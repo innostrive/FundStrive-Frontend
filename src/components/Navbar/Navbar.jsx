@@ -13,17 +13,17 @@ const Navbar = () => {
             <div className="flex items-center justify-center gap-10">
               {menuItems.map((item, i) => (
                 <>
-                  <Link
-                    to={item.link}
+                  <a
+                    href={item.link}
                     key={i}
-                    className="text-base tracking-normal uppercase font-normal cursor-pointer text-[#f3f4f7] flex items-center justify-center gap-4"
+                    className="text-sm tracking-normal uppercase font-normal cursor-pointer text-[#f3f4f7] flex items-center justify-center gap-4"
                   >
                     {item?.label}
-                  </Link>
+                  </a>
                 </>
               ))}
             </div>
-            <Link className="text-base uppercase font-medium px-4 cursor-pointer text-white bg-[#f47721] h-full flex items-center justify-center gap-4">
+            <Link className="text-sm uppercase font-medium px-4 cursor-pointer text-white bg-[#f47721] h-full flex items-center justify-center gap-4">
               Donate
             </Link>
           </div>

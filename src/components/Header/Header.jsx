@@ -7,10 +7,11 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { EffectFade, Navigation, Autoplay } from "swiper/modules";
-import { Button } from "../../Styles/Styles";
+import { Button } from "../../styles/Styles";
+
 const Header = () => {
   return (
-    <div>
+    <section id="home" className="scroll-mt-48">
       <Swiper
         spaceBetween={30}
         effect={"fade"}
@@ -76,7 +77,7 @@ const Header = () => {
           </div>
         </SwiperSlide>
       </Swiper>
-    </div>
+    </section>
   );
 };
 

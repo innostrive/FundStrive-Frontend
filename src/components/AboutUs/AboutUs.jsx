@@ -4,14 +4,15 @@ import happy from "../../assets/glitter.png";
 import volunteer from "../../assets/shirt.png";
 import donation from "../../assets/cash.png";
 import award from "../../assets/medal.png";
+import { Link } from "react-router-dom";
 const AboutUs = () => {
   return (
-    <div className="py-20">
+    <section id="about-us" className="py-20 scroll-mt-10">
       <Container>
-        <div className="grid grid-cols-2 gap-40 content-center place-content-center">
-          <div className="space-y-8">
+        <div className="grid grid-cols-2 gap-40">
+          <div className="space-y-8 place-self-center">
             <Title title="About Us" className="text-left" />
-            <p className="text-sm font-light leading-normal tracking-wide">
+            <p className="text-sm font-light leading-loose tracking-normal">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit.
               Distinctio est sint cumque non natus quidem iusto, pariatur
               voluptatem. Voluptates perspiciatis ex alias facilis fugit veniam
@@ -19,16 +20,14 @@ const AboutUs = () => {
               accusantium sequi odio esse vero quia voluptatibus! Soluta
               recusandae id temporibus quaerat corrupti, alias modi.
             </p>
-            <Button label="Read Details" />
+            <div>
+              <Link to={"/about-us"}>
+                {" "}
+                <Button label="Read Details" />
+              </Link>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="h-auto w-auto p-10 rounded-md border grid place-content-center place-items-center gap-2">
-              <img src={award} alt="" className="h-12 w-12" />
-              <span className="text-2xl font-bold text-[#2B2A27]">6528+</span>
-              <p className="text-sm font-light text-[#2B2A27] tracking-normal">
-                Made Happy
-              </p>
-            </div>
             <div className="h-auto w-auto p-10 rounded-md border grid place-content-center place-items-center gap-2">
               <img src={happy} alt="" className="h-12 w-12" />
               <span className="text-2xl font-bold text-[#2B2A27]">6528+</span>
@@ -37,23 +36,30 @@ const AboutUs = () => {
               </p>
             </div>
             <div className="h-auto w-auto p-10 rounded-md border grid place-content-center place-items-center gap-2">
+              <img src={award} alt="" className="h-12 w-12" />
+              <span className="text-2xl font-bold text-[#2B2A27]">6528+</span>
+              <p className="text-sm font-light text-[#2B2A27] tracking-normal">
+                Award
+              </p>
+            </div>
+            <div className="h-auto w-auto p-10 rounded-md border grid place-content-center place-items-center gap-2">
               <img src={volunteer} alt="" className="h-12 w-12" />
               <span className="text-2xl font-bold text-[#2B2A27]">6528+</span>
               <p className="text-sm font-light text-[#2B2A27] tracking-normal">
-                Made Happy
+                Total Volunteer
               </p>
             </div>
             <div className="h-auto w-auto p-10 rounded-md border grid place-content-center place-items-center gap-2">
               <img src={donation} alt="" className="h-12 w-12" />
               <span className="text-2xl font-bold text-[#2B2A27]">6528+</span>
               <p className="text-sm font-light text-[#2B2A27] tracking-normal">
-                Made Happy
+                Dontaion Completed
               </p>
             </div>
           </div>
         </div>
       </Container>
-    </div>
+    </section>
   );
 };
 

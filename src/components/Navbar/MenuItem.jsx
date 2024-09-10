@@ -5,18 +5,18 @@ export const menuItems = [
   },
   {
     label: "Campaign",
-    link: "/",
+    link: "/#campaign",
   },
   {
     label: "Blog",
-    link: "/",
+    link: "/#blog",
   },
   {
     label: "About Us",
-    link: "/",
+    link: "/#about-us",
   },
   {
     label: "Contact",
-    link: "/contact",
+    link: "/contact-us",
   },
 ];

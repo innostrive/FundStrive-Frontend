@@ -17,19 +17,22 @@ const Footer = () => {
           </div>
           <div className="space-y-4 grid">
             <h3 className="text-2xl font-medium text-white">Useful Links</h3>
-            <a href="" className="text-sm font-medium text-[#f3f4f7]">
+            <a href="/#home" className="text-sm font-medium text-[#f3f4f7]">
               Home
             </a>
-            <a href="" className="text-sm font-medium text-[#f3f4f7]">
+            <a href="/#about-us" className="text-sm font-medium text-[#f3f4f7]">
               About us
             </a>
-            <a href="" className="text-sm font-medium text-[#f3f4f7]">
+            <a href="/#campaign" className="text-sm font-medium text-[#f3f4f7]">
               Campaign
             </a>
-            <a href="" className="text-sm font-medium text-[#f3f4f7]">
+            <a href="/#blog" className="text-sm font-medium text-[#f3f4f7]">
               Blogs
             </a>
-            <a href="" className="text-sm font-medium text-[#f3f4f7]">
+            <a
+              href="/contact-us"
+              className="text-sm font-medium text-[#f3f4f7]"
+            >
               Contact us
             </a>
           </div>
@@ -66,18 +69,34 @@ const Footer = () => {
               </button>
             </div>
             <div className="flex gap-4">
-              <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]">
+              <a
+                href="https://www.facebook.com/"
+                target="__blank"
+                className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]"
+              >
                 <BiLogoFacebook size={20} />
-              </div>
-              <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]">
+              </a>
+              <a
+                href="https://bd.linkedin.com"
+                target="__blank"
+                className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]"
+              >
                 <BiLogoLinkedin size={20} />
-              </div>
-              <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]">
+              </a>
+              <a
+                href="https://www.instagram.com"
+                target="__blank"
+                className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]"
+              >
                 <FaInstagram size={20} />
-              </div>
-              <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]">
+              </a>
+              <a
+                href="https://mail.google.com/"
+                target="__blank"
+                className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]"
+              >
                 <FaGoogle size={20} />
-              </div>
+              </a>
             </div>
             <div></div>
           </div>

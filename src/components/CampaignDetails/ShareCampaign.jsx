@@ -33,18 +33,34 @@ const ShareCampaign = () => {
         </CopyToClipboard>
       </div>
       <div className="flex gap-4 my-4">
-        <button className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]">
+        <a
+          href="https://www.facebook.com/"
+          target="__blank"
+          className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]"
+        >
           <BiLogoFacebook size={20} />
-        </button>
-        <button className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]">
+        </a>
+        <a
+          href="https://bd.linkedin.com"
+          target="__blank"
+          className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]"
+        >
           <BiLogoLinkedin size={20} />
-        </button>
-        <button className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]">
+        </a>
+        <a
+          href="https://www.instagram.com"
+          target="__blank"
+          className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]"
+        >
           <FaInstagram size={20} />
-        </button>
-        <button className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]">
+        </a>
+        <a
+          href="https://mail.google.com/"
+          target="__blank"
+          className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]"
+        >
           <FaGoogle size={20} />
-        </button>
+        </a>
       </div>
     </div>
   );

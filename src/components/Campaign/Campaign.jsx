@@ -52,17 +52,49 @@ const Campaign = () => {
       goal: "40000",
       raised: "10000",
     },
+    {
+      id: 7,
+      img: donate,
+      organization: "Save the Strays",
+      title: "Building a New Animal Shelter",
+      goal: "45000",
+      raised: "15000",
+    },
+    {
+      id: 8,
+      img: donate,
+      organization: "Pure Water Initiative",
+      title: "Clean Water for Remote Villages",
+      goal: "60000",
+      raised: "22000",
+    },
+    {
+      id: 9,
+      img: donate,
+      organization: "Global Relief Fund",
+      title: "Emergency Relief for Flood Victims",
+      goal: "100000",
+      raised: "50000",
+    },
+    {
+      id: 10,
+      img: donate,
+      organization: "Youth Empowerment",
+      title: "Skill Development for Unemployed Youth",
+      goal: "40000",
+      raised: "10000",
+    },
   ];
 
   return (
-    <div className="bg-[#f3f4f7] py-20">
+    <div id="campaign" className="bg-[#f3f4f7] py-20 scroll-mt-10">
       <div>
         <Title title="Our Latest Campaign" />
         <div className="h-2 w-20 bg-[#2B2A27] rounded-full mx-auto mt-3"></div>
       </div>
       <Container>
         <div className="grid grid-cols-3 gap-10 mt-5">
-          {campaignData.map((data, i) => (
+          {campaignData.slice(0, 6).map((data, i) => (
             <div className="h-auto w-full max-w-96 rounded-md bg-white" key={i}>
               <img src={donate} alt="" className="h-52 w-full object-cover" />
               <div className="space-y-5 p-5">
@@ -87,8 +119,10 @@ const Campaign = () => {
                   </h1>
                 </div>
 
-                <div className="w-full rounded-full h-0.5 bg-[#2B2A27]">
-                  <div className="bg-[#f47721] h-0.5 rounded-full w-[45%]"></div>
+                <div className="p-5 bg-[#f3f4f7]">
+                  <div className="w-full rounded-full h-0.5 bg-[#2B2A27]">
+                    <div className="bg-[#f47721] h-0.5 rounded-full w-[45%]"></div>
+                  </div>
                 </div>
 
                 <div className="flex justify-between">
@@ -108,6 +142,11 @@ const Campaign = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="grid place-content-center py-10">
+          <Link to={"/campaign-list"}>
+            <Button label="See All" />
+          </Link>
         </div>
       </Container>
     </div>

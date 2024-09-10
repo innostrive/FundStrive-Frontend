@@ -57,7 +57,7 @@ const Blogs = () => {
   ];
 
   return (
-    <div className="py-20">
+    <section id="blog" className="py-20">
       <Container>
         <div className="py-20">
           <Title title="Blogs" />
@@ -69,7 +69,7 @@ const Blogs = () => {
           ))}
         </div>
       </Container>
-    </div>
+    </section>
   );
 };
 
