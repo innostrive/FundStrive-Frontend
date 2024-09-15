@@ -1,14 +1,25 @@
-import {
-  Button,
-  Card,
-  Checkbox,
-  Input,
-  Typography,
-} from "@material-tailwind/react";
-import React from "react";
-import { Link } from "react-router-dom";
+import { Button, Card, Input, Typography } from "@material-tailwind/react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
+  const onSubmit = async (data) => {
+    await axios.post("http://localhost:4000/login", data).then((data) => {
+      if (data.data.data !== null) {
+        toast.success(data.data.message);
+        localStorage.setItem("token", data.data.data.token);
+        localStorage.setItem("role", data.data.data.role);
+        navigate("/dashboard");
+      } else {
+        toast.error(data.data.message);
+      }
+    });
+  };
+
   return (
     <div>
       <Card color="transparent" shadow={false}>
@@ -18,7 +29,10 @@ const LoginForm = () => {
         <Typography color="gray" className="mt-1 font-normal">
           Nice to meet you! Enter your details to register.
         </Typography>
-        <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+        >
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Your Email
@@ -30,6 +44,7 @@ const LoginForm = () => {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              {...register("email")}
             />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Password
@@ -42,27 +57,10 @@ const LoginForm = () => {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              {...register("password")}
             />
           </div>
-          <Checkbox
-            label={
-              <Typography
-                variant="small"
-                color="gray"
-                className="flex items-center font-normal"
-              >
-                I agree the
-                <a
-                  href="#"
-                  className="font-medium transition-colors hover:text-gray-900"
-                >
-                  &nbsp;Terms and Conditions
-                </a>
-              </Typography>
-            }
-            containerProps={{ className: "-ml-2.5" }}
-          />
-          <Button className="mt-6" fullWidth>
+          <Button className="mt-6" fullWidth type="submit">
             Login
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">

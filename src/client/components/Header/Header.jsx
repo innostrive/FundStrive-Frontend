@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { EffectFade, Navigation, Autoplay } from "swiper/modules";
 import { Button } from "../../styles/Styles";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -36,7 +37,9 @@ const Header = () => {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 Eligendi, illum.
               </p>
-              <Button label="Donate" />
+              <Link to="/campaign-list">
+                <Button label="Donate" />
+              </Link>
             </div>
           </div>
         </SwiperSlide>
@@ -54,7 +57,9 @@ const Header = () => {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 Eligendi, illum.
               </p>
-              <Button label="Donate" />
+              <Link to="/campaign-list">
+                <Button label="Donate" />
+              </Link>
             </div>
           </div>
         </SwiperSlide>
@@ -72,7 +77,9 @@ const Header = () => {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 Eligendi, illum.
               </p>
-              <Button label="Donate" />
+              <Link to="/campaign-list">
+                <Button label="Donate" />
+              </Link>
             </div>
           </div>
         </SwiperSlide>
