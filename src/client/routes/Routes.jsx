@@ -7,25 +7,19 @@ import ContactUs from "../pages/ContactUs/ContactUs";
 import AllCampaignList from "../pages/AllCampaignList/AllCampaignList";
 import CampaignDetails from "../components/CampaignDetails/CampaignDetails";
 import BlogDetails from "../components/BlogDetails/BlogDetails";
-import Login from "../pages/Auth/Login/Login";
-import SignUp from "../pages/Auth/SignUp/SignUp";
-import Sidebar from "../../dashboard/Sidebar/Sidebar";
-import Dashboard from "../../dashboard/pages/dashboard/Dashboard";
 import Users from "../../dashboard/pages/Users/Users";
 import ProtectedRoute from "../../dashboard/layout/ProtectedRoute";
-// import Home from "../pages/Home/Home";
-// import Layout from "../components/layout/Layout";
-// import ContactUs from "../pages/ContactUs/ContactUs";
-// import CampaignDetails from "../components/CampaignDetails/CampaignDetails";
-// import BlogDetails from "../components/BlogDetails/BlogDetails";
-// import Login from "../pages/Auth/Login/Login";
-// import SignUp from "../pages/Auth/SignUp/SignUp";
-// import ScrollTop from "../share/ScrollTop/ScollTop";
-// import AboutUsDetails from "../components/AboutUsDetails/AboutUsDetails";
-// import AllCampaignList from "../pages/AllCampaignList/AllCampaignList";
-// import Dashboard from "../admin/Dashboard/Sidebar";
-// import Sidebar from "../admin/Dashboard/Sidebar";
-
+import Login from "../../dashboard/pages/auth/Login/Login";
+import SignUp from "../../dashboard/pages/auth/SignUp/SignUp";
+import UserDetails from "../../dashboard/pages/Users/userDetails";
+import Dashboard from "../../dashboard/pages/dashboard/Dashboard";
+import EditUser from "../../dashboard/pages/Users/EditUser";
+import { lazy } from "react";
+import Category from "../../dashboard/pages/Category/Category";
+import Campaign from "../../dashboard/pages/Campaign/Campaign";
+import CreateCategory from "../../dashboard/pages/Category/CreateCategory";
+import CreateCampaign from "../../dashboard/pages/Campaign/CreateCampaign";
+// const UserEdit = lazy(() => import("../../dashboard/pages/Users/EditUser"));
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -83,6 +77,54 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Users />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard/user-details/:id",
+    element: (
+      <ProtectedRoute>
+        <UserDetails />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard/edit-user/:id",
+    element: (
+      <ProtectedRoute>
+        <EditUser />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard/category",
+    element: (
+      <ProtectedRoute>
+        <Category />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard/create-category",
+    element: (
+      <ProtectedRoute>
+        <CreateCategory />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard/campaign",
+    element: (
+      <ProtectedRoute>
+        <Campaign />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard/create-campaign",
+    element: (
+      <ProtectedRoute>
+        <CreateCampaign />
       </ProtectedRoute>
     ),
   },

@@ -74,7 +74,7 @@ const Sidebar = () => {
       <div className="w-64 h-full text-white p-4">
         <ul>
           {menuItems.map((item) => (
-            <li key={item.id} className="cursor-pointer">
+            <li key={item.id} className="cursor-pointer text-sm">
               {item.name === "Logout" ? (
                 <motion.div
                   className={`flex items-center p-3 rounded-lg ${

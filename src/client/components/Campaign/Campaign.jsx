@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import donate from "../../assets/donate-1.jpg";
 import { Button, Title } from "../../styles/Styles";
 import Container from "../Container/Container";
+import useCampaignsData from "../../hooks/useCampaignsData";
 const Campaign = () => {
   const campaignData = [
     {
@@ -85,7 +86,7 @@ const Campaign = () => {
       raised: "10000",
     },
   ];
-
+  const campaigns = useCampaignsData();
   return (
     <div id="campaign" className="bg-[#f3f4f7] py-20 scroll-mt-10">
       <div>
@@ -94,8 +95,11 @@ const Campaign = () => {
       </div>
       <Container>
         <div className="grid grid-cols-3 gap-10 mt-5">
-          {campaignData.slice(0, 6).map((data, i) => (
-            <div className="h-auto w-full max-w-96 rounded-md bg-white" key={i}>
+          {campaigns.map((campaign) => (
+            <div
+              className="h-auto w-full max-w-96 rounded-md bg-white"
+              key={campaign?._id}
+            >
               <img src={donate} alt="" className="h-52 w-full object-cover" />
               <div className="space-y-5 p-5">
                 <div className="flex items-center justify-between">
@@ -105,9 +109,9 @@ const Campaign = () => {
                       alt=""
                       className="h-10 w-10 rounded-full"
                     />
-                    <p className="text-sm font-normal">{data?.organization}</p>
+                    <p className="text-sm font-normal">{campaign?.name}</p>
                   </div>
-                  <Link to={`/campaign/${data?.id}`}>
+                  <Link to={`/campaign/${campaign?._id}`}>
                     <div>
                       <Button label="Donate" />
                     </div>
@@ -115,7 +119,7 @@ const Campaign = () => {
                 </div>
                 <div className="">
                   <h1 className="font-medium text-[#00112c] text-base">
-                    {data?.title}
+                    {campaign?.title}
                   </h1>
                 </div>
 
@@ -127,13 +131,13 @@ const Campaign = () => {
 
                 <div className="flex justify-between">
                   <p className="font-bold text-sm text-[#00112c]">
-                    ${data?.raised}
+                    ${campaign?.raised_amount}
                     <span className="font-semibold text-sm ml-1 tracking-normal text-[#f47721]">
                       Raised
                     </span>
                   </p>
                   <p className="font-bold text-sm text-[#00112c]">
-                    ${data.goal}
+                    ${campaign?.target_amount}
                     <span className="font-semibold text-sm ml-1 tracking-normal text-[#219558]">
                       Goal
                     </span>

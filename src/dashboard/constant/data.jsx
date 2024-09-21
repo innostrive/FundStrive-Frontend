@@ -21,8 +21,50 @@ export const menuItems = [
     ),
     link: "/dashboard/users",
   },
-  { id: 3, name: "Settings", icon: "⚙️" },
-  { id: 4, name: "Profile", icon: "👤" },
-  { id: 5, name: "Messages", icon: "💬" },
-  { id: 6, name: "Logout", icon: "🚪" },
+  {
+    id: 3,
+    name: "Category",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-layers size-7"
+      >
+        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+        <polyline points="2 17 12 22 22 17"></polyline>
+        <polyline points="2 12 12 17 22 12"></polyline>
+      </svg>
+    ),
+    link: "/dashboard/category",
+  },
+  {
+    id: 4,
+    name: "Campaign",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-bullhorn size-7"
+      >
+        <path d="M18 13v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"></path>
+        <path d="M23 5v10c0 1.1-.9 2-2 2h-7l-4 4V3l4 4h7c1.1 0 2 .9 2 2z"></path>
+      </svg>
+    ),
+    link: "/dashboard/campaign",
+  },
+  { id: 5, name: "Logout", icon: "🚪" },
 ];

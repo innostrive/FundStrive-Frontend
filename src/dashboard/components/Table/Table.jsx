@@ -1,6 +1,8 @@
-import axios from "axios";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTable, useRowSelect } from "react-table";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useUsersData from "../../hooks/useUsersData";
+import { Link } from "react-router-dom";
 
 // Component for rendering action buttons
 const ActionButtons = () => (
@@ -41,20 +43,38 @@ const IndeterminateCheckbox = React.forwardRef(
 );
 
 const Table = () => {
-  // Define table columns
+  const users = useUsersData();
+  const axiosSecure = useAxiosSecure();
+  const handleUserDelete = (id) => {
+    const deleteId = {
+      ids: [id],
+    };
+    axiosSecure
+      .delete("/api/users", deleteId)
+      .then((response) => console.log("user deleted", response));
+  };
   const columns = useMemo(
     () => [
       {
         Header: "ID",
-        accessor: "id",
+        accessor: "_id",
+        Cell: (row) => {
+          return <span>{row?.cell?.value}</span>;
+        },
       },
       {
         Header: "Name",
-        accessor: "categories",
+        accessor: "name",
+        Cell: (row) => {
+          return <span>{row?.cell?.value}</span>;
+        },
       },
       {
-        Header: "Date",
-        accessor: "date",
+        Header: "Country",
+        accessor: "country",
+        Cell: (row) => {
+          return <span>{row?.cell?.value}</span>;
+        },
       },
       {
         Header: "Status",
@@ -63,53 +83,40 @@ const Table = () => {
       },
       {
         Header: "Action",
-        Cell: () => <ActionButtons />,
+        Cell: ({ row }) => (
+          <div className="flex gap-2">
+            <Link to={`/dashboard/user-details/${row.original._id}`}>
+              <button className="text-blue-500 hover:text-blue-700">
+                View
+              </button>
+            </Link>
+            <Link>
+              {" "}
+              <button
+                className="text-red-500 hover:text-red-700"
+                onClick={() => handleUserDelete(console.log(row?.original._id))}
+              >
+                Delete
+              </button>
+            </Link>
+            <Link to={`/dashboard/edit-user/${row.original._id}`}>
+              <button className="text-purple-500 hover:text-purple-700">
+                Edit
+              </button>
+            </Link>
+          </div>
+        ),
       },
     ],
     []
   );
 
   // Define table data
-  const data = useMemo(
-    () => [
-      {
-        id: "#0001",
-        categories: "Medical Terpenes",
-        date: "March 23, 2023",
-        status: "Active",
-      },
-      {
-        id: "#0002",
-        categories: "Sauce Terps",
-        date: "March 29, 2023",
-        status: "Inactive",
-      },
-      {
-        id: "#0003",
-        categories: "Live Resin Terpenes",
-        date: "March 23, 2023",
-        status: "Active",
-      },
-      {
-        id: "#0004",
-        categories: "Isolates",
-        date: "March 10, 2023",
-        status: "Active",
-      },
-      {
-        id: "#0005",
-        categories: "710Terps",
-        date: "March 10, 2023",
-        status: "Inactive",
-      },
-      // Add more rows as needed
-    ],
-    []
-  );
+  const data = useMemo(() => users, []);
 
   // Use the table hook
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data }, useRowSelect, (hooks) => {
+    useTable({ columns, data: users }, useRowSelect, (hooks) => {
       hooks.visibleColumns.push((columns) => [
         {
           id: "selection",
