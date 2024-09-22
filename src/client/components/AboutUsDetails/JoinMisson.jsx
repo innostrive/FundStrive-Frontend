@@ -1,4 +1,4 @@
-import { Title } from "../../styles/Styles";
+import { Title } from "../../Styles/Styles";
 import Container from "../Container/Container";
 import donate from "../../assets/donate-1.jpg";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";

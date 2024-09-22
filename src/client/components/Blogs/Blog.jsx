@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import donate from "../../assets/donate-1.jpg";
-import { Button } from "../../styles/Styles";
+import { Button } from "../../Styles/Styles";
 const Blog = ({ data }) => {
   return (
     <div className="h-auto w-full max-w-96 rounded-md bg-white border border-gray-100">

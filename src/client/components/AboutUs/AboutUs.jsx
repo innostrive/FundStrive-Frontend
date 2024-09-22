@@ -1,4 +1,4 @@
-import { Button, Title } from "../../styles/Styles";
+import { Button, Title } from "../../Styles/Styles";
 import Container from "../Container/Container";
 import happy from "../../assets/glitter.png";
 import volunteer from "../../assets/shirt.png";
@@ -13,10 +13,10 @@ const AboutUs = () => {
           <div className="space-y-8 place-self-center">
             <Title title="About Us" className="text-left" />
             <p className="text-sm font-light leading-loose tracking-normal">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Distinctio est sint cumque non natus quidem iusto, pariatur
-              voluptatem. Voluptates perspiciatis ex alias facilis fugit veniam
-              quo nihil quasi, culpa possimus molestiae hic minus quas nesciunt
+              Lorem ipsum dolor sit, amet consectetur dummy text. Distinctio est
+              sint cumque non natus quidem iusto, pariatur voluptatem.
+              Voluptates perspiciatis ex alias facilis fugit veniam quo nihil
+              quasi, culpa possimus molestiae hic minus quas nesciunt
               accusantium sequi odio esse vero quia voluptatibus! Soluta
               recusandae id temporibus quaerat corrupti, alias modi.
             </p>

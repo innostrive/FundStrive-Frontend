@@ -1,8 +1,6 @@
 import React from "react";
-import donate from "../../assets/donate-1.jpg";
-import { Button, Title } from "../../styles/Styles";
+import { Title } from "../../Styles/Styles";
 import Container from "../Container/Container";
-import { Link } from "react-router-dom";
 import Blog from "./Blog";
 const Blogs = () => {
   const blogsData = [

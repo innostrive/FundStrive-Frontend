@@ -1,4 +1,3 @@
-import donate from "../../assets/donation.jpg";
 import Container from "../../components/Container/Container";
 const TopHeader = ({ title, image }) => {
   return (

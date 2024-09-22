@@ -1,4 +1,4 @@
-import { Title } from "../../styles/Styles";
+import { Title } from "../../Styles/Styles";
 import TeamMemberSlider from "./TeamMemberSlider";
 
 const Authority = () => {

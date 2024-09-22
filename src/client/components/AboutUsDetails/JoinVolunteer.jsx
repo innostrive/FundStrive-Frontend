@@ -1,7 +1,7 @@
 import Container from "../Container/Container";
 import donation from "../../assets/donation-2.jpg";
 import { Link } from "react-router-dom";
-import { Button } from "../../styles/Styles";
+import { Button } from "../../Styles/Styles";
 const JoinVolunteer = () => {
   return (
     <section className="bg-[#2B2A27]">

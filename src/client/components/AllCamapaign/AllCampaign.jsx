@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import donate from "../../assets/donate-1.jpg";
-import { Button, Title } from "../../styles/Styles";
+import { Button, Title } from "../../Styles/Styles";
 import Container from "../Container/Container";
 const AllCampaign = () => {
   const campaignData = [

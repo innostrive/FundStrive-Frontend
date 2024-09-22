@@ -1,4 +1,4 @@
-import { Title } from "../../styles/Styles";
+import { Title } from "../../Styles/Styles";
 import donate from "../../assets/donate-1.jpg";
 import Container from "../Container/Container";
 import { Swiper, SwiperSlide } from "swiper/react";
