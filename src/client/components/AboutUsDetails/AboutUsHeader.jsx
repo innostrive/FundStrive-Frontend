@@ -12,7 +12,7 @@ const AboutUsHeader = () => {
               Learn More About Our Foundation
             </h1>
             <p className="text-base font-normal leading-loose">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+              Lorem ipsum dolor sit amet consectetur dummy text,
               nesciunt. Quae at iure voluptatibus, doloremque natus iusto
               voluptate nostrum adipisci? Ex nihil eum aspernatur voluptates.
             </p>
