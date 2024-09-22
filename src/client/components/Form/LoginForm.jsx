@@ -1,12 +1,18 @@
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+import loginValidationSchema from "../../../dashboard/schemas/login.schema";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useFormContext();
   const onSubmit = async (data) => {
     await axios.post("http://localhost:4000/login", data).then((data) => {
       if (data.data.data !== null) {
@@ -31,6 +37,7 @@ const LoginForm = () => {
         </Typography>
         <form
           onSubmit={handleSubmit(onSubmit)}
+          resolver={zodResolver(loginValidationSchema)}
           className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
         >
           <div className="mb-1 flex flex-col gap-6">
@@ -45,6 +52,7 @@ const LoginForm = () => {
                 className: "before:content-none after:content-none",
               }}
               {...register("email")}
+              error={errors ? errors.message : ""}
             />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Password
@@ -58,6 +66,7 @@ const LoginForm = () => {
                 className: "before:content-none after:content-none",
               }}
               {...register("password")}
+              error={errors ? errors.message : ""}
             />
           </div>
           <Button className="mt-6" fullWidth type="submit">
