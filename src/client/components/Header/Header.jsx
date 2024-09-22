@@ -7,8 +7,8 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { EffectFade, Navigation, Autoplay } from "swiper/modules";
-import { Button } from "../../styles/Styles";
 import { Link } from "react-router-dom";
+import { Button } from "../../Styles/Styles";
 
 const Header = () => {
   return (

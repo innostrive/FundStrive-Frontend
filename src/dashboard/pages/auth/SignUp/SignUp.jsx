@@ -2,7 +2,7 @@ import donation from "../../../assets/donation.jpg";
 import SignUpForm from "../../../components/form/SignupForm";
 const SignUp = () => {
   return (
-    <>
+    <section>
       <div className="grid grid-cols-2 w-screen h-screen">
         <div className="h-full w-full grid content-center justify-items-center bg-[#f3f4f7]">
           <SignUpForm />
@@ -11,7 +11,7 @@ const SignUp = () => {
           <img src={donation} alt="" className="h-96 w-96" />
         </div>
       </div>
-    </>
+    </section>
   );
 };
 

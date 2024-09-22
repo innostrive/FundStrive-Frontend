@@ -25,7 +25,7 @@ const Sidebar = () => {
 
   return (
     <motion.div
-      className={`w-full max-w-72 bg-[#2B2A27] h-auto min-h-screen overflow-hidden`}
+      className={`w-full max-w-72 bg-[#2B2A27] min-h-screen overflow-hidden fixed inset-0`}
       initial={{ translateX: sidebarToggle ? 0 : 0 }}
       animate={{ translateX: sidebarToggle ? -220 : 0 }}
       transition={{ type: "just", ease: "linear", duration: 0.3 }}

@@ -18,149 +18,166 @@ const SignUpForm = () => {
     });
   };
   return (
-    <Card color="transparent" shadow={false}>
+    <div className="w-full max-w-3xl">
       <Typography variant="h4" color="blue-gray">
         Sign Up
       </Typography>
       <Typography color="gray" className="mt-1 font-normal">
         Nice to meet you! Enter your details to register.
       </Typography>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-      >
-        <div className="mb-1 flex flex-col gap-6">
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Your Name
-          </Typography>
-          <Input
-            type="text"
-            size="lg"
-            placeholder="name"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("name")}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Your Email
-          </Typography>
-          <Input
-            type="email"
-            size="lg"
-            placeholder="example@mail.com"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("email")}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Password
-          </Typography>
-          <Input
-            type="password"
-            size="lg"
-            placeholder="********"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("password")}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Phone Number
-          </Typography>
-          <Input
-            type="text"
-            size="lg"
-            placeholder="phone number"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("phone_number")}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Address
-          </Typography>
-          <Input
-            type="text"
-            size="lg"
-            placeholder="address"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("address")}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Country
-          </Typography>
-          <Input
-            type="text"
-            size="lg"
-            placeholder="country"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("country")}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            State
-          </Typography>
-          <Input
-            type="text"
-            size="lg"
-            placeholder="state"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("state")}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            City
-          </Typography>
-          <Input
-            type="text"
-            size="lg"
-            placeholder="city"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("city")}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Post Code
-          </Typography>
-          <Input
-            type="text"
-            size="lg"
-            placeholder="Post Code"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("post_code")}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Upload Image
-          </Typography>
-          <Input
-            type="text"
-            size="lg"
-            placeholder="Upload Image"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            {...register("image")}
-            // onChange={(e) => setImage(e.target.files[0])}
-          />
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
+        <div className="mb-1 grid grid-cols-2 gap-5">
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Your Name
+            </Typography>
+            <Input
+              type="text"
+              size="lg"
+              placeholder="name"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("name")}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Your Email
+            </Typography>
+            <Input
+              type="email"
+              size="lg"
+              placeholder="example@mail.com"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("email")}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Password
+            </Typography>
+            <Input
+              type="password"
+              size="lg"
+              placeholder="********"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("password")}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Phone Number
+            </Typography>
+            <Input
+              type="text"
+              size="lg"
+              placeholder="phone number"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("phone_number")}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Address
+            </Typography>
+            <Input
+              type="text"
+              size="lg"
+              placeholder="address"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("address")}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Country
+            </Typography>
+            <Input
+              type="text"
+              size="lg"
+              placeholder="country"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("country")}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              State
+            </Typography>
+            <Input
+              type="text"
+              size="lg"
+              placeholder="state"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("state")}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              City
+            </Typography>
+            <Input
+              type="text"
+              size="lg"
+              placeholder="city"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("city")}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Post Code
+            </Typography>
+            <Input
+              type="text"
+              size="lg"
+              placeholder="Post Code"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("post_code")}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Upload Image
+            </Typography>
+            <Input
+              type="file"
+              size="lg"
+              placeholder="Upload Image"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              {...register("image")}
+              // onChange={(e) => setImage(e.target.files[0])}
+            />
+          </div>
         </div>
         <Button className="mt-6" fullWidth type="submit">
           sign up
@@ -172,7 +189,7 @@ const SignUpForm = () => {
           </Link>
         </Typography>
       </form>
-    </Card>
+    </div>
   );
 };
 
