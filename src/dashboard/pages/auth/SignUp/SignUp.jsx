@@ -1,5 +1,5 @@
 import donation from "../../../assets/donation.jpg";
-import SignUpForm from "../../../components/form/SignupForm";
+import SignUpForm from "../../../components/form/SignUpForm";
 const SignUp = () => {
   return (
     <section>
