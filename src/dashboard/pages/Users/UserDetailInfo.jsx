@@ -1,5 +1,3 @@
-import TextInput from "../../ui/TextInput";
-
 const UserDetailInfo = ({ userInfo }) => {
   return (
     <section className="flex justify-center">

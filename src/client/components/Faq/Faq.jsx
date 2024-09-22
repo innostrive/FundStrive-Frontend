@@ -5,7 +5,7 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 import Container from "../Container/Container";
-import { Title } from "../../styles/Styles";
+import { Title } from "../../Styles/Styles";
 
 function Icon({ id, open }) {
   return (

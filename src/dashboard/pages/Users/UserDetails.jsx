@@ -3,7 +3,6 @@ import Layout from "../../layout/Layout";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import UserDetailInfo from "./UserDetailInfo";
-import Breadcrumbs from "../../ui/Breadcrumbs";
 
 const UserDetails = () => {
   const { id } = useParams();
@@ -17,7 +16,6 @@ const UserDetails = () => {
   return (
     <Layout>
       <section>
-        <Breadcrumbs />
         <UserDetailInfo userInfo={userInfo} />
       </section>
     </Layout>
