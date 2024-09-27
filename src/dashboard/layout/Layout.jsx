@@ -1,16 +1,26 @@
 import React from "react";
 import Sidebar from "../Sidebar/Sidebar";
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
 
 const Layout = ({ children }) => {
   return (
-    <section className="flex min-h-screen">
-      {/* <---- Sidebar ----> */}
-      <div className="h-full w-72">
+    <div className="flex min-h-screen gap-0">
+      {/* Sidebar */}
+      <div className="h-screen w-72 fixed">
         <Sidebar />
       </div>
-      {/* <---- Main Content ----> */}
-      <main className="flex-1 min-h-screen h-auto p-5 w-full">{children}</main>
-    </section>
+
+      {/* Main Content */}
+      <div className="ml-72 flex-1 w-full">
+        {/* Navbar */}
+        <Header />
+        {/* Main content starts below the navbar */}
+        <main className="w-full mt-24 p-5">
+          <Outlet />
+        </main>
+      </div>
+    </div>
   );
 };
 

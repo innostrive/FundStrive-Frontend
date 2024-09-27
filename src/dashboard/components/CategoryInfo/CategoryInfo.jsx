@@ -1,7 +1,16 @@
+import { Link } from "react-router-dom";
+import { Edit } from "../../assets/icons/icons";
+
 const CategoryInfo = ({ categoryInfo }) => {
   return (
     <section className="flex justify-center">
       <div className="h-auto w-full max-w-5xl p-5 rounded-md bg-white border space-y-10">
+        <div className="flex ml-auto p-2 bg-red-200 rounded-md w-10">
+          <Link to={`/dashboard/edit-category/${categoryInfo?._id}`}>
+            {" "}
+            <Edit className="size-6 text-white" />
+          </Link>
+        </div>
         <div className="flex gap-4 items-center justify-center">
           <div>
             <img

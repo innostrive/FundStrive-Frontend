@@ -52,91 +52,89 @@ const EditUser = () => {
   };
 
   return (
-    <Layout>
-      <section className="flex justify-center">
-        <div className="h-auto w-full max-w-5xl p-5 rounded-md bg-white border space-y-10">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-2 gap-10">
-              <div className="grid grid-cols-1 space-y-2">
-                <span className="text-sm">Name</span>
-                <input
-                  className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-                  type="text"
-                  defaultValue={userInfo?.name}
-                  {...register("name")} // Register the input
-                />
-              </div>
-              <div className="grid grid-cols-1 space-y-2">
-                <span className="text-sm">Email</span>
-                <input
-                  className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-                  type="email"
-                  defaultValue={userInfo?.email} // Show default value
-                  {...register("email")} // Register the input
-                />
-              </div>
-              <div className="grid grid-cols-1 space-y-2">
-                <span className="text-sm">Phone Number</span>
-                <input
-                  className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-                  type="text"
-                  defaultValue={userInfo?.phone_number} // Show default value
-                  {...register("phone_number")} // Register the input
-                />
-              </div>
-              <div className="grid grid-cols-1 space-y-2">
-                <span className="text-sm">Country</span>
-                <input
-                  className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-                  type="text"
-                  defaultValue={userInfo?.country} // Show default value
-                  {...register("country")} // Register the input
-                />
-              </div>
-              <div className="grid grid-cols-1 space-y-2">
-                <span className="text-sm">State</span>
-                <input
-                  className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-                  type="text"
-                  defaultValue={userInfo?.state} // Show default value
-                  {...register("state")} // Register the input
-                />
-              </div>
-              <div className="grid grid-cols-1 space-y-2">
-                <span className="text-sm">City</span>
-                <input
-                  className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-                  type="text"
-                  defaultValue={userInfo?.city} // Show default value
-                  {...register("city")} // Register the input
-                />
-              </div>
-              <div className="grid grid-cols-1 space-y-2">
-                <span className="text-sm">Post Code</span>
-                <input
-                  className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-                  type="text"
-                  defaultValue={userInfo?.post_code} // Show default value
-                  {...register("post_code")} // Register the input
-                />
-              </div>
-              <div className="grid grid-cols-1 space-y-2">
-                <span className="text-sm">Address</span>
-                <input
-                  className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-                  type="text"
-                  defaultValue={userInfo?.address} // Show default value
-                  {...register("address")} // Register the input
-                />
-              </div>
+    <section className="flex justify-center">
+      <div className="h-auto w-full max-w-5xl p-5 rounded-md bg-white border space-y-10">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Name</span>
+              <input
+                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.name}
+                {...register("name")} // Register the input
+              />
             </div>
-            <Button type="submit" className="my-5">
-              Update
-            </Button>
-          </form>
-        </div>
-      </section>
-    </Layout>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Email</span>
+              <input
+                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="email"
+                defaultValue={userInfo?.email} // Show default value
+                {...register("email")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Phone Number</span>
+              <input
+                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.phone_number} // Show default value
+                {...register("phone_number")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Country</span>
+              <input
+                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.country} // Show default value
+                {...register("country")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">State</span>
+              <input
+                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.state} // Show default value
+                {...register("state")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">City</span>
+              <input
+                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.city} // Show default value
+                {...register("city")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Post Code</span>
+              <input
+                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.post_code} // Show default value
+                {...register("post_code")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Address</span>
+              <input
+                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.address} // Show default value
+                {...register("address")} // Register the input
+              />
+            </div>
+          </div>
+          <Button type="submit" className="my-5">
+            Update
+          </Button>
+        </form>
+      </div>
+    </section>
   );
 };
 

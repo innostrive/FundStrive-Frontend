@@ -3,11 +3,7 @@ import Layout from "../../layout/Layout";
 import EditCategoryInfo from "../../components/CategoryInfo/EditCategoryInfo";
 
 const EditCategory = () => {
-  return (
-    <Layout>
-      <EditCategoryInfo />
-    </Layout>
-  );
+  return <EditCategoryInfo />;
 };
 
 export default EditCategory;

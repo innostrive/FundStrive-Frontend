@@ -1,21 +1,42 @@
-import { Button, Card, Input, Typography } from "@material-tailwind/react";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Button, Typography } from "@material-tailwind/react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useState } from "react";
+import Form from "./Form";
+import axios from "axios";
+import TextInput from "../../ui/TextInput";
+import { zodResolver } from "@hookform/resolvers/zod";
+import userRegistrationSchema from "../../schemas/registration.schema";
 const SignUpForm = () => {
-  const axiosSecure = useAxiosSecure();
-  const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
+  const [image, setImage] = useState(null);
+
+  const handleTextInputChange = (e) => {
+    const { name, files } = e.target;
+    setImage((prevData) => ({
+      ...prevData,
+      [name]: files ? files[0] : value,
+    }));
+  };
+
   const onSubmit = async (data) => {
-    await axiosSecure.post("/signup", data).then((data) => {
-      if (data.data.data !== null) {
-        toast.success(data.data.message);
-        navigate("/login");
-      } else {
-        toast.error(data.data.message);
-      }
-    });
+    const payload = {
+      image: data.image,
+      ...data,
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/signup",
+        payload
+      );
+      console.log("Response:", response.data);
+      toast.success("Sign up successful!");
+      navigate("/login");
+    } catch (error) {
+      console.error("Sign up error:", error);
+      toast.error("Failed to sign up. Please try again.");
+    }
+    // console.log(payload);
   };
   return (
     <div className="w-full max-w-3xl">
@@ -23,159 +44,78 @@ const SignUpForm = () => {
         Sign Up
       </Typography>
       <Typography color="gray" className="mt-1 font-normal">
-        Nice to meet you! Enter your details to register.
+        Nice to meet you! Enter your detailsr.
       </Typography>
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
+      <Form
+        onSubmit={onSubmit}
+        resolver={zodResolver(userRegistrationSchema)}
+        className="mt-8 mb-2 w-full"
+      >
         <div className="mb-1 grid grid-cols-2 gap-5">
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               Your Name
             </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="name"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("name")}
-            />
+            <TextInput type="text" name="name" />
           </div>
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               Your Email
             </Typography>
-            <Input
-              type="email"
-              size="lg"
-              placeholder="example@mail.com"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("email")}
-            />
+            <TextInput type="email" name="email" />
           </div>
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               Password
             </Typography>
-            <Input
-              type="password"
-              size="lg"
-              placeholder="********"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("password")}
-            />
+            <TextInput type="password" name="password" />
           </div>
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               Phone Number
             </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="phone number"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("phone_number")}
-            />
+            <TextInput type="text" name="phone_number" />
           </div>
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               Address
             </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="address"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("address")}
-            />
+            <TextInput type="text" name="address" />
           </div>
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               Country
             </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="country"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("country")}
-            />
+            <TextInput type="text" name="country" />
           </div>
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               State
             </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="state"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("state")}
-            />
+            <TextInput type="text" name="state" />
           </div>
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               City
             </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="city"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("city")}
-            />
+            <TextInput type="text" name="city" />
           </div>
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               Post Code
             </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="Post Code"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("post_code")}
-            />
+            <TextInput type="text" name="post_code" />
           </div>
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               Upload Image
             </Typography>
-            <Input
+            <TextInput
               type="file"
-              size="lg"
-              placeholder="Upload Image"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("image")}
-              // onChange={(e) => setImage(e.target.files[0])}
+              id="image"
+              name="image"
+              onChange={handleTextInputChange}
+              accept="image/*"
             />
           </div>
         </div>
@@ -188,7 +128,7 @@ const SignUpForm = () => {
             Sign In
           </Link>
         </Typography>
-      </form>
+      </Form>
     </div>
   );
 };

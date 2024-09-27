@@ -22,6 +22,11 @@ import AdminCampaignDetails from "../../dashboard/pages/Campaign/AdminCampaignDe
 import CategoryDetails from "../../dashboard/pages/Category/CategoryDetails";
 import EditCategory from "../../dashboard/pages/Category/EditCategory";
 import EditCampaign from "../../dashboard/pages/Campaign/EditCampaign";
+import BlogsData from "../../dashboard/pages/Blog/BlogsData";
+import CreateBlog from "../../dashboard/pages/Blog/CreateBlog";
+import BlogDetailsData from "../../dashboard/pages/Blog/BlogDetailsData";
+import MainLayout from "../../dashboard/layout/MainLayout";
+import adminPath from "./admin.routes";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -70,96 +75,9 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: (
       <ProtectedRoute>
-        <Dashboard />
+        <MainLayout />
       </ProtectedRoute>
     ),
-  },
-  {
-    path: "/dashboard/users",
-    element: (
-      <ProtectedRoute>
-        <Users />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/user-details/:id",
-    element: (
-      <ProtectedRoute>
-        <UserDetails />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/edit-user/:id",
-    element: (
-      <ProtectedRoute>
-        <EditUser />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/category",
-    element: (
-      <ProtectedRoute>
-        <Category />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/category/:id",
-    element: (
-      <ProtectedRoute>
-        <CategoryDetails />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/edit-category/:id",
-    element: (
-      <ProtectedRoute>
-        <EditCategory />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/create-category",
-    element: (
-      <ProtectedRoute>
-        <CreateCategory />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/campaign",
-    element: (
-      <ProtectedRoute>
-        <Campaign />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/campaign/:id",
-    element: (
-      <ProtectedRoute>
-        <AdminCampaignDetails />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/edit-campaign/:id",
-    element: (
-      <ProtectedRoute>
-        <EditCampaign />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/dashboard/create-campaign",
-    element: (
-      <ProtectedRoute>
-        <CreateCampaign />
-      </ProtectedRoute>
-    ),
+    children: adminPath,
   },
 ]);

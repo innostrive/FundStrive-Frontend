@@ -117,18 +117,18 @@ const Table = () => {
   // Use the table hook
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: users }, useRowSelect, (hooks) => {
-      hooks.visibleColumns.push((columns) => [
-        {
-          id: "selection",
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-          ),
-          Cell: ({ row }) => (
-            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-          ),
-        },
-        ...columns,
-      ]);
+      // hooks.visibleColumns.push((columns) => [
+      //   {
+      //     id: "selection",
+      //     Header: ({ getToggleAllRowsSelectedProps }) => (
+      //       <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+      //     ),
+      //     Cell: ({ row }) => (
+      //       <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+      //     ),
+      //   },
+      //   ...columns,
+      // ]);
     });
 
   return (

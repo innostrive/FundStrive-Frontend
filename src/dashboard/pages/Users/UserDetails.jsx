@@ -14,11 +14,9 @@ const UserDetails = () => {
     });
   }, []);
   return (
-    <Layout>
-      <section>
-        <UserDetailInfo userInfo={userInfo} />
-      </section>
-    </Layout>
+    <section>
+      <UserDetailInfo userInfo={userInfo} />
+    </section>
   );
 };
 

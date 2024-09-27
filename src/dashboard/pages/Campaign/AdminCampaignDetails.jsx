@@ -22,11 +22,7 @@ const AdminCampaignDetails = () => {
       setCategory(res.data.data);
     });
   }, [categoryId]);
-  return (
-    <Layout>
-      <CampaignInfo campaignInfo={campaignInfo} category={category} />
-    </Layout>
-  );
+  return <CampaignInfo campaignInfo={campaignInfo} category={category} />;
 };
 
 export default AdminCampaignDetails;

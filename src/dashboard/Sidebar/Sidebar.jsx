@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { menuItems } from "../constant/data";
 import { Link, useNavigate } from "react-router-dom";
+import { adminSidebarItems, userSidebarItems } from "./SidebarRoutes";
 
 const Sidebar = () => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
-  const navigate = useNavigate();
 
   const collapse = () => {
     setSidebarToggle((prev) => !prev);
@@ -16,16 +15,11 @@ const Sidebar = () => {
     setActiveItem(id);
   };
 
-  const handleLogout = (name) => {
-    if (name === "Logout") {
-      localStorage.removeItem("token");
-      navigate("/login"); // Navigate to login page after logging out
-    }
-  };
+  const userRole = localStorage.getItem("role");
 
   return (
     <motion.div
-      className={`w-full max-w-72 bg-[#2B2A27] min-h-screen overflow-hidden fixed inset-0`}
+      className={`bg-[#2B2A27] min-h-screen h-auto`}
       initial={{ translateX: sidebarToggle ? 0 : 0 }}
       animate={{ translateX: sidebarToggle ? -220 : 0 }}
       transition={{ type: "just", ease: "linear", duration: 0.3 }}
@@ -73,42 +67,51 @@ const Sidebar = () => {
       </div>
       <div className="w-64 h-full text-white p-4">
         <ul>
-          {menuItems.map((item) => (
-            <li key={item.id} className="cursor-pointer text-sm">
-              {item.name === "Logout" ? (
-                <motion.div
-                  className={`flex items-center p-3 rounded-lg ${
-                    activeItem === item.id ? "bg-gray-700" : ""
-                  }`}
-                  onClick={() => {
-                    handleItemClick(item.id);
-                    handleLogout(item.name);
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <span className="mr-4 text-xl">{item.icon}</span>
-                  {item.name}
-                </motion.div>
-              ) : (
-                <Link to={item?.link}>
-                  <motion.div
-                    className={`flex items-center p-3 rounded-lg ${
-                      activeItem === item.id ? "bg-gray-700" : ""
-                    }`}
-                    onClick={() => handleItemClick(item.id)}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <span className="mr-4 text-xl">{item.icon}</span>
-                    {item.name}
-                  </motion.div>
-                </Link>
-              )}
-            </li>
-          ))}
+          {userRole === "admin" ? (
+            <>
+              {" "}
+              {adminSidebarItems.map((item) => (
+                <li key={item.id} className="cursor-pointer text-sm">
+                  <Link to={item?.link}>
+                    <motion.div
+                      className={`flex items-center p-3 rounded-lg ${
+                        activeItem === item.id ? "bg-gray-700" : ""
+                      }`}
+                      onClick={() => handleItemClick(item.id)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <span className="mr-4 text-xl">{item.icon}</span>
+                      {item.name}
+                    </motion.div>
+                  </Link>
+                </li>
+              ))}
+            </>
+          ) : (
+            <>
+              {" "}
+              {userSidebarItems.map((item) => (
+                <li key={item.id} className="cursor-pointer text-sm">
+                  <Link to={item?.link}>
+                    <motion.div
+                      className={`flex items-center p-3 rounded-lg ${
+                        activeItem === item.id ? "bg-gray-700" : ""
+                      }`}
+                      onClick={() => handleItemClick(item.id)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <span className="mr-4 text-xl">{item.icon}</span>
+                      {item.name}
+                    </motion.div>
+                  </Link>
+                </li>
+              ))}
+            </>
+          )}
         </ul>
       </div>
     </motion.div>

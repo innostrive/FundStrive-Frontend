@@ -68,9 +68,9 @@ const CreateCampaign = () => {
   };
 
   return (
-    <Layout>
+    <div className="border border-b border-gray-200 rounded-md p-5 w-3/4 flex mx-auto">
       <Card color="transparent" shadow={false} className="w-full">
-        <Typography variant="h4" color="blue-gray">
+        <Typography variant="h4" color="blue-gray" className="text-center">
           Create category for campaign
         </Typography>
         <form onSubmit={handleCategorySubmit} className="mt-8 mb-2">
@@ -228,7 +228,7 @@ const CreateCampaign = () => {
           </Button>
         </form>
       </Card>
-    </Layout>
+    </div>
   );
 };
 

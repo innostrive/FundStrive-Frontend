@@ -14,11 +14,7 @@ const CategoryDetails = () => {
       setCategoryInfo(res.data.data);
     });
   }, []);
-  return (
-    <Layout>
-      <CategoryInfo categoryInfo={categoryInfo} />
-    </Layout>
-  );
+  return <CategoryInfo categoryInfo={categoryInfo} />;
 };
 
 export default CategoryDetails;

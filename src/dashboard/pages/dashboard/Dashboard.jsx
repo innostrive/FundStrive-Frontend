@@ -1,11 +1,11 @@
-import Layout from "../../layout/Layout";
-import Card from "../../components/Card/Card";
+import DashboardHome from "../../components/DashboardHome/DashboardHome";
 
 const Dashboard = () => {
   return (
-    <Layout>
-      <Card></Card>
-    </Layout>
+    <div>
+      <h1 className="text-lg font-medium my-5">Dashboard</h1>
+      <DashboardHome />
+    </div>
   );
 };
 

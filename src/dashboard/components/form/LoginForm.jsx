@@ -1,20 +1,21 @@
-import { Button, Card, Input, Typography } from "@material-tailwind/react";
-import axios from "axios";
-import { useForm } from "react-hook-form";
+import { Button, Card, Typography } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import loginValidationSchema from "../../schemas/login.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Form from "./Form";
+import TextInput from "../../ui/TextInput";
+import axios from "axios";
 
 const LoginForm = () => {
-  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-    await axiosSecure.post("/login", data).then((data) => {
+    await axios.post("http://localhost:4000/login", data).then((data) => {
       if (data.data.data !== null) {
         toast.success(data.data.message);
         localStorage.setItem("token", data.data.data.token);
         localStorage.setItem("role", data.data.data.role);
+        localStorage.setItem("userId", data.data.data.id);
         navigate("/dashboard");
       } else {
         toast.error(data.data.message);
@@ -31,36 +32,20 @@ const LoginForm = () => {
         <Typography color="gray" className="mt-1 font-normal">
           Nice to meet you! Enter your details to register.
         </Typography>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
+        <Form
+          onSubmit={onSubmit}
+          resolver={zodResolver(loginValidationSchema)}
           className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
         >
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Your Email
             </Typography>
-            <Input
-              size="lg"
-              placeholder="name@mail.com"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("email")}
-            />
+            <TextInput type="email" name="email" />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Password
             </Typography>
-            <Input
-              type="password"
-              size="lg"
-              placeholder="********"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("password")}
-            />
+            <TextInput type="password" name="password" />
           </div>
           <Button className="mt-6" fullWidth type="submit">
             Login
@@ -71,7 +56,7 @@ const LoginForm = () => {
               Sign Up
             </Link>
           </Typography>
-        </form>
+        </Form>
       </Card>
     </div>
   );
