@@ -150,7 +150,7 @@ const DonateForm = () => {
                 }}
               />
             </div>
-            <Button className="mt-6 bg-[#2B2A27]" fullWidth>
+            <Button className="mt-6 bg-secondary" fullWidth>
               Make Your Donation
             </Button>
           </div>

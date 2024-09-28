@@ -5,8 +5,8 @@ import RecentBlog from "./RecentBlog";
 const RecentBlogs = () => {
   const posts = useBlogsData();
   return (
-    <div className="border border-gray-200 rounded-md bg-white w-full h-auto">
-      <div className="w-full p-2 bg-[#2B2A27]">
+    <div className="border border-gray-300 rounded-md bg-text-primary w-full h-auto">
+      <div className="w-full p-2 bg-secondary">
         <h1 className="text-base font-normal text-white">Recent Blogs</h1>
       </div>
       <div>

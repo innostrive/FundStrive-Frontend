@@ -10,7 +10,7 @@ const ShareCampaign = () => {
   return (
     <div>
       <div className="my-4">
-        <h1 className="text-base font-medium text-black">Share Campaign</h1>
+        <h1 className="text-base font-medium text-secondary">Share Campaign</h1>
       </div>
       <div className="relative flex w-full max-w-[24rem]">
         <Input
@@ -27,7 +27,10 @@ const ShareCampaign = () => {
           }}
         />
         <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
-          <Button size="sm" className="!absolute right-1 top-1 rounded">
+          <Button
+            size="sm"
+            className="!absolute right-1 top-1 rounded bg-secondary"
+          >
             Copy
           </Button>
         </CopyToClipboard>
@@ -36,28 +39,28 @@ const ShareCampaign = () => {
         <a
           href="https://www.facebook.com/"
           target="__blank"
-          className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]"
+          className="h-10 w-10 flex items-center justify-center rounded-md bg-secondary text-text-primary"
         >
           <BiLogoFacebook size={20} />
         </a>
         <a
           href="https://bd.linkedin.com"
           target="__blank"
-          className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]"
+          className="h-10 w-10 flex items-center justify-center rounded-md bg-secondary text-text-primary"
         >
           <BiLogoLinkedin size={20} />
         </a>
         <a
           href="https://www.instagram.com"
           target="__blank"
-          className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]"
+          className="h-10 w-10 flex items-center justify-center rounded-md bg-secondary text-text-primary"
         >
           <FaInstagram size={20} />
         </a>
         <a
           href="https://mail.google.com/"
           target="__blank"
-          className="h-10 w-10 flex items-center justify-center rounded-md bg-[#2B2A27] text-[#f3f4f7]"
+          className="h-10 w-10 flex items-center justify-center rounded-md bg-secondary text-text-primary"
         >
           <FaGoogle size={20} />
         </a>

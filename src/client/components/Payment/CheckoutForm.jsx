@@ -122,7 +122,11 @@ const CheckoutForm = () => {
           },
         }}
       /> */}
-      <Button className="uppercase w-full" type="submit" disabled={!stripe}>
+      <Button
+        className="uppercase w-full bg-secondary"
+        type="submit"
+        disabled={!stripe}
+      >
         Make your donation
       </Button>
     </form>
