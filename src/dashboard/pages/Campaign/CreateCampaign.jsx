@@ -10,7 +10,6 @@ import {
 import React, { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
-import Layout from "../../layout/Layout";
 import useCategoriesData from "../../hooks/useCategoriesData";
 
 const CreateCampaign = () => {
@@ -54,12 +53,18 @@ const CreateCampaign = () => {
     formData.append("image", campaignData.image);
 
     try {
-      await axiosSecure.post("/api/campaigns", formData).then((response) => {
-        if (response.status === 200) {
-          toast.success(response.data.message);
-        }
-        console.log("campaign:", response);
-      });
+      await axiosSecure
+        .post("/api/campaigns", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(response.data.message);
+          }
+          console.log("campaign:", response);
+        });
     } catch (err) {
       toast.error(err);
       console.log(err);

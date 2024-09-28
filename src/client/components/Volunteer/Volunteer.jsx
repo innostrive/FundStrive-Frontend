@@ -86,7 +86,20 @@ const Volunteer = () => {
         </div>
         <Swiper
           spaceBetween={30}
-          slidesPerView={3}
+          slidesPerView={1}
+          breakpoints={{
+            640: {
+              width: 640,
+              slidesPerView: 1,
+            },
+            768: {
+              width: 768,
+              slidesPerView: 1,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+          }}
           pagination={{
             clickable: true,
           }}
@@ -98,7 +111,7 @@ const Volunteer = () => {
         >
           {volunteerData.map((data, i) => (
             <SwiperSlide key={i}>
-              <div className="h-auto w-full max-w-96 rounded-md bg-white">
+              <div className="h-auto w-full sm:max-w-96 rounded-md bg-white px-5 sm:px-0">
                 <img src={donate} alt="" className="h-52 w-full object-cover" />
                 <div className="space-y-4 flex flex-col justify-center items-center p-5">
                   <h1>{data?.name}</h1>

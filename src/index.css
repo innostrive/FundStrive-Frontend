@@ -11,19 +11,19 @@
 }
 
 .swiper-button-next {
-  background-color: #f47721;
-  color: #fff;
+  background-color: #00ccdd;
+  color: #f3f4f7;
   height: 50px;
   width: 50px;
   font-size: 20px;
 }
 .swiper-button-prev {
-  background-color: #f47721;
-  color: #fff;
+  background-color: #00ccdd;
+  color: #f3f4f7;
   height: 50px;
   width: 50px;
   font-size: 20px;
 }
 .swiper-pagination-bullet {
-  background-color: #f47721;
+  background-color: #00ccdd;
 }

@@ -90,7 +90,7 @@ const TeamMemberSlider = () => {
       <Container>
         <Swiper
           spaceBetween={0}
-          slidesPerView={3}
+          slidesPerView={1}
           pagination={{
             clickable: true,
           }}
@@ -98,11 +98,22 @@ const TeamMemberSlider = () => {
             delay: 5000,
             disableOnInteraction: false,
           }}
+          breakpoints={{
+            640: {
+              slidesPerView: 1,
+            },
+            768: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+          }}
           modules={[Pagination, Navigation, Autoplay]}
         >
           {teamMember.map((data, i) => (
             <SwiperSlide key={i}>
-              <div className="h-auto w-full max-w-80 rounded-md bg-white border border-gray-200 group">
+              <div className="h-auto w-full sm:max-w-80 rounded-md bg-white border border-gray-200 group sm:px-0 px-5">
                 <div class="group relative cursor-pointer items-center justify-center overflow-hidden transition-shadow hover:shadow-xl hover:shadow-black/30">
                   <div class="h-80 w-full">
                     <img
@@ -114,17 +125,17 @@ const TeamMemberSlider = () => {
                   <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-black/70"></div>
                   <div class="absolute inset-0 flex translate-y-[60%] flex-col items-center justify-center px-9 text-center transition-all duration-500 group-hover:translate-y-20">
                     {/* <h1 class="text-xl font-medium text-white">Social</h1> */}
-                    <div class="flex gap-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]">
+                    <div class="flex gap-2 text-text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <div className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary">
                         <BiLogoFacebook size={20} />
                       </div>
-                      <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]">
+                      <div className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary">
                         <BiLogoLinkedin size={20} />
                       </div>
-                      <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]">
+                      <div className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary">
                         <FaInstagram size={20} />
                       </div>
-                      <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#f47721] text-[#f3f4f7]">
+                      <div className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary">
                         <FaGoogle size={20} />
                       </div>
                     </div>

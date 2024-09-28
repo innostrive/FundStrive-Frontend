@@ -9,8 +9,8 @@ const AboutUs = () => {
   return (
     <section id="about-us" className="py-20 scroll-mt-10">
       <Container>
-        <div className="grid grid-cols-2 gap-40">
-          <div className="space-y-8 place-self-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-40 px-5 sm:px-0">
+          <div className="space-y-8 sm:place-self-center">
             <Title title="About Us" className="text-left" />
             <p className="text-sm font-light leading-loose tracking-normal">
               Lorem ipsum dolor sit, amet consectetur dummy text. Distinctio est
@@ -23,7 +23,7 @@ const AboutUs = () => {
             <div>
               <Link to={"/about-us"}>
                 {" "}
-                <Button label="Read Details" />
+                <Button label="Read Details" className="bg-secondary" />
               </Link>
             </div>
           </div>

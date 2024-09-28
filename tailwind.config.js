@@ -4,20 +4,24 @@ module.exports = withMT({
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      colors: {
+        primary: "#00CCDD",
+        secondary: "#2D3250",
+        "text-primary": "#f3f4f7",
+      },
       keyframes: {
-        fade: {
-          "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.25)" },
-          "100%": { transform: "scale(1.5)" },
+        "nav-down": {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(0)" },
         },
-        fadeUp: {
-          "10%": { transform: "translateY(0px)" },
-          "100%": { transform: "translateY(0px)" },
+        "nav-up": {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-100%)" },
         },
       },
       animation: {
-        fade: "fade 12s linear infinite",
-        fadeUp: "fadeUp 12s linear infinite",
+        "nav-down": "nav-down 0.3s ease-in-out",
+        "nav-up": "nav-up 0.3s ease-in-out",
       },
     },
   },

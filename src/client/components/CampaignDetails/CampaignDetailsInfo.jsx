@@ -10,16 +10,18 @@ import { RiDashboardLine } from "react-icons/ri";
 import donate from "../../assets/donate-1.jpg";
 import Gallery from "./Gallery";
 import Document from "./Document";
+import { useParams } from "react-router-dom";
+import useCampaignsInfo from "../../hooks/useCampaignInfo";
 
 const CampaignDetailsInfo = () => {
+  const { id } = useParams();
+  const campaign = useCampaignsInfo(id);
   const data = [
     {
       label: "Description",
       value: "description",
       icon: RiDashboardLine,
-      desc: `It really matters and then like it really doesn't matter.
-      What matters is the people who are sparked by it. And the people
-      who are like offended by it, it doesn't matter.`,
+      desc: campaign?.description,
     },
     {
       label: "Gallery",

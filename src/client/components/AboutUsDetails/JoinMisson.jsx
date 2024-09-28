@@ -7,7 +7,7 @@ const JoinMisson = () => {
     <section className="py-20">
       <Container>
         <Title title="Join Our Mission" />
-        <div className="grid grid-cols-2 gap-10 py-20">
+        <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 py-20 sm:px-0 px-5">
           <div className="space-y-5">
             <div className="grid grid-rows-1 grid-flow-col gap-5">
               <div className="bg-[#caccd1] h-10 w-10 grid place-items-center opacity-75 text-[#33186B]">

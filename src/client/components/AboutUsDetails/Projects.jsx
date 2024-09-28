@@ -7,7 +7,7 @@ const Projects = () => {
   return (
     <section className="py-20 bg-[#caccd1]">
       <Container>
-        <div className="grid grid-rows-1 grid-flow-col gap-4">
+        <div className="grid sm:grid-cols-4 grid-cols-1 gap-4 sm:px-0 px-5">
           <div className="h-auto w-auto p-10 bg-[#6295A2] rounded-md grid place-content-center place-items-center gap-2">
             <img src={happy} alt="" className="h-12 w-12" />
             <span className="text-2xl font-bold text-[#f3f4f7]">6528+</span>

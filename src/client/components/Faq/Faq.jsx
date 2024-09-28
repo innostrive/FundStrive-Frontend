@@ -37,11 +37,11 @@ const Faq = () => {
     <div className="py-20 bg-[#f3f4f7]">
       <Container>
         <Title title="Frequently Asked Question" className="py-10" />
-        <div className="space-y-4">
+        <div className="space-y-4 px-5 sm:px-0">
           <Accordion
             open={open === 1}
             icon={<Icon id={1} open={open} />}
-            className="border border-blue-gray-100 rounded-md px-2 bg-[#ADBC9F]"
+            className="border border-blue-gray-100 rounded-md px-2 bg-secondary"
           >
             <AccordionHeader
               onClick={() => handleOpen(1)}
@@ -59,7 +59,7 @@ const Faq = () => {
           <Accordion
             open={open === 2}
             icon={<Icon id={2} open={open} />}
-            className="border border-blue-gray-100 rounded-md px-2 bg-[#ADBC9F]"
+            className="border border-blue-gray-100 rounded-md px-2 bg-secondary"
           >
             <AccordionHeader
               onClick={() => handleOpen(2)}
@@ -77,7 +77,7 @@ const Faq = () => {
           <Accordion
             open={open === 3}
             icon={<Icon id={3} open={open} />}
-            className="border border-blue-gray-100 rounded-md px-2 bg-[#ADBC9F]"
+            className="border border-blue-gray-100 rounded-md px-2 bg-secondary"
           >
             <AccordionHeader
               onClick={() => handleOpen(3)}

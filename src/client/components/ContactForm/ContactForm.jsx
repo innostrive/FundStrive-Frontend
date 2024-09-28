@@ -19,7 +19,7 @@ const ContactForm = () => {
   return (
     <div>
       <Card color="transparent" shadow={false}>
-        <form className="mb-2 w-80 max-w-screen-lg sm:w-96">
+        <form className="mb-2 w-full max-w-screen-lg sm:w-96">
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               First Name
@@ -114,7 +114,7 @@ const ContactForm = () => {
             </div>
           </div>
 
-          <Button className="mt-6 uppercase bg-[#2B2A27]" fullWidth>
+          <Button className="mt-6 uppercase bg-secondary" fullWidth>
             Send Message
           </Button>
         </form>

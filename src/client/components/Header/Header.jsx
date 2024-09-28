@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import { EffectFade, Navigation, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { Button } from "../../Styles/Styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const textVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -26,13 +26,29 @@ const Header = () => {
       setAnimateText("visible");
     }, 500);
   };
+  const [navigateButton, setNavigateButton] = useState(true);
+  const handleResize = () => {
+    if (window.innerWidth < 768) {
+      setNavigateButton(false);
+    } else {
+      setNavigateButton(true);
+    }
+  };
 
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <section id="home" className="scroll-mt-48">
       <Swiper
         spaceBetween={30}
         effect={"fade"}
-        navigation={true}
+        navigation={navigateButton ? true : false}
         autoplay={{
           delay: 12000,
           disableOnInteraction: false,
@@ -46,13 +62,13 @@ const Header = () => {
               <img
                 src={image}
                 alt=""
-                className="w-full h-[80vh] object-cover"
+                className="w-full sm:h-[80vh] h-[60vh] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black to-black opacity-60"></div>
 
               <div className="absolute inset-0 flex flex-col justify-center items-center space-y-4">
                 <motion.h1
-                  className="text-5xl font-bold text-white"
+                  className="sm:text-5xl text-3xl font-bold text-text-primary"
                   variants={textVariants}
                   initial="hidden"
                   animate={animateText}
@@ -66,7 +82,7 @@ const Header = () => {
                 </motion.h1>
 
                 <motion.p
-                  className="text-base font-normal text-[#f3f4f7]"
+                  className="sm:text-base text-sm text-center font-normal text-text-primary"
                   variants={textVariants}
                   initial="hidden"
                   animate={animateText}
@@ -91,7 +107,10 @@ const Header = () => {
                         : { duration: 0, delay: 0 }
                     }
                   >
-                    <Button label="Donate" />
+                    <Button
+                      label="Donate"
+                      className="bg-primary text-text-primary"
+                    />
                   </motion.div>
                 </Link>
               </div>

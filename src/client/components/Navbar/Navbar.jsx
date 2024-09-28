@@ -1,5 +1,4 @@
 import { menuItems } from "./MenuItem";
-// import { FcDonate } from "react-icons/fc";
 import TopNav from "./TopNav";
 import Container from "../Container/Container";
 import { Link } from "react-router-dom";

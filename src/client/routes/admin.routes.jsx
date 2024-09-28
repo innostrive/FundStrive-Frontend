@@ -1,4 +1,5 @@
 import ProtectedRoute from "../../dashboard/layout/ProtectedRoute";
+import Banner from "../../dashboard/pages/Banner/Banner";
 import BlogDetailsData from "../../dashboard/pages/Blog/BlogDetailsData";
 import BlogsData from "../../dashboard/pages/Blog/BlogsData";
 import BlogUpdate from "../../dashboard/pages/Blog/BlogUpdate";
@@ -158,6 +159,14 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <BlogUpdate />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-banner",
+    element: (
+      <ProtectedRoute>
+        <Banner />
       </ProtectedRoute>
     ),
   },

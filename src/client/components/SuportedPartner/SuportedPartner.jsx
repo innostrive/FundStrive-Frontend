@@ -21,7 +21,7 @@ const SuportedPartner = () => {
         <div className="h-2 w-20 bg-[#2B2A27] rounded-full mx-auto mt-3"></div>
       </div>
       <Container>
-        <div className="space-y-10">
+        <div className="space-y-10 px-5 sm:px-0">
           <Marquee
             className="m-5"
             pauseOnHover={true}

@@ -4,88 +4,6 @@ import { Button, Title } from "../../Styles/Styles";
 import Container from "../Container/Container";
 import useCampaignsData from "../../hooks/useCampaignsData";
 const Campaign = () => {
-  const campaignData = [
-    {
-      id: 1,
-      img: donate,
-      organization: "Bright Future Foundation",
-      title: "Empowering Education for Underprivileged Children",
-      goal: "50000",
-      raised: "12000",
-    },
-    {
-      id: 2,
-      img: donate,
-      organization: "Health for All",
-      title: "Medical Aid for Rural Communities",
-      goal: "80000",
-      raised: "32000",
-    },
-    {
-      id: 3,
-      img: donate,
-      organization: "Save the Strays",
-      title: "Building a New Animal Shelter",
-      goal: "45000",
-      raised: "15000",
-    },
-    {
-      id: 4,
-      img: donate,
-      organization: "Pure Water Initiative",
-      title: "Clean Water for Remote Villages",
-      goal: "60000",
-      raised: "22000",
-    },
-    {
-      id: 5,
-      img: donate,
-      organization: "Global Relief Fund",
-      title: "Emergency Relief for Flood Victims",
-      goal: "100000",
-      raised: "50000",
-    },
-    {
-      id: 6,
-      img: donate,
-      organization: "Youth Empowerment",
-      title: "Skill Development for Unemployed Youth",
-      goal: "40000",
-      raised: "10000",
-    },
-    {
-      id: 7,
-      img: donate,
-      organization: "Save the Strays",
-      title: "Building a New Animal Shelter",
-      goal: "45000",
-      raised: "15000",
-    },
-    {
-      id: 8,
-      img: donate,
-      organization: "Pure Water Initiative",
-      title: "Clean Water for Remote Villages",
-      goal: "60000",
-      raised: "22000",
-    },
-    {
-      id: 9,
-      img: donate,
-      organization: "Global Relief Fund",
-      title: "Emergency Relief for Flood Victims",
-      goal: "100000",
-      raised: "50000",
-    },
-    {
-      id: 10,
-      img: donate,
-      organization: "Youth Empowerment",
-      title: "Skill Development for Unemployed Youth",
-      goal: "40000",
-      raised: "10000",
-    },
-  ];
   const campaigns = useCampaignsData();
   return (
     <div id="campaign" className="bg-[#f3f4f7] py-20 scroll-mt-10">
@@ -94,10 +12,10 @@ const Campaign = () => {
         <div className="h-2 w-20 bg-[#2B2A27] rounded-full mx-auto mt-3"></div>
       </div>
       <Container>
-        <div className="grid grid-cols-3 gap-10 mt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mt-5 px-5 sm:px-0">
           {campaigns.map((campaign) => (
             <div
-              className="h-auto w-full max-w-96 rounded-md bg-white"
+              className="h-auto w-full sm:max-w-96 rounded-md bg-white"
               key={campaign?._id}
             >
               <img src={donate} alt="" className="h-52 w-full object-cover" />
@@ -113,30 +31,30 @@ const Campaign = () => {
                   </div>
                   <Link to={`/campaign/${campaign?._id}`}>
                     <div>
-                      <Button label="Donate" />
+                      <Button label="Donate" className="bg-primary" />
                     </div>
                   </Link>
                 </div>
                 <div className="">
-                  <h1 className="font-medium text-[#00112c] text-base">
+                  <h1 className="font-medium text-secondary text-base">
                     {campaign?.title}
                   </h1>
                 </div>
 
                 <div className="p-5 bg-[#f3f4f7]">
                   <div className="w-full rounded-full h-0.5 bg-[#2B2A27]">
-                    <div className="bg-[#f47721] h-0.5 rounded-full w-[45%]"></div>
+                    <div className="bg-primary h-0.5 rounded-full w-[45%]"></div>
                   </div>
                 </div>
 
                 <div className="flex justify-between">
-                  <p className="font-bold text-sm text-[#00112c]">
+                  <p className="font-bold text-sm text-secondary">
                     ${campaign?.raised_amount}
-                    <span className="font-semibold text-sm ml-1 tracking-normal text-[#f47721]">
+                    <span className="font-semibold text-sm ml-1 tracking-normal text-primary">
                       Raised
                     </span>
                   </p>
-                  <p className="font-bold text-sm text-[#00112c]">
+                  <p className="font-bold text-sm text-secondary">
                     ${campaign?.target_amount}
                     <span className="font-semibold text-sm ml-1 tracking-normal text-[#219558]">
                       Goal
@@ -149,7 +67,7 @@ const Campaign = () => {
         </div>
         <div className="grid place-content-center py-10">
           <Link to={"/campaign-list"}>
-            <Button label="See All" />
+            <Button label="See All" className="bg-primary" />
           </Link>
         </div>
       </Container>

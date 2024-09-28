@@ -20,6 +20,7 @@ const StatusBadge = ({ status }) => (
 
 const UserList = () => {
   const users = useUsersData();
+  console.log("users", users);
   const axiosSecure = useAxiosSecure();
 
   const handleUserDelete = (id) => {

@@ -11,8 +11,9 @@ const UserDetails = () => {
   useEffect(() => {
     axiosSecure.get(`/api/users/${id}`).then((res) => {
       setUserInfo(res.data.data);
+      console.log("user:", res.data.data);
     });
-  }, []);
+  }, [id]);
   return (
     <section>
       <UserDetailInfo userInfo={userInfo} />

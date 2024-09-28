@@ -109,26 +109,26 @@ const AllCampaign = () => {
                   </div>
                   <Link to={`/campaign/${data?.id}`}>
                     <div>
-                      <Button label="Donate" />
+                      <Button label="Donate" className="bg-primary" />
                     </div>
                   </Link>
                 </div>
                 <div className="">
-                  <h1 className="font-medium text-[#00112c] text-base">
+                  <h1 className="font-medium text-secondary text-base">
                     {data?.title}
                   </h1>
                 </div>
 
                 <div className="p-5 bg-[#f3f4f7]">
                   <div className="w-full rounded-full h-0.5 bg-[#2B2A27]">
-                    <div className="bg-[#f47721] h-0.5 rounded-full w-[45%]"></div>
+                    <div className="bg-primary h-0.5 rounded-full w-[45%]"></div>
                   </div>
                 </div>
 
                 <div className="flex justify-between">
                   <p className="font-bold text-sm text-[#00112c]">
                     ${data?.raised}
-                    <span className="font-semibold text-sm ml-1 tracking-normal text-[#f47721]">
+                    <span className="font-semibold text-sm ml-1 tracking-normal text-primary">
                       Raised
                     </span>
                   </p>

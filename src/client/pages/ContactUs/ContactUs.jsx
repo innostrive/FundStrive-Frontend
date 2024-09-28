@@ -8,7 +8,7 @@ const ContactUs = () => {
       <TopHeader title="Contact Us" image={donate} />
       <div className="py-20">
         <Container>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid sm:grid-cols-2 grid-cols-1 sm:justify-items-start justify-items-center gap-5 px-5 sm:px-0">
             <div>
               <ContactForm />
             </div>
