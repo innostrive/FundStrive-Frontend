@@ -23,9 +23,9 @@ const adminPath = [
     name: "Dashboard",
     path: "",
     element: (
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
+      // <ProtectedRoute>
+      // </ProtectedRoute>
+      <Dashboard />
     ),
   },
   {
