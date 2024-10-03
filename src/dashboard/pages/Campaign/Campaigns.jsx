@@ -5,7 +5,10 @@ import useUsersData from "../../hooks/useUsersData";
 import { Link, Outlet } from "react-router-dom";
 import useCategoriesData from "../../hooks/useCategoriesData";
 import useCampaignData from "../../hooks/useCampaignData";
-import { Delete, Edit, View } from "../../assets/icons/icons";
+import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import FormCard from "../../ui/FormCard";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 // Component for rendering action buttons
 const ActionButtons = () => (
@@ -48,17 +51,42 @@ const IndeterminateCheckbox = React.forwardRef(
 );
 
 const Campaigns = () => {
-  const campaigns = useCampaignData();
+  const { campaigns, setCampaigns } = useCampaignData();
   console.log("campaigns:", campaigns);
   const axiosSecure = useAxiosSecure();
-  //   const handleUserDelete = (id) => {
-  //     const deleteId = {
-  //       ids: [id],
-  //     };
-  //     axiosSecure
-  //       .delete("/api/users", deleteId)
-  //       .then((response) => console.log("user deleted", response));
-  //   };
+  const handleCampaignDelete = (id) => {
+    const data = { ids: [id] };
+
+    Swal.fire({
+      title: "Are you sure to delete?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete("/api/campaigns", { data })
+          .then((response) => {
+            if (response.status === 200) {
+              const remainingCategories = campaigns.filter(
+                (campaign) => campaign._id !== id
+              );
+              setCampaigns(remainingCategories);
+              toast.success("Delete Successful");
+            } else {
+              toast.warning("Category not deleted");
+            }
+          })
+          .catch((error) => {
+            toast.error("An error occurred");
+            console.error(error);
+          });
+      }
+    });
+  };
   const columns = useMemo(
     () => [
       {
@@ -97,9 +125,12 @@ const Campaigns = () => {
             <Link to={`/dashboard/edit-campaign/${row.original._id}`}>
               <Edit />
             </Link>
-            <Link>
+            <span
+              className="cursor-pointer"
+              onClick={() => handleCampaignDelete(row.original._id)}
+            >
               <Delete />
-            </Link>
+            </span>
           </div>
         ),
       },
@@ -115,42 +146,49 @@ const Campaigns = () => {
     useTable({ columns, data: campaigns }, useRowSelect, (hooks) => {});
 
   return (
-    <div className="overflow-x-auto rounded-md">
-      <table {...getTableProps()} className="min-w-full bg-white border">
-        <thead className="bg-gray-200">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
-                >
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} className="hover:bg-gray-100">
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    className="py-4 px-6 text-sm text-gray-600 border-b"
+    <FormCard
+      title="Campaign List"
+      icon={<Add />}
+      path="/dashboard/create-campaign"
+      iconTitle="Add"
+    >
+      <div className="overflow-x-auto rounded-md">
+        <table {...getTableProps()} className="min-w-full bg-white border">
+          <thead className="bg-gray-200">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
                   >
-                    {cell.render("Cell")}
-                  </td>
+                    {column.render("Header")}
+                  </th>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <Outlet />
-    </div>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="hover:bg-gray-100">
+                  {row.cells.map((cell) => (
+                    <td
+                      {...cell.getCellProps()}
+                      className="py-4 px-6 text-sm text-gray-600 border-b"
+                    >
+                      {cell.render("Cell")}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <Outlet />
+      </div>
+    </FormCard>
   );
 };
 

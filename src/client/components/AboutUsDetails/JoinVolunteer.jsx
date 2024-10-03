@@ -2,7 +2,12 @@ import Container from "../Container/Container";
 import donation from "../../assets/donation-2.jpg";
 import { Link } from "react-router-dom";
 import { Button } from "../../Styles/Styles";
+import IButton from "../../../dashboard/ui/IButton";
+import { useState } from "react";
+import { VolunteerForm } from "./VolunteerForm";
 const JoinVolunteer = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen((cur) => !cur);
   return (
     <section className="bg-secondary">
       <Container>
@@ -19,9 +24,7 @@ const JoinVolunteer = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-black to-black opacity-60"></div>
             <div className="absolute inset-0 grid place-items-center">
-              <Link to="/sign-up">
-                <Button label="Join Us" className="bg-primary" />
-              </Link>
+              <VolunteerForm open={open} handleOpen={handleOpen} />
             </div>
             <img src={donation} alt="" />
           </div>

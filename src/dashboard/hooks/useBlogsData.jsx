@@ -3,13 +3,13 @@ import useAxiosSecure from "./useAxiosSecure";
 
 const useBlogsData = () => {
   const axiosSecure = useAxiosSecure();
-  const [users, setUsers] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   useEffect(() => {
     axiosSecure.get("/posts").then((res) => {
-      setUsers(res.data.data.posts);
+      setBlogs(res.data.data.posts);
     });
   }, []);
-  return users;
+  return { blogs, setBlogs };
 };
 
 export default useBlogsData;

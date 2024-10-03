@@ -9,7 +9,7 @@ const Form = ({ children, onSubmit, resolver, defaultValues }) => {
   if (!!resolver) {
     formConfig["resolver"] = resolver;
   }
-  const methods = useForm(formConfig);
+  const methods = useForm({ formConfig });
 
   const submitHandlre = methods.handleSubmit;
   return (

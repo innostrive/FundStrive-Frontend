@@ -118,26 +118,27 @@ const AllCampaign = () => {
                     {data?.title}
                   </h1>
                 </div>
-
-                <div className="p-5 bg-[#f3f4f7]">
-                  <div className="w-full rounded-full h-0.5 bg-[#2B2A27]">
-                    <div className="bg-primary h-0.5 rounded-full w-[45%]"></div>
+                <div className="h-20">
+                  <div className="p-5 bg-[#f3f4f7]">
+                    <div className="w-full rounded-full h-0.5 bg-[#2B2A27]">
+                      <div className="bg-primary h-0.5 rounded-full w-[45%]"></div>
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex justify-between">
-                  <p className="font-bold text-sm text-[#00112c]">
-                    ${data?.raised}
-                    <span className="font-semibold text-sm ml-1 tracking-normal text-primary">
-                      Raised
-                    </span>
-                  </p>
-                  <p className="font-bold text-sm text-[#00112c]">
-                    ${data.goal}
-                    <span className="font-semibold text-sm ml-1 tracking-normal text-[#219558]">
-                      Goal
-                    </span>
-                  </p>
+                  <div className="flex justify-between mt-5">
+                    <p className="font-bold text-sm text-[#00112c]">
+                      ${data?.raised}
+                      <span className="font-semibold text-sm ml-1 tracking-normal text-primary">
+                        Raised
+                      </span>
+                    </p>
+                    <p className="font-bold text-sm text-[#00112c]">
+                      ${data.goal}
+                      <span className="font-semibold text-sm ml-1 tracking-normal text-[#219558]">
+                        Goal
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,20 +1,43 @@
 import moment from "moment";
-import { Link } from "react-router-dom";
 import { Edit } from "../../assets/icons/icons";
+import FormCard from "../../ui/FormCard";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import ReactQuill from "react-quill";
+import EditorToolbar, {
+  modules,
+  formats,
+} from "../../components/EditToolbar/EditToolbar";
+import IButton from "../../ui/IButton";
+import { Button, Option, Select } from "@material-tailwind/react";
+import useCategoriesData from "../../hooks/useCategoriesData";
 
-const CampaignInfo = ({ campaignInfo, category }) => {
+const CampaignInfo = ({ campaignInfo, category, setCategory }) => {
+  const { categories } = useCategoriesData();
+  const [edit, setEdit] = useState(false);
+  const { register } = useForm();
   const campaignDeadline = moment(campaignInfo?.deadline).format(
     "MMMM Do YYYY, h:mm:ss a"
   );
+
+  const handleCategoryChange = (value) => {
+    console.log(value);
+    setCategory((prevData) => ({
+      ...prevData,
+      category: value,
+    }));
+  };
   return (
-    <section className="flex justify-center">
-      <div className="h-auto w-full max-w-5xl p-5 rounded-md bg-white border space-y-10">
-        <div className="flex ml-auto p-2 bg-red-200 rounded-md w-10">
-          <Link to={`/dashboard/edit-campaign/${campaignInfo?._id}`}>
-            {" "}
-            <Edit className="size-6 text-white" />
-          </Link>
-        </div>
+    <section>
+      <FormCard
+        title="Campaign Details"
+        icon={
+          <Edit
+            onClick={() => setEdit(true)}
+            className="size-6 text-secondary"
+          />
+        }
+      >
         <div className="flex gap-4 items-center justify-center">
           <div>
             <img
@@ -29,51 +52,117 @@ const CampaignInfo = ({ campaignInfo, category }) => {
             </h1>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-10">
-          <div className="space-y-2">
+        <div className="grid sm:grid-cols-2 grid-cols-1 gap-10">
+          <div className="grid space-y-2">
             <span className="text-sm">Name</span>
-            <p className="bg-[#f3f4f7] p-2 rounded-md text-base text-center font-medium text-black">
-              {campaignInfo?.name}
-            </p>
+            <input
+              type="text"
+              defaultValue={campaignInfo?.name}
+              disabled={edit ? false : true}
+              className={`${
+                edit
+                  ? "p-2 bg-white border border-gray-200 rounded-md focus:outline-1 focus:outline-gray-200"
+                  : "p-2 rounded-md bg-white border border-gary-200"
+              }`}
+              {...register("name")}
+            />
           </div>
-          <div className="space-y-2">
+          <div className="grid space-y-2">
             <span className="text-sm">Ttile</span>
-            <p className="bg-[#f3f4f7] p-2 rounded-md text-base text-center font-medium text-black">
-              {campaignInfo?.title}
-            </p>
+            <input
+              type="text"
+              defaultValue={campaignInfo?.name}
+              disabled={edit ? false : true}
+              className={`${
+                edit
+                  ? "p-2 bg-white border border-gray-200 rounded-md focus:outline-1 focus:outline-gray-200"
+                  : "p-2 rounded-md bg-white border border-gary-200"
+              }`}
+              {...register("name")}
+            />
           </div>
-          <div className="space-y-2">
+          <div className="grid space-y-2">
             <span className="text-sm">Category</span>
-            <p className="bg-[#f3f4f7] p-2 rounded-md text-base text-center font-medium text-black">
-              {category?.name}
-            </p>
+            <Select
+              label="Category"
+              value={category}
+              onChange={(value) => setCategory(value)}
+            >
+              {categories.map((category) => (
+                <Option
+                  key={category?._id}
+                  value={category?._id}
+                  className="text-black"
+                >
+                  {category.name}
+                </Option>
+              ))}
+            </Select>
           </div>
-          <div className="space-y-2">
+          <div className="grid space-y-2">
             <span className="text-sm">Raised Amount</span>
-            <p className="bg-[#f3f4f7] p-2 rounded-md text-base text-center font-medium text-black">
-              ${campaignInfo?.raised_amount}
-            </p>
+            <input
+              type="text"
+              defaultValue={campaignInfo?.raised_amount}
+              disabled={edit ? false : true}
+              className={`${
+                edit
+                  ? "p-2 bg-white border border-gray-200 rounded-md focus:outline-1 focus:outline-gray-200"
+                  : "p-2 rounded-md bg-white border border-gary-200"
+              }`}
+              {...register("name")}
+            />
           </div>
-          <div className="space-y-2">
+          <div className="grid space-y-2">
             <span className="text-sm">Target Amount</span>
-            <p className="bg-[#f3f4f7] p-2 rounded-md text-base text-center font-medium text-black">
-              ${campaignInfo?.target_amount}
-            </p>
+            <input
+              type="text"
+              defaultValue={campaignInfo?.target_amount}
+              disabled={edit ? false : true}
+              className={`${
+                edit
+                  ? "p-2 bg-white border border-gray-200 rounded-md focus:outline-1 focus:outline-gray-200"
+                  : "p-2 rounded-md bg-white border border-gary-200"
+              }`}
+              {...register("name")}
+            />
           </div>
-          <div className="space-y-2">
+          <div className="grid space-y-2">
             <span className="text-sm">Deadline</span>
-            <p className="bg-[#f3f4f7] p-2 rounded-md text-base text-center font-medium text-black">
-              {campaignDeadline}
-            </p>
+            <input
+              type="text"
+              defaultValue={campaignInfo?.deadline}
+              disabled={edit ? false : true}
+              className={`${
+                edit
+                  ? "p-2 bg-white border border-gray-200 rounded-md focus:outline-1 focus:outline-gray-200"
+                  : "p-2 rounded-md bg-white border border-gary-200"
+              }`}
+              {...register("name")}
+            />
           </div>
-          <div className="space-y-2">
-            <span className="text-sm">Description</span>
-            <p className="bg-[#f3f4f7] p-2 rounded-md text-base text-center font-medium text-black">
-              {campaignInfo?.description}
-            </p>
+          <div className="grid space-y-2 col-span-2">
+            <label className="text-sm">Description</label>
+            <EditorToolbar toolbarId={"t2"} />
+            <ReactQuill
+              theme="snow"
+              // value={blogContent}
+              // onChange={handleContentChange}
+              placeholder={"Write something awesome..."}
+              modules={modules("t2")}
+              formats={formats}
+            />
           </div>
         </div>
-      </div>
+        {edit ? (
+          <div className="my-5 flex gap-5 justify-end">
+            <IButton>Update</IButton>
+            <Button className="bg-red-400" onClick={() => setEdit(false)}>
+              Cancel
+            </Button>
+          </div>
+        ) : null}
+      </FormCard>
     </section>
   );
 };

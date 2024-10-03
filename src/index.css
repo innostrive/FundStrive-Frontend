@@ -27,3 +27,7 @@
 .swiper-pagination-bullet {
   background-color: #00ccdd;
 }
+.ql-container {
+  min-height: 150px;
+  height: auto;
+}

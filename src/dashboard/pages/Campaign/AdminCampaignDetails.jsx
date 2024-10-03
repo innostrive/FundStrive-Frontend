@@ -12,17 +12,24 @@ const AdminCampaignDetails = () => {
   useEffect(() => {
     axiosSecure.get(`/campaigns/${id}`).then((res) => {
       setCampaignInfo(res.data.data);
+      setCategory(res.data.data.category);
     });
   }, []);
 
   // fetch category
-  const categoryId = campaignInfo?.category;
-  useEffect(() => {
-    axiosSecure.get(`/categories/${categoryId}`).then((res) => {
-      setCategory(res.data.data);
-    });
-  }, [categoryId]);
-  return <CampaignInfo campaignInfo={campaignInfo} category={category} />;
+  // const categoryId = campaignInfo?.category;
+  // useEffect(() => {
+  //   axiosSecure.get(`/categories/${categoryId}`).then((res) => {
+  //     setCategory(res.data.data);
+  //   });
+  // }, [categoryId]);
+  return (
+    <CampaignInfo
+      campaignInfo={campaignInfo}
+      category={category}
+      setCategory={setCategory}
+    />
+  );
 };
 
 export default AdminCampaignDetails;

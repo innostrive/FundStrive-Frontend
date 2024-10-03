@@ -3,6 +3,11 @@ import { Edit } from "../../assets/icons/icons";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import axios from "axios";
+import IButton from "../../ui/IButton";
+import PersonalInfo from "./PersonalInfo";
+import Address from "./Address";
+import MyProfile from "./MyProfile";
+import ResetPassword from "./ResetPassword";
 
 const Profile = () => {
   const [edit, setEdit] = useState(false);
@@ -18,7 +23,7 @@ const Profile = () => {
   }, [userId]);
   return (
     <section className="p-5 space-y-5">
-      <div className="my-5">
+      {/* <div className="my-5">
         <h1 className="text-xl font-medium text-gray-900 leading-normal">
           Account Settings
         </h1>
@@ -42,8 +47,9 @@ const Profile = () => {
           </div>
           <Edit className="size-6 text-gray-700" />
         </div>
-      </div>
-      <div className="rounded-lg border border-gray-300 h-auto w-full px-5 py-10">
+      </div> */}
+      <MyProfile />
+      {/* <div className="rounded-lg border border-gray-300 h-auto w-full px-5 py-10">
         <div className="mb-10">
           <h1 className="text-xl font-medium text-gray-900 leading-normal">
             Personal Information
@@ -62,8 +68,8 @@ const Profile = () => {
                   defaultValue={userInfo?.name}
                   className={`${
                     edit
-                      ? "w-2/3 p-2 border border-gray-200 rounded-md focus:outline-1 focus:outline-gray-200"
-                      : "mt-2 text-lg bg-white"
+                      ? "p-2 border border-gray-200 rounded-md focus:outline-1 focus:outline-gray-200"
+                      : "p-2 border border-gray-200 rounded-md focus:outline-1 focus:outline-gray-200"
                   }`}
                 />
               </div>
@@ -107,14 +113,16 @@ const Profile = () => {
           </div>
         </div>
         {edit ? (
-          <div className="my-5">
-            <Button className="w-full">Update</Button>
+          <div className="my-5 flex gap-5 justify-end">
+            <IButton>Update</IButton>
+            <Button className="bg-red-400" onClick={() => setEdit(false)}>
+              Cancel
+            </Button>
           </div>
-        ) : (
-          ""
-        )}
-      </div>
-      <div className="rounded-lg border border-gray-300 h-auto w-full px-5 py-10">
+        ) : null}
+      </div> */}
+      <PersonalInfo />
+      {/* <div className="rounded-lg border border-gray-300 h-auto w-full px-5 py-10">
         <div className="mb-10">
           <h1 className="text-xl font-medium text-gray-900 leading-normal">
             Address
@@ -182,7 +190,9 @@ const Profile = () => {
           </div>
           <Edit className="size-6 text-gray-700" />
         </div>
-      </div>
+      </div> */}
+      <Address />
+      <ResetPassword userInfo={userInfo} />
     </section>
   );
 };

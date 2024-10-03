@@ -5,7 +5,9 @@ import useUsersData from "../../hooks/useUsersData";
 import { Link } from "react-router-dom";
 import useCategoriesData from "../../hooks/useCategoriesData";
 import Swal from "sweetalert2";
-import { Delete, Edit, View } from "../../assets/icons/icons";
+import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import FormCard from "../../ui/FormCard";
+import { toast } from "react-toastify";
 
 // Component for rendering action buttons
 const ActionButtons = () => (
@@ -48,15 +50,14 @@ const IndeterminateCheckbox = React.forwardRef(
 );
 
 const Categories = () => {
-  const categories = useCategoriesData();
-  console.log("categories:", categories);
+  const { categories, setCategories } = useCategoriesData();
   const axiosSecure = useAxiosSecure();
-  const handleUserDelete = (id) => {
-    const deleteId = {
-      ids: [id],
-    };
+
+  const handleCategoryDelete = (id) => {
+    const data = { ids: [id] };
+
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you sure to delete?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -66,11 +67,26 @@ const Categories = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete("/api/categories", deleteId)
-          .then((response) => console.log("category delete:", response));
+          .delete("/api/categories", { data })
+          .then((response) => {
+            if (response.status === 200) {
+              const remainingCategories = categories.filter(
+                (category) => category._id !== id
+              );
+              setCategories(remainingCategories);
+              toast.success("Delete Successful");
+            } else {
+              toast.warning("Category not deleted");
+            }
+          })
+          .catch((error) => {
+            toast.error("An error occurred");
+            console.error(error);
+          });
       }
     });
   };
+
   const columns = useMemo(
     () => [
       {
@@ -99,10 +115,12 @@ const Categories = () => {
             <Link to={`/dashboard/category/${row.original._id}`}>
               <View />
             </Link>
-            <Link>
-              {" "}
+            <span
+              className="cursor-pointer"
+              onClick={() => handleCategoryDelete(row.original._id)}
+            >
               <Delete />
-            </Link>
+            </span>
             <Link to={`/dashboard/edit-category/${row.original._id}`}>
               <Edit />
             </Link>
@@ -113,49 +131,54 @@ const Categories = () => {
     []
   );
 
-  // Define table data
-  const data = useMemo(() => categories, []);
+  const data = useMemo(() => categories, [categories, handleCategoryDelete]);
 
-  // Use the table hook
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: categories }, useRowSelect, (hooks) => {});
+    useTable({ columns, data }, useRowSelect, (hooks) => {});
 
   return (
-    <div className="overflow-x-auto rounded-md">
-      <table {...getTableProps()} className="min-w-full bg-white border">
-        <thead className="bg-gray-200">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
-                >
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} className="hover:bg-gray-100">
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    className="py-4 px-6 text-sm text-gray-600 border-b"
+    <FormCard
+      title="Category List"
+      path="/dashboard/create-category"
+      icon={<Add />}
+      iconTitle="Add"
+    >
+      <div className="overflow-x-auto rounded-md">
+        <table {...getTableProps()} className="min-w-full bg-white border">
+          <thead className="bg-gray-200">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
                   >
-                    {cell.render("Cell")}
-                  </td>
+                    {column.render("Header")}
+                  </th>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="hover:bg-gray-100">
+                  {row.cells.map((cell) => (
+                    <td
+                      {...cell.getCellProps()}
+                      className="py-4 px-6 text-sm text-gray-600 border-b"
+                    >
+                      {cell.render("Cell")}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </FormCard>
   );
 };
 

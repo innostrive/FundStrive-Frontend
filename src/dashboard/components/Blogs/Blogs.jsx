@@ -5,7 +5,10 @@ import useUsersData from "../../hooks/useUsersData";
 import { Link } from "react-router-dom";
 import useBlogsData from "../../hooks/useBlogsData";
 import moment from "moment";
-import { Delete, Edit, View } from "../../assets/icons/icons";
+import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import FormCard from "../../ui/FormCard";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 // Component for rendering action buttons
 const ActionButtons = () => (
@@ -48,17 +51,42 @@ const IndeterminateCheckbox = React.forwardRef(
 );
 
 const Blogs = () => {
+  const { blogs, setBlogs } = useBlogsData();
   const axiosSecure = useAxiosSecure();
-  const blogs = useBlogsData();
   console.log("blogs:", blogs);
 
-  const handleUserDelete = (id) => {
-    const deleteId = {
-      ids: [id],
-    };
-    axiosSecure
-      .delete("/api/users", deleteId)
-      .then((response) => console.log("user deleted", response));
+  const handleBlogDelete = (id) => {
+    const data = { ids: [id] };
+
+    Swal.fire({
+      title: "Are you sure to delete?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete("/api/posts", { data })
+          .then((response) => {
+            if (response.status === 200) {
+              const remainingCategories = blogs.filter(
+                (blog) => blog._id !== id
+              );
+              setBlogs(remainingCategories);
+              toast.success("Delete Successful");
+            } else {
+              toast.warning("Category not deleted");
+            }
+          })
+          .catch((error) => {
+            toast.error("An error occurred");
+            console.error(error);
+          });
+      }
+    });
   };
   const columns = useMemo(
     () => [
@@ -95,10 +123,12 @@ const Blogs = () => {
             <Link to={`/dashboard/blog/${row.original._id}`}>
               <View />
             </Link>
-            <Link>
-              {" "}
+            <span
+              className="cursor-pointer"
+              onClick={() => handleBlogDelete(row.original._id)}
+            >
               <Delete />
-            </Link>
+            </span>
             <Link to={`/dashboard/edit-blog/${row.original._id}`}>
               <Edit />
             </Link>
@@ -110,48 +140,56 @@ const Blogs = () => {
   );
 
   // Define table data
-  const data = useMemo(() => blogs, []);
+  const data = useMemo(() => blogs, [blogs, handleBlogDelete]);
 
   // Use the table hook
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: blogs }, useRowSelect, (hooks) => {});
+    useTable({ columns, data }, useRowSelect, (hooks) => {});
 
   return (
-    <div className="overflow-x-auto rounded-md">
-      <table {...getTableProps()} className="min-w-full bg-white border">
-        <thead className="bg-gray-200">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
-                >
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} className="hover:bg-gray-100">
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    className="py-4 px-6 text-sm text-gray-600 border-b"
+    <FormCard
+      title="Blog List"
+      icon={<Add />}
+      path="/dashboard/create-blog"
+      iconTitle="Add"
+      className="w-full"
+    >
+      <div className="overflow-x-auto rounded-md">
+        <table {...getTableProps()} className="w-full bg-white border">
+          <thead className="bg-gray-200">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
                   >
-                    {cell.render("Cell")}
-                  </td>
+                    {column.render("Header")}
+                  </th>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="hover:bg-gray-100">
+                  {row.cells.map((cell) => (
+                    <td
+                      {...cell.getCellProps()}
+                      className="py-4 px-6 text-sm text-gray-600 border-b"
+                    >
+                      {cell.render("Cell")}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </FormCard>
   );
 };
 

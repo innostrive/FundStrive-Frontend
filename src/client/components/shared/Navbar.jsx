@@ -9,6 +9,7 @@ import {
 } from "@material-tailwind/react";
 import Container from "../Container/Container";
 import { Link, NavLink } from "react-router-dom";
+import useSetting from "../../../dashboard/hooks/useSettings";
 
 export function StickyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -20,9 +21,24 @@ export function StickyNavbar() {
     );
   }, []);
 
+  const { settings } = useSetting();
+  const activeSetting = settings.filter((item) => item.status === "Active");
+
   const navList = (
     <ul className="mt-2 mb-4 flex uppercase flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography
+      {activeSetting.map((setting) => (
+        <Typography
+          as="li"
+          variant="small"
+          className=" text-secondary font-semibold"
+          key={setting?.key}
+        >
+          <a href={`/${setting?.value}`} className="flex items-center">
+            {setting?.value}
+          </a>
+        </Typography>
+      ))}
+      {/* <Typography
         as="li"
         variant="small"
         className=" text-secondary font-semibold"
@@ -67,7 +83,7 @@ export function StickyNavbar() {
         <a href="/contact-us" className="flex items-center">
           Contact
         </a>
-      </Typography>
+      </Typography> */}
     </ul>
   );
   const [stickyNav, setStickyNav] = useState(false);

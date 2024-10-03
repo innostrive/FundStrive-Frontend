@@ -3,6 +3,7 @@ import Layout from "../../layout/Layout";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import UserDetailInfo from "./UserDetailInfo";
+import UserProfile from "./UserProfile";
 
 const UserDetails = () => {
   const { id } = useParams();
@@ -15,7 +16,8 @@ const UserDetails = () => {
     });
   }, [id]);
   return (
-    <section>
+    <section className="space-y-5">
+      <UserProfile userInfo={userInfo} />
       <UserDetailInfo userInfo={userInfo} />
     </section>
   );

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { adminSidebarItems, userSidebarItems } from "./SidebarRoutes";
@@ -18,22 +18,26 @@ const Sidebar = () => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setSidebarToggle(true);
-      } else {
-        setSidebarToggle(false);
       }
     };
-    handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setSidebarToggle]);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <motion.div
-      className={`bg-[#2B2A27] min-h-screen h-auto`}
-      initial={{ translateX: sidebarToggle ? 0 : 0 }}
+      className={`bg-secondary text-text-primary min-h-screen h-auto`}
+      initial={{ translateX: 0 }}
       animate={{ translateX: sidebarToggle ? -320 : 0 }}
       transition={{ type: "just", ease: "linear", duration: 0.3 }}
     >
+      <div className="py-5">
+        <h1 className="text-3xl font-bold uppercase text-center text-text-primary">
+          Fund<span className="text-primary">strive</span>
+        </h1>
+      </div>
       <div className="grid place-content-end p-2 sm:hidden">
         <motion.svg
           xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +68,7 @@ const Sidebar = () => {
                   <Link to={item?.link}>
                     <motion.div
                       className={`flex items-center p-3 rounded-lg ${
-                        activeItem === item.id ? "bg-gray-700" : ""
+                        activeItem === item.id ? "bg-primary text-white" : ""
                       }`}
                       onClick={() => handleItemClick(item.id)}
                       whileHover={{ scale: 1.05 }}

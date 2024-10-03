@@ -5,88 +5,82 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import Layout from "../../layout/Layout";
-
+import Form from "../../components/form/Form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import categorySchema from "../../schemas/category.schema";
+import TextInput from "../../ui/TextInput";
+import { FormProvider, useForm } from "react-hook-form";
+import FormCard from "../../ui/FormCard";
+import IButton from "../../ui/IButton";
+import { useNavigate, useParams } from "react-router-dom";
+import ReactQuill from "react-quill";
+import EditorToolbar, {
+  modules,
+  formats,
+} from "../../components/EditToolbar/EditToolbar";
 const CreateCategory = () => {
   const axiosSecure = useAxiosSecure();
-  const [categoryData, setCategoryData] = useState({
-    name: "",
-    description: "",
-    image: null,
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-    setCategoryData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value,
-    }));
+  const navigate = useNavigate();
+  const [image, setImage] = useState(null);
+  const [value, setValue] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
+  const methods = useForm();
+  const { handleSubmit } = methods;
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
-  const handleCategorySubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("name", categoryData.name);
-    formData.append("description", categoryData.description);
-    formData.append("image", categoryData.image);
+  const onSubmit = async (data) => {
+    // const formData = new FormData();
+    // formData.append("image", categoryData.image);
+    const postData = {
+      ...data,
+      description: value,
+    };
     try {
-      await axiosSecure.post("/api/categories", formData).then((response) => {
+      await axiosSecure.post("/api/categories", postData).then((response) => {
         if (response.status === 200) {
           toast.success(response.data.message);
+          navigate("/dashboard/category");
         }
       });
     } catch (err) {
       toast.error(err);
       console.log(err);
     }
+    console.log("data", data);
   };
   return (
     <section>
-      <Typography
-        color="blue-gray"
-        className="text-center font-medium text-2xl my-10 leading-normal"
-      >
-        Create category for campaign
-      </Typography>
-      <div className="border border-b border-gray-200 rounded-md p-5 w-3/4 flex mx-auto">
-        <Card color="transparent" shadow={false} className="w-full">
-          <form onSubmit={handleCategorySubmit} className="mt-8 mb-2">
-            <div className="mb-1 flex flex-col gap-6">
+      <FormCard title="Create category for campaign">
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
+            <div className="mb-1 grid gap-6">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Category Name
               </Typography>
-              <Input
-                type="text"
-                size="lg"
-                placeholder="name"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                  className: "before:content-none after:content-none",
-                }}
-                id="name"
-                name="name"
-                value={categoryData.name}
-                onChange={handleInputChange}
-              />
+              <TextInput type="text" name="name" />
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Description
               </Typography>
-              <Textarea
-                type="text"
-                size="lg"
-                placeholder="desciption"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                  className: "before:content-none after:content-none",
-                }}
-                id="description"
-                name="description"
-                value={categoryData.description}
-                onChange={handleInputChange}
+              <EditorToolbar toolbarId={"t2"} />
+              <ReactQuill
+                theme="snow"
+                // value={value}
+                // onChange={setValue}
+                modules={modules("t2")}
+                formats={formats}
+                placeholder="Write blog here..."
               />
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Upload Image
@@ -101,16 +95,25 @@ const CreateCategory = () => {
                 }}
                 id="image"
                 name="image"
-                onChange={handleInputChange}
+                onChange={handleImage}
                 accept="image/*"
               />
             </div>
-            <Button className="mt-6" fullWidth type="submit">
-              Submit
-            </Button>
+            <div className="mt-5">
+              {imagePreview && (
+                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                  <img
+                    src={imagePreview}
+                    alt=""
+                    className="h-full w-full object-cover object-center rounded-md"
+                  />
+                </div>
+              )}
+            </div>
+            <IButton className="flex ml-auto">Submit</IButton>
           </form>
-        </Card>
-      </div>
+        </FormProvider>
+      </FormCard>
     </section>
   );
 };

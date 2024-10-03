@@ -1,11 +1,11 @@
 import UserList from "../../components/UserList/UserList";
+import FormCard from "../../ui/FormCard";
 
 const Users = () => {
   return (
-    <div className="border border-b border-gray-200 rounded-md p-5">
-      <h1 className="text-lg font-medium mb-5">User List</h1>
+    <FormCard title="User List">
       <UserList></UserList>
-    </div>
+    </FormCard>
   );
 };
 

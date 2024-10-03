@@ -8,6 +8,9 @@ import EditorToolbar, {
   modules,
   formats,
 } from "../../components/EditToolbar/EditToolbar";
+import FormCard from "../../ui/FormCard";
+import IButton from "../../ui/IButton";
+import { Add } from "../../assets/icons/icons";
 
 const BlogCreate = () => {
   const axiosSecure = useAxiosSecure();
@@ -61,88 +64,81 @@ const BlogCreate = () => {
       });
   };
   return (
-    <div className="border border-b border-gray-200 rounded-md p-5 w-3/4 flex mx-auto">
-      <Card color="transparent" shadow={false}>
-        <Typography variant="h4" color="blue-gray" className="text-center">
-          Upload Blog
-        </Typography>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2">
-          <div className="mb-1 flex flex-col gap-6">
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Ttile
-            </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="name"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              id="name"
-              name="title"
-              {...register("title")}
-            />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Tags
-            </Typography>
-            <Input
-              type="text"
-              size="lg"
-              placeholder="desciption"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              id="description"
-              name="tags"
-              {...register("tags")}
-            />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Content
-            </Typography>
-            <EditorToolbar toolbarId={"t2"} />
-            <ReactQuill
-              theme="snow"
-              value={value}
-              onChange={setValue}
-              modules={modules("t2")}
-              formats={formats}
-              placeholder="Write blog here..."
-            />
-            <label
-              htmlFor="image"
-              className="text-base text-black font-medium text-center cursor-pointer block h-full w-full border border-gray-400 p-2 rounded-md"
-            >
-              Upload Image
-            </label>
-            <input
-              type="file"
-              placeholder="Upload Image"
-              className="hidden"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={(e) => handleImage(e)}
-            />
-            <div>
-              {imagePreview && (
-                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
-                  <img
-                    src={imagePreview}
-                    alt=""
-                    className="h-full w-full object-cover object-center rounded-md"
-                  />
-                </div>
-              )}
-            </div>
+    <FormCard title="Upload Blog">
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2">
+        <div className="mb-1 flex flex-col gap-6">
+          <Typography variant="h6" color="blue-gray" className="-mb-3">
+            Ttile
+          </Typography>
+          <Input
+            type="text"
+            size="lg"
+            placeholder="name"
+            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+            id="name"
+            name="title"
+            {...register("title")}
+          />
+          <Typography variant="h6" color="blue-gray" className="-mb-3">
+            Tags
+          </Typography>
+          <Input
+            type="text"
+            size="lg"
+            placeholder="desciption"
+            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+            id="description"
+            name="tags"
+            {...register("tags")}
+          />
+          <Typography variant="h6" color="blue-gray" className="-mb-3">
+            Content
+          </Typography>
+          <EditorToolbar toolbarId={"t2"} />
+          <ReactQuill
+            theme="snow"
+            value={value}
+            onChange={setValue}
+            modules={modules("t2")}
+            formats={formats}
+            placeholder="Write blog here..."
+          />
+          <label
+            htmlFor="image"
+            className="text-base text-black font-medium text-center cursor-pointer block h-full w-full border border-gray-400 p-2 rounded-md"
+          >
+            Upload Image
+          </label>
+          <input
+            type="file"
+            placeholder="Upload Image"
+            className="hidden"
+            id="image"
+            name="image"
+            accept="image/*"
+            onChange={(e) => handleImage(e)}
+          />
+          <div>
+            {imagePreview && (
+              <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                <img
+                  src={imagePreview}
+                  alt=""
+                  className="h-full w-full object-cover object-center rounded-md"
+                />
+              </div>
+            )}
           </div>
-          <Button className="mt-6" fullWidth type="submit">
-            Submit
-          </Button>
-        </form>
-      </Card>
-    </div>
+        </div>
+        <IButton className="flex ml-auto my-5">Submit</IButton>
+      </form>
+    </FormCard>
   );
 };
 

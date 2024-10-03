@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const SidebarContext = createContext();
 
@@ -7,6 +7,7 @@ const SidebarProvider = ({ children }) => {
   const collapse = () => {
     setSidebarToggle((prev) => !prev);
   };
+
   const values = {
     collapse,
     setSidebarToggle,

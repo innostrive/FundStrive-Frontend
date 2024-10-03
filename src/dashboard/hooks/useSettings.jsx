@@ -5,11 +5,11 @@ const useSetting = () => {
   const axiosSecure = useAxiosSecure();
   const [settings, setSettings] = useState([]);
   useEffect(() => {
-    axiosSecure.get("/banners").then((res) => {
+    axiosSecure.get("/api/settings").then((res) => {
       setSettings(res.data.data.settings);
     });
   }, []);
-  return settings;
+  return { settings, setSettings };
 };
 
 export default useSetting;

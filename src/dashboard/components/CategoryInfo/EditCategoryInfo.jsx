@@ -4,11 +4,19 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useParams } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import { toast } from "react-toastify";
-
+import FormCard from "../../ui/FormCard";
+import IButton from "../../ui/IButton";
+import TextInput from "../../ui/TextInput";
+import ReactQuill from "react-quill";
+import EditorToolbar, {
+  modules,
+  formats,
+} from "../../components/EditToolbar/EditToolbar";
 const EditCategoryInfo = () => {
   const { id } = useParams();
   const { register, handleSubmit, reset } = useForm(); // react-hook-form
   const [categoryInfo, setCategoryInfo] = useState({});
+  const [selectedStatus, setSelectedStatus] = useState("");
   const axiosSecure = useAxiosSecure(); // custom hook for secure axios instance
 
   // Fetch user info from API
@@ -16,6 +24,7 @@ const EditCategoryInfo = () => {
     axiosSecure.get(`/categories/${id}`).then((res) => {
       const userData = res.data.data;
       setCategoryInfo(userData);
+      setSelectedStatus(userData?.status);
     });
   }, [id, axiosSecure]);
   useEffect(() => {
@@ -40,19 +49,14 @@ const EditCategoryInfo = () => {
       });
   };
   return (
-    <section className="flex justify-center">
-      <div className="h-auto w-full max-w-5xl p-5 rounded-md bg-white border space-y-10">
-        <div className="my-5">
-          <span className="text-lg font-medium leading-normal text-gray-700">
-            Update Category
-          </span>
-        </div>
+    <section>
+      <FormCard title="Update Category">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 w-full">
             <div className="grid grid-cols-1 space-y-2">
               <span className="text-sm">Name</span>
               <input
-                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 type="text"
                 defaultValue={categoryInfo?.name}
                 {...register("name")}
@@ -60,27 +64,39 @@ const EditCategoryInfo = () => {
             </div>
             <div className="grid grid-cols-1 space-y-2">
               <span className="text-sm">Status</span>
-              <input
-                className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-                type="text"
-                defaultValue={categoryInfo?.status}
-                {...register("status")}
-              />
+              <select
+                label="Select Status"
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-auto text-base rounded"
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
             </div>
           </div>
           <div className="grid grid-cols-1 space-y-2 mt-7">
             <span className="text-sm">Description</span>
-            <textarea
-              className="bg-[#f3f4f7] text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded min-h-20"
+            {/* <textarea
+              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded min-h-20"
               type="text"
               defaultValue={categoryInfo?.description}
               {...register("description")}
+            /> */}
+            <EditorToolbar toolbarId={"t2"} />
+            <ReactQuill
+              theme="snow"
+              // value={value}
+              // onChange={setValue}
+              modules={modules("t2")}
+              formats={formats}
+              placeholder="Write blog here..."
             />
           </div>
           <div className="grid grid-cols-1 mt-7">
             <label
               htmlFor="image"
-              className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full bg-[#f3f4f7] border-gray-300 border p-2 rounded-md"
+              className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
             >
               Upload Image
             </label>
@@ -93,11 +109,9 @@ const EditCategoryInfo = () => {
               accept="image/*"
             />
           </div>
-          <Button type="submit" className="my-5 w-full">
-            Update
-          </Button>
+          <IButton className="flex ml-auto my-5">Update</IButton>
         </form>
-      </div>
+      </FormCard>
     </section>
   );
 };

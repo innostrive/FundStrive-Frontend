@@ -2,6 +2,7 @@ import Container from "../Container/Container";
 import { CiMail } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
 import Logo from "../../assets/Logo/Logo.jpg";
+import { Email, Phone } from "../../../dashboard/assets/icons/icons";
 const TopNav = () => {
   return (
     <div className="w-full bg-[#f3f4f7]">
@@ -11,21 +12,16 @@ const TopNav = () => {
             <h1 className="text-3xl font-bold uppercase text-secondary">
               Fund<span className="text-primary">strive</span>
             </h1>
-            {/* <img
-              src={Logo}
-              className="h-10 w-10 object-cover rounded-full"
-              alt="Logo"
-            /> */}
           </div>
           <div className="flex items-center gap-3">
-            <CiMail size={45} className="text-primary" />
+            <Email />
             <div>
               <h1 className="text-xl font-semibold">Email</h1>
               <span className="text-sm font-normal">contact@gmail.com</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <BsTelephone size={35} className="text-primary" />
+            <Phone />
             <div>
               <h1 className="text-xl font-semibold">Phone</h1>
               <span className="text-sm font-normal">+880 6165488</span>

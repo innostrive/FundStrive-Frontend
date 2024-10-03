@@ -7,17 +7,10 @@ import axios from "axios";
 import TextInput from "../../ui/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userRegistrationSchema from "../../schemas/registration.schema";
+import IButton from "../../ui/IButton";
 const SignUpForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const [image, setImage] = useState(null);
-
-  const handleTextInputChange = (e) => {
-    const { name, files } = e.target;
-    setImage((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value,
-    }));
-  };
 
   const onSubmit = async (data) => {
     const payload = {
@@ -25,33 +18,31 @@ const SignUpForm = () => {
       ...data,
     };
     try {
+      setIsLoading(true);
       const response = await axios.post(
         "http://localhost:4000/signup",
         payload
       );
       console.log("Response:", response.data);
+      setIsLoading(false);
       toast.success("Sign up successful!");
       navigate("/login");
     } catch (error) {
       console.error("Sign up error:", error);
       toast.error("Failed to sign up. Please try again.");
     }
-    // console.log(payload);
   };
   return (
-    <div className="w-full max-w-3xl">
-      <Typography variant="h4" color="blue-gray">
+    <div className="w-full max-w-3xl sm:p-0 p-5">
+      <Typography variant="h4" color="blue-gray" className="my-5">
         Sign Up
-      </Typography>
-      <Typography color="gray" className="mt-1 font-normal">
-        Nice to meet you! Enter your detailsr.
       </Typography>
       <Form
         onSubmit={onSubmit}
         resolver={zodResolver(userRegistrationSchema)}
         className="mt-8 mb-2 w-full"
       >
-        <div className="mb-1 grid grid-cols-2 gap-5">
+        <div className="mb-1 grid sm:grid-cols-2 grid-cols-1  gap-5">
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
               Your Name
@@ -106,22 +97,15 @@ const SignUpForm = () => {
             </Typography>
             <TextInput type="text" name="post_code" />
           </div>
-          <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Upload Image
-            </Typography>
-            <TextInput
-              type="file"
-              id="image"
-              name="image"
-              onChange={handleTextInputChange}
-              accept="image/*"
-            />
-          </div>
         </div>
-        <Button className="mt-6" fullWidth type="submit">
-          sign up
-        </Button>
+        <IButton
+          className="mt-6"
+          type="submit"
+          fullWidth
+          disabled={isLoading ? true : false}
+        >
+          {isLoading ? "Signing Up..." : "Sign up"}
+        </IButton>
         <Typography color="gray" className="mt-4 text-center font-normal">
           Already have an account?{" "}
           <Link to={"/login"} className="font-medium text-gray-900">

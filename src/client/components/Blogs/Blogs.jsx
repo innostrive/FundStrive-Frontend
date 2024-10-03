@@ -4,8 +4,7 @@ import Container from "../Container/Container";
 import Blog from "./Blog";
 import useBlogsData from "../../../dashboard/hooks/useBlogsData";
 const Blogs = () => {
-  const posts = useBlogsData();
-  console.log("blog:", posts);
+  const { blogs } = useBlogsData();
   const blogsData = [
     {
       id: 1,
@@ -65,8 +64,8 @@ const Blogs = () => {
           <div className="h-2 w-20 bg-[#2B2A27] rounded-full mx-auto mt-3"></div>
         </div>
         <div className="grid sm:grid-cols-3 grid-cols-1 justify-center gap-10 mt-5 px-5 sm:px-0">
-          {posts.map((post, i) => (
-            <Blog post={post} key={i} />
+          {blogs.map((blog, i) => (
+            <Blog blog={blog} key={i} />
           ))}
         </div>
       </Container>

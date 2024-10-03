@@ -13,19 +13,23 @@ import CategoryDetails from "../../dashboard/pages/Category/CategoryDetails";
 import CreateCategory from "../../dashboard/pages/Category/CreateCategory";
 import EditCategory from "../../dashboard/pages/Category/EditCategory";
 import Dashboard from "../../dashboard/pages/dashboard/Dashboard";
+import CreateSettings from "../../dashboard/pages/Settings/CreateSettings";
+import Settings from "../../dashboard/pages/Settings/Settings";
+import SettingsInfo from "../../dashboard/pages/Settings/SettingsInfo";
 import UserProfile from "../../dashboard/pages/UserProfile/UserProfile";
 import EditUser from "../../dashboard/pages/Users/EditUser";
 import UserDetails from "../../dashboard/pages/Users/UserDetails";
 import Users from "../../dashboard/pages/Users/Users";
-
+import { lazy } from "react";
+const UserUpdate = lazy(() => import("../../dashboard/pages/Users/EditUser"));
 const adminPath = [
   {
     name: "Dashboard",
     path: "",
     element: (
-      // <ProtectedRoute>
-      // </ProtectedRoute>
-      <Dashboard />
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
     ),
   },
   {
@@ -167,6 +171,30 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <Banner />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "settings",
+    element: (
+      <ProtectedRoute>
+        <Settings />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-settings",
+    element: (
+      <ProtectedRoute>
+        <CreateSettings />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "settings/:id",
+    element: (
+      <ProtectedRoute>
+        <SettingsInfo />
       </ProtectedRoute>
     ),
   },

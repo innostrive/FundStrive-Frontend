@@ -1,7 +1,7 @@
 const DashboardCard = () => {
   return (
-    <section className="flex gap-5 border border-b border-gray-200 rounded-md p-5">
-      <div className="h-auto w-full min-h-20 min-w-96 bg-[#b9a6ff] text-white rounded-md p-5">
+    <section className="grid grid-cols-1 sm:grid-cols-3 gap-5 border border-b border-gray-200 rounded-md p-5">
+      <div className="h-auto w-full min-h-20 sm:min-w-96 bg-[#b9a6ff] text-white rounded-md p-5">
         <div className="flex flex-col items-center gap-2">
           <span>Total Raised</span>
           <div className="flex gap-1 items-center text-white">
@@ -25,7 +25,7 @@ const DashboardCard = () => {
           </div>
         </div>
       </div>
-      <div className="h-auto w-full min-h-20 min-w-96 bg-[#8BC34A] text-white rounded-md p-5">
+      <div className="h-auto w-full min-h-20 sm:min-w-96 bg-[#8BC34A] text-white rounded-md p-5">
         <div className="flex flex-col items-center gap-2">
           <span>Total Pay</span>
           <div className="flex gap-1 items-center text-white">
@@ -49,7 +49,7 @@ const DashboardCard = () => {
           </div>
         </div>
       </div>
-      <div className="h-auto w-full min-h-20 min-w-96 bg-[#FF9800] text-white rounded-md p-5">
+      <div className="h-auto w-full min-h-20 sm:min-w-96 bg-[#FF9800] text-white rounded-md p-5">
         <div className="flex flex-col items-center gap-2">
           <span>Panding</span>
           <div className="flex gap-1 items-center text-white">

@@ -3,13 +3,13 @@ import useAxiosSecure from "./useAxiosSecure";
 
 const useCampaignData = () => {
   const axiosSecure = useAxiosSecure();
-  const [campaigns, setUsers] = useState([]);
+  const [campaigns, setCampaigns] = useState([]);
   useEffect(() => {
     axiosSecure.get("/campaigns").then((res) => {
-      setUsers(res.data.data.campaigns);
+      setCampaigns(res.data.data.campaigns);
     });
   }, []);
-  return campaigns;
+  return { campaigns, setCampaigns };
 };
 
 export default useCampaignData;
