@@ -20,33 +20,6 @@ const StatusBadge = ({ status }) => (
   </span>
 );
 const Settings = () => {
-  const { settings, setSettings } = useSetting();
-  console.log("settings:", settings);
-  const axiosSecure = useAxiosSecure();
-  const handleSettingsDelete = (id) => {
-    const data = {
-      ids: [id],
-    };
-    Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete("/api/settings", { data }).then((data) => {
-          const remainingUser = settings.filter((user) => user._id !== id);
-          setSettings(remainingUser);
-          data.status === 200
-            ? toast.success("Delete Successful")
-            : toast.warning("Activity not deleted");
-        });
-      }
-    });
-  };
   const columns = useMemo(
     () => [
       {
@@ -94,16 +67,48 @@ const Settings = () => {
   );
 
   // Define table data
-  const data = useMemo(() => settings, [settings]);
+  const data = useMemo(() => columns, []);
+  const { settings, setSettings } = useSetting();
+
+  console.log("settings:", settings);
+  const axiosSecure = useAxiosSecure();
+  const handleSettingsDelete = (id) => {
+    const data = {
+      ids: [id],
+    };
+    Swal.fire({
+      title: "Are you sure to delete?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete("/api/settings", { data }).then((data) => {
+          const remainingSetting = settings.filter(
+            (setting) => setting._id !== id
+          );
+          console.log("remaining data of table:", remainingSetting);
+          setSettings(remainingSetting);
+          data.status === 200
+            ? toast.success("Delete Successful")
+            : toast.warning("Activity not deleted");
+        });
+      }
+    });
+  };
 
   // Use the table hook
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data }, useRowSelect, (hooks) => {});
+    useTable({ columns, data: settings }, useRowSelect, (hooks) => {});
   return (
     <FormCard
       title="Settings List"
       icon={<Add />}
       path="/dashboard/create-settings"
+      iconTitle="Add"
     >
       <div className="overflow-x-auto rounded-md">
         <table {...getTableProps()} className="min-w-full bg-white border">

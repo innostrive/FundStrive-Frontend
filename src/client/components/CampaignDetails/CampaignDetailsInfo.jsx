@@ -6,12 +6,18 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import { RiDashboardLine } from "react-icons/ri";
 import donate from "../../assets/donate-1.jpg";
 import Gallery from "./Gallery";
 import Document from "./Document";
 import { useParams } from "react-router-dom";
 import useCampaignsInfo from "../../hooks/useCampaignInfo";
+import {
+  GalleryIcon,
+  ReviewIcon,
+  DocumentIcon,
+  DescriptionIcon,
+} from "../../assets/icons/icons";
+import Reviews from "../Reviews/Reviews";
 
 const CampaignDetailsInfo = () => {
   const { id } = useParams();
@@ -20,20 +26,26 @@ const CampaignDetailsInfo = () => {
     {
       label: "Description",
       value: "description",
-      icon: RiDashboardLine,
+      icon: DescriptionIcon,
       desc: campaign?.description,
     },
     {
       label: "Gallery",
       value: "gallery",
-      icon: RiDashboardLine,
+      icon: GalleryIcon,
       desc: <Gallery />,
     },
     {
       label: "Document",
       value: "document",
-      icon: RiDashboardLine,
+      icon: DocumentIcon,
       desc: <Document />,
+    },
+    {
+      label: "Reviews",
+      value: "reviews",
+      icon: ReviewIcon,
+      desc: <Reviews />,
     },
   ];
   return (
@@ -45,7 +57,7 @@ const CampaignDetailsInfo = () => {
         <TabsHeader className="border border-gray-200 bg-white">
           {data.map(({ label, value, icon }) => (
             <Tab key={value} value={value}>
-              <div className="flex items-center gap-2 uppercase">
+              <div className="flex items-center gap-2 uppercase text-secondary">
                 {React.createElement(icon, { className: "w-5 h-5" })}
                 {label}
               </div>

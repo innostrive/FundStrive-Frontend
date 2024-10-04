@@ -27,6 +27,8 @@ import CreateBlog from "../../dashboard/pages/Blog/CreateBlog";
 import BlogDetailsData from "../../dashboard/pages/Blog/BlogDetailsData";
 import MainLayout from "../../dashboard/layout/MainLayout";
 import adminPath from "./admin.routes";
+import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
+import ForgotPassword from "../../dashboard/components/form/ForgotPassword";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -71,6 +73,14 @@ export const router = createBrowserRouter([
     path: "/sign-up",
     element: <SignUp />,
   },
+  {
+    path: "/reset-password/",
+    element: <ResetPassword />,
+  },
+  // {
+  //   path: "/reset-password,
+  //   element: <ResetPassword />,
+  // },
   {
     path: "/dashboard",
     element: (

@@ -50,44 +50,7 @@ const IndeterminateCheckbox = React.forwardRef(
 );
 
 const Categories = () => {
-  const { categories, setCategories } = useCategoriesData();
-  const axiosSecure = useAxiosSecure();
-
-  const handleCategoryDelete = (id) => {
-    const data = { ids: [id] };
-
-    Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure
-          .delete("/api/categories", { data })
-          .then((response) => {
-            if (response.status === 200) {
-              const remainingCategories = categories.filter(
-                (category) => category._id !== id
-              );
-              setCategories(remainingCategories);
-              toast.success("Delete Successful");
-            } else {
-              toast.warning("Category not deleted");
-            }
-          })
-          .catch((error) => {
-            toast.error("An error occurred");
-            console.error(error);
-          });
-      }
-    });
-  };
-
-  const columns = useMemo(
+  const COLUMNS = useMemo(
     () => [
       {
         Header: "Code",
@@ -130,11 +93,51 @@ const Categories = () => {
     ],
     []
   );
+  const data = useMemo(() => COLUMNS, []);
 
-  const data = useMemo(() => categories, [categories, handleCategoryDelete]);
+  const { categories, setCategories } = useCategoriesData();
+  const axiosSecure = useAxiosSecure();
+
+  const handleCategoryDelete = (id) => {
+    const data = { ids: [id] };
+
+    Swal.fire({
+      title: "Are you sure to delete?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete("/api/categories", { data })
+          .then((response) => {
+            if (response.status === 200) {
+              const remainingCategories = categories.filter(
+                (category) => category._id !== id
+              );
+              setCategories(remainingCategories);
+              toast.success("Delete Successful");
+            } else {
+              toast.warning("Category not deleted");
+            }
+          })
+          .catch((error) => {
+            toast.error("An error occurred");
+            console.error(error);
+          });
+      }
+    });
+  };
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data }, useRowSelect, (hooks) => {});
+    useTable(
+      { columns: COLUMNS, data: categories },
+      useRowSelect,
+      (hooks) => {}
+    );
 
   return (
     <FormCard

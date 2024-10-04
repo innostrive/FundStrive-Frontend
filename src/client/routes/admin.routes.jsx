@@ -175,7 +175,7 @@ const adminPath = [
     ),
   },
   {
-    path: "settings",
+    path: "system-settings",
     element: (
       <ProtectedRoute>
         <Settings />

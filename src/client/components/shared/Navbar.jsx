@@ -33,8 +33,8 @@ export function StickyNavbar() {
           className=" text-secondary font-semibold"
           key={setting?.key}
         >
-          <a href={`/${setting?.value}`} className="flex items-center">
-            {setting?.value}
+          <a href={`${setting?.value}`} className="flex items-center">
+            {setting?.key}
           </a>
         </Typography>
       ))}
