@@ -3,17 +3,22 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { adminSidebarItems, userSidebarItems } from "./SidebarRoutes";
 import { SidebarContext } from "../context/SidebarProvider";
-
+import { BsChevronDown } from "react-icons/bs";
 const Sidebar = () => {
   const { collapse, sidebarToggle, setSidebarToggle } =
     useContext(SidebarContext);
   const [activeItem, setActiveItem] = useState(null);
   const userRole = localStorage.getItem("role");
+  const [openSubmenu, setOpenSubmenu] = useState(null);
 
   const handleItemClick = (id) => {
     setActiveItem(id);
+    if (openSubmenu === id) {
+      setOpenSubmenu(null); // Close the submenu if clicked again
+    } else {
+      setOpenSubmenu(id); // Open the submenu
+    }
   };
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -62,7 +67,6 @@ const Sidebar = () => {
         <ul>
           {userRole === "admin" ? (
             <>
-              {" "}
               {adminSidebarItems.map((item) => (
                 <li key={item.id} className="cursor-pointer text-sm">
                   <Link to={item?.link}>
@@ -70,15 +74,49 @@ const Sidebar = () => {
                       className={`flex items-center p-3 rounded-lg ${
                         activeItem === item.id ? "bg-primary text-white" : ""
                       }`}
-                      onClick={() => handleItemClick(item.id)}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 300 }}
+                      onClick={() => handleItemClick(item.id)}
                     >
-                      <span className="mr-4 text-xl">{item.icon}</span>
+                      <span className="mr-4 text-xl">{item?.icon}</span>
                       {item.name}
+                      {item.subMenus && item.subMenus.length > 0 && (
+                        <BsChevronDown
+                          className={`text-xl transition-transform ml-4 ${
+                            openSubmenu === item.id ? "rotate-180" : ""
+                          }`}
+                        />
+                      )}
                     </motion.div>
                   </Link>
+                  {item.subMenus && item.subMenus.length > 0 && (
+                    <motion.ul
+                      initial={{ height: 0 }}
+                      animate={{
+                        height: openSubmenu === item.id ? "auto" : 0,
+                      }}
+                      transition={{ type: "spring", stiffness: 200 }}
+                      className="overflow-hidden px-5 py-2"
+                    >
+                      {item.subMenus.map((subItem) => (
+                        <li key={subItem.id} className="py-2">
+                          <Link to={subItem.link}>
+                            <div
+                              className={`flex items-center p-3 rounded-lg ${
+                                activeItem === item.id
+                                  ? "bg-primary text-white"
+                                  : ""
+                              }`}
+                            >
+                              <span className="mr-2">{subItem.icon}</span>
+                              {subItem.name}
+                            </div>
+                          </Link>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
                 </li>
               ))}
             </>

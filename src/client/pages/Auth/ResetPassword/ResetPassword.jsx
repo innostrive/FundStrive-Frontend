@@ -5,18 +5,35 @@ import TextInput from "../../../../dashboard/ui/TextInput";
 import axios from "axios";
 import donation from "../../../assets/donation.jpg";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
 const ResetPassword = () => {
+  const { token } = useParams();
+  // console.log("token:", token);
   const [isLoading, setIsLoading] = useState(false);
-
+  const URL = import.meta.env.VITE_BASE_URL;
   const onSubmit = async (data) => {
-    setIsLoading(true);
+    // setIsLoading(true);
+    const payload = {
+      ...data,
+      reset_link: token,
+    };
     try {
       await axios
-        .post("http://localhost:4000/reset-password", data)
+        .post(
+          `${URL}/reset-password`,
+          payload
+          //    {
+          //   headers: {
+          //     Authorization: `${token}`,
+          //   },
+          // }
+        )
         .then((data) => {
           // setIsLoading(false);
-          toast.success(data.data.message);
+          if (data.status === 200) {
+            toast.success(data.data.message);
+          }
           console.log("resetLink:", data);
         });
     } catch {

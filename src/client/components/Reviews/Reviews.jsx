@@ -1,17 +1,11 @@
-import Form from "../../../dashboard/components/form/Form";
-import TextInput from "../../../dashboard/ui/TextInput";
+import ReviewForm from "./ReviewForm";
+import VisitorReview from "./VisitorReview";
 
-const Reviews = () => {
-  const onSubmit = (data) => {
-    console.log("data:", data);
-  };
+const Reviews = ({ campaignId }) => {
   return (
-    <section>
-      <Form onSubmit={onSubmit}>
-        <TextInput label="Name" name="name" type="text" />
-        <TextInput label="Email" name="email" type="text" />
-        <TextInput label="Review" name="review" type="textarea" />
-      </Form>
+    <section className="space-y-10">
+      <VisitorReview></VisitorReview>
+      <ReviewForm campaignId={campaignId}></ReviewForm>
     </section>
   );
 };

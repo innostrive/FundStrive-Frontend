@@ -22,6 +22,7 @@ import Reviews from "../Reviews/Reviews";
 const CampaignDetailsInfo = () => {
   const { id } = useParams();
   const campaign = useCampaignsInfo(id);
+  const campaignId = campaign?._id;
   const data = [
     {
       label: "Description",
@@ -45,7 +46,7 @@ const CampaignDetailsInfo = () => {
       label: "Reviews",
       value: "reviews",
       icon: ReviewIcon,
-      desc: <Reviews />,
+      desc: <Reviews campaignId={campaignId} />,
     },
   ];
   return (
@@ -66,7 +67,7 @@ const CampaignDetailsInfo = () => {
         </TabsHeader>
         <TabsBody>
           {data.map(({ value, desc }) => (
-            <TabPanel key={value} value={value}>
+            <TabPanel key={value} value={value} className="px-0">
               {desc}
             </TabPanel>
           ))}

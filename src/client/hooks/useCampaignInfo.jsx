@@ -8,7 +8,7 @@ const useCampaignsInfo = (id) => {
     axiosSecure.get(`/campaigns/${id}`).then((res) => {
       setCampaign(res.data.data);
     });
-  }, []);
+  }, [id]);
   return campaign;
 };
 

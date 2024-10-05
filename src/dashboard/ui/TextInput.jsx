@@ -19,15 +19,16 @@ const TextInput = ({
     <div className="grid gap-2">
       {type === "textarea" ? (
         <div>
+          <label htmlFor="">{label}</label>
           <Controller
             name={name}
             render={({ field }) => (
-              <Textarea
+              <textarea
                 {...field}
                 errorMessage={errors[name] ? errors[name].message : ""}
                 type={type}
                 className={twMerge(
-                  "border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded",
+                  "border border-gray-300 px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded min-h-32 h-auto",
                   className
                 )}
                 value={value}

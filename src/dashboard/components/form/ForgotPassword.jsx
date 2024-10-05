@@ -4,17 +4,19 @@ import Form from "./Form";
 import TextInput from "../../ui/TextInput";
 import IButton from "../../ui/IButton";
 import donation from "../../assets/donation.jpg";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data) => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       await axios
         .post("http://localhost:4000/forgot-password", data)
         .then((data) => {
-          setIsLoading(false);
+          // setIsLoading(false);
+          toast.success(data.data.message);
           console.log("resetLink:", data);
         });
     } catch {

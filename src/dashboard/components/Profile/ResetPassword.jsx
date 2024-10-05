@@ -17,7 +17,7 @@ const ResetPassword = ({ userInfo }) => {
   // const userId = localStorage.getItem("userId");
 
   const onSubmit = (data) => {
-    axiosSecure.post("/reset-password", data).then((res) => {
+    axios.post("http://localhost:4000/reset-password", data).then((res) => {
       if (res.status === 200) {
         toast.success("Password Reset Successfull...");
       } else {
