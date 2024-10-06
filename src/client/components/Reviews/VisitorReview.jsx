@@ -1,7 +1,11 @@
 import { Rating } from "@material-tailwind/react";
 import FormCard from "../../../dashboard/ui/FormCard";
 import review from "../../assets/Logo/user.jpg";
+import useCampaignsInfo from "../../hooks/useCampaignInfo";
+import useReview from "../../hooks/useReview";
 const VisitorReview = () => {
+  const reviews = useReview();
+  // console.log("reviews:", reviews);
   return (
     <div className="grid grid-cols-12 items-center bg-white rounded-md p-5">
       <div className="col-span-2">

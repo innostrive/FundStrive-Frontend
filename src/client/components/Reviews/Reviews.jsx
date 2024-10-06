@@ -4,7 +4,7 @@ import VisitorReview from "./VisitorReview";
 const Reviews = ({ campaignId }) => {
   return (
     <section className="space-y-10">
-      <VisitorReview></VisitorReview>
+      <VisitorReview campaignId={campaignId}></VisitorReview>
       <ReviewForm campaignId={campaignId}></ReviewForm>
     </section>
   );

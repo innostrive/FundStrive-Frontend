@@ -17,7 +17,7 @@ const ReviewForm = ({ campaignId }) => {
     const payload = {
       ...data,
       rating,
-      campaignId,
+      campaign_id: campaignId,
     };
 
     await axiosSecure
@@ -28,7 +28,7 @@ const ReviewForm = ({ campaignId }) => {
           console.log("review:", res.data);
         }
       });
-    console.log("data:", payload);
+    // console.log("data:", payload);
   };
   return (
     <Form onSubmit={onSubmit}>

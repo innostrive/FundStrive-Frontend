@@ -23,7 +23,7 @@ const StatusBadge = ({ status }) => (
 const UserList = () => {
   const { users, handleUserDelete } = useUsersData();
   const axiosSecure = useAxiosSecure();
-
+  console.log("users:", users);
   // useEffect(() => {
   //   axiosSecure.get("/api/users").then((res) => {
   //     setUserList(res.data.data.users);
@@ -132,6 +132,11 @@ const UserList = () => {
 
   return (
     <div className="overflow-x-auto rounded-md">
+      <img
+        src="http://localhost:4000/public/uploads/users/1728208037095.jpeg"
+        alt=""
+        className="my-10"
+      />
       <table {...getTableProps()} className="min-w-full bg-white border">
         <thead className="bg-gray-200">
           {headerGroups.map((headerGroup) => (

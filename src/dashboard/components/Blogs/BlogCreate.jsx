@@ -70,14 +70,10 @@ const BlogCreate = () => {
           <Typography variant="h6" color="blue-gray" className="-mb-3">
             Ttile
           </Typography>
-          <Input
+          <input
             type="text"
             size="lg"
-            placeholder="name"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
+            className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
             id="name"
             name="title"
             {...register("title")}
@@ -85,14 +81,10 @@ const BlogCreate = () => {
           <Typography variant="h6" color="blue-gray" className="-mb-3">
             Tags
           </Typography>
-          <Input
+          <input
             type="text"
             size="lg"
-            placeholder="desciption"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
+            className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
             id="description"
             name="tags"
             {...register("tags")}

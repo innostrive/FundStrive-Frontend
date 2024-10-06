@@ -115,7 +115,6 @@ export const adminSidebarItems = [
     link: "/dashboard/blogs",
   },
   {
-    id: 6,
     name: "System Settings",
     // icon: (
     //   <svg
@@ -143,7 +142,7 @@ export const adminSidebarItems = [
 
     subMenus: [
       {
-        id: 1,
+        // id: 1,
         name: "Menu Settings",
         icon: (
           <svg

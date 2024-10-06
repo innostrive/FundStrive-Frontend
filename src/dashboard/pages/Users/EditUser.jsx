@@ -41,68 +41,38 @@ const EditUser = () => {
     reader.readAsDataURL(file);
   };
 
-  // const onSubmit = (data) => {
-  //   const formData = new FormData();
-
-  //   formData.append("user", userInfo);
-
-  //   if (image) {
-  //     formData.append("image", image);
-  //   } else {
-  //     toast.error("image is missing");
-  //   }
-
-  //   const updateUser = {
-  //     user: userInfo,
-  //     image: image,
-  //   };
-
-  //   formData.append("data", JSON.stringify());
-
-  //   axiosSecure
-  //     .patch(`/api/users/upload-image`, updateUser, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response.data.data !== null) {
-  //         toast.success(response.data.message);
-  //         console.log("image", response);
-  //       } else {
-  //         toast.error(response.data.message);
-  //       }
-  //       console.log(response);
-  //     });
-  // };
-
-  const defaultValues = {
-    name: "Jon Smith",
-  };
-
   const onSubmit = (data) => {
     const formData = new FormData();
-    formData.append("image", image);
+    // formData.append("image", image);
     const payload = {
       ...data,
       status: selectedStatus,
+      image,
     };
-    console.log("Data being submitted:", payload);
-    formData.append("data", JSON.stringify(payload));
+    // formData.append("data", JSON.stringify(payload));
+    console.log(formData.get("data"));
     axiosSecure
-      .put(`/api/users/${id}`, payload)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success(response.data.message);
-          console.log("Server response:", response);
+      .put(
+        `/api/users/${id}`,
+        payload
+        //   {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success(res.data.message);
+          console.log("Server response:", res.data);
           navigate("/dashboard/users");
         }
       })
       .catch((error) => {
-        toast.error(response.data.message);
+        toast.error(error);
         console.error("Error submitting data:", error);
       });
-    console.log("data:", data);
+    console.log("data:", payload);
   };
 
   return (
@@ -192,7 +162,7 @@ const EditUser = () => {
             accept="image/*"
             onChange={(e) => handleImage(e)}
           />
-          <div>
+          <div className="mt-5">
             {imagePreview && (
               <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
                 <img

@@ -62,17 +62,15 @@ const CreateCategory = () => {
   };
   return (
     <section>
-      <FormCard title="Create category for campaign">
+      <FormCard title="Create category">
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
             <div className="mb-1 grid gap-6">
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
+              <span className="-mb-3 text-sm text-secondary">
                 Category Name
-              </Typography>
+              </span>
               <TextInput type="text" name="name" />
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Description
-              </Typography>
+              <span className="-mb-3 text-sm text-secondary">Description</span>
               <EditorToolbar toolbarId={"t2"} />
               <ReactQuill
                 theme="snow"
@@ -80,35 +78,35 @@ const CreateCategory = () => {
                 // onChange={setValue}
                 modules={modules("t2")}
                 formats={formats}
-                placeholder="Write blog here..."
-              />
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Upload Image
-              </Typography>
-              <Input
-                type="file"
-                size="lg"
-                placeholder="Upload Image"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                  className: "before:content-none after:content-none",
-                }}
-                id="image"
-                name="image"
-                onChange={handleImage}
-                accept="image/*"
+                placeholder="Write description here..."
               />
             </div>
-            <div className="mt-5">
-              {imagePreview && (
-                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
-                  <img
-                    src={imagePreview}
-                    alt=""
-                    className="h-full w-full object-cover object-center rounded-md"
-                  />
-                </div>
-              )}
+            <div className="col-span-2 mt-5">
+              <label
+                htmlFor="image"
+                className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
+              >
+                Upload Image
+              </label>
+              <input
+                type="file"
+                className="hidden"
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={(e) => handleImage(e)}
+              />
+              <div className="mt-5">
+                {imagePreview && (
+                  <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                    <img
+                      src={imagePreview}
+                      alt=""
+                      className="h-full w-full object-cover object-center rounded-md"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
             <IButton className="flex ml-auto">Submit</IButton>
           </form>

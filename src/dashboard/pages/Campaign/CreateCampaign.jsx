@@ -22,7 +22,8 @@ import EditorToolbar, {
 const CreateCampaign = () => {
   const axiosSecure = useAxiosSecure();
   const { categories } = useCategoriesData();
-
+  const [imagePreview, setImagePreview] = useState("");
+  const [image, setImage] = useState(null);
   const [campaignData, setCampaignData] = useState({
     name: "",
     description: "",
@@ -59,60 +60,48 @@ const CreateCampaign = () => {
     formData.append("deadline", campaignData.deadline);
     formData.append("image", campaignData.image);
 
-    try {
-      await axiosSecure
-        .post("/api/campaigns", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            toast.success(response.data.message);
-          }
-          console.log("campaign:", response);
-        });
-    } catch (err) {
-      toast.error(err);
-      console.log(err);
-    }
-    console.log("campaign:", formData);
+    // try {
+    //   await axiosSecure
+    //     .post("/api/campaigns", formData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     })
+    //     .then((response) => {
+    //       if (response.status === 200) {
+    //         toast.success(response.data.message);
+    //       }
+    //       console.log("campaign:", response);
+    //     });
+    // } catch (err) {
+    //   toast.error(err);
+    //   console.log(err);
+    // }
+    console.log("campaign:", formData.get("category"));
   };
 
   return (
     <FormCard title="Create Campaign">
       <form onSubmit={handleCategorySubmit} className="mt-8 mb-2">
         <div className="mb-1 grid sm:grid-cols-2 grid-cols-1 gap-10">
-          <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Campaign Name
-            </Typography>
-            <Input
+          <div className="grid grid-cols-1 space-y-2">
+            <span className="text-sm">Campaign Name</span>
+            <input
               type="text"
               size="lg"
-              placeholder="name"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
+              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               id="name"
               name="name"
               value={campaignData.name}
               onChange={handleInputChange}
             />
           </div>
-          <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Campaign Title
-            </Typography>
-            <Input
+          <div className="grid grid-cols-1 space-y-2">
+            <span className="text-sm">Campaign Title</span>
+            <input
               type="text"
               size="lg"
-              placeholder="name"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
+              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               id="title"
               name="title"
               value={campaignData.title}
@@ -120,10 +109,8 @@ const CreateCampaign = () => {
             />
           </div>
 
-          <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Category
-            </Typography>
+          <div className="grid grid-cols-1 space-y-2">
+            <span className="text-sm">Category</span>
             <Select
               label="Select Category"
               value={categories?._id}
@@ -141,68 +128,48 @@ const CreateCampaign = () => {
               ))}
             </Select>
           </div>
-          <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Target Amount
-            </Typography>
-            <Input
+          <div className="grid grid-cols-1 space-y-2">
+            <span className="text-sm">Target Amount</span>
+            <input
               type="text"
               size="lg"
-              placeholder="target amount"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
+              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               id="targetAmount"
               name="target_amount"
               value={campaignData.target_amount}
               onChange={handleInputChange}
             />
           </div>
-          <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Raised Amount
-            </Typography>
-            <Input
+          <div className="grid grid-cols-1 space-y-2">
+            <span className="text-sm">Raised Amount</span>
+            <input
               type="text"
               size="lg"
-              placeholder="raised amount"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
+              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               id="raisedAmount"
               name="raised_amount"
               value={campaignData.raised_amount}
               onChange={handleInputChange}
             />
           </div>
-          <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Deadline
-            </Typography>
-            <Input
+          <div className="grid grid-cols-1 space-y-2">
+            <span className="text-sm">Deadline</span>
+            <input
               type="date"
               size="lg"
-              placeholder="deadline"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
+              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               id="deadline"
               name="deadline"
               value={campaignData.deadline}
               onChange={handleInputChange}
             />
           </div>
-          <div className="col-span-2">
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Description
-            </Typography>
+          <div className="col-span-2 space-y-2">
+            <span className="grid grid-cols-1 space-y-2">Description</span>
             {/* <Textarea
               type="text"
               size="lg"
-              placeholder="description"
+              
               className="!border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
@@ -219,26 +186,34 @@ const CreateCampaign = () => {
               // onChange={setValue}
               modules={modules("t2")}
               formats={formats}
-              placeholder="Write blog here..."
             />
           </div>
           <div className="col-span-2">
-            <Typography variant="h6" color="blue-gray" className="mb-3">
+            <label
+              htmlFor="image"
+              className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
+            >
               Upload Image
-            </Typography>
-            <Input
+            </label>
+            <input
               type="file"
-              size="lg"
-              placeholder="Upload Image"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
+              className="hidden"
               id="image"
               name="image"
-              onChange={handleInputChange}
               accept="image/*"
+              onChange={(e) => handleImage(e)}
             />
+            <div className="mt-5">
+              {imagePreview && (
+                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                  <img
+                    src={imagePreview}
+                    alt=""
+                    className="h-full w-full object-cover object-center rounded-md"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <IButton className="my-5 flex ml-auto">Submit</IButton>

@@ -16,37 +16,55 @@ const EditCategoryInfo = () => {
   const { id } = useParams();
   const { register, handleSubmit, reset } = useForm(); // react-hook-form
   const [categoryInfo, setCategoryInfo] = useState({});
+  const [categoryDescription, setCategoryDescription] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
-  const axiosSecure = useAxiosSecure(); // custom hook for secure axios instance
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const axiosSecure = useAxiosSecure();
 
-  // Fetch user info from API
   useEffect(() => {
     axiosSecure.get(`/categories/${id}`).then((res) => {
       const userData = res.data.data;
       setCategoryInfo(userData);
       setSelectedStatus(userData?.status);
+      setCategoryDescription(userData?.description);
     });
   }, [id, axiosSecure]);
+
+  console.log("categoryById:", categoryInfo);
+
   useEffect(() => {
     reset();
   }, [categoryInfo]);
 
-  const onSubmit = (data) => {
-    console.log("Data being submitted:", data); // Check if data is populated
-    if (!data) {
-      console.error("Data is null or undefined!");
-      return;
-    }
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
 
-    axiosSecure
-      .put(`/api/categories/${id}`, data)
+  const onSubmit = async (data) => {
+    const categoryData = {
+      ...data,
+      status: selectedStatus,
+      description: categoryDescription,
+      image,
+    };
+    await axiosSecure
+      .put(`/api/categories/${id}`, categoryData)
       .then((response) => {
         console.log("Server response:", response);
         toast.success(response.data.message);
       })
       .catch((error) => {
         console.error("Error submitting data:", error);
+        toast.error(error);
       });
+    console.log("category:", categoryData);
   };
   return (
     <section>
@@ -77,20 +95,14 @@ const EditCategoryInfo = () => {
           </div>
           <div className="grid grid-cols-1 space-y-2 mt-7">
             <span className="text-sm">Description</span>
-            {/* <textarea
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded min-h-20"
-              type="text"
-              defaultValue={categoryInfo?.description}
-              {...register("description")}
-            /> */}
             <EditorToolbar toolbarId={"t2"} />
             <ReactQuill
               theme="snow"
-              // value={value}
-              // onChange={setValue}
+              value={categoryDescription}
+              onChange={(value) => setCategoryDescription(value)}
               modules={modules("t2")}
               formats={formats}
-              placeholder="Write blog here..."
+              placeholder="Write description here..."
             />
           </div>
           <div className="grid grid-cols-1 mt-7">
@@ -107,7 +119,19 @@ const EditCategoryInfo = () => {
               id="image"
               name="image"
               accept="image/*"
+              onChange={(e) => handleImage(e)}
             />
+            <div className="mt-5">
+              {imagePreview && (
+                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                  <img
+                    src={imagePreview}
+                    alt=""
+                    className="h-full w-full object-cover object-center rounded-md"
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <IButton className="flex ml-auto my-5">Update</IButton>
         </form>

@@ -10,25 +10,25 @@ import Payment from "../Payment/Payment";
 const DonateForm = () => {
   const [donationAmount, setDonationAmount] = useState("");
   const [paymentType, setPaymentType] = useState(false);
-  console.log(paymentType);
+  // console.log(paymentType);
   return (
     <Card color="transparent" shadow={false}>
-      <form className="mt-8 mb-2 w-full">
-        <h1 className="text-base font-medium text-black">Payment With</h1>
-        <div className="flex">
-          <Radio
-            name="offline"
-            label="Offline"
-            onClick={() => setPaymentType(true)}
-          />
-          <Radio
-            name="offline"
-            label="Online"
-            defaultChecked
-            onClick={() => setPaymentType(false)}
-          />
-        </div>
-        {paymentType ? (
+      <h1 className="text-base font-medium text-black">Payment With</h1>
+      <div className="flex">
+        <Radio
+          name="offline"
+          label="Offline"
+          onClick={() => setPaymentType(true)}
+        />
+        <Radio
+          name="offline"
+          label="Online"
+          defaultChecked
+          onClick={() => setPaymentType(false)}
+        />
+      </div>
+      {paymentType ? (
+        <form className="mt-8 mb-2 w-full">
           <div className="space-y-4">
             <h1 className="text-base font-medium text-black">
               Donation Amount
@@ -154,10 +154,10 @@ const DonateForm = () => {
               Make Your Donation
             </Button>
           </div>
-        ) : (
-          <Payment />
-        )}
-      </form>
+        </form>
+      ) : (
+        <Payment />
+      )}
     </Card>
   );
 };

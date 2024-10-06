@@ -1,12 +1,54 @@
-import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
+import { Input } from "@material-tailwind/react";
+import IButton from "../../../dashboard/ui/IButton";
+import axios from "axios";
+import { useState } from "react";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 const Payment = () => {
+  const URL = import.meta.env.VITE_BASE_URL;
+  const [payment, setPayment] = useState("");
+  const axiosSecure = useAxiosSecure();
+  const handleSubmit = async (event, item) => {
+    event.preventDefault();
+    const data = {
+      ...item,
+      payment: payment,
+    };
+    try {
+      const response = await axios.post(`${URL}/payment_check`, {
+        api_id: "price_1Q6zN3JggWefJ04AWu8mZIig",
+      });
+      const sessionId = response.data.sessionId;
+
+      if (sessionId) {
+        const stripe = await stripePromise;
+        console.log(stripe);
+        localStorage.setItem("planData", JSON.stringify(item));
+        await stripe.redirectToCheckout({ sessionId });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <Elements stripe={stripePromise}>
-      <CheckoutForm />
-    </Elements>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {/* <div className="space-y-4">
+        <label className="text-base font-medium text-[#2B2A27]">Amount</label>
+        <Input
+          size="md"
+          placeholder="Amount"
+          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+          labelProps={{
+            className: "before:content-none after:content-none",
+          }}
+          onChange={(e) => setPayment(e.target.value)}
+        />
+      </div> */}
+      <IButton className="uppercase w-full" onClick={() => handleSubmit(item)}>
+        Make your donation
+      </IButton>
+    </form>
   );
 };
 

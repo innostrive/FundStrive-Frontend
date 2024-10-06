@@ -8,79 +8,42 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
+
+const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const axiosSecure = useAxiosSecure();
+  const [clientSecret, setClientSecret] = useState("");
 
-  const handleSubmit = async (event) => {
-    // Block native form submission.
-    event.preventDefault();
+  const handleSubmit = async (item) => {
+    const data = {
+      ...item,
+      price: 65,
+    };
+    console.log("item:", data);
+    try {
+      const response = await axiosInstance.post("/payment_check", item);
+      const sessionId = response.data.sessionId;
 
-    if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
-      return;
-    }
-
-    // Get a reference to a mounted CardElement. Elements knows how
-    // to find your CardElement because there can only ever be one of
-    // each type of element.
-    const card = elements.getElement(CardElement);
-
-    if (card == null) {
-      return;
-    }
-
-    // Use your card Element with other Stripe.js APIs
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card,
-    });
-
-    if (error) {
-      console.log("[error]", error);
-    } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      if (sessionId) {
+        // swalSuccess();
+        const stripe = await stripePromise;
+        console.log(stripe);
+        localStorage.setItem("planData", JSON.stringify(item));
+        await stripe.redirectToCheckout({ sessionId });
+      }
+    } catch (error) {
+      swalError(error);
     }
   };
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-4">
-        <label className="text-base font-medium text-[#2B2A27]">
-          Card Number
-        </label>
-        <CardNumberElement className="border border-gray-400 rounded px-3 py-3" />
-      </div>
-      <div className="flex gap-4">
-        <div className="space-y-4 w-full">
-          <label className="text-base font-medium text-[#2B2A27]">
-            Card Expier Date
-          </label>
-          <CardExpiryElement className="border border-gray-400 rounded px-3 py-3" />
-        </div>
-        <div className="space-y-4 w-full">
-          <label className="text-base font-medium text-[#2B2A27]">
-            Card CVC
-          </label>
-          <CardCvcElement className="border border-gray-400 rounded px-3 py-3" />
-        </div>
-      </div>
-      <div className="space-y-4">
-        <label className="text-base font-medium text-[#2B2A27]">
-          Your Name
-        </label>
-        <Input
-          size="md"
-          placeholder="name"
-          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-          labelProps={{
-            className: "before:content-none after:content-none",
-          }}
-        />
-      </div>
-      <div className="space-y-4">
+      {/* <div className="space-y-4">
         <label className="text-base font-medium text-[#2B2A27]">
           Your Email
         </label>
@@ -92,40 +55,21 @@ const CheckoutForm = () => {
             className: "before:content-none after:content-none",
           }}
         />
-      </div>
+      </div> */}
       <div className="space-y-4">
-        <label className="text-base font-medium text-[#2B2A27]">
-          Your Country
-        </label>
+        <label className="text-base font-medium text-[#2B2A27]">Amount</label>
         <Input
           size="md"
-          placeholder="email"
+          placeholder="Amount"
           className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
           labelProps={{
             className: "before:content-none after:content-none",
           }}
         />
       </div>
-      {/* <CardElement
-        options={{
-          style: {
-            base: {
-              fontSize: "16px",
-              color: "#424770",
-              "::placeholder": {
-                color: "#aab7c4",
-              },
-            },
-            invalid: {
-              color: "#9e2146",
-            },
-          },
-        }}
-      /> */}
       <Button
         className="uppercase w-full bg-secondary"
-        type="submit"
-        disabled={!stripe}
+        onClick={() => handleSubmit(item)}
       >
         Make your donation
       </Button>
