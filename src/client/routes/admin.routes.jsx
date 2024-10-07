@@ -1,5 +1,4 @@
 import ProtectedRoute from "../../dashboard/layout/ProtectedRoute";
-import Banner from "../../dashboard/pages/Banner/Banner";
 import BlogDetailsData from "../../dashboard/pages/Blog/BlogDetailsData";
 import BlogsData from "../../dashboard/pages/Blog/BlogsData";
 import BlogUpdate from "../../dashboard/pages/Blog/BlogUpdate";
@@ -13,7 +12,12 @@ import CategoryDetails from "../../dashboard/pages/Category/CategoryDetails";
 import CreateCategory from "../../dashboard/pages/Category/CreateCategory";
 import EditCategory from "../../dashboard/pages/Category/EditCategory";
 import Dashboard from "../../dashboard/pages/dashboard/Dashboard";
+import BannerInfo from "../../dashboard/pages/Settings/BannerSettings/BannerInfo";
+import BannerSettings from "../../dashboard/pages/Settings/BannerSettings/BannerSettings";
+import CreateBanner from "../../dashboard/pages/Settings/BannerSettings/CreateBanner";
+import EditBanner from "../../dashboard/pages/Settings/BannerSettings/EditBanner";
 import CreateSettings from "../../dashboard/pages/Settings/CreateSettings";
+import EditSettings from "../../dashboard/pages/Settings/EditSettings";
 import Settings from "../../dashboard/pages/Settings/Settings";
 import SettingsInfo from "../../dashboard/pages/Settings/SettingsInfo";
 import UserProfile from "../../dashboard/pages/UserProfile/UserProfile";
@@ -167,14 +171,6 @@ const adminPath = [
     ),
   },
   {
-    path: "create-banner",
-    element: (
-      <ProtectedRoute>
-        <Banner />
-      </ProtectedRoute>
-    ),
-  },
-  {
     path: "menu-settings",
     element: (
       <ProtectedRoute>
@@ -195,6 +191,46 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <SettingsInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-settings/:id",
+    element: (
+      <ProtectedRoute>
+        <EditSettings />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "banner-list",
+    element: (
+      <ProtectedRoute>
+        <BannerSettings />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-banner",
+    element: (
+      <ProtectedRoute>
+        <CreateBanner />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-banner/:id",
+    element: (
+      <ProtectedRoute>
+        <EditBanner />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "banner/:id",
+    element: (
+      <ProtectedRoute>
+        <BannerInfo />
       </ProtectedRoute>
     ),
   },

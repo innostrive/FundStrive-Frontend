@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import useAxiosSecure from "./useAxiosSecure";
+import axios from "axios";
 
 const useCampaignsData = () => {
-  const axiosSecure = useAxiosSecure();
-  const [campaigns, setUsers] = useState([]);
+  const URL = import.meta.env.VITE_BASE_URL;
+  const [campaigns, setCampaigns] = useState([]);
   useEffect(() => {
-    axiosSecure.get("/campaigns").then((res) => {
-      setUsers(res.data.data.campaigns);
+    axios.get(`${URL}/campaigns`).then((res) => {
+      setCampaigns(res.data.data.campaigns);
     });
   }, []);
+  console.log("campaign:", campaigns);
   return campaigns;
 };
 

@@ -19,8 +19,8 @@ import {
 } from "../../assets/icons/icons";
 import Reviews from "../Reviews/Reviews";
 
-const CampaignDetailsInfo = () => {
-  const { id } = useParams();
+const CampaignDetailsInfo = ({ id }) => {
+  // const { id } = useParams();
   const campaign = useCampaignsInfo(id);
   const campaignId = campaign?._id;
   const data = [

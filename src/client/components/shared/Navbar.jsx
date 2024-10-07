@@ -9,7 +9,7 @@ import {
 } from "@material-tailwind/react";
 import Container from "../Container/Container";
 import { Link, NavLink } from "react-router-dom";
-import useSetting from "../../../dashboard/hooks/useSettings";
+import useNavMenus from "../../hooks/useNavMenus";
 
 export function StickyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -21,69 +21,25 @@ export function StickyNavbar() {
     );
   }, []);
 
-  const { settings } = useSetting();
-  const activeSetting = settings.filter((item) => item.status === "Active");
+  const navmenus = useNavMenus();
+  const activeMenus = navmenus.filter((item) => item.status === "Active");
 
   const navList = (
     <ul className="mt-2 mb-4 flex uppercase flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      {activeSetting.map((setting) => (
-        <Typography
-          as="li"
-          variant="small"
-          className=" text-secondary font-semibold"
-          key={setting?.key}
-        >
-          <a href={`${setting?.value}`} className="flex items-center">
-            {setting?.key}
-          </a>
-        </Typography>
-      ))}
-      {/* <Typography
-        as="li"
-        variant="small"
-        className=" text-secondary font-semibold"
-      >
-        <a href="/" className="flex items-center">
-          Home
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        className=" text-secondary font-semibold"
-      >
-        <a href="/#campaign" className="flex items-center">
-          Campaign
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        className="text-secondary  font-semibold"
-      >
-        <a href="/#blog" className="flex items-center">
-          Blog
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        className="text-secondary  font-semibold"
-      >
-        <a href="/#about-us" className="flex items-center">
-          About Us
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className=" font-semibold"
-      >
-        <a href="/contact-us" className="flex items-center">
-          Contact
-        </a>
-      </Typography> */}
+      {activeMenus
+        .sort((a, b) => b.key.localeCompare(a.key))
+        .map((activeMenu) => (
+          <Typography
+            as="li"
+            variant="small"
+            className=" text-secondary font-semibold"
+            key={activeMenu?.key}
+          >
+            <a href={`${activeMenu?.value}`} className="flex items-center">
+              {activeMenu?.key}
+            </a>
+          </Typography>
+        ))}
     </ul>
   );
   const [stickyNav, setStickyNav] = useState(false);

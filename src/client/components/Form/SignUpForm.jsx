@@ -4,9 +4,10 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 const SignUpForm = () => {
+  const URL = import.meta.env.VITE_BASE_URL;
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-    await axios.post("http://localhost:4000/signup", data).then((data) => {
+    await axios.post(`${URL}/signup`, data).then((data) => {
       console.log("user data:", data);
       if (data.data.data !== null) {
         toast.success(data.data.message);

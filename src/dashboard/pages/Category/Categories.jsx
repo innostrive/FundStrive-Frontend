@@ -115,10 +115,6 @@ const Categories = () => {
           .delete("/api/categories", { data })
           .then((response) => {
             if (response.status === 200) {
-              const remainingCategories = categories.filter(
-                (category) => category._id !== id
-              );
-              setCategories(remainingCategories);
               toast.success("Delete Successful");
             } else {
               toast.warning("Category not deleted");

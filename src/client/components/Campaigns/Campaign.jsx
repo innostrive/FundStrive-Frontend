@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Range } from "react-range";
 import donate from "../../assets/donate-1.jpg";
 import { Link } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+import { Button, Progress } from "@material-tailwind/react";
 import IButton from "../../../dashboard/ui/IButton";
 const Campaign = ({ campaign }) => {
   const goal = campaign?.target_amount;
   const raised = campaign?.raised_amount;
   const average = (raised + goal) / 2;
-  const initialProgress = (average / goal) * 100;
+  const initialProgress = Math.round((average / goal) * 100);
 
   const [progress, setProgress] = useState([initialProgress]);
   return (
@@ -36,9 +36,9 @@ const Campaign = ({ campaign }) => {
         </div>
 
         <div className="p-5 bg-[#f3f4f7]">
-          <div className="w-full rounded-full h-0.5 bg-[#2B2A27]">
+          <div className="">
             {/* <div className="bg-primary h-0.5 rounded-full w-[45%]"></div> */}
-            <Range
+            {/* <Range
               step={0.1}
               min={0}
               max={100}
@@ -71,6 +71,13 @@ const Campaign = ({ campaign }) => {
                   }}
                 />
               )}
+            /> */}
+            <Progress
+              value={initialProgress}
+              label="Completed"
+              size="md"
+              className="bg-secondary h-3"
+              color="cyan"
             />
           </div>
         </div>

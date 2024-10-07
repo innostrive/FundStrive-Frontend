@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FormCard from "../../ui/FormCard";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -6,12 +6,12 @@ import { toast } from "react-toastify";
 import Form from "../../components/form/Form";
 import IButton from "../../ui/IButton";
 
-const SettingsInfo = () => {
+const EditSettings = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const [settings, setSettings] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     axiosSecure.get(`/api/settings/${id}`).then((res) => {
       setSettings(res.data.data);
@@ -26,7 +26,8 @@ const SettingsInfo = () => {
     };
     axiosSecure.put(`/api/settings/${id}`, editData).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.data.message);
+        toast.success(res.data.message);
+        navigate("/dashboard/menu-settings");
       }
       console.log(res.data.data);
     });
@@ -45,7 +46,6 @@ const SettingsInfo = () => {
               id="raisedAmount"
               name="raised_amount"
               defaultValue={settings?.name}
-              disabled
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
@@ -57,7 +57,6 @@ const SettingsInfo = () => {
               id="raisedAmount"
               name="raised_amount"
               defaultValue={settings?.slug}
-              disabled
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
@@ -69,7 +68,6 @@ const SettingsInfo = () => {
               id="raisedAmount"
               name="raised_amount"
               defaultValue={settings?.key}
-              disabled
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
@@ -81,25 +79,25 @@ const SettingsInfo = () => {
               id="raisedAmount"
               name="raised_amount"
               defaultValue={settings?.value}
-              disabled
             />
           </div>
-          <div className="grid col-span-2 space-y-2">
-            <span className="text-sm">Status</span>
-            <input
-              type="text"
-              size="lg"
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="raisedAmount"
-              name="raised_amount"
-              defaultValue={settings?.status}
-              disabled
-            />
+          <div className="col-span-2">
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-full text-base rounded"
+            >
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
           </div>
         </div>
+        <IButton type="submit" className="my-5 flex ml-auto">
+          submit
+        </IButton>
       </Form>
     </FormCard>
   );
 };
 
-export default SettingsInfo;
+export default EditSettings;

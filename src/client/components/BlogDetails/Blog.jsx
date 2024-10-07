@@ -1,7 +1,8 @@
 import donate from "../../assets/donate-1.jpg";
+import BlogReview from "./BlogReview";
 const Blog = ({ blog }) => {
   return (
-    <div>
+    <div className="space-y-10">
       <div className="space-y-8">
         {/* <img src={donate} alt="" className="h-52 w-full object-cover" /> */}
         <div
@@ -9,6 +10,7 @@ const Blog = ({ blog }) => {
           dangerouslySetInnerHTML={{ __html: blog?.content }}
         ></div>
       </div>
+      <BlogReview blog={blog} />
     </div>
   );
 };

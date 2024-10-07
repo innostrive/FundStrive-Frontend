@@ -1,12 +1,13 @@
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
 import axios from "axios";
-import { useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import loginValidationSchema from "../../../dashboard/schemas/login.schema";
 
 const LoginForm = () => {
+  const URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const {
     register,
@@ -14,7 +15,7 @@ const LoginForm = () => {
     formState: { errors },
   } = useFormContext();
   const onSubmit = async (data) => {
-    await axios.post("http://localhost:4000/login", data).then((data) => {
+    await axios.post(`${URL}/login`, data).then((data) => {
       if (data.data.data !== null) {
         toast.success(data.data.message);
         localStorage.setItem("token", data.data.data.token);

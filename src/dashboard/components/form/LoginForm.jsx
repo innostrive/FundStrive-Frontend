@@ -12,11 +12,13 @@ import ForgotPassword from "./ForgotPassword";
 import { PasswordModal } from "./PasswordModal";
 
 const LoginForm = () => {
+  const URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (data) => {
+    setIsLoading(true);
     try {
-      await axios.post("http://localhost:4000/login", data).then((data) => {
+      await axios.post(`${URL}/login`, data).then((data) => {
         setIsLoading(false);
         toast.success(data.data.message);
         localStorage.setItem("token", data.data.data.token);
@@ -28,18 +30,15 @@ const LoginForm = () => {
       toast.error(data.data.message);
       console.log("login error:", data.data.message);
     }
-    try {
-      setIsLoading(true);
-      await axios
-        .post("http://localhost:4000/forgot-password", data)
-        .then((data) => {
-          setIsLoading(false);
-          console.log("resetLink:", data);
-        });
-    } catch {
-      toast.error(data.data.message);
-      console.log("login error:", data.data.message);
-    }
+    // try {
+    //   setIsLoading(true);
+    //   await axios.post(`${URL}/forgot-password`, data).then((data) => {
+    //     setIsLoading(false);
+    //   });
+    // } catch {
+    //   toast.error(data.data.message);
+    //   console.log("login error:", data.data.message);
+    // }
     console.log("reset:", data);
   };
 

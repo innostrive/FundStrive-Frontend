@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "./useAxiosSecure";
+import axios from "axios";
 
 const useSetting = () => {
-  const axiosSecure = useAxiosSecure();
   const [settings, setSettings] = useState([]);
   useEffect(() => {
-    axiosSecure.get("/api/settings").then((res) => {
+    axios.get("/api/settings").then((res) => {
       setSettings(res.data.data.settings);
     });
   }, []);

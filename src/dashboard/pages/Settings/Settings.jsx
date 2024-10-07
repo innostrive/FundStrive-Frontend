@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useMemo } from "react";
 import { useRowSelect, useTable } from "react-table";
+import { FilterSettings } from "./FilterSettings";
 
 const StatusBadge = ({ status }) => (
   <span
@@ -30,8 +31,15 @@ const Settings = () => {
         },
       },
       {
-        Header: "Category",
-        accessor: "name",
+        Header: "Slug",
+        accessor: "slug",
+        Cell: (row) => {
+          return <span>{row?.cell?.value}</span>;
+        },
+      },
+      {
+        Header: "Menu",
+        accessor: "key",
         Cell: (row) => {
           return <span>{row?.cell?.value}</span>;
         },
@@ -56,7 +64,7 @@ const Settings = () => {
                 <Delete />
               </span>
             </Link>
-            <Link to={`/dashboard/edit-category/${row.original._id}`}>
+            <Link to={`/dashboard/edit-settings/${row.original._id}`}>
               <Edit />
             </Link>
           </div>
@@ -110,6 +118,9 @@ const Settings = () => {
       path="/dashboard/create-settings"
       iconTitle="Add"
     >
+      <div className="my-5">
+        <FilterSettings />
+      </div>
       <div className="overflow-x-auto rounded-md">
         <table {...getTableProps()} className="min-w-full bg-white border">
           <thead className="bg-gray-200">

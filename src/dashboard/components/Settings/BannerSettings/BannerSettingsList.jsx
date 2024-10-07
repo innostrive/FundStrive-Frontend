@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable, useRowSelect, usePagination } from "react-table";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useUsersData from "../../hooks/useUsersData";
 import { Link } from "react-router-dom";
-import { Delete, Edit, View } from "../../assets/icons/icons";
+import { Delete, Edit, View } from "../../../../dashboard/assets/icons/icons";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import useUsersData from "../../../hooks/useUsersData";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useBanner from "../../../hooks/useBanner";
 
 // Component for rendering the status badge
 const StatusBadge = ({ status }) => (
@@ -20,40 +21,38 @@ const StatusBadge = ({ status }) => (
   </span>
 );
 
-const UserList = () => {
-  const { users, handleUserDelete } = useUsersData();
+const BannerSettingsList = () => {
+  const banners = useBanner();
   const axiosSecure = useAxiosSecure();
-  console.log("users:", users);
+  console.log("banner:", banners);
   // useEffect(() => {
   //   axiosSecure.get("/api/users").then((res) => {
   //     setUserList(res.data.data.users);
   //   });
   // }, []);
 
-  // const handleUserDelete = (id) => {
-  //   const data = {
-  //     ids: [id],
-  //   };
-  //   Swal.fire({
-  //     title: "Are you sure to delete?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       axiosSecure.delete("/api/users", { data }).then((data) => {
-  //         const remainingUser = users.filter((user) => user._id !== id);
-  //         setUsers(remainingUser);
-  //         data.status === 200
-  //           ? toast.success("Delete Successful")
-  //           : toast.warning("Activity not deleted");
-  //       });
-  //     }
-  //   });
-  // };
+  const handleUserDelete = (id) => {
+    const data = {
+      ids: [id],
+    };
+    Swal.fire({
+      title: "Are you sure to delete?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete("/api/banners", { data }).then((data) => {
+          data.status === 200
+            ? toast.success("Delete Successful")
+            : toast.warning("Activity not deleted");
+        });
+      }
+    });
+  };
 
   const columns = useMemo(
     () => [
@@ -62,16 +61,8 @@ const UserList = () => {
         accessor: "name",
       },
       {
-        Header: "Country",
-        accessor: "country",
-      },
-      {
-        Header: "State",
-        accessor: "state",
-      },
-      {
-        Header: "Role",
-        accessor: "role",
+        Header: "Slug",
+        accessor: "slug",
       },
       {
         Header: "Status",
@@ -82,10 +73,10 @@ const UserList = () => {
         Header: "Action",
         Cell: ({ row }) => (
           <div className="flex gap-2">
-            <Link to={`/dashboard/user-details/${row.original._id}`}>
+            <Link to={`/dashboard/banner/${row.original._id}`}>
               <View />
             </Link>
-            <Link to={`/dashboard/edit-user/${row.original._id}`}>
+            <Link to={`/dashboard/edit-banner/${row.original._id}`}>
               <Edit />
             </Link>
             <span
@@ -102,7 +93,7 @@ const UserList = () => {
   );
 
   // Define table data
-  const data = useMemo(() => users, [users]);
+  const data = useMemo(() => banners, [banners]);
 
   // Use table hook and pagination
   const {
@@ -211,4 +202,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default BannerSettingsList;

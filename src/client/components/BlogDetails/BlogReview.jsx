@@ -1,18 +1,18 @@
-import axios from "axios";
-import Form from "../../../dashboard/components/form/Form";
-import IButton from "../../../dashboard/ui/IButton";
-import TextInput from "../../../dashboard/ui/TextInput";
-import { Rating, Typography } from "@material-tailwind/react";
 import { useState } from "react";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
-import useReview from "../../hooks/useReview";
-import { useForm } from "react-hook-form";
-const ReviewForm = ({ campaignId }) => {
+import Form from "../../../dashboard/components/form/Form";
+import { Rating, Typography } from "@material-tailwind/react";
+import TextInput from "../../../dashboard/ui/TextInput";
+import IButton from "../../../dashboard/ui/IButton";
+
+const BlogReview = ({ blog }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [isLoading, setIsLoading] = useState(false);
+  const axiosSecure = useAxiosSecure();
   const [rating, setRating] = useState(0);
-  const [, refetch] = useReview();
-  const { reset } = useForm();
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+
   const handleRatingChange = (newRating) => {
     setRating(newRating);
   };
@@ -20,19 +20,17 @@ const ReviewForm = ({ campaignId }) => {
     const payload = {
       ...data,
       rating,
-      campaign_id: campaignId,
+      post_id: blog?._id,
     };
-    setIsLoading(true);
-    await axios.post(`${URL}/reviews`, payload).then((res) => {
-      if (res.status === 200) {
-        toast.success(res.data.message);
-        setIsLoading(false);
-        reset();
-        console.log("review:", res.data);
-      }
-      refetch();
-    });
-    // console.log("data:", payload);
+    // setIsLoading(true);
+    // await axiosSecure.post(`${URL}/reviews`, payload).then((res) => {
+    //   if (res.status === 200) {
+    //     toast.success(res.data.message);
+    //     setIsLoading(false);
+    //     console.log("review:", res.data);
+    //   }
+    // });
+    console.log("data:", payload);
   };
   return (
     <Form onSubmit={onSubmit}>
@@ -54,4 +52,4 @@ const ReviewForm = ({ campaignId }) => {
   );
 };
 
-export default ReviewForm;
+export default BlogReview;

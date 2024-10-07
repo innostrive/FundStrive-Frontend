@@ -1,31 +1,28 @@
-import { Rating } from "@material-tailwind/react";
-import FormCard from "../../../dashboard/ui/FormCard";
-import review from "../../assets/Logo/user.jpg";
-import useCampaignsInfo from "../../hooks/useCampaignInfo";
 import useReview from "../../hooks/useReview";
+import axios from "axios";
+import { toast } from "react-toastify";
+import ReviewCard from "./ReviewCard";
 const VisitorReview = () => {
-  const reviews = useReview();
-  // console.log("reviews:", reviews);
+  const [reviews, refetch] = useReview();
+  console.log("review:", reviews);
+  const URL = import.meta.env.VITE_BASE_URL;
+  const handleDelete = async (id) => {
+    console.log("id:", id);
+    const data = {
+      ids: [id],
+    };
+    await axios.delete(`${URL}/reviews`, { data }).then((res) => {
+      if (res.status === 200) {
+        toast.success("Comment deleted...");
+        refetch();
+      }
+    });
+  };
   return (
-    <div className="grid grid-cols-12 items-center bg-white rounded-md p-5">
-      <div className="col-span-2">
-        <img
-          src={review}
-          alt=""
-          className="rounded-full object-cover h-20 w-20"
-        />
-      </div>
-      <div className="col-span-10 space-y-5">
-        <div className="flex justify-between">
-          <h1>Jon Smith</h1>
-          <Rating className="text-primary" value={4} />
-        </div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem dicta
-          laudantium saepe in? Nulla laborum consequatur unde, facilis earum
-          repellendus?
-        </p>
-      </div>
+    <div className="space-y-5">
+      {reviews.map((review) => (
+        <ReviewCard review={review} handleDelete={handleDelete} />
+      ))}
     </div>
   );
 };

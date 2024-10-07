@@ -1,4 +1,4 @@
-import useBlogsData from "../../../dashboard/hooks/useBlogsData";
+import useBlogsData from "../../hooks/useBlogData";
 import ShareCampaign from "../CampaignDetails/ShareCampaign";
 import RecentBlog from "./RecentBlog";
 

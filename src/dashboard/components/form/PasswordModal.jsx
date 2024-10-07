@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 export function PasswordModal() {
+  const URL = import.meta.env.VITE_BASE_URL;
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [resetLink, setResetLink] = useState(false);
@@ -23,17 +24,15 @@ export function PasswordModal() {
 
   const onSubmit = async (data) => {
     try {
-      await axios
-        .post("http://localhost:4000/forgot-password", data)
-        .then((data) => {
-          if (data.status === 200) {
-            toast.success(data.data.message);
-            setResetLink(true);
-            console.log("resetLink:", data);
-          }
-        });
-    } catch {
-      toast.error(data.data.message);
+      await axios.post(`${URL}/forgot-password`, data).then((data) => {
+        if (data.status === 200) {
+          toast.success(data.data.message);
+          setResetLink(true);
+          console.log("resetLink:", data);
+        }
+      });
+    } catch (err) {
+      toast.error(err);
       console.log("login error:", data.data.message);
     }
     console.log("reset-password:", data);
@@ -55,19 +54,18 @@ export function PasswordModal() {
               <IButton className="mt-6" type="submit" fullWidth>
                 send
               </IButton>
-              {resetLink && (
+              {resetLink ? (
                 <span className="text-base font-normal text-green-300">
                   Please Check Your Email For Reset Your Password
                 </span>
+              ) : (
+                ""
               )}
             </DialogBody>
             <DialogFooter>
               <Button onClick={handleOpen} color="green" className="mr-1">
                 <span>Cancel</span>
               </Button>
-              {/* <IButton className="mt-6" type="submit">
-                <span>Send</span>
-              </IButton> */}
             </DialogFooter>
           </Form>
         </FormCard>

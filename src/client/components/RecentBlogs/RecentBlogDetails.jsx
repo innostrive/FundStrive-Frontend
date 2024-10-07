@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import axios from "axios";
 
 const RecentBlogDetails = ({ blogId }) => {
-  const axiosSecure = useAxiosSecure();
+  const URL = import.meta.env.VITE_BASE_URL;
   const [blog, setBlog] = useState({});
   useEffect(() => {
-    axiosSecure.get(`/posts/${blogId}`).then((res) => {
+    axios.get(`${URL}/posts/${blogId}`).then((res) => {
       setBlog(res.data.data);
     });
   }, []);
