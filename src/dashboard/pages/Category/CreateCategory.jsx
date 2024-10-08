@@ -16,7 +16,7 @@ import TextInput from "../../ui/TextInput";
 import { FormProvider, useForm } from "react-hook-form";
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
-import { useNavigate, useParams } from "react-router-dom";
+import { json, useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import EditorToolbar, {
   modules,
@@ -30,6 +30,7 @@ const CreateCategory = () => {
   const [imagePreview, setImagePreview] = useState("");
   const methods = useForm();
   const { handleSubmit } = methods;
+
   const handleImage = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -41,24 +42,30 @@ const CreateCategory = () => {
   };
 
   const onSubmit = async (data) => {
-    // const formData = new FormData();
-    // formData.append("image", categoryData.image);
+    const formData = new FormData();
     const postData = {
       ...data,
       description: value,
+      image,
     };
     try {
-      await axiosSecure.post("/api/categories", postData).then((response) => {
-        if (response.status === 200) {
-          toast.success(response.data.message);
-          navigate("/dashboard/category");
-        }
-      });
+      await axiosSecure
+        .post("/api/categories", postData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(response.data.message);
+            navigate("/dashboard/category");
+          }
+        });
     } catch (err) {
       toast.error(err);
       console.log(err);
     }
-    console.log("data", data);
+    console.log("data", Object.fromEntries(formData));
   };
   return (
     <section>
@@ -66,16 +73,13 @@ const CreateCategory = () => {
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
             <div className="mb-1 grid gap-6">
-              <span className="-mb-3 text-sm text-secondary">
-                Category Name
-              </span>
-              <TextInput type="text" name="name" />
+              <TextInput type="text" name="name" label="Name" />
               <span className="-mb-3 text-sm text-secondary">Description</span>
               <EditorToolbar toolbarId={"t2"} />
               <ReactQuill
                 theme="snow"
-                // value={value}
-                // onChange={setValue}
+                value={value}
+                onChange={setValue}
                 modules={modules("t2")}
                 formats={formats}
                 placeholder="Write description here..."

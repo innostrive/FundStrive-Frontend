@@ -34,10 +34,8 @@ const BlogCreate = () => {
     const postData = {
       ...data,
       content: value,
-      image: image,
+      image,
     };
-
-    formData.append("data", JSON.stringify(postData));
 
     if (image) {
       formData.append("image", image);

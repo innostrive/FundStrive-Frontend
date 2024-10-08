@@ -1,13 +1,13 @@
 import Swal from "sweetalert2";
 import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useSetting from "../../hooks/useSettings";
 import FormCard from "../../ui/FormCard";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useMemo } from "react";
 import { useRowSelect, useTable } from "react-table";
 import { FilterSettings } from "./FilterSettings";
+import useSettings from "../../hooks/useSettings";
 
 const StatusBadge = ({ status }) => (
   <span
@@ -21,6 +21,37 @@ const StatusBadge = ({ status }) => (
   </span>
 );
 const Settings = () => {
+  const { settings, setSettings } = useSettings();
+
+  const axiosSecure = useAxiosSecure();
+  const handleSettingsDelete = (id) => {
+    const data = {
+      ids: [id],
+    };
+    Swal.fire({
+      title: "Are you sure to delete?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete("/api/settings", { data }).then((data) => {
+          const remainingSetting = settings.filter(
+            (setting) => setting._id !== id
+          );
+          console.log("remaining data of table:", remainingSetting);
+          setSettings(remainingSetting);
+          data.status === 200
+            ? toast.success("Delete Successful")
+            : toast.warning("Activity not deleted");
+        });
+      }
+    });
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -75,38 +106,9 @@ const Settings = () => {
   );
 
   // Define table data
-  const data = useMemo(() => columns, []);
-  const { settings, setSettings } = useSetting();
-
-  console.log("settings:", settings);
-  const axiosSecure = useAxiosSecure();
-  const handleSettingsDelete = (id) => {
-    const data = {
-      ids: [id],
-    };
-    Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete("/api/settings", { data }).then((data) => {
-          const remainingSetting = settings.filter(
-            (setting) => setting._id !== id
-          );
-          console.log("remaining data of table:", remainingSetting);
-          setSettings(remainingSetting);
-          data.status === 200
-            ? toast.success("Delete Successful")
-            : toast.warning("Activity not deleted");
-        });
-      }
-    });
-  };
+  const data = useMemo(() => {
+    columns, settings;
+  }, [settings]);
 
   // Use the table hook
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =

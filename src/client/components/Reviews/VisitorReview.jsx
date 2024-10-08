@@ -2,10 +2,14 @@ import useReview from "../../hooks/useReview";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ReviewCard from "./ReviewCard";
-const VisitorReview = () => {
+const VisitorReview = ({ campaignId }) => {
   const [reviews, refetch] = useReview();
-  console.log("review:", reviews);
   const URL = import.meta.env.VITE_BASE_URL;
+
+  const campaignReviews = reviews.filter(
+    (item) => item.campaign_id === campaignId
+  );
+
   const handleDelete = async (id) => {
     console.log("id:", id);
     const data = {
@@ -20,7 +24,10 @@ const VisitorReview = () => {
   };
   return (
     <div className="space-y-5">
-      {reviews.map((review) => (
+      <span className="text-lg font-medium tracking-normal leading-normal text-secondary">
+        Total Comments {campaignReviews.length}
+      </span>
+      {campaignReviews.map((review) => (
         <ReviewCard review={review} handleDelete={handleDelete} />
       ))}
     </div>

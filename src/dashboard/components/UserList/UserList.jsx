@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Delete, Edit, View } from "../../assets/icons/icons";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
 
 // Component for rendering the status badge
 const StatusBadge = ({ status }) => (
@@ -22,38 +23,8 @@ const StatusBadge = ({ status }) => (
 
 const UserList = () => {
   const { users, handleUserDelete } = useUsersData();
-  const axiosSecure = useAxiosSecure();
-  console.log("users:", users);
-  // useEffect(() => {
-  //   axiosSecure.get("/api/users").then((res) => {
-  //     setUserList(res.data.data.users);
-  //   });
-  // }, []);
 
-  // const handleUserDelete = (id) => {
-  //   const data = {
-  //     ids: [id],
-  //   };
-  //   Swal.fire({
-  //     title: "Are you sure to delete?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       axiosSecure.delete("/api/users", { data }).then((data) => {
-  //         const remainingUser = users.filter((user) => user._id !== id);
-  //         setUsers(remainingUser);
-  //         data.status === 200
-  //           ? toast.success("Delete Successful")
-  //           : toast.warning("Activity not deleted");
-  //       });
-  //     }
-  //   });
-  // };
+  console.log("users:", users);
 
   const columns = useMemo(
     () => [

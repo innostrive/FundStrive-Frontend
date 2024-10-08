@@ -1,54 +1,34 @@
-import { useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import axios from "axios";
+import useReview from "../../hooks/useReview";
+import BlogReviewForm from "./BlogReviewForm";
 import { toast } from "react-toastify";
-import Form from "../../../dashboard/components/form/Form";
-import { Rating, Typography } from "@material-tailwind/react";
-import TextInput from "../../../dashboard/ui/TextInput";
-import IButton from "../../../dashboard/ui/IButton";
+import BlogReviewCard from "./BlogReviewCard";
 
 const BlogReview = ({ blog }) => {
+  const [reviews, refetch] = useReview();
   const URL = import.meta.env.VITE_BASE_URL;
-  const [isLoading, setIsLoading] = useState(false);
-  const axiosSecure = useAxiosSecure();
-  const [rating, setRating] = useState(0);
-  const baseUrl = import.meta.env.VITE_BASE_URL;
+  console.log("reviews:", reviews);
 
-  const handleRatingChange = (newRating) => {
-    setRating(newRating);
-  };
-  const onSubmit = async (data) => {
-    const payload = {
-      ...data,
-      rating,
-      post_id: blog?._id,
+  const blogReviews = reviews.filter((item) => item.post_id === blog._id);
+  console.log("blogReviews:", blogReviews);
+
+  const handleDelete = async (id) => {
+    console.log("id:", id);
+    const data = {
+      ids: [id],
     };
-    // setIsLoading(true);
-    // await axiosSecure.post(`${URL}/reviews`, payload).then((res) => {
-    //   if (res.status === 200) {
-    //     toast.success(res.data.message);
-    //     setIsLoading(false);
-    //     console.log("review:", res.data);
-    //   }
-    // });
-    console.log("data:", payload);
+    await axios.delete(`${URL}/reviews`, { data }).then((res) => {
+      if (res.status === 200) {
+        toast.success("Comment deleted...");
+        refetch();
+      }
+    });
   };
   return (
-    <Form onSubmit={onSubmit}>
-      <div className="flex items-center gap-5">
-        <Typography className="">Rate This Campaign?</Typography>
-        <Rating
-          className="text-primary"
-          value={rating}
-          onChange={(newRating) => handleRatingChange(newRating)}
-        />
-      </div>
-      <TextInput label="Name" name="name" type="text" />
-      <TextInput label="Email" name="email" type="text" />
-      <TextInput label="Review" name="review" type="textarea" />
-      <IButton className="mt-5 rounded-none py-5">
-        {isLoading ? "Wait..." : "Review Submit"}
-      </IButton>
-    </Form>
+    <section className="space-y-5">
+      <BlogReviewCard blogReviews={blogReviews} handleDelete={handleDelete} />
+      <BlogReviewForm blog={blog} refetch={refetch} />
+    </section>
   );
 };
 

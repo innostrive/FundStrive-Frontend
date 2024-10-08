@@ -3,28 +3,23 @@ import { Input } from "@material-tailwind/react";
 import IButton from "../../../dashboard/ui/IButton";
 import axios from "axios";
 import { useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 const Payment = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [payment, setPayment] = useState("");
-  const axiosSecure = useAxiosSecure();
-  const handleSubmit = async (event, item) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = {
-      ...item,
-      payment: payment,
+    const price = {
+      price: payment,
+      api_id: "price_1Q6zN3JggWefJ04AWu8mZIig",
     };
     try {
-      const response = await axios.post(`${URL}/payment_check`, {
-        api_id: "price_1Q6zN3JggWefJ04AWu8mZIig",
-      });
-      const sessionId = response.data.sessionId;
+      const response = await axios.post(`${URL}/payment_check`, price);
+      const sessionId = response.data.data.sessionId;
 
       if (sessionId) {
         const stripe = await stripePromise;
-        console.log(stripe);
-        localStorage.setItem("planData", JSON.stringify(item));
+        localStorage.setItem("planData", JSON.stringify(price));
         await stripe.redirectToCheckout({ sessionId });
       }
     } catch (error) {
@@ -33,7 +28,7 @@ const Payment = () => {
   };
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* <div className="space-y-4">
+      <div className="space-y-4">
         <label className="text-base font-medium text-[#2B2A27]">Amount</label>
         <Input
           size="md"
@@ -44,8 +39,8 @@ const Payment = () => {
           }}
           onChange={(e) => setPayment(e.target.value)}
         />
-      </div> */}
-      <IButton className="uppercase w-full" onClick={() => handleSubmit(item)}>
+      </div>
+      <IButton className="uppercase w-full" type="submit">
         Make your donation
       </IButton>
     </form>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "./useAxiosSecure";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
 
 const useUsersData = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,13 +27,11 @@ const useUsersData = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete("/api/categories", { data })
+          .delete("/api/users", { data })
           .then((response) => {
             if (response.status === 200) {
-              const remainingCategories = users.filter(
-                (user) => user._id !== id
-              );
-              setCategories(remainingCategories);
+              const remainingUsers = users.filter((user) => user._id !== id);
+              setUsers(remainingUsers);
               toast.success("Delete Successful");
             } else {
               toast.warning("Category not deleted");
@@ -46,7 +45,7 @@ const useUsersData = () => {
     });
   };
 
-  return { users, setUsers, handleUserDelete };
+  return { users, handleUserDelete };
 };
 
 export default useUsersData;

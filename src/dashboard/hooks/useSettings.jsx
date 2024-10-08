@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import useAxiosSecure from "./useAxiosSecure";
 import axios from "axios";
 
-const useSetting = () => {
+const useSettings = () => {
+  const URL = import.meta.env.VITE_BASE_URL;
   const [settings, setSettings] = useState([]);
   useEffect(() => {
-    axios.get("/api/settings").then((res) => {
+    axios.get(`${URL}/settings`).then((res) => {
       setSettings(res.data.data.settings);
     });
   }, []);
   return { settings, setSettings };
 };
 
-export default useSetting;
+export default useSettings;

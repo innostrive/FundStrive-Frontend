@@ -31,7 +31,7 @@ const AboutCampaign = ({ id }) => {
         </div>
         <div className="text-center text-sm font-light">
           <p>Raised</p>
-          <span className="font-medium text-[#f47721]">
+          <span className="font-medium text-primary">
             ${campaign?.raised_amount}
           </span>
         </div>

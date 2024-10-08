@@ -9,15 +9,6 @@ import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
 import { toast } from "react-toastify";
 
-// Component for rendering action buttons
-const ActionButtons = () => (
-  <div className="flex space-x-2">
-    <button className="text-blue-500 hover:text-blue-700">View</button>
-    <button className="text-red-500 hover:text-red-700">Delete</button>
-    <button className="text-purple-500 hover:text-purple-700">Edit</button>
-  </div>
-);
-
 // Component for rendering the status badge
 const StatusBadge = ({ status }) => (
   <span
@@ -31,25 +22,40 @@ const StatusBadge = ({ status }) => (
   </span>
 );
 
-// Default column for the checkbox
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
-
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    );
-  }
-);
-
 const Categories = () => {
+  const { categories, setCategories } = useCategoriesData();
+  console.log("categories:", categories);
+  const axiosSecure = useAxiosSecure();
+
+  const handleCategoryDelete = (id) => {
+    const data = { ids: [id] };
+
+    Swal.fire({
+      title: "Are you sure to delete?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete("/api/categories", { data })
+          .then((response) => {
+            if (response.status === 200) {
+              toast.success("Delete Successful");
+            } else {
+              toast.warning("Category not deleted");
+            }
+          })
+          .catch((error) => {
+            toast.error("An error occurred");
+            console.error(error);
+          });
+      }
+    });
+  };
   const COLUMNS = useMemo(
     () => [
       {
@@ -94,39 +100,6 @@ const Categories = () => {
     []
   );
   const data = useMemo(() => COLUMNS, []);
-
-  const { categories, setCategories } = useCategoriesData();
-  const axiosSecure = useAxiosSecure();
-
-  const handleCategoryDelete = (id) => {
-    const data = { ids: [id] };
-
-    Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure
-          .delete("/api/categories", { data })
-          .then((response) => {
-            if (response.status === 200) {
-              toast.success("Delete Successful");
-            } else {
-              toast.warning("Category not deleted");
-            }
-          })
-          .catch((error) => {
-            toast.error("An error occurred");
-            console.error(error);
-          });
-      }
-    });
-  };
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(

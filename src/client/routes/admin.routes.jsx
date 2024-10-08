@@ -24,8 +24,6 @@ import UserProfile from "../../dashboard/pages/UserProfile/UserProfile";
 import EditUser from "../../dashboard/pages/Users/EditUser";
 import UserDetails from "../../dashboard/pages/Users/UserDetails";
 import Users from "../../dashboard/pages/Users/Users";
-import { lazy } from "react";
-const UserUpdate = lazy(() => import("../../dashboard/pages/Users/EditUser"));
 const adminPath = [
   {
     name: "Dashboard",

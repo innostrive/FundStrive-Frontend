@@ -18,71 +18,64 @@ import EditorToolbar, {
   modules,
   formats,
 } from "../../components/EditToolbar/EditToolbar";
+import { useForm } from "react-hook-form";
+import { json, useNavigate } from "react-router-dom";
 
 const CreateCampaign = () => {
   const axiosSecure = useAxiosSecure();
   const { categories } = useCategoriesData();
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const [image, setImage] = useState(null);
-  const [campaignData, setCampaignData] = useState({
-    name: "",
-    description: "",
-    image: null,
-    category: "", // Add this line to track selected category
-  });
+  const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-    setCampaignData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value,
-    }));
+  const { register, handleSubmit, reset } = useForm();
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
-  const handleCategoryChange = (value) => {
-    console.log(value);
-    setCampaignData((prevData) => ({
-      ...prevData,
-      category: value, // Material Tailwind Select returns the value directly
-    }));
-  };
+  const onSubmit = async (data) => {
+    const campaignData = {
+      ...data,
+      category,
+      description,
+      image,
+    };
 
-  const handleCategorySubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("name", campaignData.name);
-    formData.append("title", campaignData.title);
-    formData.append("description", campaignData.description);
-    formData.append("category", campaignData.category);
-    formData.append("target_amount", campaignData.target_amount);
-    formData.append("raised_amount", campaignData.raised_amount);
-    formData.append("deadline", campaignData.deadline);
-    formData.append("image", campaignData.image);
-
-    // try {
-    //   await axiosSecure
-    //     .post("/api/campaigns", formData, {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     })
-    //     .then((response) => {
-    //       if (response.status === 200) {
-    //         toast.success(response.data.message);
-    //       }
-    //       console.log("campaign:", response);
-    //     });
-    // } catch (err) {
-    //   toast.error(err);
-    //   console.log(err);
-    // }
-    console.log("campaign:", formData.get("category"));
+    try {
+      await axiosSecure
+        .post("/api/campaigns", campaignData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(response.data.message);
+            reset();
+            navigate("/dashboard/campaign");
+          }
+          console.log("campaign:", response);
+        });
+    } catch (err) {
+      toast.error(err);
+      console.log(err);
+    }
+    // console.log("campaign:", formData.get("data"));
+    console.log("campaignCreate:", campaignData);
   };
 
   return (
     <FormCard title="Create Campaign">
-      <form onSubmit={handleCategorySubmit} className="mt-8 mb-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2">
         <div className="mb-1 grid sm:grid-cols-2 grid-cols-1 gap-10">
           <div className="grid grid-cols-1 space-y-2">
             <span className="text-sm">Campaign Name</span>
@@ -90,10 +83,8 @@ const CreateCampaign = () => {
               type="text"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="name"
-              name="name"
-              value={campaignData.name}
-              onChange={handleInputChange}
+              // value={campaignData.name}
+              {...register("name")}
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
@@ -102,10 +93,8 @@ const CreateCampaign = () => {
               type="text"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="title"
-              name="title"
-              value={campaignData.title}
-              onChange={handleInputChange}
+              // value={campaignData.title}
+              {...register("title")}
             />
           </div>
 
@@ -114,7 +103,7 @@ const CreateCampaign = () => {
             <Select
               label="Select Category"
               value={categories?._id}
-              onChange={handleCategoryChange}
+              onChange={setCategory}
               name="category"
             >
               {categories.map((category) => (
@@ -134,10 +123,8 @@ const CreateCampaign = () => {
               type="text"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="targetAmount"
-              name="target_amount"
-              value={campaignData.target_amount}
-              onChange={handleInputChange}
+              // value={campaignData.target_amount}
+              {...register("target_amount")}
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
@@ -146,10 +133,8 @@ const CreateCampaign = () => {
               type="text"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="raisedAmount"
-              name="raised_amount"
-              value={campaignData.raised_amount}
-              onChange={handleInputChange}
+              // value={campaignData.raised_amount}
+              {...register("raised_amount")}
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
@@ -158,34 +143,19 @@ const CreateCampaign = () => {
               type="date"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="deadline"
-              name="deadline"
-              value={campaignData.deadline}
-              onChange={handleInputChange}
+              {...register("deadline")}
             />
           </div>
           <div className="col-span-2 space-y-2">
             <span className="grid grid-cols-1 space-y-2">Description</span>
-            {/* <Textarea
-              type="text"
-              size="lg"
-              
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              id="description"
-              name="description"
-              value={campaignData.description}
-              onChange={handleInputChange}
-            /> */}
             <EditorToolbar toolbarId={"t2"} />
             <ReactQuill
               theme="snow"
-              // value={value}
-              // onChange={setValue}
+              value={description}
+              onChange={setDescription}
               modules={modules("t2")}
               formats={formats}
+              placeholder="Type description here..."
             />
           </div>
           <div className="col-span-2">

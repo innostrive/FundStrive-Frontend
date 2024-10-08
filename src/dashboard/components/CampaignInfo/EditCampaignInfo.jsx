@@ -1,7 +1,13 @@
-import { Button, Option, Select, Textarea } from "@material-tailwind/react";
+import {
+  Button,
+  Input,
+  Option,
+  Select,
+  Textarea,
+} from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import FormCard from "../../ui/FormCard";
@@ -15,12 +21,13 @@ import useCategoriesData from "../../hooks/useCategoriesData";
 
 const EditCampaignInfo = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const { categories } = useCategoriesData();
   const { register, handleSubmit, reset } = useForm();
   const [imagePreview, setImagePreview] = useState("");
   const [image, setImage] = useState(null);
-  const [category, setCategory] = useState({});
+  const [deadline, setDeadline] = useState("");
   const [campaignInfo, setCampaignInfo] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedCategory, setSelectedCategory] = useState([]);
@@ -30,20 +37,12 @@ const EditCampaignInfo = () => {
     axiosSecure.get(`/campaigns/${id}`).then((res) => {
       const userData = res.data.data;
       setCampaignInfo(userData);
-      // setSelectedCategory(userData?.category);
+      setSelectedCategory(userData?.category);
       setCampaignDescription(userData?.description);
       setSelectedStatus(userData.status);
+      setDeadline(userData?.deadline);
     });
   }, [id, axiosSecure]);
-
-  useEffect(() => {
-    axiosSecure.get(`/categories/${campaignInfo?.category}`).then((res) => {
-      const categoryData = res.data.data;
-      console.log("categoryData:", categoryData);
-    });
-  }, [campaignInfo?.category, axiosSecure]);
-
-  // console.log("category:", campaignInfo.category);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -60,16 +59,30 @@ const EditCampaignInfo = () => {
   }, [campaignInfo]);
 
   const onSubmit = (data) => {
-    // axiosSecure
-    //   .put(`/api/campaigns/${id}`, data)
-    //   .then((response) => {
-    //     console.log("Server response:", response);
-    //     toast.success(response.data.message);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error submitting data:", error);
-    //   });
-    console.log("edit-campaign:", data);
+    const formData = new FormData();
+    formData.append("image", image);
+    const campaignData = {
+      ...data,
+      status: selectedStatus,
+      category: selectedCategory,
+      description: campaignDescription,
+      deadline: deadline,
+    };
+    axiosSecure
+      .put(`/api/campaigns/${id}`, campaignData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("Server response:", response);
+        toast.success(response.data.message);
+        navigate("/dashboard/campaign");
+      })
+      .catch((error) => {
+        console.error("Error submitting data:", error);
+      });
+    console.log("edit-campaign:", campaignData);
   };
   return (
     <FormCard title="Campaign Details">
@@ -107,13 +120,12 @@ const EditCampaignInfo = () => {
             <input
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               type="date"
-              value={
+              defaultValue={
                 campaignInfo?.deadline
                   ? new Date(campaignInfo.deadline).toISOString().split("T")[0]
                   : ""
               }
-              {...register("deadline")}
-              onChange={(e) => setValue("deadline", e.target.value)}
+              onChange={(e) => setDeadline(e.target.value)}
             />
           </div>
           <div className="grid grid-cols-1 space-y-5">
@@ -132,8 +144,8 @@ const EditCampaignInfo = () => {
             <span className="text-sm">Category</span>
             <select
               label="Category"
-              // value={selectedCategory}
-              // onChange={(value) => setSelectedCategory(value)}
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
               className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-auto text-base rounded"
             >
               {categories.map((category) => (
