@@ -1,12 +1,9 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { adminSidebarItems, userSidebarItems } from "./SidebarRoutes";
-import { SidebarContext } from "../context/SidebarProvider";
 import { BsChevronDown } from "react-icons/bs";
-const Sidebar = () => {
-  const { collapse, sidebarToggle, setSidebarToggle } =
-    useContext(SidebarContext);
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [activeItem, setActiveItem] = useState(null);
   const userRole = localStorage.getItem("role");
   const [openSubmenu, setOpenSubmenu] = useState(null);
@@ -19,49 +16,87 @@ const Sidebar = () => {
       setOpenSubmenu(id); // Open the submenu
     }
   };
+
+  const location = useLocation();
+  const { pathname } = location;
+
+  const trigger = useRef(null);
+  const sidebar = useRef(null);
+
+  const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
+  const [sidebarExpanded, setSidebarExpanded] = useState(
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
+  );
+
+  // close on click outside
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setSidebarToggle(true);
-      }
+    const clickHandler = ({ target }) => {
+      if (!sidebar.current || !trigger.current) return;
+      if (
+        !sidebarOpen ||
+        sidebar.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
+      setSidebarOpen(false);
     };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
+  });
+
+  // close if the esc key is pressed
+  useEffect(() => {
+    const keyHandler = ({ keyCode }) => {
+      if (!sidebarOpen || keyCode !== 27) return;
+      setSidebarOpen(false);
     };
-  }, []);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  });
+
+  useEffect(() => {
+    localStorage.setItem("sidebar-expanded", sidebarExpanded.toString());
+    if (sidebarExpanded) {
+      document.querySelector("body")?.classList.add("sidebar-expanded");
+    } else {
+      document.querySelector("body")?.classList.remove("sidebar-expanded");
+    }
+  }, [sidebarExpanded]);
 
   return (
-    <motion.div
-      className={`bg-secondary text-text-primary min-h-screen h-auto`}
-      initial={{ translateX: 0 }}
-      animate={{ translateX: sidebarToggle ? -320 : 0 }}
-      transition={{ type: "just", ease: "linear", duration: 0.3 }}
+    <div
+      ref={sidebar}
+      className={`absolute left-0 top-0 z-[9999] flex h-screen md:w-62.5 lg:w-[304px] flex-col overflow-y-hidden bg-secondary duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+        sidebarOpen ? "translate-x-0" : "-translate-x-full z-[9999]"
+      }`}
     >
-      <div className="py-5">
+      <div className="flex space-x-5 sm:justify-center justify-between items-center p-5">
         <h1 className="text-3xl font-bold uppercase text-center text-text-primary">
           Fund<span className="text-primary">strive</span>
         </h1>
-      </div>
-      <div className="grid place-content-end p-2 sm:hidden">
-        <motion.svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          className="size-6 text-white cursor-pointer"
-          onClick={collapse}
-          initial={{ rotate: false }}
-          animate={{ rotate: collapse ? 90 : 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <motion.path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18 18 6M6 6l12 12"
-          />
-        </motion.svg>
+        <div className="sm:hidden">
+          <motion.svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="5"
+            stroke="currentColor"
+            className="size-8 text-white cursor-pointer"
+            initial={{ rotate: false }}
+            animate={{ rotate: sidebarOpen ? 90 : 0 }}
+            transition={{ duration: 0.5 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setSidebarOpen(!sidebarOpen);
+            }}
+          >
+            <motion.path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </motion.svg>
+        </div>
       </div>
       <div className="w-64 h-full text-white p-4">
         <ul>
@@ -69,11 +104,24 @@ const Sidebar = () => {
             <>
               {adminSidebarItems.map((item) => (
                 <li key={item.id} className="cursor-pointer text-sm">
-                  <Link to={item?.link}>
+                  {item.link ? (
+                    <NavLink to={item?.link}>
+                      <motion.div
+                        className={`flex items-center p-3 rounded-lg ${
+                          pathname === item.link ? "bg-primary text-white" : ""
+                        }`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                        onClick={() => handleItemClick(item.id)}
+                      >
+                        <span className="mr-4 text-xl">{item?.icon}</span>
+                        {item.name}
+                      </motion.div>
+                    </NavLink>
+                  ) : (
                     <motion.div
-                      className={`flex items-center p-3 rounded-lg ${
-                        activeItem === item.id ? "bg-primary text-white" : ""
-                      }`}
+                      className="flex items-center p-3 rounded-lg cursor-pointer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 300 }}
@@ -89,7 +137,7 @@ const Sidebar = () => {
                         />
                       )}
                     </motion.div>
-                  </Link>
+                  )}
                   {item.subMenus && item.subMenus.length > 0 && (
                     <motion.ul
                       initial={{ height: 0 }}
@@ -97,14 +145,14 @@ const Sidebar = () => {
                         height: openSubmenu === item.id ? "auto" : 0,
                       }}
                       transition={{ type: "spring", stiffness: 200 }}
-                      className="overflow-hidden px-5 py-2"
+                      className="overflow-hidden py-2"
                     >
                       {item.subMenus.map((subItem) => (
-                        <li key={subItem.id} className="py-2">
-                          <Link to={subItem.link}>
+                        <li key={subItem.name} className="py-2">
+                          <NavLink to={subItem.link}>
                             <div
                               className={`flex items-center p-3 rounded-lg ${
-                                activeItem === item.id
+                                pathname === subItem.link
                                   ? "bg-primary text-white"
                                   : ""
                               }`}
@@ -112,7 +160,7 @@ const Sidebar = () => {
                               <span className="mr-2">{subItem.icon}</span>
                               {subItem.name}
                             </div>
-                          </Link>
+                          </NavLink>
                         </li>
                       ))}
                     </motion.ul>
@@ -125,10 +173,10 @@ const Sidebar = () => {
               {" "}
               {userSidebarItems.map((item) => (
                 <li key={item.id} className="cursor-pointer text-sm">
-                  <Link to={item?.link}>
+                  <NavLink to={item?.link}>
                     <motion.div
                       className={`flex items-center p-3 rounded-lg ${
-                        activeItem === item.id ? "bg-gray-700" : ""
+                        pathname === item.link ? "bg-primary text-white" : ""
                       }`}
                       onClick={() => handleItemClick(item.id)}
                       whileHover={{ scale: 1.05 }}
@@ -138,14 +186,14 @@ const Sidebar = () => {
                       <span className="mr-4 text-xl">{item.icon}</span>
                       {item.name}
                     </motion.div>
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </>
           )}
         </ul>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

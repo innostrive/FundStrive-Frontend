@@ -1,118 +1,65 @@
-import Swal from "sweetalert2";
-import { Add, Delete, Edit, View } from "../../assets/icons/icons";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import FormCard from "../../ui/FormCard";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useMemo } from "react";
-import { useRowSelect, useTable } from "react-table";
-import { FilterSettings } from "./FilterSettings";
 import useSettings from "../../hooks/useSettings";
 
-const StatusBadge = ({ status }) => (
-  <span
-    className={`px-2 py-1 rounded-md ${
-      status === "Active"
-        ? "border border-green-500 text-green-500 hover:text-white hover:bg-green-500"
-        : "border border-red-500 text-red-500 hover:text-white hover:bg-red-500"
-    }`}
-  >
-    {status}
-  </span>
-);
-const Settings = () => {
-  const { settings, setSettings } = useSettings();
+import {
+  CardBody,
+  CardFooter,
+  Typography,
+  Chip,
+  Button,
+  IconButton,
+  Tooltip,
+} from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import FormCard from "../../ui/FormCard";
+import { NavLink } from "react-router-dom";
+import { useState, useMemo } from "react";
+import { FilterSettings } from "./FilterSettings";
 
-  const axiosSecure = useAxiosSecure();
-  const handleSettingsDelete = (id) => {
-    const data = {
-      ids: [id],
-    };
-    Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete("/api/settings", { data }).then((data) => {
-          const remainingSetting = settings.filter(
-            (setting) => setting._id !== id
-          );
-          console.log("remaining data of table:", remainingSetting);
-          setSettings(remainingSetting);
-          data.status === 200
-            ? toast.success("Delete Successful")
-            : toast.warning("Activity not deleted");
-        });
-      }
-    });
+const TABLE_HEAD = ["Code", "Slug", "Status", "Action"];
+const Settings = () => {
+  const [settings, handleSettingsDelete] = useSettings();
+  const [slug, setSlug] = useState("all");
+
+  const handleSlugFilter = (filter) => {
+    setSlug(filter);
   };
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Code",
-        accessor: "code",
-        Cell: (row) => {
-          return <span>{row?.cell?.value}</span>;
-        },
-      },
-      {
-        Header: "Slug",
-        accessor: "slug",
-        Cell: (row) => {
-          return <span>{row?.cell?.value}</span>;
-        },
-      },
-      {
-        Header: "Menu",
-        accessor: "key",
-        Cell: (row) => {
-          return <span>{row?.cell?.value}</span>;
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-        Cell: ({ value }) => <StatusBadge status={value} />,
-      },
-      {
-        Header: "Action",
-        Cell: ({ row }) => (
-          <div className="flex gap-2">
-            <Link to={`/dashboard/settings/${row.original._id}`}>
-              <View />
-            </Link>
-            <Link>
-              <span
-                className="cursor-pointer"
-                onClick={() => handleSettingsDelete(row.original._id)}
-              >
-                <Delete />
-              </span>
-            </Link>
-            <Link to={`/dashboard/edit-settings/${row.original._id}`}>
-              <Edit />
-            </Link>
-          </div>
-        ),
-      },
-    ],
-    []
-  );
+  const handleAllSlug = () => {
+    setSlug("all");
+  };
 
-  // Define table data
-  const data = useMemo(() => {
-    columns, settings;
-  }, [settings]);
+  const slugFilter =
+    slug === "all" ? settings : settings.filter((item) => item.slug === slug);
 
-  // Use the table hook
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: settings }, useRowSelect, (hooks) => {});
+  const [active, setActive] = useState(1);
+  const itemsPerPage = 3;
+
+  const totalPages = Math.ceil(slugFilter.length / itemsPerPage);
+
+  const paginatedCategories = useMemo(() => {
+    const start = (active - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return slugFilter.slice(start, end);
+  }, [slugFilter, active]);
+
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "gray",
+    onClick: () => setActive(index),
+    className:
+      active === index
+        ? "rounded-full bg-secondary text-white"
+        : "rounded-full bg-gray-50 hover:bg-gray-200 text-black",
+  });
+
+  const next = () => {
+    if (active < totalPages) setActive(active + 1);
+  };
+
+  const prev = () => {
+    if (active > 1) setActive(active - 1);
+  };
   return (
     <FormCard
       title="Settings List"
@@ -120,44 +67,129 @@ const Settings = () => {
       path="/dashboard/create-settings"
       iconTitle="Add"
     >
-      <div className="my-5">
-        <FilterSettings />
-      </div>
-      <div className="overflow-x-auto rounded-md">
-        <table {...getTableProps()} className="min-w-full bg-white border">
-          <thead className="bg-gray-200">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
+      <FilterSettings
+        handleSlugFilter={handleSlugFilter}
+        handleAllSlug={handleAllSlug}
+      />
+      <CardBody className="border p-0">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((head) => (
+                <th key={head} className="bg-blue-gray-50/50 p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
                   >
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
+          <tbody>
+            {paginatedCategories.map(({ code, slug, status, _id }, index) => {
+              const isLast = index === paginatedCategories.length - 1;
+              const classes = isLast
+                ? "p-4 border-b-none"
+                : "p-4 border-b border-blue-gray-50";
+
               return (
-                <tr {...row.getRowProps()} className="hover:bg-gray-100">
-                  {row.cells.map((cell) => (
-                    <td
-                      {...cell.getCellProps()}
-                      className="py-4 px-6 text-sm text-gray-600 border-b"
+                <tr key={_id}>
+                  <td className={classes}>
+                    <div className="flex items-center gap-3">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-bold"
+                      >
+                        {code}
+                      </Typography>
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
                     >
-                      {cell.render("Cell")}
-                    </td>
-                  ))}
+                      {slug}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <div className="w-max">
+                      <Chip
+                        size="sm"
+                        variant="ghost"
+                        value={status}
+                        color={status === "Active" ? "green" : "red"}
+                      />
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex items-center">
+                      <NavLink to={`/dashboard/settings/${_id}`}>
+                        <Tooltip content="Menu Info">
+                          <IconButton variant="text">
+                            <View className="size-5 text-secondary" />
+                          </IconButton>
+                        </Tooltip>
+                      </NavLink>
+                      <NavLink to={`/dashboard/edit-settings/${_id}`}>
+                        <Tooltip content="Edit">
+                          <IconButton variant="text">
+                            <Edit className="size-5 text-green-500" />
+                          </IconButton>
+                        </Tooltip>
+                      </NavLink>
+                      <Tooltip content="Delete">
+                        <IconButton
+                          variant="text"
+                          onClick={() => handleSettingsDelete(_id)}
+                        >
+                          <Delete className="size-5 text-red-500" />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-      </div>
+      </CardBody>
+
+      <CardFooter className="flex items-center justify-end p-4">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="text"
+            className="flex items-center gap-2 rounded-full"
+            onClick={prev}
+            disabled={active === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <IconButton key={i + 1} {...getItemProps(i + 1)}>
+                {i + 1}
+              </IconButton>
+            ))}
+          </div>
+
+          <Button
+            variant="text"
+            className="flex items-center gap-2 rounded-full"
+            onClick={next}
+            disabled={active === totalPages}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </div>
+      </CardFooter>
     </FormCard>
   );
 };

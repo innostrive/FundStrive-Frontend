@@ -5,15 +5,17 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import Form from "../../components/form/Form";
 import IButton from "../../ui/IButton";
+import axios from "axios";
 
 const EditSettings = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const URL = import.meta.env.VITE_BASE_URL;
   const [settings, setSettings] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
-    axiosSecure.get(`/api/settings/${id}`).then((res) => {
+    axios.get(`${URL}/settings/${id}`).then((res) => {
       setSettings(res.data.data);
       setSelectedStatus(res.data.data.status);
     });

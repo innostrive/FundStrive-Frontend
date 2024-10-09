@@ -21,11 +21,15 @@ const FormCard = ({ children, className, title, icon, path, iconTitle }) => {
             {title}
           </span>
         </div>
-        <div className="gap-2 flex items-center">
-          <span className="text-base font-medium text-secondary">
-            {iconTitle}
-          </span>
-          <Link to={path}>{icon}</Link>
+        <div>
+          <Link to={path}>
+            <div className="gap-2 flex items-center">
+              <span className="text-base font-medium text-secondary">
+                {iconTitle}
+              </span>
+              {icon}
+            </div>
+          </Link>
         </div>
       </div>
       {children}

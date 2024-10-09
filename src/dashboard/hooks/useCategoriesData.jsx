@@ -2,15 +2,23 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "./useAxiosSecure";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
 
 const useCategoriesData = () => {
   const axiosSecure = useAxiosSecure();
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    axiosSecure.get("/categories").then((res) => {
-      setCategories(res.data.data.categories);
-    });
-  }, []);
+  // const [categories, setCategories] = useState([]);
+  // useEffect(() => {
+  //   axiosSecure.get("/categories").then((res) => {
+  //     setCategories(res.data.data.categories);
+  //   });
+  // }, []);
+  const { refetch, data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/categories");
+      return res.data.data.categories;
+    },
+  });
 
   const handleCategoryDelete = (id) => {
     const data = { ids: [id] };
@@ -29,11 +37,8 @@ const useCategoriesData = () => {
           .delete("/api/categories", { data })
           .then((response) => {
             if (response.status === 200) {
-              const remainingCategories = categories.filter(
-                (category) => category._id !== id
-              );
-              setCategories(remainingCategories);
               toast.success("Delete Successful");
+              refetch();
             } else {
               toast.warning("Category not deleted");
             }
@@ -46,7 +51,7 @@ const useCategoriesData = () => {
     });
   };
 
-  return { categories, handleCategoryDelete, setCategories };
+  return [categories, handleCategoryDelete];
 };
 
 export default useCategoriesData;

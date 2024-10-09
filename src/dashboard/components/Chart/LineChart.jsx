@@ -106,7 +106,7 @@ export default function LineChart() {
       <CardHeader
         floated={false}
         shadow={false}
-        color="transparent"
+        // color="transparent"
         className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
       >
         <div className="w-max rounded-lg bg-gray-900 p-5 text-white">

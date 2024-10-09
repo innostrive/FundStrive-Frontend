@@ -1,112 +1,229 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useTable, useRowSelect } from "react-table";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useUsersData from "../../hooks/useUsersData";
-import { Link } from "react-router-dom";
+// import {
+//   Card,
+//   CardHeader,
+//   Typography,
+//   Button,
+//   CardBody,
+//   Chip,
+//   CardFooter,
+//   Avatar,
+//   IconButton,
+//   Tooltip,
+//   Input,
+// } from "@material-tailwind/react";
+// import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+// import useCategoriesData from "../../hooks/useCategoriesData";
+// import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+// import FormCard from "../../ui/FormCard";
+// import { NavLink } from "react-router-dom";
+// import { useState } from "react";
+
+// const TABLE_HEAD = ["Code", "Category", "Status", "Action"];
+
+// const Categories = () => {
+//   const [categories, handleCategoryDelete] = useCategoriesData();
+//   const [active, setActive] = useState(1);
+
+//   const getItemProps = (index) => ({
+//     variant: active === index ? "filled" : "text",
+//     color: "gray",
+//     onClick: () => setActive(index),
+//     className: "rounded-full",
+//   });
+
+//   const next = () => {
+//     if (active === 5) return;
+
+//     setActive(active + 1);
+//   };
+
+//   const prev = () => {
+//     if (active === 1) return;
+
+//     setActive(active - 1);
+//   };
+//   return (
+//     <FormCard
+//       title="Category List"
+//       path="/dashboard/create-category"
+//       icon={<Add />}
+//       iconTitle="Add"
+//     >
+//       <CardBody className="border p-0">
+//         <table className="w-full min-w-max table-auto text-left">
+//           <thead>
+//             <tr>
+//               {TABLE_HEAD.map((head) => (
+//                 <th key={head} className="bg-blue-gray-50/50 p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className="font-normal leading-none opacity-70"
+//                   >
+//                     {head}
+//                   </Typography>
+//                 </th>
+//               ))}
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {categories.map(({ code, name, status, _id }, index) => {
+//               const isLast = index === categories.length - 1;
+//               const classes = isLast
+//                 ? "p-4 border-b-none"
+//                 : "p-4 border-b border-blue-gray-50";
+
+//               return (
+//                 <tr key={name}>
+//                   <td className={classes}>
+//                     <div className="flex items-center gap-3">
+//                       <Typography
+//                         variant="small"
+//                         color="blue-gray"
+//                         className="font-bold"
+//                       >
+//                         {code}
+//                       </Typography>
+//                     </div>
+//                   </td>
+//                   <td className={classes}>
+//                     <Typography
+//                       variant="small"
+//                       color="blue-gray"
+//                       className="font-normal"
+//                     >
+//                       {name}
+//                     </Typography>
+//                   </td>
+//                   <td className={classes}>
+//                     <div className="w-max">
+//                       <Chip
+//                         size="sm"
+//                         variant="ghost"
+//                         value={status}
+//                         color={
+//                           status === "Active"
+//                             ? "green"
+//                             : status === "InActive"
+//                             ? "red"
+//                             : ""
+//                         }
+//                       />
+//                     </div>
+//                   </td>
+//                   <td className={classes}>
+//                     <div className="flex items-center">
+//                       <NavLink to={`/dashboard/category/${_id}`}>
+//                         <Tooltip content="Category Info">
+//                           <IconButton variant="text">
+//                             <View className="size-5 text-secondary" />
+//                           </IconButton>
+//                         </Tooltip>
+//                       </NavLink>
+//                       <NavLink to={`/dashboard/edit-category/${_id}`}>
+//                         <Tooltip content="Edit">
+//                           <IconButton variant="text">
+//                             <Edit className="size-5 text-green-500" />
+//                           </IconButton>
+//                         </Tooltip>
+//                       </NavLink>
+//                       <Tooltip content="Delete">
+//                         <IconButton
+//                           variant="text"
+//                           onClick={() => handleCategoryDelete(_id)}
+//                         >
+//                           <Delete className="size-5 text-red-500" />
+//                         </IconButton>
+//                       </Tooltip>
+//                     </div>
+//                   </td>
+//                 </tr>
+//               );
+//             })}
+//           </tbody>
+//         </table>
+//       </CardBody>
+//       <CardFooter className="flex items-center justify-center p-4">
+//         <div className="flex items-center gap-4">
+//           <Button
+//             variant="text"
+//             className="flex items-center gap-2 rounded-full"
+//             onClick={prev}
+//             disabled={active === 1}
+//           >
+//             <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+//           </Button>
+//           <div className="flex items-center gap-2">
+//             <IconButton {...getItemProps(1)}>1</IconButton>
+//             <IconButton {...getItemProps(2)}>2</IconButton>
+//             <IconButton {...getItemProps(3)}>3</IconButton>
+//             <IconButton {...getItemProps(4)}>4</IconButton>
+//             <IconButton {...getItemProps(5)}>5</IconButton>
+//           </div>
+//           <Button
+//             variant="text"
+//             className="flex items-center gap-2 rounded-full"
+//             onClick={next}
+//             disabled={active === 5}
+//           >
+//             Next
+//             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+//           </Button>
+//         </div>
+//       </CardFooter>
+//     </FormCard>
+//   );
+// };
+// export default Categories;
+
+import {
+  CardBody,
+  CardFooter,
+  Typography,
+  Chip,
+  Button,
+  IconButton,
+  Tooltip,
+} from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import useCategoriesData from "../../hooks/useCategoriesData";
-import Swal from "sweetalert2";
 import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
-import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
+import { useState, useMemo } from "react";
 
-// Component for rendering the status badge
-const StatusBadge = ({ status }) => (
-  <span
-    className={`px-2 py-1 rounded-md ${
-      status === "Active"
-        ? "border border-green-500 text-green-500 hover:text-white hover:bg-green-500"
-        : "border border-red-500 text-red-500 hover:text-white hover:bg-red-500"
-    }`}
-  >
-    {status}
-  </span>
-);
+const TABLE_HEAD = ["Code", "Category", "Status", "Action"];
 
 const Categories = () => {
-  const { categories, setCategories } = useCategoriesData();
-  console.log("categories:", categories);
-  const axiosSecure = useAxiosSecure();
+  const [categories, handleCategoryDelete] = useCategoriesData();
+  const [active, setActive] = useState(1);
+  const itemsPerPage = 2;
 
-  const handleCategoryDelete = (id) => {
-    const data = { ids: [id] };
+  const totalPages = Math.ceil(categories.length / itemsPerPage);
 
-    Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure
-          .delete("/api/categories", { data })
-          .then((response) => {
-            if (response.status === 200) {
-              toast.success("Delete Successful");
-            } else {
-              toast.warning("Category not deleted");
-            }
-          })
-          .catch((error) => {
-            toast.error("An error occurred");
-            console.error(error);
-          });
-      }
-    });
+  const paginatedCategories = useMemo(() => {
+    const start = (active - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return categories.slice(start, end);
+  }, [categories, active]);
+
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "gray",
+    onClick: () => setActive(index),
+    className:
+      active === index
+        ? "rounded-full bg-secondary text-white"
+        : "rounded-full bg-gray-50 hover:bg-gray-200 text-black",
+  });
+
+  const next = () => {
+    if (active < totalPages) setActive(active + 1);
   };
-  const COLUMNS = useMemo(
-    () => [
-      {
-        Header: "Code",
-        accessor: "code",
-        Cell: (row) => {
-          return <span>{row?.cell?.value}</span>;
-        },
-      },
-      {
-        Header: "Category",
-        accessor: "name",
-        Cell: (row) => {
-          return <span>{row?.cell?.value}</span>;
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-        Cell: ({ value }) => <StatusBadge status={value} />,
-      },
-      {
-        Header: "Action",
-        Cell: ({ row }) => (
-          <div className="flex gap-2">
-            <Link to={`/dashboard/category/${row.original._id}`}>
-              <View />
-            </Link>
-            <span
-              className="cursor-pointer"
-              onClick={() => handleCategoryDelete(row.original._id)}
-            >
-              <Delete />
-            </span>
-            <Link to={`/dashboard/edit-category/${row.original._id}`}>
-              <Edit />
-            </Link>
-          </div>
-        ),
-      },
-    ],
-    []
-  );
-  const data = useMemo(() => COLUMNS, []);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      { columns: COLUMNS, data: categories },
-      useRowSelect,
-      (hooks) => {}
-    );
+  const prev = () => {
+    if (active > 1) setActive(active - 1);
+  };
 
   return (
     <FormCard
@@ -115,41 +232,125 @@ const Categories = () => {
       icon={<Add />}
       iconTitle="Add"
     >
-      <div className="overflow-x-auto rounded-md">
-        <table {...getTableProps()} className="min-w-full bg-white border">
-          <thead className="bg-gray-200">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
+      <CardBody className="border p-0">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((head) => (
+                <th key={head} className="bg-blue-gray-50/50 p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
                   >
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
+          <tbody>
+            {paginatedCategories.map(({ code, name, status, _id }, index) => {
+              const isLast = index === paginatedCategories.length - 1;
+              const classes = isLast
+                ? "p-4 border-b-none"
+                : "p-4 border-b border-blue-gray-50";
+
               return (
-                <tr {...row.getRowProps()} className="hover:bg-gray-100">
-                  {row.cells.map((cell) => (
-                    <td
-                      {...cell.getCellProps()}
-                      className="py-4 px-6 text-sm text-gray-600 border-b"
+                <tr key={_id}>
+                  <td className={classes}>
+                    <div className="flex items-center gap-3">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-bold"
+                      >
+                        {code}
+                      </Typography>
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
                     >
-                      {cell.render("Cell")}
-                    </td>
-                  ))}
+                      {name}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <div className="w-max">
+                      <Chip
+                        size="sm"
+                        variant="ghost"
+                        value={status}
+                        color={status === "Active" ? "green" : "red"}
+                      />
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex items-center">
+                      <NavLink to={`/dashboard/category/${_id}`}>
+                        <Tooltip content="Category Info">
+                          <IconButton variant="text">
+                            <View className="size-5 text-secondary" />
+                          </IconButton>
+                        </Tooltip>
+                      </NavLink>
+                      <NavLink to={`/dashboard/edit-category/${_id}`}>
+                        <Tooltip content="Edit">
+                          <IconButton variant="text">
+                            <Edit className="size-5 text-green-500" />
+                          </IconButton>
+                        </Tooltip>
+                      </NavLink>
+                      <Tooltip content="Delete">
+                        <IconButton
+                          variant="text"
+                          onClick={() => handleCategoryDelete(_id)}
+                        >
+                          <Delete className="size-5 text-red-500" />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-      </div>
+      </CardBody>
+
+      <CardFooter className="flex items-center justify-end p-4">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="text"
+            className="flex items-center gap-2 rounded-full"
+            onClick={prev}
+            disabled={active === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <IconButton key={i + 1} {...getItemProps(i + 1)}>
+                {i + 1}
+              </IconButton>
+            ))}
+          </div>
+
+          <Button
+            variant="text"
+            className="flex items-center gap-2 rounded-full"
+            onClick={next}
+            disabled={active === totalPages}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </div>
+      </CardFooter>
     </FormCard>
   );
 };
