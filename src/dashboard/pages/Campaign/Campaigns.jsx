@@ -1,149 +1,51 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useTable, useRowSelect } from "react-table";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useUsersData from "../../hooks/useUsersData";
-import { Link, Outlet } from "react-router-dom";
-import useCategoriesData from "../../hooks/useCategoriesData";
-import useCampaignData from "../../hooks/useCampaignData";
+import {
+  CardBody,
+  CardFooter,
+  Typography,
+  Chip,
+  Button,
+  IconButton,
+  Tooltip,
+} from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
-import { toast } from "react-toastify";
-import Swal from "sweetalert2";
+import { NavLink } from "react-router-dom";
+import { useState, useMemo } from "react";
+import useCampaignData from "../../hooks/useCampaignData";
 
-// Component for rendering action buttons
-const ActionButtons = () => (
-  <div className="flex space-x-2">
-    <button className="text-blue-500 hover:text-blue-700">View</button>
-    <button className="text-red-500 hover:text-red-700">Delete</button>
-    <button className="text-purple-500 hover:text-purple-700">Edit</button>
-  </div>
-);
-
-// Component for rendering the status badge
-const StatusBadge = ({ status }) => (
-  <span
-    className={`px-2 py-1 rounded-md ${
-      status === "Active"
-        ? "border border-green-500 text-green-500 hover:text-white hover:bg-green-500"
-        : "border border-red-500 text-red-500 hover:text-white hover:bg-red-500"
-    }`}
-  >
-    {status}
-  </span>
-);
-
-// Default column for the checkbox
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
-
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    );
-  }
-);
+const TABLE_HEAD = ["Code", "Campaign", "Title", "Status", "Action"];
 
 const Campaigns = () => {
-  const { campaigns, setCampaigns } = useCampaignData();
-  console.log("campaigns:", campaigns);
-  const axiosSecure = useAxiosSecure();
-  const handleCampaignDelete = (id) => {
-    const data = { ids: [id] };
+  const [campaigns, handleCampaignDelete] = useCampaignData();
+  const [active, setActive] = useState(1);
+  const itemsPerPage = 5;
 
-    Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure
-          .delete("/api/campaigns", { data })
-          .then((response) => {
-            if (response.status === 200) {
-              const remainingCategories = campaigns.filter(
-                (campaign) => campaign._id !== id
-              );
-              setCampaigns(remainingCategories);
-              toast.success("Delete Successful");
-            } else {
-              toast.warning("Category not deleted");
-            }
-          })
-          .catch((error) => {
-            toast.error("An error occurred");
-            console.error(error);
-          });
-      }
-    });
+  const totalPages = Math.ceil(campaigns.length / itemsPerPage);
+
+  const paginatedcampaigns = useMemo(() => {
+    const start = (active - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return campaigns.slice(start, end);
+  }, [campaigns, active]);
+
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "gray",
+    onClick: () => setActive(index),
+    className:
+      active === index
+        ? "rounded-full bg-secondary text-white"
+        : "rounded-full bg-gray-50 hover:bg-gray-200 text-black",
+  });
+
+  const next = () => {
+    if (active < totalPages) setActive(active + 1);
   };
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Code",
-        accessor: "code",
-        Cell: (row) => {
-          return <span>{row?.cell?.value}</span>;
-        },
-      },
-      {
-        Header: "Campaign",
-        accessor: "name",
-        Cell: (row) => {
-          return <span>{row?.cell?.value}</span>;
-        },
-      },
-      {
-        Header: "Title",
-        accessor: "title",
-        Cell: (row) => {
-          return <span>{row?.cell?.value}</span>;
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-        Cell: ({ value }) => <StatusBadge status={value} />,
-      },
-      {
-        Header: "Action",
-        Cell: ({ row }) => (
-          <div className="flex gap-2">
-            <Link to={`/dashboard/campaign/${row.original._id}`}>
-              <View />
-            </Link>
-            <Link to={`/dashboard/edit-campaign/${row.original._id}`}>
-              <Edit />
-            </Link>
-            <span
-              className="cursor-pointer"
-              onClick={() => handleCampaignDelete(row.original._id)}
-            >
-              <Delete />
-            </span>
-          </div>
-        ),
-      },
-    ],
-    []
-  );
 
-  // Define table data
-  const data = useMemo(() => campaigns, []);
-
-  // Use the table hook
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: campaigns }, useRowSelect, (hooks) => {});
+  const prev = () => {
+    if (active > 1) setActive(active - 1);
+  };
 
   return (
     <FormCard
@@ -152,42 +54,136 @@ const Campaigns = () => {
       path="/dashboard/create-campaign"
       iconTitle="Add"
     >
-      <div className="overflow-x-auto rounded-md">
-        <table {...getTableProps()} className="min-w-full bg-white border">
-          <thead className="bg-gray-200">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
+      <CardBody className="border p-0">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((head) => (
+                <th key={head} className="bg-blue-gray-50/50 p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
                   >
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="hover:bg-gray-100">
-                  {row.cells.map((cell) => (
-                    <td
-                      {...cell.getCellProps()}
-                      className="py-4 px-6 text-sm text-gray-600 border-b"
-                    >
-                      {cell.render("Cell")}
+          <tbody>
+            {paginatedcampaigns.map(
+              ({ code, name, title, status, _id }, index) => {
+                const isLast = index === paginatedcampaigns.length - 1;
+                const classes = isLast
+                  ? "p-4 border-b-none"
+                  : "p-4 border-b border-blue-gray-50";
+
+                return (
+                  <tr key={_id}>
+                    <td className={classes}>
+                      <div className="flex items-center gap-3">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-bold"
+                        >
+                          {code}
+                        </Typography>
+                      </div>
                     </td>
-                  ))}
-                </tr>
-              );
-            })}
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {name}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {title}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Chip
+                          size="sm"
+                          variant="ghost"
+                          value={status}
+                          color={status === "Active" ? "green" : "red"}
+                        />
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex items-center">
+                        <NavLink to={`/dashboard/campaign/${_id}`}>
+                          <Tooltip content="Category Info">
+                            <IconButton variant="text">
+                              <View className="size-5 text-secondary" />
+                            </IconButton>
+                          </Tooltip>
+                        </NavLink>
+                        <NavLink to={`/dashboard/edit-campaign/${_id}`}>
+                          <Tooltip content="Edit">
+                            <IconButton variant="text">
+                              <Edit className="size-5 text-green-500" />
+                            </IconButton>
+                          </Tooltip>
+                        </NavLink>
+                        <Tooltip content="Delete">
+                          <IconButton
+                            variant="text"
+                            onClick={() => handleCampaignDelete(_id)}
+                          >
+                            <Delete className="size-5 text-red-500" />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
           </tbody>
         </table>
-        <Outlet />
-      </div>
+      </CardBody>
+
+      <CardFooter className="flex items-center justify-end p-4">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="text"
+            className="flex items-center gap-2 rounded-full"
+            onClick={prev}
+            disabled={active === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <IconButton key={i + 1} {...getItemProps(i + 1)}>
+                {i + 1}
+              </IconButton>
+            ))}
+          </div>
+
+          <Button
+            variant="text"
+            className="flex items-center gap-2 rounded-full"
+            onClick={next}
+            disabled={active === totalPages}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </div>
+      </CardFooter>
     </FormCard>
   );
 };

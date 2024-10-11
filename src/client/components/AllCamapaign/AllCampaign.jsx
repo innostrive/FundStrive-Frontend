@@ -32,8 +32,8 @@ const AllCampaign = ({ campaign }) => {
             <Progress
               value={initialProgress}
               label="Completed"
-              size="md"
-              className="bg-secondary h-3"
+              size="sm"
+              className="bg-secondary h-3 text-xs"
               color="cyan"
             />
           </div>

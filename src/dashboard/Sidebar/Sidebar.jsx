@@ -145,10 +145,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         height: openSubmenu === item.id ? "auto" : 0,
                       }}
                       transition={{ type: "spring", stiffness: 200 }}
-                      className="overflow-hidden py-2"
+                      className="overflow-hidden"
                     >
                       {item.subMenus.map((subItem) => (
-                        <li key={subItem.name} className="py-2">
+                        <li key={subItem.name} className="px-2">
                           <NavLink to={subItem.link}>
                             <div
                               className={`flex items-center p-3 rounded-lg ${

@@ -6,12 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 
 const useUsersData = () => {
   const axiosSecure = useAxiosSecure();
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    axiosSecure.get("/api/users").then((res) => {
-      setUsers(res.data.data.users);
-    });
-  }, []);
+
+  const { refetch, data: users = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/api/users");
+      return res.data.data.users;
+    },
+  });
 
   const handleUserDelete = (id) => {
     const data = { ids: [id] };
@@ -30,9 +32,8 @@ const useUsersData = () => {
           .delete("/api/users", { data })
           .then((response) => {
             if (response.status === 200) {
-              const remainingUsers = users.filter((user) => user._id !== id);
-              setUsers(remainingUsers);
               toast.success("Delete Successful");
+              refetch();
             } else {
               toast.warning("Category not deleted");
             }
@@ -45,7 +46,7 @@ const useUsersData = () => {
     });
   };
 
-  return { users, handleUserDelete };
+  return [users, handleUserDelete];
 };
 
 export default useUsersData;

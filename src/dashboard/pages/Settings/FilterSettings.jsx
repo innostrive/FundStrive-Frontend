@@ -1,17 +1,32 @@
 import { Option, Select } from "@material-tailwind/react";
 import useSetting from "../../hooks/useSettings";
+import { useState } from "react";
 
-export function FilterSettings({ handleSlugFilter, handleAllSlug }) {
+export function FilterSettings({ handleMenuFilter, handleAllMenu }) {
   const [settings] = useSetting();
+  const [value, setValue] = useState();
   return (
-    <div className="w-32 my-10">
-      <Select label="Filter With Slug" className="rounded-none">
-        <Option value="all" onClick={(value) => handleAllSlug(value)}>
+    <div className="w-32 mb-5">
+      <Select label="Filter With Menu" className="rounded-none" value={value}>
+        <Option
+          value="All"
+          onClick={(value) => {
+            handleAllMenu(value);
+            setValue("All");
+          }}
+        >
           All
         </Option>
         {settings.map((setting) => (
-          <Option onClick={() => handleSlugFilter(setting?.slug)}>
-            {setting?.slug}
+          <Option
+            key={setting?._id}
+            value={setting?.name}
+            onClick={() => {
+              handleMenuFilter(setting?.name);
+              setValue(setting?.name);
+            }}
+          >
+            {setting?.name}
           </Option>
         ))}
       </Select>

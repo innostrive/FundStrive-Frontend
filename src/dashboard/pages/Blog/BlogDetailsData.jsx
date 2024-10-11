@@ -3,6 +3,7 @@ import BlogDetailsInfo from "../../components/Blogs/BlogDetailsInfo";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Layout from "../../layout/Layout";
 import { useParams } from "react-router-dom";
+import useReviewData from "../../hooks/useReviewData";
 
 const BlogDetailsData = () => {
   const { id } = useParams();
@@ -25,8 +26,33 @@ const BlogDetailsData = () => {
       setAuthor(userData);
     });
   }, [authorId, axiosSecure]);
+
+  const [reviews, refetch] = useReviewData();
+  const URL = import.meta.env.VITE_BASE_URL;
+  console.log("reviews:", reviews);
+
+  const blogReviews = reviews.filter((item) => item.post_id === id);
+  console.log("blogReviews:", blogReviews);
+
+  const handleDelete = async (id) => {
+    console.log("id:", id);
+    const data = {
+      ids: [id],
+    };
+    await axios.delete(`${URL}/reviews`, { data }).then((res) => {
+      if (res.status === 200) {
+        toast.success("Comment deleted...");
+        refetch();
+      }
+    });
+  };
+
   return (
-    <BlogDetailsInfo blogInfo={blogInfo} author={author}></BlogDetailsInfo>
+    <BlogDetailsInfo
+      blogInfo={blogInfo}
+      author={author}
+      blogReviews={blogReviews}
+    ></BlogDetailsInfo>
   );
 };
 

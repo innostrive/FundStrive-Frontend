@@ -14,11 +14,11 @@ const CategoryInfo = ({ categoryInfo, setBlogContent, blogContent }) => {
   const [edit, setEdit] = useState(false);
   const [blogData, setBlogData] = useState({});
   const { register } = useForm();
-  const apiUrl = import.meta.env.VITE_BASE_URL_IMAGE;
+  const apiUrl = import.meta.env.VITE_IMAGE_URL;
   const configureImage = (image) => {
-    console.log("image:", apiUrl + image);
     return apiUrl + image;
   };
+  console.log("image:", apiUrl + categoryInfo?.image);
 
   const handleContentChange = (value) => {
     setBlogContent(value);
@@ -34,6 +34,10 @@ const CategoryInfo = ({ categoryInfo, setBlogContent, blogContent }) => {
           />
         }
       >
+        {/* <img
+          src="https://fundstrive-backend.onrender.com/public/uploads/categories/1728538476645.jpeg"
+          alt="image"
+        /> */}
         <div className="grid grid-cols-1 gap-5 my-5">
           <div className="grid space-y-2">
             <label className="text-sm">Name</label>

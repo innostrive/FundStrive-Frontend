@@ -1,184 +1,183 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useTable, useRowSelect, usePagination } from "react-table";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useUsersData from "../../hooks/useUsersData";
-import { Link } from "react-router-dom";
+import {
+  CardBody,
+  CardFooter,
+  Typography,
+  Chip,
+  Button,
+  IconButton,
+  Tooltip,
+} from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Delete, Edit, View } from "../../assets/icons/icons";
-import Swal from "sweetalert2";
-import { toast } from "react-toastify";
-import { useMutation } from "@tanstack/react-query";
+import FormCard from "../../ui/FormCard";
+import { NavLink } from "react-router-dom";
+import { useState, useMemo } from "react";
+import useUsersData from "../../hooks/useUsersData";
 
-// Component for rendering the status badge
-const StatusBadge = ({ status }) => (
-  <span
-    className={`px-2 py-1 rounded-md ${
-      status === "Active"
-        ? "border border-green-500 text-green-500 hover:text-white hover:bg-green-500"
-        : "border border-red-500 text-red-500 hover:text-white hover:bg-red-500"
-    }`}
-  >
-    {status}
-  </span>
-);
+const TABLE_HEAD = ["Name", "Country", "Role", "Status", "Action"];
 
 const UserList = () => {
-  const { users, handleUserDelete } = useUsersData();
+  const [users, handleUserDelete] = useUsersData();
+  const [active, setActive] = useState(1);
+  const itemsPerPage = 5;
 
-  console.log("users:", users);
+  const totalPages = Math.ceil(users.length / itemsPerPage);
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Country",
-        accessor: "country",
-      },
-      {
-        Header: "State",
-        accessor: "state",
-      },
-      {
-        Header: "Role",
-        accessor: "role",
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-        Cell: ({ value }) => <StatusBadge status={value} />,
-      },
-      {
-        Header: "Action",
-        Cell: ({ row }) => (
-          <div className="flex gap-2">
-            <Link to={`/dashboard/user-details/${row.original._id}`}>
-              <View />
-            </Link>
-            <Link to={`/dashboard/edit-user/${row.original._id}`}>
-              <Edit />
-            </Link>
-            <span
-              className="cursor-pointer"
-              onClick={() => handleUserDelete(row.original._id)}
-            >
-              <Delete />
-            </span>
-          </div>
-        ),
-      },
-    ],
-    []
-  );
+  const paginatedusers = useMemo(() => {
+    const start = (active - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return users.slice(start, end);
+  }, [users, active]);
 
-  // Define table data
-  const data = useMemo(() => users, [users]);
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "gray",
+    onClick: () => setActive(index),
+    className:
+      active === index
+        ? "rounded-full bg-secondary text-white"
+        : "rounded-full bg-gray-50 hover:bg-gray-200 text-black",
+  });
 
-  // Use table hook and pagination
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page, // instead of rows, use page for pagination
-    prepareRow,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0 }, // Set page index to 0 by default
-    },
-    usePagination, // Add pagination hook
-    useRowSelect
-  );
+  const next = () => {
+    if (active < totalPages) setActive(active + 1);
+  };
+
+  const prev = () => {
+    if (active > 1) setActive(active - 1);
+  };
 
   return (
-    <div className="overflow-x-auto rounded-md">
-      <table {...getTableProps()} className="min-w-full bg-white border">
-        <thead className="bg-gray-200">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  className="py-3 px-6 text-left text-sm font-medium text-gray-700 border-b"
-                >
-                  {column.render("Header")}
+    <FormCard title="User List">
+      <CardBody className="border p-0">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((head) => (
+                <th key={head} className="bg-blue-gray-50/50 p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
+                  >
+                    {head}
+                  </Typography>
                 </th>
               ))}
             </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} className="hover:bg-gray-100">
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    className="py-4 px-6 text-sm text-gray-600 border-b"
-                  >
-                    {cell.render("Cell")}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {paginatedusers.map(
+              ({ name, country, role, status, _id }, index) => {
+                const isLast = index === paginatedusers.length - 1;
+                const classes = isLast
+                  ? "p-4 border-b-none"
+                  : "p-4 border-b border-blue-gray-50";
 
-      {/* Pagination Controls */}
-      <div className="pagination mt-4 flex justify-between items-center">
-        <button
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-          className="px-4 py-2 bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <span>
-          Page{" "}
-          <strong className="text-base font-normal capitalize text-gray-600">
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
-        </span>
-        <button
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-          className="px-4 py-2 bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+                return (
+                  <tr key={_id}>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {name}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {country}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {role}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Chip
+                          size="sm"
+                          variant="ghost"
+                          value={status}
+                          color={status === "Active" ? "green" : "red"}
+                        />
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex items-center">
+                        <NavLink to={`/dashboard/user-details/${_id}`}>
+                          <Tooltip content="Category Info">
+                            <IconButton variant="text">
+                              <View className="size-5 text-secondary" />
+                            </IconButton>
+                          </Tooltip>
+                        </NavLink>
+                        <NavLink to={`/dashboard/edit-user/${_id}`}>
+                          <Tooltip content="Edit">
+                            <IconButton variant="text">
+                              <Edit className="size-5 text-green-500" />
+                            </IconButton>
+                          </Tooltip>
+                        </NavLink>
+                        <Tooltip content="Delete">
+                          <IconButton
+                            variant="text"
+                            onClick={() => handleUserDelete(_id)}
+                          >
+                            <Delete className="size-5 text-red-500" />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
+          </tbody>
+        </table>
+      </CardBody>
 
-      {/* Page Size Selection */}
-      <div className="mt-4">
-        <span className="text-base font-normal capitalize text-gray-600">
-          Rows per page:{" "}
-        </span>
-        <select
-          value={pageSize}
-          onChange={(e) => setPageSize(Number(e.target.value))}
-          className="ml-2 border border-gray-300 rounded bg-gray-100"
-        >
-          {[5, 10, 20, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize} className="bg-gray-100">
-              {pageSize}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
+      <CardFooter className="flex items-center justify-end p-4">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="text"
+            className="flex items-center gap-2 rounded-full"
+            onClick={prev}
+            disabled={active === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <IconButton key={i + 1} {...getItemProps(i + 1)}>
+                {i + 1}
+              </IconButton>
+            ))}
+          </div>
+
+          <Button
+            variant="text"
+            className="flex items-center gap-2 rounded-full"
+            onClick={next}
+            disabled={active === totalPages}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </div>
+      </CardFooter>
+    </FormCard>
   );
 };
 

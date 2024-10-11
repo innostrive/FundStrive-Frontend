@@ -1,13 +1,6 @@
-import {
-  Menu,
-  MenuHandler,
-  MenuItem,
-  MenuList,
-  Rating,
-} from "@material-tailwind/react";
+import { Rating } from "@material-tailwind/react";
 import reviewing from "../../assets/Logo/user.jpg";
-import { ThreeDotMenu } from "../../assets/icons/icons";
-const BlogReviewCard = ({ blogReviews, handleDelete }) => {
+const BlogReviewCard = ({ blogReviews }) => {
   return (
     <div className="space-y-5">
       <span className="text-lg font-medium tracking-normal leading-normal text-secondary">
@@ -31,18 +24,6 @@ const BlogReviewCard = ({ blogReviews, handleDelete }) => {
                   value={review?.rating}
                   readonly
                 />
-                <Menu>
-                  <MenuHandler>
-                    <button>
-                      <ThreeDotMenu />
-                    </button>
-                  </MenuHandler>
-                  <MenuList>
-                    <MenuItem onClick={() => handleDelete(review?._id)}>
-                      Delete
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
               </div>
             </div>
             <p>{review?.review}</p>

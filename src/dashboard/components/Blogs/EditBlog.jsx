@@ -11,6 +11,10 @@ import EditorToolbar, {
 } from "../../components/EditToolbar/EditToolbar";
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
+import BlogReview from "./BlogReview";
+import axios from "axios";
+import useReviewData from "../../hooks/useReviewData";
+import EditBlogReview from "./EditBlogReview";
 
 const EditBlog = () => {
   const { id } = useParams();
@@ -20,6 +24,26 @@ const EditBlog = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const { register, handleSubmit, reset } = useForm();
+
+  const [reviews, refetch] = useReviewData();
+  const URL = import.meta.env.VITE_BASE_URL;
+  console.log("reviews:", reviews);
+
+  const blogReviews = reviews.filter((item) => item.post_id === id);
+  console.log("blogReviews:", blogReviews);
+
+  const handleDelete = async (id) => {
+    console.log("id:", id);
+    const data = {
+      ids: [id],
+    };
+    await axios.delete(`${URL}/reviews`, { data }).then((res) => {
+      if (res.status === 200) {
+        toast.success("Comment deleted...");
+        refetch();
+      }
+    });
+  };
 
   useEffect(() => {
     axiosSecure.get(`/posts/${id}`).then((response) => {
@@ -157,6 +181,12 @@ const EditBlog = () => {
         </div>
         <IButton className="flex ml-auto my-5">Update</IButton>
       </form>
+      <div className="space-y-5 my-10">
+        <span>Total Comments {blogReviews.length}</span>
+        {blogReviews.map((review) => (
+          <EditBlogReview review={review} handleDelete={handleDelete} />
+        ))}
+      </div>
     </FormCard>
   );
 };

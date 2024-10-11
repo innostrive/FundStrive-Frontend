@@ -18,12 +18,12 @@ import EditorToolbar, {
   modules,
   formats,
 } from "../../components/EditToolbar/EditToolbar";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { json, useNavigate } from "react-router-dom";
 
 const CreateCampaign = () => {
   const axiosSecure = useAxiosSecure();
-  const { categories } = useCategoriesData();
+  const [categories] = useCategoriesData();
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [imagePreview, setImagePreview] = useState("");
@@ -47,30 +47,34 @@ const CreateCampaign = () => {
       ...data,
       category,
       description,
-      image,
     };
 
-    try {
-      await axiosSecure
-        .post("/api/campaigns", campaignData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            toast.success(response.data.message);
-            reset();
-            navigate("/dashboard/campaign");
-          }
-          console.log("campaign:", response);
-        });
-    } catch (err) {
-      toast.error(err);
-      console.log(err);
-    }
-    // console.log("campaign:", formData.get("data"));
-    console.log("campaignCreate:", campaignData);
+    const formData = new FormData();
+    formData.append("image", data.image);
+    formData.append("data", JSON.stringify(campaignData));
+    console.log("formdata:", Object.fromEntries(formData));
+
+    // try {
+    //   await axiosSecure
+    //     .post("/api/campaigns", campaignData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     })
+    //     .then((response) => {
+    //       if (response.status === 200) {
+    //         toast.success(response.data.message);
+    //         reset();
+    //         navigate("/dashboard/campaign");
+    //       }
+    //       console.log("campaign:", response);
+    //     });
+    // } catch (err) {
+    //   toast.error(err);
+    //   console.log(err);
+    // }
+    // // console.log("campaign:", formData.get("data"));
+    // console.log("campaignCreate:", campaignData);
   };
 
   return (
@@ -165,13 +169,28 @@ const CreateCampaign = () => {
             >
               Upload Image
             </label>
-            <input
+            {/* <input
               type="file"
               className="hidden"
               id="image"
               name="image"
               accept="image/*"
               onChange={(e) => handleImage(e)}
+            /> */}
+            <Controller
+              name="image"
+              render={({ field: { onChange, value, ...field } }) => (
+                <input
+                  type="file"
+                  className="hidden"
+                  // id="image"
+                  // name="image"
+                  accept="image/*"
+                  // value={value?.fileName}
+                  {...field}
+                  onChange={(e) => onChange(e.target?.files[0])}
+                />
+              )}
             />
             <div className="mt-5">
               {imagePreview && (

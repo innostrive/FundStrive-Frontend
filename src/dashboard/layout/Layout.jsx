@@ -11,7 +11,7 @@ const Layout = () => {
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <main className="min-w-screen-xl lg:p-[30px] xl:p-[30px] mt-20 bg-text-primary h-full">
+          <main className="min-w-screen-xl lg:p-[30px] xl:p-[30px] mt-20 bg-text-primary h-auto min-h-screen">
             <Outlet />
           </main>
         </div>

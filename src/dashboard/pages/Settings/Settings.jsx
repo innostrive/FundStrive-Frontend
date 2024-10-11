@@ -16,24 +16,26 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { FilterSettings } from "./FilterSettings";
 
-const TABLE_HEAD = ["Code", "Slug", "Status", "Action"];
+const TABLE_HEAD = ["Menu", "Name", "Status", "Action"];
 const Settings = () => {
   const [settings, handleSettingsDelete] = useSettings();
-  const [slug, setSlug] = useState("all");
+  const [name, setName] = useState("all");
 
-  const handleSlugFilter = (filter) => {
-    setSlug(filter);
+  const handleMenuFilter = (filter) => {
+    setName(filter);
   };
 
-  const handleAllSlug = () => {
-    setSlug("all");
+  const handleAllMenu = () => {
+    setName("all");
   };
 
   const slugFilter =
-    slug === "all" ? settings : settings.filter((item) => item.slug === slug);
+    name === "all" ? settings : settings.filter((item) => item.name === name);
+
+  console.log("filter:", slugFilter);
 
   const [active, setActive] = useState(1);
-  const itemsPerPage = 3;
+  const itemsPerPage = 5;
 
   const totalPages = Math.ceil(slugFilter.length / itemsPerPage);
 
@@ -62,14 +64,14 @@ const Settings = () => {
   };
   return (
     <FormCard
-      title="Settings List"
+      title="Menu List"
       icon={<Add />}
       path="/dashboard/create-settings"
       iconTitle="Add"
     >
       <FilterSettings
-        handleSlugFilter={handleSlugFilter}
-        handleAllSlug={handleAllSlug}
+        handleMenuFilter={handleMenuFilter}
+        handleAllMenu={handleAllMenu}
       />
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -89,7 +91,7 @@ const Settings = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedCategories.map(({ code, slug, status, _id }, index) => {
+            {paginatedCategories.map(({ key, name, status, _id }, index) => {
               const isLast = index === paginatedCategories.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
@@ -98,24 +100,24 @@ const Settings = () => {
               return (
                 <tr key={_id}>
                   <td className={classes}>
-                    <div className="flex items-center gap-3">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-bold"
-                      >
-                        {code}
-                      </Typography>
-                    </div>
-                  </td>
-                  <td className={classes}>
                     <Typography
                       variant="small"
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {slug}
+                      {name}
                     </Typography>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex items-center gap-3">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {key}
+                      </Typography>
+                    </div>
                   </td>
                   <td className={classes}>
                     <div className="w-max">

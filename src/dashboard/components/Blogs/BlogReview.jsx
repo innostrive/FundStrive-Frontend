@@ -1,17 +1,17 @@
 import { Rating } from "@material-tailwind/react";
-import reviewimg from "../../assets/Logo/user.jpg";
+import reviewing from "../../assets/Logo/user.jpg";
 
-const ReviewCard = ({ review }) => {
+const BlogReview = ({ review }) => {
   return (
     <div className="grid grid-cols-12 items-center border border-gray-300 rounded-md p-5">
-      <div className="col-span-2">
+      <div className="col-span-1">
         <img
-          src={reviewimg}
+          src={reviewing}
           alt=""
           className="rounded-full object-cover h-20 w-20"
         />
       </div>
-      <div className="col-span-10 space-y-5">
+      <div className="col-span-11 space-y-5">
         <div className="flex justify-between">
           <h1>{review?.name}</h1>
           <div>
@@ -24,4 +24,4 @@ const ReviewCard = ({ review }) => {
   );
 };
 
-export default ReviewCard;
+export default BlogReview;

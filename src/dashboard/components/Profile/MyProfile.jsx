@@ -5,18 +5,15 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import IButton from "../../ui/IButton";
 import { Button } from "@material-tailwind/react";
 
-const MyProfile = () => {
+const MyProfile = ({ userInfo }) => {
   const [edit, setEdit] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
-
-  const userId = localStorage.getItem("userId");
-
   const axiosSecure = useAxiosSecure();
-  useEffect(() => {
-    axiosSecure.get(`/api/users/${userId}`).then((res) => {
-      setUserInfo(res.data.data);
-    });
-  }, [userId]);
+
+  // useEffect(() => {
+  //   axiosSecure.get(`/api/users/${userId}`).then((res) => {
+  //     setUserInfo(res.data.data);
+  //   });
+  // }, [userId]);
   return (
     <FormCard
       title="Profle"

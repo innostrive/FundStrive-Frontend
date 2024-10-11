@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import useAxiosSecure from "./useAxiosSecure";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
@@ -6,12 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 
 const useCategoriesData = () => {
   const axiosSecure = useAxiosSecure();
-  // const [categories, setCategories] = useState([]);
-  // useEffect(() => {
-  //   axiosSecure.get("/categories").then((res) => {
-  //     setCategories(res.data.data.categories);
-  //   });
-  // }, []);
   const { refetch, data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {

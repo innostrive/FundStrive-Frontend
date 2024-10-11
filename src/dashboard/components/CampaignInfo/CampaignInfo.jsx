@@ -11,9 +11,15 @@ import EditorToolbar, {
 import IButton from "../../ui/IButton";
 import { Button, Option, Select } from "@material-tailwind/react";
 import useCategoriesData from "../../hooks/useCategoriesData";
+import CampaignReview from "./CampaignReview";
 
-const CampaignInfo = ({ campaignInfo, category, setCategory }) => {
-  const { categories } = useCategoriesData();
+const CampaignInfo = ({
+  campaignInfo,
+  category,
+  setCategory,
+  campaignReviews,
+}) => {
+  const [categories] = useCategoriesData();
   const [edit, setEdit] = useState(false);
   const { register } = useForm();
   const campaignDeadline = moment(campaignInfo?.deadline).format(
@@ -131,7 +137,7 @@ const CampaignInfo = ({ campaignInfo, category, setCategory }) => {
             <span className="text-sm">Deadline</span>
             <input
               type="text"
-              defaultValue={campaignInfo?.deadline}
+              defaultValue={campaignDeadline}
               disabled={edit ? false : true}
               className={`${
                 edit
@@ -146,7 +152,7 @@ const CampaignInfo = ({ campaignInfo, category, setCategory }) => {
             <EditorToolbar toolbarId={"t2"} />
             <ReactQuill
               theme="snow"
-              // value={blogContent}
+              value={campaignInfo?.description}
               // onChange={handleContentChange}
               placeholder={"Write something awesome..."}
               modules={modules("t2")}
@@ -162,6 +168,11 @@ const CampaignInfo = ({ campaignInfo, category, setCategory }) => {
             </Button>
           </div>
         ) : null}
+        <div className="my-10 space-y-5">
+          {campaignReviews.map((campaignReview) => (
+            <CampaignReview campaignReview={campaignReview} />
+          ))}
+        </div>
       </FormCard>
     </section>
   );

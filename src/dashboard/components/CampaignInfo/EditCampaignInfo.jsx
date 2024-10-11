@@ -1,10 +1,3 @@
-import {
-  Button,
-  Input,
-  Option,
-  Select,
-  Textarea,
-} from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,12 +11,12 @@ import EditorToolbar, {
   formats,
 } from "../../components/EditToolbar/EditToolbar";
 import useCategoriesData from "../../hooks/useCategoriesData";
-
-const EditCampaignInfo = () => {
+import EditCampaignReview from "./EditCampaignReview";
+const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const { categories } = useCategoriesData();
+  const [categories] = useCategoriesData();
   const { register, handleSubmit, reset } = useForm();
   const [imagePreview, setImagePreview] = useState("");
   const [image, setImage] = useState(null);
@@ -204,6 +197,14 @@ const EditCampaignInfo = () => {
         </div>
         <IButton className="my-5 flex ml-auto">update</IButton>
       </form>
+      <div className="space-y-5">
+        {campaignReviews.map((campaignReview) => (
+          <EditCampaignReview
+            campaignReview={campaignReview}
+            handleDelete={handleDelete}
+          />
+        ))}
+      </div>
     </FormCard>
   );
 };
