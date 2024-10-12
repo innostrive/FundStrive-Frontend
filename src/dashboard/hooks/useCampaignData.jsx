@@ -27,7 +27,7 @@ const useCampaignData = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete("/api/campaign", { data })
+          .delete("/api/campaigns", { data })
           .then((response) => {
             if (response.status === 200) {
               toast.success("Delete Successful");

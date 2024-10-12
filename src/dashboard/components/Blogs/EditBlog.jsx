@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import EditorToolbar, {
   modules,
@@ -24,6 +24,7 @@ const EditBlog = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const { register, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
 
   const [reviews, refetch] = useReviewData();
   const URL = import.meta.env.VITE_BASE_URL;
@@ -80,11 +81,6 @@ const EditBlog = () => {
 
     formData.append("data", JSON.stringify(postData));
 
-    if (image) {
-      formData.append("image", image);
-    } else {
-      toast.error("image is missing");
-    }
     // console.log("blogData:", formData.get("data"));
     // console.log("blogData:", formData.get("image"));
 
@@ -96,7 +92,8 @@ const EditBlog = () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          toast.success("Blog created successfully!!!");
+          toast.success(response.data.message);
+          navigate("/dashboard/blogs");
           console.log("blog:", response.data.message);
         } else {
           toast.error("Something went wrong!!!");

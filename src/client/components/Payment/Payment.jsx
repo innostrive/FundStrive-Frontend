@@ -3,7 +3,7 @@ import { Input } from "@material-tailwind/react";
 import IButton from "../../../dashboard/ui/IButton";
 import axios from "axios";
 import { useState } from "react";
-const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
 const Payment = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [payment, setPayment] = useState("");

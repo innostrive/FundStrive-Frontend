@@ -18,6 +18,7 @@ const TABLE_HEAD = ["Code", "Campaign", "Title", "Status", "Action"];
 
 const Campaigns = () => {
   const [campaigns, handleCampaignDelete] = useCampaignData();
+  console.log("campaigns:", campaigns);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -61,9 +62,9 @@ const Campaigns = () => {
               {TABLE_HEAD.map((head) => (
                 <th key={head} className="bg-blue-gray-50/50 p-4">
                   <Typography
-                    variant="small"
+                    variant="h6"
                     color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+                    className="font-bold leading-none opacity-70"
                   >
                     {head}
                   </Typography>

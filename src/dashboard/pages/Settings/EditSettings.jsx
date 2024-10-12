@@ -95,7 +95,7 @@ const EditSettings = () => {
           </div>
         </div>
         <IButton type="submit" className="my-5 flex ml-auto">
-          submit
+          update
         </IButton>
       </Form>
     </FormCard>

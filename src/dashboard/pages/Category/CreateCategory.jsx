@@ -13,7 +13,7 @@ import Form from "../../components/form/Form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import categorySchema from "../../schemas/category.schema";
 import TextInput from "../../ui/TextInput";
-import { FormProvider, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
 import { json, useNavigate, useParams } from "react-router-dom";
@@ -28,8 +28,14 @@ const CreateCategory = () => {
   const [image, setImage] = useState(null);
   const [value, setValue] = useState("");
   const [imagePreview, setImagePreview] = useState("");
-  const methods = useForm();
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    control,
+    register,
+    clearErrors,
+    formState: { errors },
+  } = useForm();
+  const [isError, setError] = useState(null);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -43,9 +49,9 @@ const CreateCategory = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
+
     const postData = {
       ...data,
-      description: value,
       image,
     };
     try {
@@ -65,56 +71,90 @@ const CreateCategory = () => {
       toast.error(err);
       console.log(err);
     }
-    console.log("data", Object.fromEntries(formData));
+    console.log("data", postData);
   };
+
   return (
     <section>
       <FormCard title="Create category">
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
-            <div className="mb-1 grid gap-6">
-              <TextInput type="text" name="name" label="Name" />
-              <span className="-mb-3 text-sm text-secondary">Description</span>
-              <EditorToolbar toolbarId={"t2"} />
-              <ReactQuill
-                theme="snow"
-                value={value}
-                onChange={setValue}
-                modules={modules("t2")}
-                formats={formats}
-                placeholder="Write description here..."
-              />
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
+          <div className="mb-1 grid gap-6">
+            <span className="-mb-3 text-sm text-secondary">Name</span>
+            <input
+              type="text"
+              name="name"
+              {...register("name", { required: "Name is required" })}
+              className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
+                errors.name ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            )}
+            <span className="-mb-3 text-sm text-secondary">Description</span>
+            <EditorToolbar toolbarId={"t2"} />
+            <Controller
+              name="description"
+              control={control}
+              rules={{ required: "Description is required" }}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <>
+                  <ReactQuill
+                    theme="snow"
+                    value={value}
+                    onChange={onChange}
+                    modules={modules("t2")}
+                    formats={formats}
+                    placeholder="Write description here..."
+                  />
+                  {error && (
+                    <p className="text-red-500 text-sm">{error.message}</p>
+                  )}
+                </>
+              )}
+            />
+          </div>
+          <div className="col-span-2 mt-5">
+            <label
+              htmlFor="image"
+              className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
+            >
+              Upload Image
+            </label>
+            <input
+              type="file"
+              className="hidden"
+              id="image"
+              name="image"
+              accept="image/*"
+              {...register("image", {
+                required: "Image is required",
+              })}
+              onChange={(e) => {
+                handleImage(e);
+                clearErrors("image");
+              }}
+            />
+            {errors.image && (
+              <p className="text-red-500 text-sm">{errors.image.message}</p>
+            )}
+            <div className="mt-5">
+              {imagePreview && (
+                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                  <img
+                    src={imagePreview}
+                    alt=""
+                    className="h-full w-full object-cover object-center rounded-md"
+                  />
+                </div>
+              )}
             </div>
-            <div className="col-span-2 mt-5">
-              <label
-                htmlFor="image"
-                className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
-              >
-                Upload Image
-              </label>
-              <input
-                type="file"
-                className="hidden"
-                id="image"
-                name="image"
-                accept="image/*"
-                onChange={(e) => handleImage(e)}
-              />
-              <div className="mt-5">
-                {imagePreview && (
-                  <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
-                    <img
-                      src={imagePreview}
-                      alt=""
-                      className="h-full w-full object-cover object-center rounded-md"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-            <IButton className="flex ml-auto">Submit</IButton>
-          </form>
-        </FormProvider>
+          </div>
+          <IButton className="flex ml-auto">Submit</IButton>
+        </form>
       </FormCard>
     </section>
   );

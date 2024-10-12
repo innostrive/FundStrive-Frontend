@@ -10,11 +10,18 @@ import { useState } from "react";
 import IButton from "../../ui/IButton";
 import ForgotPassword from "./ForgotPassword";
 import { PasswordModal } from "./PasswordModal";
+import { useForm } from "react-hook-form";
 
 const LoginForm = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
@@ -24,22 +31,12 @@ const LoginForm = () => {
         localStorage.setItem("token", data.data.data.token);
         localStorage.setItem("role", data.data.data.role);
         localStorage.setItem("userId", data.data.data.id);
+        reset();
         navigate("/dashboard");
       });
-    } catch {
-      toast.error(data.data.message);
-      console.log("login error:", data.data.message);
+    } catch (err) {
+      toast.error(err);
     }
-    // try {
-    //   setIsLoading(true);
-    //   await axios.post(`${URL}/forgot-password`, data).then((data) => {
-    //     setIsLoading(false);
-    //   });
-    // } catch {
-    //   toast.error(data.data.message);
-    //   console.log("login error:", data.data.message);
-    // }
-    console.log("reset:", data);
   };
 
   return (
@@ -52,16 +49,50 @@ const LoginForm = () => {
           Nice to meet you! Enter your details to register.
         </Typography>
       </div>
-      <Form
-        onSubmit={onSubmit}
-        resolver={zodResolver(loginValidationSchema)}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
         className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
       >
         <div className="mb-1 flex flex-col gap-6">
-          <TextInput type="email" name="email" label="Your Email" />
-          <TextInput type="password" name="password" label="Password" />
+          <span className="text-sm">Email</span>
+          <input
+            type="email"
+            name="email"
+            className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
+              errors.email ? "border-red-500" : "border-gray-300"
+            }`}
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                message: "Enter a valid email",
+              },
+            })}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
+
+          <span className="text-sm">Password</span>
+          <input
+            type="password"
+            name="password"
+            className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
+              errors.password ? "border-red-500" : "border-gray-300"
+            }`}
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters long",
+              },
+            })}
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
         </div>
-        <PasswordModal />
+        {/* <PasswordModal /> */}
         <IButton
           className="mt-6"
           type="submit"
@@ -76,7 +107,7 @@ const LoginForm = () => {
             Sign Up
           </Link>
         </Typography>
-      </Form>
+      </form>
     </section>
   );
 };

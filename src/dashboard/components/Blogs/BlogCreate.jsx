@@ -1,6 +1,6 @@
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -11,13 +11,19 @@ import EditorToolbar, {
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
 import { Add } from "../../assets/icons/icons";
+import { useNavigate } from "react-router-dom";
 
 const BlogCreate = () => {
   const axiosSecure = useAxiosSecure();
-  const [value, setValue] = useState("");
+  const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -33,17 +39,8 @@ const BlogCreate = () => {
     const formData = new FormData();
     const postData = {
       ...data,
-      content: value,
       image,
     };
-
-    if (image) {
-      formData.append("image", image);
-    } else {
-      toast.error("image is missing");
-    }
-    console.log("blogData:", formData.get("data"));
-    console.log("blogData:", formData.get("image"));
 
     axiosSecure
       .post("/api/posts", postData, {
@@ -54,6 +51,7 @@ const BlogCreate = () => {
       .then((response) => {
         if (response.status === 200) {
           toast.success("Blog created successfully!!!");
+          navigate("/dashboard/blogs");
           console.log("blog:", response.data);
         } else {
           toast.error("Something went wrong!!!");
@@ -66,16 +64,27 @@ const BlogCreate = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2">
         <div className="mb-1 flex flex-col gap-6">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Ttile
+            Title
           </Typography>
           <input
             type="text"
             size="lg"
             className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-            id="name"
+            id="title"
             name="title"
-            {...register("title")}
+            {...register("title", {
+              required: "Title is required",
+              minLength: {
+                value: 3,
+                message: "Title must be at least 3 characters long",
+              },
+            })}
           />
+          {errors.title && (
+            <span className="text-red-500 text-sm">{errors.title.message}</span>
+          )}
+
+          {/* Tags */}
           <Typography variant="h6" color="blue-gray" className="-mb-3">
             Tags
           </Typography>
@@ -83,21 +92,42 @@ const BlogCreate = () => {
             type="text"
             size="lg"
             className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-            id="description"
+            id="tags"
             name="tags"
-            {...register("tags")}
+            {...register("tags", {
+              required: "Tags are required",
+              minLength: {
+                value: 2,
+                message: "Tags must be at least 2 characters long",
+              },
+            })}
           />
+          {errors.tags && (
+            <span className="text-red-500 text-sm">{errors.tags.message}</span>
+          )}
           <Typography variant="h6" color="blue-gray" className="-mb-3">
             Content
           </Typography>
           <EditorToolbar toolbarId={"t2"} />
-          <ReactQuill
-            theme="snow"
-            value={value}
-            onChange={setValue}
-            modules={modules("t2")}
-            formats={formats}
-            placeholder="Write blog here..."
+          <Controller
+            name="description"
+            control={control}
+            rules={{ required: "Description is required" }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <>
+                <ReactQuill
+                  theme="snow"
+                  value={value}
+                  onChange={onChange}
+                  modules={modules("t2")}
+                  formats={formats}
+                  placeholder="Write description here..."
+                />
+                {error && (
+                  <p className="text-red-500 text-sm">{error.message}</p>
+                )}
+              </>
+            )}
           />
           <label
             htmlFor="image"

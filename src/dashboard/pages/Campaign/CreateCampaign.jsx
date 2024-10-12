@@ -30,7 +30,13 @@ const CreateCampaign = () => {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -45,36 +51,34 @@ const CreateCampaign = () => {
   const onSubmit = async (data) => {
     const campaignData = {
       ...data,
-      category,
-      description,
+      image,
     };
 
     const formData = new FormData();
-    formData.append("image", data.image);
-    formData.append("data", JSON.stringify(campaignData));
-    console.log("formdata:", Object.fromEntries(formData));
+    formData.append("image", image);
+    // formData.append("data", JSON.stringify(campaignData));
 
-    // try {
-    //   await axiosSecure
-    //     .post("/api/campaigns", campaignData, {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     })
-    //     .then((response) => {
-    //       if (response.status === 200) {
-    //         toast.success(response.data.message);
-    //         reset();
-    //         navigate("/dashboard/campaign");
-    //       }
-    //       console.log("campaign:", response);
-    //     });
-    // } catch (err) {
-    //   toast.error(err);
-    //   console.log(err);
-    // }
-    // // console.log("campaign:", formData.get("data"));
-    // console.log("campaignCreate:", campaignData);
+    try {
+      await axiosSecure
+        .post("/api/campaigns", campaignData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(response.data.message);
+            reset();
+            navigate("/dashboard/campaign");
+          }
+          console.log("campaign:", response);
+        });
+    } catch (err) {
+      toast.error(err);
+      console.log(err);
+    }
+    // console.log("campaign:", formData.get("data"));
+    console.log("campaignCreate:", campaignData);
   };
 
   return (
@@ -87,39 +91,71 @@ const CreateCampaign = () => {
               type="text"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              // value={campaignData.name}
-              {...register("name")}
+              {...register("name", {
+                required: "Campaign name is required",
+                minLength: {
+                  value: 3,
+                  message: "Campaign name must be at least 3 characters",
+                },
+              })}
             />
+            {errors.name && (
+              <span className="text-red-500 text-sm">
+                {errors.name.message}
+              </span>
+            )}
           </div>
+
+          {/* Campaign Title */}
           <div className="grid grid-cols-1 space-y-2">
             <span className="text-sm">Campaign Title</span>
             <input
               type="text"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              // value={campaignData.title}
-              {...register("title")}
+              {...register("title", {
+                required: "Campaign title is required",
+                minLength: {
+                  value: 5,
+                  message: "Campaign title must be at least 5 characters",
+                },
+              })}
             />
+            {errors.title && (
+              <span className="text-red-500 text-sm">
+                {errors.title.message}
+              </span>
+            )}
           </div>
 
           <div className="grid grid-cols-1 space-y-2">
             <span className="text-sm">Category</span>
-            <Select
-              label="Select Category"
-              value={categories?._id}
-              onChange={setCategory}
+
+            <Controller
               name="category"
-            >
-              {categories.map((category) => (
-                <Option
-                  key={category?._id}
-                  value={category?._id}
-                  className="text-black"
+              control={control}
+              rules={{ required: "Category is required" }}
+              render={({ field: { onChange } }) => (
+                <Select
+                  label="Select Category"
+                  onChange={onChange}
+                  name="category"
                 >
-                  {category?.name}
-                </Option>
-              ))}
-            </Select>
+                  {categories.map((category) => (
+                    <Option
+                      key={category?._id}
+                      value={category?._id}
+                      className="text-black"
+                    >
+                      {category?.name}
+                    </Option>
+                  ))}
+                </Select>
+              )}
+            />
+            {errors.category && (
+              <span className="text-red-500">{errors.category.message}</span>
+            )}
           </div>
           <div className="grid grid-cols-1 space-y-2">
             <span className="text-sm">Target Amount</span>
@@ -127,39 +163,63 @@ const CreateCampaign = () => {
               type="text"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              // value={campaignData.target_amount}
-              {...register("target_amount")}
+              {...register("target_amount", {
+                required: "Target amount is required",
+                pattern: {
+                  value: /^[0-9]*$/,
+                  message: "Target amount must be a valid number",
+                },
+              })}
             />
+            {errors.target_amount && (
+              <span className="text-red-500 text-sm">
+                {errors.target_amount.message}
+              </span>
+            )}
           </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Raised Amount</span>
-            <input
-              type="text"
-              size="lg"
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              // value={campaignData.raised_amount}
-              {...register("raised_amount")}
-            />
-          </div>
-          <div className="grid grid-cols-1 space-y-2">
+
+          {/* Deadline */}
+          <div className="grid col-span-2 space-y-2">
             <span className="text-sm">Deadline</span>
             <input
               type="date"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              {...register("deadline")}
+              {...register("deadline", {
+                required: "Deadline is required",
+              })}
             />
+            {errors.deadline && (
+              <span className="text-red-500 text-sm">
+                {errors.deadline.message}
+              </span>
+            )}
           </div>
           <div className="col-span-2 space-y-2">
             <span className="grid grid-cols-1 space-y-2">Description</span>
             <EditorToolbar toolbarId={"t2"} />
-            <ReactQuill
-              theme="snow"
-              value={description}
-              onChange={setDescription}
-              modules={modules("t2")}
-              formats={formats}
-              placeholder="Type description here..."
+            <Controller
+              name="description"
+              control={control}
+              rules={{ required: "Description is required" }}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <>
+                  <ReactQuill
+                    theme="snow"
+                    value={value}
+                    onChange={onChange}
+                    modules={modules("t2")}
+                    formats={formats}
+                    placeholder="Write description here..."
+                  />
+                  {error && (
+                    <p className="text-red-500 text-sm">{error.message}</p>
+                  )}
+                </>
+              )}
             />
           </div>
           <div className="col-span-2">
@@ -169,29 +229,15 @@ const CreateCampaign = () => {
             >
               Upload Image
             </label>
-            {/* <input
+            <input
               type="file"
               className="hidden"
               id="image"
               name="image"
               accept="image/*"
               onChange={(e) => handleImage(e)}
-            /> */}
-            <Controller
-              name="image"
-              render={({ field: { onChange, value, ...field } }) => (
-                <input
-                  type="file"
-                  className="hidden"
-                  // id="image"
-                  // name="image"
-                  accept="image/*"
-                  // value={value?.fileName}
-                  {...field}
-                  onChange={(e) => onChange(e.target?.files[0])}
-                />
-              )}
             />
+
             <div className="mt-5">
               {imagePreview && (
                 <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">

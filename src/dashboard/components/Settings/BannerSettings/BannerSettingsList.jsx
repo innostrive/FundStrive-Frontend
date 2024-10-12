@@ -18,7 +18,7 @@ const TABLE_HEAD = ["Code", "Name", "Slug", "Status", "Action"];
 
 const BannerSettingsList = () => {
   const [banners, handleBannerDelete] = useBanner();
-
+  console.log("banner:", banners);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -62,9 +62,9 @@ const BannerSettingsList = () => {
               {TABLE_HEAD.map((head) => (
                 <th key={head} className="bg-blue-gray-50/50 p-4">
                   <Typography
-                    variant="small"
+                    variant="h6"
                     color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+                    className="font-bold leading-none opacity-70"
                   >
                     {head}
                   </Typography>

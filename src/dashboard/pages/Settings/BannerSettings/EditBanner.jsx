@@ -5,7 +5,8 @@ import IButton from "../../../ui/IButton";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const EditBanner = () => {
   const { id } = useParams();
@@ -15,10 +16,20 @@ const EditBanner = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const axiosSecure = useAxiosSecure();
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const navigate = useNavigate();
+  // const URL = import.meta.env.VITE_BASE_URL;
+  // useEffect(() => {
+  //   axios.get(`${URL}/settings/${id}`).then((res) => {
+  //     setBanner(res.data.data.status);
+  //     setSelectedStatus(res.data.data.status);
+  //   });
+  // }, []);
 
   useEffect(() => {
     axiosSecure.get(`/banners/${id}`).then((res) => {
       setBanner(res.data.data);
+      setSelectedStatus(res.data.data.status);
     });
   }, [id, axiosSecure]);
 
@@ -26,7 +37,7 @@ const EditBanner = () => {
 
   useEffect(() => {
     reset();
-  }, [reset]);
+  }, [banner]);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -44,6 +55,7 @@ const EditBanner = () => {
     const bannerData = {
       ...data,
       image,
+      status: selectedStatus,
     };
     await axiosSecure
       .put(`/api/banners/${id}`, bannerData, {
@@ -54,6 +66,7 @@ const EditBanner = () => {
       .then((response) => {
         console.log("Server response:", response);
         toast.success(response.data.message);
+        navigate("/dashboard/banner-list");
       })
       .catch((error) => {
         console.error("Error submitting data:", error);
@@ -84,6 +97,16 @@ const EditBanner = () => {
                 defaultValue={banner?.slug}
                 {...register("slug")}
               />
+            </div>
+            <div className="col-span-2">
+              <select
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-full text-base rounded"
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
             </div>
           </div>
           <div className="col-span-2 mt-5">

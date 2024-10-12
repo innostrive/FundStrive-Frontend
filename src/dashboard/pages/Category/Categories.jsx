@@ -63,9 +63,9 @@ const Categories = () => {
               {TABLE_HEAD.map((head) => (
                 <th key={head} className="bg-blue-gray-50/50 p-4">
                   <Typography
-                    variant="small"
+                    variant="h6"
                     color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+                    className="font-bold leading-none opacity-70"
                   >
                     {head}
                   </Typography>

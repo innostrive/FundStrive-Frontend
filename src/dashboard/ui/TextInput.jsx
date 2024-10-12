@@ -46,10 +46,10 @@ const TextInput = ({
           <label htmlFor="">{label}</label>
           <Controller
             name={name}
-            render={({ field }) => (
-              <input
+            render={({ field, fieldState: { error } }) => (
+              <Input
                 {...field}
-                errorMessage={errors[name] ? errors[name].message : ""}
+                // error={errors[name] ? errors[name].message : ""}
                 type={type}
                 className={twMerge(
                   "border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded",

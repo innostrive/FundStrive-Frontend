@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import FormCard from "../../ui/FormCard";
@@ -21,6 +21,7 @@ const EditCategoryInfo = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosSecure.get(`/categories/${id}`).then((res) => {
@@ -59,6 +60,7 @@ const EditCategoryInfo = () => {
       .then((response) => {
         console.log("Server response:", response);
         toast.success(response.data.message);
+        navigate("/dashboard/category");
       })
       .catch((error) => {
         console.error("Error submitting data:", error);

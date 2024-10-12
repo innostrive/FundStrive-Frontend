@@ -1,4 +1,3 @@
-import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 const Form = ({ children, onSubmit, resolver, defaultValues }) => {
@@ -6,7 +5,7 @@ const Form = ({ children, onSubmit, resolver, defaultValues }) => {
   if (!!defaultValues) {
     formConfig["defaultValues"] = defaultValues;
   }
-  if (!!resolver) {
+  if (resolver) {
     formConfig["resolver"] = resolver;
   }
   const methods = useForm({ formConfig });
