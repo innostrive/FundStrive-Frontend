@@ -1,4 +1,4 @@
-import { GalleryIcon } from "../assets/icons/icons";
+import { GalleryIcon, Privilege } from "../assets/icons/icons";
 
 export const adminSidebarItems = [
   {
@@ -174,6 +174,11 @@ export const adminSidebarItems = [
         name: "Banner Settings",
         icon: <GalleryIcon className="text-white" />,
         link: "/dashboard/banner-list",
+      },
+      {
+        name: "User Privilege",
+        icon: <Privilege className="text-white" />,
+        link: "/dashboard/user-privilege",
       },
     ],
   },

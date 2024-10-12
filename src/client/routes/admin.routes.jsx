@@ -20,6 +20,7 @@ import CreateSettings from "../../dashboard/pages/Settings/CreateSettings";
 import EditSettings from "../../dashboard/pages/Settings/EditSettings";
 import Settings from "../../dashboard/pages/Settings/Settings";
 import SettingsInfo from "../../dashboard/pages/Settings/SettingsInfo";
+import UserPrivilege from "../../dashboard/pages/UserPrivilege/UserPrivilege";
 import UserProfile from "../../dashboard/pages/UserProfile/UserProfile";
 import EditUser from "../../dashboard/pages/Users/EditUser";
 import UserDetails from "../../dashboard/pages/Users/UserDetails";
@@ -229,6 +230,14 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <BannerInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "user-privilege",
+    element: (
+      <ProtectedRoute>
+        <UserPrivilege />
       </ProtectedRoute>
     ),
   },

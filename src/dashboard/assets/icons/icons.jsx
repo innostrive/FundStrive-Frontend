@@ -62,7 +62,7 @@ export const ArrowUp = () => {
     </svg>
   );
 };
-export const View = () => {
+export const View = ({ onClick }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -71,6 +71,7 @@ export const View = () => {
       stroke-width="1.5"
       stroke="currentColor"
       className="size-5 text-blue-500"
+      onClick={onClick}
     >
       <path
         stroke-linecap="round"
@@ -178,6 +179,26 @@ export const Email = () => {
         stroke-linecap="round"
         stroke-linejoin="round"
         d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+      ></path>
+    </svg>
+  );
+};
+export const Privilege = () => {
+  return (
+    <svg
+      data-slot="icon"
+      fill="none"
+      stroke-width="1.5"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      className="size-6 text-text-primary"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"
       ></path>
     </svg>
   );
