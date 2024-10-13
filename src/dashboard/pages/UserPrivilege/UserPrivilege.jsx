@@ -9,22 +9,24 @@ import useRolePriviliege from "../../hooks/useRolePriviliege";
 import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { Delete, Edit, View } from "../../assets/icons/icons";
-import PriviliegeModal from "./PriviliegeModal";
 import { useState } from "react";
+import ViewPriviliegeModal from "./ViewPriviliegeModal";
+import EditPriviliegeModal from "./EditPrivilegeModal";
 const TABLE_HEAD = ["Role", "Action"];
 const UserPrivilege = () => {
   const [rolePrivliege] = useRolePriviliege();
-  const [role, setRole] = useState();
+  const [role, setRole] = useState({});
 
   const handleRole = (key) => {
-    return Object.keys(rolePrivliege)
+    const filteredPrivileges = Object.keys(rolePrivliege)
       .filter((k) => k === key)
       .reduce((obj, k) => {
-        obj[k] = rolePrivliege[k];
-        setRole(obj);
-        console.log("obj:", obj);
-        return obj;
+        const privilege = rolePrivliege[k];
+        setRole(privilege);
+        return privilege;
       }, {});
+
+    return filteredPrivileges;
   };
 
   return (
@@ -71,13 +73,16 @@ const UserPrivilege = () => {
                           variant="text"
                           onClick={() => handleRole(item)}
                         >
-                          <PriviliegeModal role={role} />
+                          <ViewPriviliegeModal role={role} />
                         </IconButton>
                       </Tooltip>
                       <NavLink>
                         <Tooltip content="Edit">
-                          <IconButton variant="text">
-                            <Edit className="size-5 text-green-500" />
+                          <IconButton
+                            variant="text"
+                            onClick={() => handleRole(item)}
+                          >
+                            <EditPriviliegeModal role={role} />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
