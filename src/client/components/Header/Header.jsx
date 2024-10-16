@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { EffectFade, Navigation, Autoplay } from "swiper/modules";
+import { EffectFade, Navigation, Autoplay, Pagination } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { Button } from "../../Styles/Styles";
 import { useEffect, useState } from "react";
@@ -48,12 +48,16 @@ const Header = () => {
       <Swiper
         spaceBetween={30}
         effect={"fade"}
-        navigation={navigateButton ? true : false}
+        // navigation={navigateButton ? true : false}
+        pagination={{
+          clickable: true,
+          // el: ".custom-pagination",
+        }}
         autoplay={{
           delay: 12000,
           disableOnInteraction: false,
         }}
-        modules={[EffectFade, Navigation, Autoplay]}
+        modules={[EffectFade, Navigation, Autoplay, Pagination]}
         onSlideChange={handleSlideChange}
       >
         {[donate1, donate2, donate3].map((image, index) => (
@@ -109,7 +113,7 @@ const Header = () => {
                   >
                     <Button
                       label="Donate"
-                      className="bg-primary text-text-primary"
+                      className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase"
                     />
                   </motion.div>
                 </Link>

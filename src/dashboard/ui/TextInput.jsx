@@ -28,7 +28,7 @@ const TextInput = ({
                 errorMessage={errors[name] ? errors[name].message : ""}
                 type={type}
                 className={twMerge(
-                  "border border-gray-300 px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded min-h-32 h-auto",
+                  "border border-gray-300 px-2 py-1.5 mt-2 w-full focus:outline-gray-300 focus:outline-1 rounded min-h-32 h-auto",
                   className
                 )}
                 value={value}
@@ -47,7 +47,7 @@ const TextInput = ({
           <Controller
             name={name}
             render={({ field, fieldState: { error } }) => (
-              <Input
+              <input
                 {...field}
                 // error={errors[name] ? errors[name].message : ""}
                 type={type}

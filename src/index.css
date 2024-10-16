@@ -31,3 +31,19 @@
   min-height: 150px;
   height: auto;
 }
+
+.custom-pagination {
+  position: relative;
+  top: -50px;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+.custom-pagination .swiper-pagination-bullet {
+  background-color: #02174c;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  background-color: #00ccdd;
+}

@@ -27,7 +27,7 @@ const Payment = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 mt-5">
       <div className="space-y-4">
         <label className="text-base font-medium text-[#2B2A27]">Amount</label>
         <Input

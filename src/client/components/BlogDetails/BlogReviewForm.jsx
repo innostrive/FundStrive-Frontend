@@ -1,54 +1,94 @@
-import { useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { toast } from "react-toastify";
-import Form from "../../../dashboard/components/form/Form";
-import { Rating, Typography } from "@material-tailwind/react";
-import TextInput from "../../../dashboard/ui/TextInput";
+import axios from "axios";
 import IButton from "../../../dashboard/ui/IButton";
-
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 const BlogReviewForm = ({ blog, refetch }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [isLoading, setIsLoading] = useState(false);
-  const axiosSecure = useAxiosSecure();
-  const [rating, setRating] = useState(0);
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleRatingChange = (newRating) => {
-    setRating(newRating);
-  };
   const onSubmit = async (data) => {
     const payload = {
       ...data,
-      rating,
       post_id: blog?._id,
     };
     setIsLoading(true);
-    await axiosSecure.post(`${URL}/reviews`, payload).then((res) => {
+    await axios.post(`${URL}/reviews`, payload).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.message);
-        refetch();
         setIsLoading(false);
+        reset();
         console.log("review:", res.data);
       }
+      refetch();
     });
     console.log("data:", payload);
   };
   return (
-    <Form onSubmit={onSubmit}>
-      <div className="flex items-center gap-5">
-        <Typography className="">Rate This Campaign?</Typography>
-        <Rating
-          className="text-primary"
-          value={rating}
-          onChange={(newRating) => handleRatingChange(newRating)}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-1 grid gap-6">
+        <span className="-mb-3 text-sm text-secondary">Name</span>
+        <input
+          type="text"
+          name="name"
+          {...register("name", {
+            required: "Name is required",
+            minLength: {
+              value: 3,
+              message: "Name must be at least 3 characters long",
+            },
+          })}
+          className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
+            errors.name ? "border-red-500" : "border-gray-300"
+          }`}
         />
+        {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+
+        {/* Email Field */}
+        <span className="-mb-3 text-sm text-secondary">Email</span>
+        <input
+          type="email"
+          name="email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: { value: /^\S+@\S+$/i, message: "Invalid email format" },
+          })}
+          className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
+            errors.email ? "border-red-500" : "border-gray-300"
+          }`}
+        />
+        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+
+        {/* Review Field */}
+        <span className="-mb-3 text-sm text-secondary">Comment</span>
+        <textarea
+          name="review"
+          {...register("review", {
+            required: "Review is required",
+            minLength: {
+              value: 10,
+              message: "Review must be at least 10 characters long",
+            },
+          })}
+          className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded h-auto min-h-40 ${
+            errors.review ? "border-red-500" : "border-gray-300"
+          }`}
+        />
+        {errors.review && (
+          <p className="text-red-500">{errors.review.message}</p>
+        )}
       </div>
-      <TextInput label="Name" name="name" type="text" />
-      <TextInput label="Email" name="email" type="text" />
-      <TextInput label="Review" name="review" type="textarea" />
+
       <IButton className="mt-5 rounded-none py-5">
-        {isLoading ? "Wait..." : "Review Submit"}
+        {isLoading ? "Wait..." : "Submit"}
       </IButton>
-    </Form>
+    </form>
   );
 };
 

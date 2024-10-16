@@ -5,14 +5,14 @@ import { BiLogoFacebook, BiLogoLinkedin } from "react-icons/bi";
 import { FaGoogle, FaInstagram } from "react-icons/fa6";
 import { toast } from "react-toastify";
 
-const ShareCampaign = () => {
+const ShareBlog = () => {
   const [value, setValue] = useState(window.location.href);
   const [copied, setCopied] = useState(false);
   return (
     <div>
       <div className="my-4">
         <h1 className="text-base font-medium text-secondary">
-          Share Campaign With Social Media
+          Share Blog With Social Media
         </h1>
       </div>
       <div className="relative flex w-full max-w-[24rem]">
@@ -78,4 +78,4 @@ const ShareCampaign = () => {
   );
 };
 
-export default ShareCampaign;
+export default ShareBlog;

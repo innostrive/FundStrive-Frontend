@@ -102,6 +102,7 @@ const Volunteer = () => {
           }}
           pagination={{
             clickable: true,
+            el: ".custom-pagination", // Adding a custom class for pagination
           }}
           autoplay={{
             delay: 5000,
@@ -122,7 +123,7 @@ const Volunteer = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        {/* </div> */}
+        <div className="custom-pagination mt-5 flex justify-center"></div>
       </Container>
     </div>
   );

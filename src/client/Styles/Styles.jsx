@@ -12,7 +12,7 @@ export const Button = ({ className, label }) => {
   return (
     <button
       className={twMerge(
-        "h-10 w-auto px-4 py-2 rounded-md bg-[#f47721] text-white",
+        "h-12 w-auto px-5 rounded-md bg-[#f47721] text-white",
         className
       )}
     >

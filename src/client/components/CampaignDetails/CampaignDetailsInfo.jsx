@@ -28,7 +28,9 @@ const CampaignDetailsInfo = ({ id }) => {
       label: "Description",
       value: "description",
       icon: DescriptionIcon,
-      desc: campaign?.description,
+      desc: (
+        <div dangerouslySetInnerHTML={{ __html: campaign?.description }}></div>
+      ),
     },
     {
       label: "Gallery",

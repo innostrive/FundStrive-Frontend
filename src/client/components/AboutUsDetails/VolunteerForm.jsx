@@ -40,7 +40,10 @@ export function VolunteerForm({ open, handleOpen }) {
   };
   return (
     <>
-      <IButton className="bg-primary" onClick={handleOpen}>
+      <IButton
+        className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase"
+        onClick={handleOpen}
+      >
         Join Us
       </IButton>
       <Dialog size="md" open={open} handler={handleOpen}>

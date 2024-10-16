@@ -23,7 +23,10 @@ const Campaigns = () => {
         </div>
         <div className="grid place-content-center py-10">
           <Link to={"/campaign-list"}>
-            <Button label="See All" className="bg-primary" />
+            <Button
+              label="See All"
+              className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase"
+            />
           </Link>
         </div>
       </Container>

@@ -23,7 +23,10 @@ const AboutUs = () => {
             <div>
               <Link to={"/about-us"}>
                 {" "}
-                <Button label="Read Details" className="bg-secondary" />
+                <Button
+                  label="Read Details"
+                  className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase"
+                />
               </Link>
             </div>
           </div>

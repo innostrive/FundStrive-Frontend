@@ -14,6 +14,7 @@ import MainLayout from "../../dashboard/layout/MainLayout";
 import adminPath from "./admin.routes";
 import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
 import RecentBlogDetail from "../components/RecentBlogs/RecentBlogDetail";
+import PaymentSuccessfull from "../pages/PaymentSuccessfull/PaymentSuccessfull";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
   {
     path: "/reset-password/:token",
     element: <ResetPassword />,
+  },
+  {
+    path: "/payment-success",
+    element: <PaymentSuccessfull />,
   },
   {
     path: "/dashboard",

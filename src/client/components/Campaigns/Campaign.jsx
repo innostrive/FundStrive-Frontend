@@ -25,7 +25,9 @@ const Campaign = ({ campaign }) => {
           </div>
           <Link to={`/campaign/${campaign?._id}`}>
             <div>
-              <IButton className="bg-primary">Donate</IButton>
+              <IButton className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase">
+                Donate
+              </IButton>
             </div>
           </Link>
         </div>
@@ -36,47 +38,12 @@ const Campaign = ({ campaign }) => {
         </div>
 
         <div className="p-5 bg-[#f3f4f7]">
-          <div className="">
-            {/* <div className="bg-primary h-0.5 rounded-full w-[45%]"></div> */}
-            {/* <Range
-              step={0.1}
-              min={0}
-              max={100}
-              values={progress}
-              onChange={(values) => setProgress(values)}
-              renderTrack={({ props, children }) => (
-                <div {...props}>
-                  <div
-                    style={{
-                      position: "absolute",
-                      width: `${progress[0]}%`,
-                      backgroundColor: "#00CCDD",
-                      height: "100%",
-                      borderRadius: "4px",
-                    }}
-                  />
-                  {children}
-                </div>
-              )}
-              renderThumb={({ props }) => (
-                <div
-                  {...props}
-                  style={{
-                    ...props.style,
-                    height: "16px",
-                    width: "16px",
-                    backgroundColor: "#00CCDD",
-                    borderRadius: "50%",
-                    cursor: "pointer",
-                  }}
-                />
-              )}
-            /> */}
+          <div>
             <Progress
               value={initialProgress}
               label="Completed"
               size="md"
-              className="bg-secondary h-3"
+              className="bg-secondary h-3 text-xs"
               color="cyan"
             />
           </div>

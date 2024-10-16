@@ -9,7 +9,7 @@ const BlogReview = ({ blog }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   console.log("reviews:", reviews);
 
-  const blogReviews = reviews.filter((item) => item.post_id === blog._id);
+  const blogReviews = reviews.filter((item) => item?.post_id === blog?._id);
   console.log("blogReviews:", blogReviews);
 
   const handleDelete = async (id) => {

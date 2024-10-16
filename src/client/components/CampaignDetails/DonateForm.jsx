@@ -12,7 +12,7 @@ const DonateForm = () => {
   const [paymentType, setPaymentType] = useState(false);
   // console.log(paymentType);
   return (
-    <Card color="transparent" shadow={false}>
+    <Card color="transparent" shadow={false} className="my-10">
       <h1 className="text-base font-medium text-black">Payment With</h1>
       <div className="flex">
         <Radio
@@ -108,26 +108,11 @@ const DonateForm = () => {
                 color="blue-gray"
                 className="-mb-3 font-normal text-base"
               >
-                Bank AC
+                Bank AC/Transection Id
               </Typography>
               <Input
                 size="md"
                 placeholder="Bank Account Number"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                  className: "before:content-none after:content-none",
-                }}
-              />
-              <Typography
-                variant="h6"
-                color="blue-gray"
-                className="-mb-3 font-normal text-base"
-              >
-                Transection Id
-              </Typography>
-              <Input
-                size="md"
-                placeholder="Transection Id"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                 labelProps={{
                   className: "before:content-none after:content-none",
