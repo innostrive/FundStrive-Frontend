@@ -22,34 +22,25 @@ const ContactForm = () => {
         <form className="mb-2 w-full max-w-screen-lg sm:w-96">
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              First Name
+              Name
             </Typography>
             <Input
               size="lg"
-              placeholder="name@mail.com"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              type="text"
+              placeholder="Name"
+              className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
             />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Last Name
+              Email
             </Typography>
             <Input
               size="lg"
-              placeholder="name@mail.com"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Your Email
-            </Typography>
-            <Input
-              size="lg"
-              placeholder="name@mail.com"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              type="email"
+              placeholder="Email"
+              className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -97,7 +88,7 @@ const ContactForm = () => {
               <Input
                 type="tel"
                 placeholder="Mobile Number"
-                className="rounded-l-none !border-t-blue-gray-200 focus:!border-t-gray-900"
+                className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
@@ -110,7 +101,13 @@ const ContactForm = () => {
               Message
             </Typography>
             <div className="w-96">
-              <Textarea label="Message" />
+              <Textarea
+                label="Message"
+                className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
+                labelProps={{
+                  className: "before:content-none after:content-none px-4 py-2",
+                }}
+              />
             </div>
           </div>
 

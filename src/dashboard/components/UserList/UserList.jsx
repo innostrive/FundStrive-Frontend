@@ -46,7 +46,6 @@ const UserList = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
-
   return (
     <FormCard title="User List">
       <CardBody className="border p-0">
@@ -68,7 +67,7 @@ const UserList = () => {
           </thead>
           <tbody>
             {paginatedusers.map(
-              ({ name, country, role, status, _id }, index) => {
+              ({ name, country, role, status, _id, image }, index) => {
                 const isLast = index === paginatedusers.length - 1;
                 const classes = isLast
                   ? "p-4 border-b-none"

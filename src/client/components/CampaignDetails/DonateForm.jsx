@@ -2,12 +2,36 @@ import {
   Button,
   Card,
   Input,
+  Menu,
+  MenuHandler,
+  MenuItem,
+  MenuList,
+  Option,
   Radio,
+  Select,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Payment from "../Payment/Payment";
+import { useCountries } from "use-react-countries";
 const DonateForm = () => {
+  // const { countries } = useCountries();
+  // const [country, setCountry] = useState(0);
+  // const { name, flags, countryCallingCode } = countries[country];
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState({});
+
+  useEffect(() => {
+    fetch(
+      "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setCountries(data.countries);
+        // setSelectedCountry(data?.userSelectValue?.label);
+      });
+  }, []);
+  console.log("countrydata:", selectedCountry);
   const [donationAmount, setDonationAmount] = useState("");
   const [paymentType, setPaymentType] = useState(false);
   // console.log(paymentType);
@@ -125,15 +149,17 @@ const DonateForm = () => {
               >
                 Country
               </Typography>
-              <Input
-                type="text"
-                size="md"
-                placeholder="country"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                  className: "before:content-none after:content-none",
-                }}
-              />
+              <Select
+                label="Select Country"
+                // value={selectedCountry}
+                onChange={(value) => setSelectedCountry(value)}
+              >
+                {countries.map((country) => (
+                  <Option key={country.value} value={country.label}>
+                    {country.label}
+                  </Option>
+                ))}
+              </Select>
             </div>
             <Button className="mt-6 bg-secondary" fullWidth>
               Make Your Donation

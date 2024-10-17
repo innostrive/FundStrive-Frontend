@@ -13,7 +13,11 @@ import brand10 from "../../assets/brand-10.png";
 import brand11 from "../../assets/brand-11.png";
 import brand12 from "../../assets/brand-12.png";
 import Container from "../Container/Container";
+import usePartnerData from "../../hooks/usePartnerData";
 const SuportedPartner = () => {
+  const [partners] = usePartnerData();
+  const suppurters = partners.filter((item) => item?.slug === "Partner");
+  console.log("partner:", suppurters);
   return (
     <div className="py-20">
       <div className="py-20">
