@@ -1,14 +1,16 @@
 import axios from "axios";
 import IButton from "../../../dashboard/ui/IButton";
-import { Rating, Typography } from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useReview from "../../hooks/useReview";
 import { useForm } from "react-hook-form";
+import StarRating from "../ui/StarRating";
 const ReviewForm = ({ campaignId }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [isLoading, setIsLoading] = useState(false);
-  const [rating, setRating] = useState();
+  const [rating, setRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
   const [, refetch] = useReview();
   const {
     handleSubmit,
@@ -17,9 +19,6 @@ const ReviewForm = ({ campaignId }) => {
     formState: { errors },
   } = useForm();
 
-  const handleRatingChange = (newRating) => {
-    setRating(newRating);
-  };
   const onSubmit = async (data) => {
     const payload = {
       ...data,
@@ -32,20 +31,22 @@ const ReviewForm = ({ campaignId }) => {
         toast.success(res.data.message);
         setIsLoading(false);
         reset();
-        console.log("review:", res.data);
+        setRating(0);
+        setHoverRating(0);
+        refetch();
       }
-      refetch();
     });
-    console.log("data:", payload);
+    console.log("campaign-review:", payload);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex items-center gap-5 mb-2">
         <Typography className="">Rate This Campaign?</Typography>
-        <Rating
-          className="text-primary"
-          value={rating}
-          onChange={handleRatingChange}
+        <StarRating
+          rating={rating}
+          hoverRating={hoverRating}
+          setRating={setRating}
+          setHoverRating={setHoverRating}
         />
       </div>
       <div className="mb-1 grid gap-6">

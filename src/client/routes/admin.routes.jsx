@@ -1,3 +1,4 @@
+import ContactDetails from "../../dashboard/components/ContactDetails/ContactDetails";
 import ProtectedRoute from "../../dashboard/layout/ProtectedRoute";
 import BlogDetailsData from "../../dashboard/pages/Blog/BlogDetailsData";
 import BlogsData from "../../dashboard/pages/Blog/BlogsData";
@@ -11,7 +12,16 @@ import Category from "../../dashboard/pages/Category/Category";
 import CategoryDetails from "../../dashboard/pages/Category/CategoryDetails";
 import CreateCategory from "../../dashboard/pages/Category/CreateCategory";
 import EditCategory from "../../dashboard/pages/Category/EditCategory";
+import ContactInfo from "../../dashboard/pages/ContactInfo/ContactInfo";
 import Dashboard from "../../dashboard/pages/dashboard/Dashboard";
+import CreateFaq from "../../dashboard/pages/FAQ/CreateFaq";
+import EditFaq from "../../dashboard/pages/FAQ/EditFaq";
+import FAQ from "../../dashboard/pages/FAQ/FAQ";
+import FaqDetails from "../../dashboard/pages/FAQ/FaqDetails";
+import CreatePartner from "../../dashboard/pages/PartnerGallery/CreatePartner";
+import EditPartnerGallery from "../../dashboard/pages/PartnerGallery/EditPartnerGallery";
+import PrtnerGallery from "../../dashboard/pages/PartnerGallery/PartnerGallery";
+import PartnerGalleryView from "../../dashboard/pages/PartnerGallery/PartnerGalleryView";
 import BannerInfo from "../../dashboard/pages/Settings/BannerSettings/BannerInfo";
 import BannerSettings from "../../dashboard/pages/Settings/BannerSettings/BannerSettings";
 import CreateBanner from "../../dashboard/pages/Settings/BannerSettings/CreateBanner";
@@ -20,6 +30,12 @@ import CreateSettings from "../../dashboard/pages/Settings/CreateSettings";
 import EditSettings from "../../dashboard/pages/Settings/EditSettings";
 import Settings from "../../dashboard/pages/Settings/Settings";
 import SettingsInfo from "../../dashboard/pages/Settings/SettingsInfo";
+import CreateNavInfo from "../../dashboard/pages/Settings/TopNavbarInfo/CreateNavInfo";
+import EditEmail from "../../dashboard/pages/Settings/TopNavbarInfo/EditEmail";
+import EditPhone from "../../dashboard/pages/Settings/TopNavbarInfo/EditPhone";
+import TopNavbarInfo from "../../dashboard/pages/Settings/TopNavbarInfo/TopNavbarInfo";
+import TopNavInfoDetails from "../../dashboard/pages/Settings/TopNavbarInfo/TopNavInfoDetails";
+import Subscribers from "../../dashboard/pages/Subscribers/Subscribers";
 import UserPrivilege from "../../dashboard/pages/UserPrivilege/UserPrivilege";
 import UserProfile from "../../dashboard/pages/UserProfile/UserProfile";
 import EditUser from "../../dashboard/pages/Users/EditUser";
@@ -202,6 +218,46 @@ const adminPath = [
     ),
   },
   {
+    path: "top-navbar",
+    element: (
+      <ProtectedRoute>
+        <TopNavbarInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-topnavInfo",
+    element: (
+      <ProtectedRoute>
+        <CreateNavInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "topnavInfo-details",
+    element: (
+      <ProtectedRoute>
+        <TopNavInfoDetails />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-emailInfo/:id",
+    element: (
+      <ProtectedRoute>
+        <EditEmail />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-phoneInfo/:id",
+    element: (
+      <ProtectedRoute>
+        <EditPhone />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "banner-list",
     element: (
       <ProtectedRoute>
@@ -234,10 +290,98 @@ const adminPath = [
     ),
   },
   {
+    path: "partner-gallery",
+    element: (
+      <ProtectedRoute>
+        <PrtnerGallery />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-partner",
+    element: (
+      <ProtectedRoute>
+        <CreatePartner />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "partner-gallery-view/:id",
+    element: (
+      <ProtectedRoute>
+        <PartnerGalleryView />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-partner-gallery/:id",
+    element: (
+      <ProtectedRoute>
+        <EditPartnerGallery />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "user-privilege",
     element: (
       <ProtectedRoute>
         <UserPrivilege />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "contact-info",
+    element: (
+      <ProtectedRoute>
+        <ContactInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "contact-details/:id",
+    element: (
+      <ProtectedRoute>
+        <ContactDetails />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "faq-settings",
+    element: (
+      <ProtectedRoute>
+        <FAQ />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-faq",
+    element: (
+      <ProtectedRoute>
+        <CreateFaq />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "faq-details/:id",
+    element: (
+      <ProtectedRoute>
+        <FaqDetails />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-faq/:id",
+    element: (
+      <ProtectedRoute>
+        <EditFaq />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "subscribers-list",
+    element: (
+      <ProtectedRoute>
+        <Subscribers />
       </ProtectedRoute>
     ),
   },

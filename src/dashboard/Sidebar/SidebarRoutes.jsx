@@ -1,4 +1,9 @@
-import { GalleryIcon, Privilege } from "../assets/icons/icons";
+import {
+  ContactIcon,
+  GalleryIcon,
+  Privilege,
+  Question,
+} from "../assets/icons/icons";
 
 export const adminSidebarItems = [
   {
@@ -171,14 +176,39 @@ export const adminSidebarItems = [
         link: "/dashboard/menu-settings",
       },
       {
+        name: "Top Navbar Settings",
+        icon: <GalleryIcon className="text-white" />,
+        link: "/dashboard/top-navbar",
+      },
+      {
         name: "Banner Settings",
         icon: <GalleryIcon className="text-white" />,
         link: "/dashboard/banner-list",
       },
       {
+        name: "Partner Gallery",
+        icon: <GalleryIcon className="text-white" />,
+        link: "/dashboard/partner-gallery",
+      },
+      {
         name: "User Privilege",
         icon: <Privilege className="text-white" />,
         link: "/dashboard/user-privilege",
+      },
+      {
+        name: "Contact Info",
+        icon: <ContactIcon />,
+        link: "/dashboard/contact-info",
+      },
+      {
+        name: "Subscribers",
+        icon: <ContactIcon />,
+        link: "/dashboard/subscribers-list",
+      },
+      {
+        name: "FAQ Settings",
+        icon: <Question />,
+        link: "/dashboard/faq-settings",
       },
     ],
   },

@@ -22,6 +22,7 @@ const CampaignInfo = ({
   const [categories] = useCategoriesData();
   const [edit, setEdit] = useState(false);
   const { register } = useForm();
+  const [value, setValue] = useState();
   const campaignDeadline = moment(campaignInfo?.deadline).format(
     "MMMM Do YYYY, h:mm:ss a"
   );
@@ -99,6 +100,7 @@ const CampaignInfo = ({
                   key={category?._id}
                   value={category?._id}
                   className="text-black"
+                  onClick={() => setValue(category?.name)}
                 >
                   {category.name}
                 </Option>

@@ -7,7 +7,7 @@ const useReviewData = () => {
     queryKey: ["reviews"],
     queryFn: async () => {
       const res = await axios.get(`${URL}/reviews`);
-      console.log("review:", res);
+      // console.log("review:", res);
       return res.data.data.reviews;
     },
   });

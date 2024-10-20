@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Accordion,
   AccordionHeader,
@@ -6,6 +6,7 @@ import {
 } from "@material-tailwind/react";
 import Container from "../Container/Container";
 import { Title } from "../../Styles/Styles";
+import useFaq from "../../hooks/useFaq";
 
 function Icon({ id, open }) {
   return (
@@ -29,10 +30,12 @@ function Icon({ id, open }) {
 }
 
 const Faq = () => {
-  const [open, setOpen] = React.useState(0);
+  const [faq] = useFaq();
+  const [open, setOpen] = useState(0);
 
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
-
+  const handleOpen = (index) => {
+    setOpen(open === index ? 0 : index);
+  };
   return (
     <div className="py-20 bg-[#f3f4f7]">
       <Container>
@@ -41,60 +44,23 @@ const Faq = () => {
           <div className="h-2 w-20 bg-[#2B2A27] rounded-full mx-auto mt-3"></div>
         </div>
         <div className="space-y-4 px-5 sm:px-0">
-          <Accordion
-            open={open === 1}
-            icon={<Icon id={1} open={open} />}
-            className="border border-blue-gray-100 rounded-md px-2 bg-text-primary"
-          >
-            <AccordionHeader
-              onClick={() => handleOpen(1)}
-              className="border-none text-secondary text-xl font-medium"
+          {faq.map((faqdata, index) => (
+            <Accordion
+              className="border border-blue-gray-100 rounded-md px-2 bg-text-primary"
+              key={faqdata?._id}
+              open={open === index}
             >
-              <h1> What is Material Tailwind?</h1>
-            </AccordionHeader>
-            <AccordionBody className="text-secondary text-sm font-normal">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
-            </AccordionBody>
-          </Accordion>
-          <Accordion
-            open={open === 2}
-            icon={<Icon id={2} open={open} />}
-            className="border border-blue-gray-100 rounded-md px-2 bg-text-primary"
-          >
-            <AccordionHeader
-              onClick={() => handleOpen(2)}
-              className="border-none text-secondary text-xl font-medium hover:text-secondary"
-            >
-              How to use Material Tailwind?
-            </AccordionHeader>
-            <AccordionBody className="text-secondary text-sm font-normal">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
-            </AccordionBody>
-          </Accordion>
-          <Accordion
-            open={open === 3}
-            icon={<Icon id={3} open={open} />}
-            className="border border-blue-gray-100 rounded-md px-2 bg-text-primary"
-          >
-            <AccordionHeader
-              onClick={() => handleOpen(3)}
-              className="border-none text-secondary text-xl font-medium hover:text-secondary"
-            >
-              What can I do with Material Tailwind?
-            </AccordionHeader>
-            <AccordionBody className="text-secondary text-sm font-normal">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
-            </AccordionBody>
-          </Accordion>
+              <AccordionHeader
+                className="border-none text-secondary text-xl font-medium hover:text-secondary"
+                onClick={() => handleOpen(index)}
+              >
+                {faqdata?.key}
+              </AccordionHeader>
+              <AccordionBody className="text-secondary text-sm font-normal">
+                {faqdata?.value}
+              </AccordionBody>
+            </Accordion>
+          ))}
         </div>
       </Container>
     </div>

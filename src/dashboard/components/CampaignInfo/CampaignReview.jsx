@@ -1,5 +1,6 @@
 import { Rating } from "@material-tailwind/react";
 import reviewing from "../../assets/Logo/user.jpg";
+import ShowRating from "../../../client/components/ui/ShowRating";
 const CampaignReview = ({ campaignReview }) => {
   return (
     <div className="grid grid-cols-12 items-center border border-gray-300 rounded-md p-5">
@@ -14,7 +15,8 @@ const CampaignReview = ({ campaignReview }) => {
         <div className="flex justify-between">
           <h1>{campaignReview?.name}</h1>
           <div>
-            <Rating className="text-primary" value={campaignReview?.rating} />
+            {/* <Rating className="text-primary" value={campaignReview?.rating} /> */}
+            <ShowRating rating={campaignReview?.rating} />
           </div>
         </div>
         <p>{campaignReview?.review}</p>

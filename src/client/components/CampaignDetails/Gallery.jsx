@@ -1,7 +1,10 @@
 import image1 from "../../assets/donate-1.jpg";
 import image2 from "../../assets/donate-2.jpg";
 import image3 from "../../assets/donate-3.jpg";
+import useCampaignGallery from "../../hooks/useCampaignGallery";
 const Gallery = () => {
+  const [gallery] = useCampaignGallery();
+  console.log(gallery);
   const images = [
     {
       id: 1,

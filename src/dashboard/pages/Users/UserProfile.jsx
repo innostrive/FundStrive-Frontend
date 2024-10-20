@@ -6,6 +6,9 @@ import { Edit } from "../../assets/icons/icons";
 
 const UserProfile = ({ userInfo }) => {
   const [edit, setEdit] = useState(false);
+  const imageUrl =
+    "http://localhost:4000/public/uploads/campaigns/1728392970293.jpeg";
+  console.log("userInfo:", imageUrl + userInfo?.image);
   return (
     <FormCard
       icon={
@@ -15,7 +18,8 @@ const UserProfile = ({ userInfo }) => {
       <div className="flex gap-4 items-center mb-10">
         <div>
           <img
-            src={userInfo?.image}
+            src={`${imageUrl}`}
+            crossOrigin="anonymous"
             alt=""
             className="rounded-full h-20 w-20"
           />

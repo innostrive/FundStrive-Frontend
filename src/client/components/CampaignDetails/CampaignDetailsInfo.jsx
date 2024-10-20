@@ -20,7 +20,6 @@ import {
 import Reviews from "../Reviews/Reviews";
 
 const CampaignDetailsInfo = ({ id }) => {
-  // const { id } = useParams();
   const campaign = useCampaignsInfo(id);
   const campaignId = campaign?._id;
   const data = [

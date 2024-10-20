@@ -1,25 +1,35 @@
 import { loadStripe } from "@stripe/stripe-js";
-import { Input } from "@material-tailwind/react";
+import { Input, Typography } from "@material-tailwind/react";
 import IButton from "../../../dashboard/ui/IButton";
 import axios from "axios";
 import { useState } from "react";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useForm } from "react-hook-form";
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
-const Payment = () => {
+const Payment = ({ id }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [payment, setPayment] = useState("");
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const price = {
-      price: payment,
-      api_id: "price_1Q6zN3JggWefJ04AWu8mZIig",
-    };
-    try {
-      const response = await axios.post(`${URL}/payment_check`, price);
-      const sessionId = response.data.data.sessionId;
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
+  const onSubmit = async (data) => {
+    const payload = {
+      ...data,
+      campaign_id: id,
+      email: "test@gmail.com",
+    };
+    console.log("payment:", payload);
+    try {
+      const response = await axios.post(`${URL}/payment_check`, payload);
+      const sessionId = response.data.data.sessionId;
+      console.log("response:", response);
       if (sessionId) {
         const stripe = await stripePromise;
-        localStorage.setItem("planData", JSON.stringify(price));
+        localStorage.setItem("planData", JSON.stringify(payload));
         await stripe.redirectToCheckout({ sessionId });
       }
     } catch (error) {
@@ -27,18 +37,23 @@ const Payment = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mt-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-5">
       <div className="space-y-4">
         <label className="text-base font-medium text-[#2B2A27]">Amount</label>
         <Input
           size="md"
           placeholder="Amount"
-          className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+          className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
           labelProps={{
             className: "before:content-none after:content-none",
           }}
-          onChange={(e) => setPayment(e.target.value)}
+          {...register("amount", { required: "Amount is required" })}
         />
+        {errors.amount && (
+          <Typography color="red" variant="small">
+            {errors.amount.message}
+          </Typography>
+        )}
       </div>
       <IButton className="uppercase w-full" type="submit">
         Make your donation

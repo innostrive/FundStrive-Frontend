@@ -25,9 +25,9 @@ const EditCampaign = () => {
   }, [id, axiosSecure]);
 
   const campaignReviews = reviews.filter((item) => item.campaign_id === id);
-  console.log("capaignReviews:", campaignReviews);
+  // console.log("capaignReviews:", campaignReviews);
   const handleDelete = async (id) => {
-    console.log("id:", id);
+    // console.log("id:", id);
     const data = {
       ids: [id],
     };

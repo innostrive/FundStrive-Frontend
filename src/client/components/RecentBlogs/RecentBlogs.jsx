@@ -1,6 +1,5 @@
 import useBlogsData from "../../hooks/useBlogData";
 import ShareBlog from "../BlogDetails/ShareBlog";
-import ShareCampaign from "../CampaignDetails/ShareCampaign";
 import RecentBlog from "./RecentBlog";
 
 const RecentBlogs = () => {

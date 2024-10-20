@@ -9,7 +9,7 @@ const useNavMenus = () => {
       setNavMenues(res.data.data.settings);
     });
   }, []);
-  console.log("navmenu:", navmenues);
+  // console.log("navmenu:", navmenues);
 
   return navmenues;
 };

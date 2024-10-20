@@ -1,5 +1,7 @@
 import { Rating } from "@material-tailwind/react";
 import reviewimg from "../../assets/Logo/user.jpg";
+import StarRating from "../ui/StarRating";
+import ShowRating from "../ui/ShowRating";
 
 const ReviewCard = ({ review }) => {
   return (
@@ -15,7 +17,8 @@ const ReviewCard = ({ review }) => {
         <div className="flex justify-between">
           <h1>{review?.name}</h1>
           <div>
-            <Rating className="text-primary" value={review?.rating} readonly />
+            {/* <Rating className="text-primary" value={review?.rating} readonly /> */}
+            <ShowRating rating={review?.rating} />
           </div>
         </div>
         <p>{review?.review}</p>

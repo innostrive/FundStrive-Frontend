@@ -8,8 +8,10 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 const PaymentSuccess = () => {
+  const { paymentInfo } = useParams();
+  console.log("paymentInfo:", paymentInfo);
   const [isHover, setIsHover] = useState(false);
   return (
     <section className="relative h-screen bg-[#f2f2f2]">

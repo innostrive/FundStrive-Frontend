@@ -2,7 +2,33 @@ import Container from "../Container/Container";
 import { BiLogoFacebook, BiLogoLinkedin } from "react-icons/bi";
 import { FaInstagram } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { Spinner } from "@material-tailwind/react";
 const Footer = () => {
+  const URL = import.meta.env.VITE_BASE_URL;
+  const [isLoading, setIsLoading] = useState();
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    setIsLoading(true);
+    axios.post(`${URL}/subscribers`, data).then((res) => {
+      if (res.status === 200) {
+        setIsLoading(false);
+        toast.success(res.data.message);
+        reset();
+      } else {
+        toast.warning("Something wrong!!!");
+      }
+    });
+    console.log("email:", data);
+  };
   return (
     <div className="py-20 bg-secondary">
       <Container>
@@ -64,16 +90,34 @@ const Footer = () => {
             <h1 className="text-2xl font-medium tracking-wide text-text-primary">
               Subscribe
             </h1>
-            <div className="grid grid-cols-12">
-              {" "}
-              <input
-                type="text"
-                className="focus:outline-none h-10 p-1 col-span-8"
-              />
-              <button className="uppercase text-base text-text-primary tracking-normal font-normal bg-primary h-10 w-auto px-2 col-span-4">
-                Send
-              </button>
-            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="grid grid-cols-12">
+                {" "}
+                <input
+                  type="text"
+                  className="focus:outline-none h-10 p-1 col-span-8"
+                  {...register("email", { required: "Email is required" })}
+                />
+                <button
+                  type="submit"
+                  className="uppercase text-base text-text-primary tracking-normal font-normal bg-primary hover:bg-white hover:text-primary duration-150 ease-in h-10 w-auto px-2 col-span-4"
+                  disabled={isLoading && true}
+                >
+                  {isLoading ? (
+                    <div className="flex justify-center items-center gap-2">
+                      <Spinner /> Sending...
+                    </div>
+                  ) : (
+                    "Send"
+                  )}
+                </button>
+              </div>
+            </form>
+            {errors.email && (
+              <span className="text-sm text-red-500">
+                {errors.email.message}
+              </span>
+            )}
             <div className="flex gap-4">
               <a
                 href="https://www.facebook.com/"

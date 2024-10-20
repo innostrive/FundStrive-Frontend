@@ -12,13 +12,6 @@ const ReviewBlogInfo = ({ review }) => {
       <div className="col-span-10 space-y-5">
         <div className="flex justify-between">
           <h1>{review?.name}</h1>
-          {/* <div>
-        <Rating
-          className="text-primary"
-          value={review?.rating}
-          readonly
-        />
-      </div> */}
         </div>
         <p>{review?.review}</p>
       </div>

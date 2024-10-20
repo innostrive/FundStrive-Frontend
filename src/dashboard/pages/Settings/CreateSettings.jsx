@@ -39,15 +39,6 @@ const CreateSettings = () => {
     <FormCard title="Create Settings">
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
         <div className="mb-1 grid gap-6">
-          {/* <TextInput type="text" name="name" label="Name" defaultValue="Menu" />
-          <TextInput
-            type="text"
-            name="slug"
-            label="Slug"
-            defaultValue="NAVMENU"
-          />
-          <TextInput type="text" name="key" label="Menu Name" />
-          <TextInput type="text" name="value" label="Menu URL" /> */}
           <div className="grid grid-cols-1 space-y-2">
             <span className="text-sm">Name</span>
             <input

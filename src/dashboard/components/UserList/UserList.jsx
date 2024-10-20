@@ -18,6 +18,8 @@ const TABLE_HEAD = ["Name", "Country", "Role", "Status", "Action"];
 
 const UserList = () => {
   const [users, handleUserDelete] = useUsersData();
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
+  console.log("users:", users);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 

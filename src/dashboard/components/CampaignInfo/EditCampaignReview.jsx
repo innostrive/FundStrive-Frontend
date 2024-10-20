@@ -7,6 +7,7 @@ import {
 } from "@material-tailwind/react";
 import reviewing from "../../assets/Logo/user.jpg";
 import { ThreeDotMenu } from "../../../client/assets/icons/icons";
+import ShowRating from "../../../client/components/ui/ShowRating";
 const EditCampaignReview = ({ campaignReview, handleDelete }) => {
   return (
     <div className="grid grid-cols-12 items-center border border-gray-300 rounded-md p-5">
@@ -20,12 +21,8 @@ const EditCampaignReview = ({ campaignReview, handleDelete }) => {
       <div className="col-span-11 space-y-5">
         <div className="flex justify-between">
           <h1>{campaignReview?.name}</h1>
-          <div>
-            <Rating
-              className="text-primary"
-              value={campaignReview?.rating}
-              readonly
-            />
+          <div className="flex gap-2">
+            <ShowRating rating={campaignReview?.rating} />
             <Menu>
               <MenuHandler>
                 <button>

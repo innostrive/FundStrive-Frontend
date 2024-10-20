@@ -14,12 +14,25 @@ import {
 import { useEffect, useState } from "react";
 import Payment from "../Payment/Payment";
 import { useCountries } from "use-react-countries";
-const DonateForm = () => {
-  // const { countries } = useCountries();
-  // const [country, setCountry] = useState(0);
-  // const { name, flags, countryCallingCode } = countries[country];
+import { useForm } from "react-hook-form";
+import CustomDonateForm from "./CustomDonateForm";
+import axios from "axios";
+import { toast } from "react-toastify";
+const DonateForm = ({ id }) => {
+  const URL = import.meta.env.VITE_BASE_URL;
+  const [value, setValue] = useState();
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState({});
+  const [donationAmount, setDonationAmount] = useState("");
+  const [paymentType, setPaymentType] = useState(false);
+  const [error, setError] = useState("");
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     fetch(
@@ -28,13 +41,40 @@ const DonateForm = () => {
       .then((response) => response.json())
       .then((data) => {
         setCountries(data.countries);
-        // setSelectedCountry(data?.userSelectValue?.label);
+        setSelectedCountry(data?.userSelectValue?.label);
       });
   }, []);
-  console.log("countrydata:", selectedCountry);
-  const [donationAmount, setDonationAmount] = useState("");
-  const [paymentType, setPaymentType] = useState(false);
-  // console.log(paymentType);
+  // console.log("countrydata:", selectedCountry);
+
+  const onSubmit = async (data) => {
+    if (!donationAmount) {
+      setError("Donation amount is required");
+    } else {
+      setError(""); // Clear error if validation passes
+      // Proceed with form submission logic
+    }
+    const payload = {
+      ...data,
+      country: selectedCountry,
+      amount: donationAmount,
+      campaign_id: id,
+      mode: "offline",
+    };
+
+    try {
+      await axios.post(`${URL}/payment_success`, payload).then((res) => {
+        if (res.status) {
+          toast.success(res.data.message);
+          reset();
+          console.log("payment:", res.data.message);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log("data:", payload);
+  };
   return (
     <Card color="transparent" shadow={false} className="my-10">
       <h1 className="text-base font-medium text-black">Payment With</h1>
@@ -52,22 +92,26 @@ const DonateForm = () => {
         />
       </div>
       {paymentType ? (
-        <form className="mt-8 mb-2 w-full">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="space-y-4">
             <h1 className="text-base font-medium text-black">
               Donation Amount
             </h1>
             <Input
               size="md"
-              className="bg-[#f3f4f7]"
               value={donationAmount}
               onChange={(e) => setDonationAmount(e.target.value)}
+              className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
               disabled={
                 donationAmount === "100" ||
                 donationAmount === "200" ||
                 donationAmount === "300"
               }
             />
+
             <div className="flex flex-wrap">
               <Radio
                 name="type"
@@ -107,11 +151,17 @@ const DonateForm = () => {
               <Input
                 size="md"
                 placeholder="name"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
+                {...register("name", { required: "Name is required" })}
               />
+              {errors.name && (
+                <Typography color="red" variant="small">
+                  {errors.name.message}
+                </Typography>
+              )}
               <Typography
                 variant="h6"
                 color="blue-gray"
@@ -122,11 +172,23 @@ const DonateForm = () => {
               <Input
                 size="md"
                 placeholder="email"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: "Invalid email format",
+                  },
+                })}
               />
+              {errors.email && (
+                <Typography color="red" variant="small">
+                  {errors.email.message}
+                </Typography>
+              )}
               <Typography
                 variant="h6"
                 color="blue-gray"
@@ -137,11 +199,19 @@ const DonateForm = () => {
               <Input
                 size="md"
                 placeholder="Bank Account Number"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
+                {...register("transaction_id", {
+                  required: "Bank Account/Transection Id is required",
+                })}
               />
+              {errors.transaction_id && (
+                <Typography color="red" variant="small">
+                  {errors.transaction_id.message}
+                </Typography>
+              )}
               <Typography
                 variant="h6"
                 color="blue-gray"
@@ -151,24 +221,29 @@ const DonateForm = () => {
               </Typography>
               <Select
                 label="Select Country"
-                // value={selectedCountry}
+                value={selectedCountry}
                 onChange={(value) => setSelectedCountry(value)}
               >
                 {countries.map((country) => (
-                  <Option key={country.value} value={country.label}>
+                  <Option
+                    key={country.value}
+                    value={country.label}
+                    onClick={() => setValue(selectedCountry)}
+                  >
                     {country.label}
                   </Option>
                 ))}
               </Select>
             </div>
-            <Button className="mt-6 bg-secondary" fullWidth>
+            <Button type="submit" className="mt-6 bg-secondary" fullWidth>
               Make Your Donation
             </Button>
           </div>
         </form>
       ) : (
-        <Payment />
+        <Payment id={id} />
       )}
+      {/* <CustomDonateForm /> */}
     </Card>
   );
 };

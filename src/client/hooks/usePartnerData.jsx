@@ -6,7 +6,7 @@ const usePartnerData = () => {
   const { data: partners = [] } = useQuery({
     queryKey: ["partners"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/banners");
+      const res = await axiosSecure.get("/banners?slug=PARTNER");
       return res.data.data.banners;
     },
   });

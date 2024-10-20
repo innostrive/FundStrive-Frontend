@@ -7,8 +7,10 @@ const VisitorReview = ({ campaignId }) => {
   const URL = import.meta.env.VITE_BASE_URL;
 
   const campaignReviews = reviews.filter(
-    (item) => item.campaign_id === campaignId
+    (item) => item?.campaign_id === campaignId
   );
+
+  console.log("review:", reviews);
 
   const handleDelete = async (id) => {
     console.log("id:", id);
@@ -27,7 +29,7 @@ const VisitorReview = ({ campaignId }) => {
       <span className="text-lg font-medium tracking-normal leading-normal text-secondary">
         Total Comments {campaignReviews.length}
       </span>
-      {campaignReviews.map((review) => (
+      {campaignReviews?.map((review) => (
         <ReviewCard review={review} handleDelete={handleDelete} />
       ))}
     </div>

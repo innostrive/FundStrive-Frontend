@@ -6,7 +6,7 @@ const DonateInfo = ({ id }) => {
   return (
     <div className="border border-gray-200 rounded-md bg-white w-full h-auto p-5">
       <AboutCampaign id={id} />
-      <DonateForm />
+      <DonateForm id={id} />
       <ShareCampaign />
     </div>
   );

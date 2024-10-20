@@ -12,6 +12,7 @@ import EditorToolbar, {
 } from "../../components/EditToolbar/EditToolbar";
 import useCategoriesData from "../../hooks/useCategoriesData";
 import EditCampaignReview from "./EditCampaignReview";
+import EditCampaignFile from "./EditCampaignFile";
 const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
       .catch((error) => {
         console.error("Error submitting data:", error);
       });
-    console.log("edit-campaign:", campaignData);
+    // console.log("edit-campaign:", campaignData);
   };
   return (
     <FormCard title="Campaign Details">
@@ -168,26 +169,27 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
           </div>
           <div className="col-span-2">
             <label
-              htmlFor="image"
+              htmlFor="fileImage"
               className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
             >
               Upload Image
             </label>
             <input
+              multiple
               type="file"
               placeholder="Upload Image"
               className="hidden"
-              id="image"
-              name="image"
+              id="fileImage"
+              name="fileImage"
               accept="image/*"
-              onChange={(e) => handleImage(e)}
+              onChange={handleImage}
             />
-            <div className="mt-5">
+            <div className="mt-5 flex gap-2">
               {imagePreview && (
                 <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
                   <img
                     src={imagePreview}
-                    alt=""
+                    alt="Image preview"
                     className="h-full w-full object-cover object-center rounded-md"
                   />
                 </div>
@@ -198,12 +200,16 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
         <IButton className="my-5 flex ml-auto">update</IButton>
       </form>
       <div className="space-y-5">
+        <span>Reviews: {campaignReviews?.length}</span>
         {campaignReviews.map((campaignReview) => (
           <EditCampaignReview
             campaignReview={campaignReview}
             handleDelete={handleDelete}
           />
         ))}
+      </div>
+      <div className="my-16">
+        <EditCampaignFile id={id} />
       </div>
     </FormCard>
   );

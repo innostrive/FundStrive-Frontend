@@ -113,7 +113,7 @@ const Header = () => {
                   >
                     <Button
                       label="Donate"
-                      className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase"
+                      className="bg-primary hover:bg-gray-200 hover:text-primary duration-200 ease-in text-text-primary rounded-none uppercase"
                     />
                   </motion.div>
                 </Link>

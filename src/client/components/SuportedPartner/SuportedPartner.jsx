@@ -16,8 +16,8 @@ import Container from "../Container/Container";
 import usePartnerData from "../../hooks/usePartnerData";
 const SuportedPartner = () => {
   const [partners] = usePartnerData();
-  const suppurters = partners.filter((item) => item?.slug === "Partner");
-  console.log("partner:", suppurters);
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
+  console.log("partner:", partners);
   return (
     <div className="py-20">
       <div className="py-20">
@@ -26,19 +26,22 @@ const SuportedPartner = () => {
       </div>
       <Container>
         <div className="space-y-10 px-5 sm:px-0">
-          <Marquee
-            className="m-5"
-            pauseOnHover={true}
-            autoFill={true}
-            speed={20}
-          >
-            <img src={brand1} alt="" className="object-cover" />
-            <img src={brand2} alt="" className="object-cover" />
-            <img src={brand3} alt="" className="object-cover" />
-            <img src={brand4} alt="" className="object-cover" />
-            <img src={brand5} alt="" className="object-cover" />
-            <img src={brand6} alt="" className="object-cover" />
-          </Marquee>
+          {partners.map((partner) => (
+            <Marquee
+              className="m-5"
+              pauseOnHover={true}
+              autoFill={true}
+              speed={20}
+            >
+              <img
+                key={partner?._id}
+                src={imageUrl + partner?.image}
+                alt=""
+                className="object-cover"
+                crossOrigin="anonymous"
+              />
+            </Marquee>
+          ))}
           <Marquee
             className="gap-4"
             pauseOnHover={true}

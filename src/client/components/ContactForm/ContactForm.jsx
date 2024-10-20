@@ -6,20 +6,53 @@ import {
   MenuHandler,
   MenuItem,
   MenuList,
+  Spinner,
   Textarea,
   Typography,
 } from "@material-tailwind/react";
+import axios from "axios";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useCountries } from "use-react-countries";
 
 const ContactForm = () => {
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+  const [isLoading, setIsLoading] = useState(false);
   const { countries } = useCountries();
   const [country, setCountry] = useState(0);
   const { name, flags, countryCallingCode } = countries[country];
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const payload = {
+      ...data,
+      phone: countryCallingCode + " " + data.phone,
+    };
+    setIsLoading(true);
+    axios.post(`${baseUrl}/contact-us`, payload).then((res) => {
+      if (res.status === 200) {
+        setIsLoading(false);
+        toast.success("Thanks for contact with us...");
+        reset();
+      } else {
+        toast.warning("Something wrong!");
+      }
+      console.log("contactMessage:", res);
+    });
+  };
   return (
     <div>
       <Card color="transparent" shadow={false}>
-        <form className="mb-2 w-full max-w-screen-lg sm:w-96">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mb-2 w-full max-w-screen-lg sm:w-96"
+        >
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Name
@@ -32,7 +65,13 @@ const ContactForm = () => {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              {...register("name", { required: "Name is required" })}
             />
+            {errors.name && (
+              <Typography color="red" variant="small" className="-my-3">
+                {errors.name.message}
+              </Typography>
+            )}
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Email
             </Typography>
@@ -44,7 +83,19 @@ const ContactForm = () => {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Invalid email format",
+                },
+              })}
             />
+            {errors.email && (
+              <Typography color="red" variant="small" className="-my-3">
+                {errors.email.message}
+              </Typography>
+            )}
             <div className="relative flex w-full max-w-[24rem]">
               <Menu placement="bottom-start">
                 <MenuHandler>
@@ -95,8 +146,14 @@ const ContactForm = () => {
                 containerProps={{
                   className: "min-w-0",
                 }}
+                {...register("phone", { required: "Phone number is required" })}
               />
             </div>
+            {errors.message && (
+              <Typography color="red" variant="small" className="-my-3">
+                {errors.phone.message}
+              </Typography>
+            )}
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Message
             </Typography>
@@ -107,12 +164,29 @@ const ContactForm = () => {
                 labelProps={{
                   className: "before:content-none after:content-none px-4 py-2",
                 }}
+                {...register("message", { required: "Message is required" })}
               />
             </div>
+            {errors.message && (
+              <Typography color="red" variant="small" className="-my-3">
+                {errors.message.message}
+              </Typography>
+            )}
           </div>
 
-          <Button className="mt-6 uppercase bg-secondary" fullWidth>
-            Send Message
+          <Button
+            type="submit"
+            className="mt-6 uppercase bg-secondary"
+            fullWidth
+            disabled={isLoading && true}
+          >
+            {isLoading ? (
+              <div className="flex justify-center items-center gap-2">
+                <Spinner /> Sending...
+              </div>
+            ) : (
+              "Send Message"
+            )}
           </Button>
         </form>
       </Card>

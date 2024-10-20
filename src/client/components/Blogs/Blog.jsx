@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import donate from "../../assets/donate-1.jpg";
 import { Button } from "../../Styles/Styles";
 import moment from "moment/moment";
@@ -14,8 +13,6 @@ const Blog = ({ blog }) => {
       setAuthor(res.data.data);
     });
   }, [userId]);
-  console.log("blog:", blog);
-  console.log("author:", author);
   const publishedDate = moment(blog?.created_at).format("DD-MM-YYYY");
   return (
     <div className="h-auto w-full sm:max-w-96 rounded-md bg-white border border-gray-100">
@@ -26,7 +23,7 @@ const Blog = ({ blog }) => {
             Published At: {publishedDate}
           </p>
           <p className="text-xs font-semibold tracking-wide">
-            Author:{author?.name}
+            Author: {author?.name}
           </p>
         </div>
         <h1 className="text-base font-normal">{blog?.title}</h1>
