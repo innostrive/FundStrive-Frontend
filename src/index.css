@@ -47,3 +47,8 @@
 .custom-pagination .swiper-pagination-bullet-active {
   background-color: #00ccdd;
 }
+.gallery {
+  display: flex;
+  flex: wrap;
+  gap: 12px;
+}

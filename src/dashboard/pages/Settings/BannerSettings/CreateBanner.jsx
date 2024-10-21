@@ -12,8 +12,6 @@ const CreateBanner = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
-  const methods = useForm();
-  const { handleSubmit } = methods;
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -30,6 +28,8 @@ const CreateBanner = () => {
     formData.append("image", image);
     const postData = {
       ...data,
+      name: "Careusel",
+      slug: "HEADER_CARUSEL",
       image: image,
     };
     try {
@@ -53,43 +53,37 @@ const CreateBanner = () => {
   };
 
   return (
-    <FormCard title="Upload Banner">
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
-          <div className="mb-1 grid gap-6">
-            <TextInput type="text" name="name" label="Name" />
-            <TextInput type="text" name="slug" label="Slug" />
+    <FormCard title="Upload Carusel Image">
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
+        <div className="col-span-2 mt-5">
+          <label
+            htmlFor="image"
+            className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
+          >
+            Upload Image
+          </label>
+          <input
+            type="file"
+            className="hidden"
+            id="image"
+            name="image"
+            accept="image/*"
+            onChange={(e) => handleImage(e)}
+          />
+          <div className="mt-5">
+            {imagePreview && (
+              <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                <img
+                  src={imagePreview}
+                  alt=""
+                  className="h-full w-full object-cover object-center rounded-md"
+                />
+              </div>
+            )}
           </div>
-          <div className="col-span-2 mt-5">
-            <label
-              htmlFor="image"
-              className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
-            >
-              Upload Image
-            </label>
-            <input
-              type="file"
-              className="hidden"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={(e) => handleImage(e)}
-            />
-            <div className="mt-5">
-              {imagePreview && (
-                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
-                  <img
-                    src={imagePreview}
-                    alt=""
-                    className="h-full w-full object-cover object-center rounded-md"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-          <IButton className="flex ml-auto">Submit</IButton>
-        </form>
-      </FormProvider>
+        </div>
+        <IButton className="flex ml-auto">Submit</IButton>
+      </form>
     </FormCard>
   );
 };

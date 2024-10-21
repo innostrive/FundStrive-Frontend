@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 
-const CreateSettings = () => {
+const CreateAboutVision = () => {
   const settings = useSetting();
   const axiosSecure = useAxiosSecure();
   const [value, setValue] = useState([]);
@@ -25,8 +25,8 @@ const CreateSettings = () => {
   const onSubmit = async (data) => {
     const payload = {
       ...data,
-      name: "Menu",
-      slug: "NAVMENU",
+      name: "Vision",
+      slug: "VISION",
     };
     try {
       await axiosSecure.post("/api/settings", payload).then((response) => {
@@ -34,7 +34,7 @@ const CreateSettings = () => {
           console.log("settings:", response.data.message);
           toast.success(response.data.message);
           reset();
-          navigate("/dashboard/menu-settings");
+          navigate("/dashboard/about-vision");
         }
       });
     } catch (err) {
@@ -48,18 +48,18 @@ const CreateSettings = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
         <div className="mb-1 grid gap-6">
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Menu</span>
+            <span className="text-sm">Name</span>
             <input
               type="text"
               size="lg"
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="name"
-              name="name"
+              id="title"
+              name="title"
               {...register("key", {
-                required: "Menu is required",
+                required: "Title is required",
                 minLength: {
                   value: 3,
-                  message: "Menu must be at least 3 characters",
+                  message: "Title must be at least 3 characters",
                 },
               })}
             />
@@ -69,15 +69,14 @@ const CreateSettings = () => {
           </div>
 
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Menu URL</span>
-            <input
+            <span className="text-sm">Success Value</span>
+            <textarea
               type="text"
-              size="lg"
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="menuUrl"
-              name="menuUrl"
+              className="text-base h-auto min-h-40 border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+              id="Description"
+              name="Description"
               {...register("value", {
-                required: "Menu URL is required",
+                required: "Description is required",
               })}
             />
             {errors.value && (
@@ -93,4 +92,4 @@ const CreateSettings = () => {
   );
 };
 
-export default CreateSettings;
+export default CreateAboutVision;

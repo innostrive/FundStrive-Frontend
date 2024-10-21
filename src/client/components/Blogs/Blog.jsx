@@ -14,6 +14,17 @@ const Blog = ({ blog }) => {
     });
   }, [userId]);
   const publishedDate = moment(blog?.created_at).format("DD-MM-YYYY");
+
+  const content = blog?.content;
+  const contentWithoutImages = content?.replace(/<img[^>]*>/g, "").trim();
+
+  const sliceText = (text, size) => {
+    if (text.length > size) {
+      return text.slice(0, size) + "...";
+    } else {
+      return text;
+    }
+  };
   return (
     <div className="h-auto w-full sm:max-w-96 rounded-md bg-white border border-gray-100">
       <img src={donate} alt="" className="h-52 w-full object-cover" />
@@ -26,6 +37,11 @@ const Blog = ({ blog }) => {
             Author: {author?.name}
           </p>
         </div>
+        <p
+          dangerouslySetInnerHTML={{
+            __html: sliceText(contentWithoutImages, 90),
+          }}
+        ></p>
         <h1 className="text-base font-normal">{blog?.title}</h1>
         <div className="flex justify-between items-center">
           <Link to={`/blog/${blog._id}`}>

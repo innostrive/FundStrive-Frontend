@@ -19,31 +19,17 @@ import { FilterSettings } from "./FilterSettings";
 const TABLE_HEAD = ["Menu", "Name", "Status", "Action"];
 const Settings = () => {
   const [settings, handleSettingsDelete] = useSettings();
-  const [name, setName] = useState("all");
-
-  const handleMenuFilter = (filter) => {
-    setName(filter);
-  };
-
-  const handleAllMenu = () => {
-    setName("all");
-  };
-
-  const slugFilter =
-    name === "all" ? settings : settings.filter((item) => item.name === name);
-
-  console.log("filter:", slugFilter);
 
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
-  const totalPages = Math.ceil(slugFilter.length / itemsPerPage);
+  const totalPages = Math.ceil(settings.length / itemsPerPage);
 
-  const paginatedCategories = useMemo(() => {
+  const paginatedSettings = useMemo(() => {
     const start = (active - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return slugFilter.slice(start, end);
-  }, [slugFilter, active]);
+    return settings.slice(start, end);
+  }, [settings, active]);
 
   const getItemProps = (index) => ({
     variant: active === index ? "filled" : "text",
@@ -69,10 +55,6 @@ const Settings = () => {
       path="/dashboard/create-settings"
       iconTitle="Add"
     >
-      <FilterSettings
-        handleMenuFilter={handleMenuFilter}
-        handleAllMenu={handleAllMenu}
-      />
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
@@ -91,8 +73,8 @@ const Settings = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedCategories.map(({ key, name, status, _id }, index) => {
-              const isLast = index === paginatedCategories.length - 1;
+            {paginatedSettings.map(({ key, name, status, _id }, index) => {
+              const isLast = index === paginatedSettings.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
                 : "p-4 border-b border-blue-gray-50";

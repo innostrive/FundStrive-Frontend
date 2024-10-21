@@ -20,7 +20,6 @@ const Payment = ({ id }) => {
     const payload = {
       ...data,
       campaign_id: id,
-      email: "test@gmail.com",
     };
     console.log("payment:", payload);
     try {
@@ -39,7 +38,28 @@ const Payment = ({ id }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-5">
       <div className="space-y-4">
-        <label className="text-base font-medium text-[#2B2A27]">Amount</label>
+        <label className="text-base font-medium text-[#2B2A27]">Email</label>
+        <Input
+          size="md"
+          placeholder="Email"
+          className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
+          labelProps={{
+            className: "before:content-none after:content-none",
+          }}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Enter a valid email address",
+            },
+          })}
+        />
+        {errors.email && (
+          <span className="text-red-500 text-sm">{errors.email.message}</span>
+        )}
+        <label className="text-base font-medium text-[#2B2A27] block mt-3">
+          Amount
+        </label>
         <Input
           size="md"
           placeholder="Amount"

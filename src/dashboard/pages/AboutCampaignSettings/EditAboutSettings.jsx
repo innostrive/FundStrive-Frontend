@@ -8,7 +8,7 @@ import IButton from "../../ui/IButton";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-const EditSettings = () => {
+const EditAboutSettings = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const URL = import.meta.env.VITE_BASE_URL;
@@ -31,14 +31,14 @@ const EditSettings = () => {
   const onSubmit = (data) => {
     const editData = {
       ...data,
-      name: "Menu",
-      slug: "NAVMENU",
+      name: "Activities",
+      slug: "ACTIVITIES",
       status: selectedStatus,
     };
     axiosSecure.put(`/api/settings/${id}`, editData).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.message);
-        navigate("/dashboard/menu-settings");
+        navigate("/dashboard/about-settings");
       }
       console.log(res.data.data);
     });
@@ -50,7 +50,7 @@ const EditSettings = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-10">
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Menu</span>
+            <span className="text-sm">Name</span>
             <input
               type="text"
               size="lg"
@@ -62,7 +62,7 @@ const EditSettings = () => {
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Menu URL</span>
+            <span className="text-sm">Success Value</span>
             <input
               type="text"
               size="lg"
@@ -92,4 +92,4 @@ const EditSettings = () => {
   );
 };
 
-export default EditSettings;
+export default EditAboutSettings;

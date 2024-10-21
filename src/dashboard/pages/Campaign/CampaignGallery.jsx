@@ -8,27 +8,27 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
-import usePartnerGallery from "../../hooks/usePartnerGallery";
-import FormCard from "../../ui/FormCard";
-import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import useCampaignGallery from "../../hooks/useCampaignGallery";
 
-const TABLE_HEAD = ["Name", "Slug", "Status", "Action"];
+const TABLE_HEAD = ["Campaign", "Type", "Action"];
 
-const PrtnerGallery = () => {
-  const [partner, handlePartnerDelete] = usePartnerGallery();
-  console.log("partner:", partner);
+const CampaignGallery = () => {
+  const [gallery, handleGalleryDelete] = useCampaignGallery();
+  console.log("campaigns:", gallery);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
-  const totalPages = Math.ceil(partner.length / itemsPerPage);
+  const totalPages = Math.ceil(gallery.length / itemsPerPage);
 
-  const paginatedPartner = useMemo(() => {
+  const paginatedGallery = useMemo(() => {
     const start = (active - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return partner.slice(start, end);
-  }, [partner, active]);
+    return gallery.slice(start, end);
+  }, [gallery, active]);
 
   const getItemProps = (index) => ({
     variant: active === index ? "filled" : "text",
@@ -50,10 +50,10 @@ const PrtnerGallery = () => {
 
   return (
     <FormCard
-      title="Partner List"
+      title="Campaign Gallery"
       icon={<Add />}
-      iconTitle="Add"
-      path="/dashboard/create-partner"
+      path="/dashboard/upload-gallery"
+      iconTitle="Upload"
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -73,8 +73,8 @@ const PrtnerGallery = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedPartner.map(({ name, slug, status, _id }, index) => {
-              const isLast = index === paginatedPartner.length - 1;
+            {paginatedGallery.map(({ type, campaign_id, _id }, index) => {
+              const isLast = index === paginatedGallery.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
                 : "p-4 border-b border-blue-gray-50";
@@ -82,53 +82,45 @@ const PrtnerGallery = () => {
               return (
                 <tr key={_id}>
                   <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {name}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {slug}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <div className="w-max">
-                      <Chip
-                        size="sm"
-                        variant="ghost"
-                        value={status}
-                        color={status === "Active" ? "green" : "red"}
-                      />
+                    <div className="flex items-center gap-3">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-bold"
+                      >
+                        {campaign_id}
+                      </Typography>
                     </div>
                   </td>
                   <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {type}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/partner-gallery-view/${_id}`}>
-                        <Tooltip content="Category Info">
+                      <NavLink to={`/dashboard/upload-gallery/${_id}`}>
+                        <Tooltip content="Gallery Info">
                           <IconButton variant="text">
-                            <View className="size-5 text-secondary" />
+                            <Add className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-partner-gallery/${_id}`}>
-                        <Tooltip content="Edit">
+                      <NavLink to={`/dashboard/campaign/${_id}`}>
+                        <Tooltip content="Gallery Info">
                           <IconButton variant="text">
-                            <Edit className="size-5 text-green-500" />
+                            <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
                       <Tooltip content="Delete">
                         <IconButton
                           variant="text"
-                          onClick={() => handlePartnerDelete(_id)}
+                          onClick={() => handleGalleryDelete(_id)}
                         >
                           <Delete className="size-5 text-red-500" />
                         </IconButton>
@@ -176,4 +168,4 @@ const PrtnerGallery = () => {
   );
 };
 
-export default PrtnerGallery;
+export default CampaignGallery;

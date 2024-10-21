@@ -2,7 +2,7 @@ import useBlogsData from "../../hooks/useBlogData";
 import ShareBlog from "../BlogDetails/ShareBlog";
 import RecentBlog from "./RecentBlog";
 
-const RecentBlogs = () => {
+const RecentBlogs = ({ author, publishedDate }) => {
   const { blogs } = useBlogsData();
   return (
     <div className="border border-gray-300 rounded-md bg-text-primary w-full h-auto">

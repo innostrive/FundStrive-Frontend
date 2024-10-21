@@ -11,6 +11,7 @@ import { EffectFade, Navigation, Autoplay, Pagination } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { Button } from "../../Styles/Styles";
 import { useEffect, useState } from "react";
+import useHeaderCarusel from "../../hooks/useHeaderCarusel";
 
 const textVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -18,6 +19,9 @@ const textVariants = {
 };
 
 const Header = () => {
+  const [carusel] = useHeaderCarusel();
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
+  console.log("carusel:", carusel);
   const [animateText, setAnimateText] = useState("visible");
 
   const handleSlideChange = () => {
@@ -67,6 +71,7 @@ const Header = () => {
                 src={image}
                 alt=""
                 className="w-full sm:h-[80vh] h-[60vh] object-cover"
+                // crossOrigin="anonymous"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black to-black opacity-60"></div>
 

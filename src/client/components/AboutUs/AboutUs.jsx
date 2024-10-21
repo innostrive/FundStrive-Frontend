@@ -5,7 +5,17 @@ import volunteer from "../../assets/shirt.png";
 import donation from "../../assets/cash.png";
 import award from "../../assets/medal.png";
 import { Link } from "react-router-dom";
+import useAboutActivitySettings from "../../hooks/useAboutActivitySettings";
+import AboutActivity from "./AboutActivity";
 const AboutUs = () => {
+  const [aboutActivity] = useAboutActivitySettings();
+  const image = [happy, volunteer, donation, award];
+  const combinedArray = aboutActivity.map((n, index) => ({
+    name: n,
+    image: image[index],
+  }));
+
+  console.log("combineArray:", combinedArray);
   return (
     <section id="about-us" className="py-20 scroll-mt-10">
       <Container>
@@ -31,34 +41,9 @@ const AboutUs = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="h-auto w-auto p-10 rounded-md border grid place-content-center place-items-center gap-2">
-              <img src={happy} alt="" className="h-12 w-12" />
-              <span className="text-2xl font-bold text-[#2B2A27]">6528+</span>
-              <p className="text-sm font-light text-[#2B2A27] tracking-normal">
-                Made Happy
-              </p>
-            </div>
-            <div className="h-auto w-auto p-10 rounded-md border grid place-content-center place-items-center gap-2">
-              <img src={award} alt="" className="h-12 w-12" />
-              <span className="text-2xl font-bold text-[#2B2A27]">6528+</span>
-              <p className="text-sm font-light text-[#2B2A27] tracking-normal">
-                Award
-              </p>
-            </div>
-            <div className="h-auto w-auto p-10 rounded-md border grid place-content-center place-items-center gap-2">
-              <img src={volunteer} alt="" className="h-12 w-12" />
-              <span className="text-2xl font-bold text-[#2B2A27]">6528+</span>
-              <p className="text-sm font-light text-[#2B2A27] tracking-normal">
-                Total Volunteer
-              </p>
-            </div>
-            <div className="h-auto w-auto p-10 rounded-md border grid place-content-center place-items-center gap-2">
-              <img src={donation} alt="" className="h-12 w-12" />
-              <span className="text-2xl font-bold text-[#2B2A27]">6528+</span>
-              <p className="text-sm font-light text-[#2B2A27] tracking-normal">
-                Dontaion Completed
-              </p>
-            </div>
+            {combinedArray.map((activity) => (
+              <AboutActivity activity={activity} key={activity?._id} />
+            ))}
           </div>
         </div>
       </Container>

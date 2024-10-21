@@ -46,11 +46,10 @@ const Volunteer = () => {
         >
           {volunteer.map((data, i) => (
             <SwiperSlide key={i}>
-              <div className="h-auto w-full sm:max-w-96 rounded-md bg-white px-5 sm:px-0">
-                <img src={donate} alt="" className="h-52 w-full object-cover" />
-                <div className="space-y-4 flex flex-col justify-center items-center p-5">
+              <div className="h-auto min-h-80 w-full sm:max-w-96 bg-white px-5 sm:px-0">
+                <img src={donate} alt="" className="h-64 w-full object-cover" />
+                <div className="h-16 flex justify-between items-center p-5 bg-secondary bg-opacity-50 text-gray-100">
                   <h1>{data?.name}</h1>
-                  <p>Perticipate 40 campaigns</p>
                   <p>From {data?.country}</p>
                 </div>
               </div>

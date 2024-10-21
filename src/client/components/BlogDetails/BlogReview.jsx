@@ -3,14 +3,22 @@ import useReview from "../../hooks/useReview";
 import BlogReviewForm from "./BlogReviewForm";
 import { toast } from "react-toastify";
 import BlogReviewCard from "./BlogReviewCard";
+import { useEffect, useState } from "react";
 
 const BlogReview = ({ blog }) => {
   const [reviews, refetch] = useReview();
   const URL = import.meta.env.VITE_BASE_URL;
-  console.log("reviews:", reviews);
 
-  const blogReviews = reviews.filter((item) => item?.post_id === blog?._id);
-  console.log("blogReviews:", blogReviews);
+  const [blogReviews, setBlogReviews] = useState([]);
+
+  useEffect(() => {
+    if (reviews && blog?._id) {
+      const filteredReviews = reviews.filter(
+        (item) => item?.post_id === blog?._id
+      );
+      setBlogReviews(filteredReviews);
+    }
+  }, [reviews, blog?._id]);
 
   const handleDelete = async (id) => {
     console.log("id:", id);

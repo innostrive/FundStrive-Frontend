@@ -7,8 +7,8 @@ const useCampaignGallery = () => {
     queryKey: ["campaign-gallery"],
     queryFn: async () => {
       const res = await axios.get(`${URL}/campaigns/asset?type=image`);
-      console.log("gallery", res.data.data);
-      // return res.data.data;
+      console.log("gallery:", res.data.data);
+      return res.data.data;
     },
   });
   return [gallery];

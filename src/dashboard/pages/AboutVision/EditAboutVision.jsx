@@ -8,7 +8,7 @@ import IButton from "../../ui/IButton";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-const EditSettings = () => {
+const EditAboutVision = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const URL = import.meta.env.VITE_BASE_URL;
@@ -31,14 +31,14 @@ const EditSettings = () => {
   const onSubmit = (data) => {
     const editData = {
       ...data,
-      name: "Menu",
-      slug: "NAVMENU",
+      name: "Vision",
+      slug: "VISION",
       status: selectedStatus,
     };
     axiosSecure.put(`/api/settings/${id}`, editData).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.message);
-        navigate("/dashboard/menu-settings");
+        navigate("/dashboard/about-vision");
       }
       console.log(res.data.data);
     });
@@ -48,9 +48,9 @@ const EditSettings = () => {
   return (
     <FormCard title="Settings Details">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-2 gap-10">
+        <div className="space-y-5">
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Menu</span>
+            <span className="text-sm">Name</span>
             <input
               type="text"
               size="lg"
@@ -61,12 +61,11 @@ const EditSettings = () => {
               {...register("key")}
             />
           </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Menu URL</span>
-            <input
+          <div className="grid space-y-2">
+            <span className="text-sm">Success Value</span>
+            <textarea
               type="text"
-              size="lg"
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+              className="text-base h-auto min-h-40 border border-gray-300 px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded"
               id="value"
               name="value"
               defaultValue={settings?.value}
@@ -92,4 +91,4 @@ const EditSettings = () => {
   );
 };
 
-export default EditSettings;
+export default EditAboutVision;

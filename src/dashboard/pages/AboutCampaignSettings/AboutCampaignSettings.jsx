@@ -8,27 +8,28 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
-import usePartnerGallery from "../../hooks/usePartnerGallery";
-import FormCard from "../../ui/FormCard";
-import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import useUsersData from "../../hooks/useUsersData";
+import useAboutSettings from "../../hooks/useAboutSettings";
 
-const TABLE_HEAD = ["Name", "Slug", "Status", "Action"];
+const TABLE_HEAD = ["Key", "Value", "Status", "Action"];
 
-const PrtnerGallery = () => {
-  const [partner, handlePartnerDelete] = usePartnerGallery();
-  console.log("partner:", partner);
+const AboutCampaignSettings = () => {
+  const [aboutSuccess, handleAboutSuccessDelete] = useAboutSettings();
+  console.log("aboutSuccess:", aboutSuccess);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
-  const totalPages = Math.ceil(partner.length / itemsPerPage);
+  const totalPages = Math.ceil(aboutSuccess.length / itemsPerPage);
 
-  const paginatedPartner = useMemo(() => {
+  const paginatedAboutSuccess = useMemo(() => {
     const start = (active - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return partner.slice(start, end);
-  }, [partner, active]);
+    return aboutSuccess.slice(start, end);
+  }, [aboutSuccess, active]);
 
   const getItemProps = (index) => ({
     variant: active === index ? "filled" : "text",
@@ -47,13 +48,12 @@ const PrtnerGallery = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
-
   return (
     <FormCard
-      title="Partner List"
+      title="About Setting List"
       icon={<Add />}
       iconTitle="Add"
-      path="/dashboard/create-partner"
+      path="/dashboard/create-about-settings"
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -73,8 +73,8 @@ const PrtnerGallery = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedPartner.map(({ name, slug, status, _id }, index) => {
-              const isLast = index === paginatedPartner.length - 1;
+            {paginatedAboutSuccess.map(({ key, value, status, _id }, index) => {
+              const isLast = index === paginatedAboutSuccess.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
                 : "p-4 border-b border-blue-gray-50";
@@ -87,7 +87,7 @@ const PrtnerGallery = () => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {name}
+                      {key}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -96,7 +96,7 @@ const PrtnerGallery = () => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {slug}
+                      {value}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -111,14 +111,7 @@ const PrtnerGallery = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/partner-gallery-view/${_id}`}>
-                        <Tooltip content="Category Info">
-                          <IconButton variant="text">
-                            <View className="size-5 text-secondary" />
-                          </IconButton>
-                        </Tooltip>
-                      </NavLink>
-                      <NavLink to={`/dashboard/edit-partner-gallery/${_id}`}>
+                      <NavLink to={`/dashboard/edit-about-settings/${_id}`}>
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
@@ -128,7 +121,7 @@ const PrtnerGallery = () => {
                       <Tooltip content="Delete">
                         <IconButton
                           variant="text"
-                          onClick={() => handlePartnerDelete(_id)}
+                          onClick={() => handleAboutSuccessDelete(_id)}
                         >
                           <Delete className="size-5 text-red-500" />
                         </IconButton>
@@ -176,4 +169,4 @@ const PrtnerGallery = () => {
   );
 };
 
-export default PrtnerGallery;
+export default AboutCampaignSettings;

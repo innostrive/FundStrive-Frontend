@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
-import useAxiosSecure from "./useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "./useAxiosSecure";
 
-const useBanner = () => {
+const useAboutSettings = () => {
+  const URL = import.meta.env.VITE_BASE_URL;
   const axiosSecure = useAxiosSecure();
-  const { refetch, data: banners = [] } = useQuery({
-    queryKey: ["banners"],
+
+  const { refetch, data: aboutSuccess = [] } = useQuery({
+    queryKey: ["aboutSuccess"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/banners?slug=HEADER_CARUSEL");
-      return res.data.data.banners;
+      const res = await axios.get(`${URL}/settings?slug=ACTIVITIES`);
+      return res.data.data.settings;
     },
   });
 
-  const handleBannerDelete = (id) => {
+  const handleAboutSuccessDelete = (id) => {
     const data = { ids: [id] };
 
     Swal.fire({
@@ -28,13 +31,13 @@ const useBanner = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete("/api/banners", { data })
+          .delete(`/api/settings`, { data })
           .then((response) => {
             if (response.status === 200) {
               toast.success("Delete Successful");
               refetch();
             } else {
-              toast.warning("Banner not deleted");
+              toast.warning("Category not deleted");
             }
           })
           .catch((error) => {
@@ -45,7 +48,7 @@ const useBanner = () => {
     });
   };
 
-  return [banners, handleBannerDelete];
+  return [aboutSuccess, handleAboutSuccessDelete];
 };
 
-export default useBanner;
+export default useAboutSettings;

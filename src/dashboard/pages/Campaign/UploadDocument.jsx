@@ -1,21 +1,22 @@
 import { useForm } from "react-hook-form";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
 import IButton from "../../ui/IButton";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import FormCard from "../../ui/FormCard";
 
-const EditCampaignFile = ({ id }) => {
+const UploadDocument = () => {
   const axiosSecure = useAxiosSecure();
-  const [fileImagePreview, setFileImagePreview] = useState([]);
-  const [fileImage, setFileImage] = useState([]);
+  const [filePreview, setFilePreview] = useState([]);
+  const [file, setFile] = useState([]);
 
-  const handleFileImage = (e) => {
+  const handleFile = (e) => {
     const file = e.target.files[0];
-    setFileImage((prev) => [...prev, file]);
+    setFile((prev) => [...prev, file]);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFileImagePreview((prev) => [...prev, reader.result]);
+        setFilePreview((prev) => [...prev, reader.result]);
       };
       reader.readAsDataURL(file);
     }
@@ -25,8 +26,8 @@ const EditCampaignFile = ({ id }) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("campaign_id", id);
-    formData.append("asset", fileImage);
-    formData.append("type", "image");
+    formData.append("asset", file);
+    formData.append("type", "document");
     formData.append("data", JSON.stringify(formData));
 
     // axiosSecure
@@ -45,33 +46,31 @@ const EditCampaignFile = ({ id }) => {
   };
 
   return (
-    <div>
-      {" "}
-      <span className="text-base font-normal text-secondary">Image Upload</span>
+    <FormCard title="Upload Document">
       <form onSubmit={handleFileInput}>
         <div className="mt-5">
           <label
             htmlFor="image"
             className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
           >
-            Upload Image
+            Upload Document
           </label>
           <input
             type="file"
-            placeholder="Upload Image"
+            placeholder="Upload Document"
             className="hidden"
             multiple
             id="image"
             name="image"
             accept="image/*"
-            onChange={(e) => handleFileImage(e)}
+            onChange={(e) => handleFile(e)}
           />
           <div className="mt-5 flex gap-2">
-            {fileImagePreview.length > 0 &&
-              fileImagePreview.map((imagePreview) => (
+            {filePreview.length > 0 &&
+              filePreview.map((imagePreview) => (
                 <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
                   <img
-                    src={imagePreview}
+                    src={filePreview}
                     alt=""
                     className="h-full w-full object-cover object-center rounded-md"
                   />
@@ -83,8 +82,8 @@ const EditCampaignFile = ({ id }) => {
           Upload
         </IButton>
       </form>
-    </div>
+    </FormCard>
   );
 };
 
-export default EditCampaignFile;
+export default UploadDocument;

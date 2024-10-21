@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import FormCard from "../../../ui/FormCard";
 
-const TABLE_HEAD = ["Code", "Name", "Slug", "Status", "Action"];
+const TABLE_HEAD = ["Name", "Slug", "Status", "Action"];
 
 const BannerSettingsList = () => {
   const [banners, handleBannerDelete] = useBanner();
@@ -50,7 +50,7 @@ const BannerSettingsList = () => {
 
   return (
     <FormCard
-      title="Banner List"
+      title="Header Caruesl List"
       icon={<Add />}
       iconTitle="Add"
       path="/dashboard/create-banner"
@@ -73,84 +73,71 @@ const BannerSettingsList = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedbanners.map(
-              ({ code, name, slug, status, _id }, index) => {
-                const isLast = index === paginatedbanners.length - 1;
-                const classes = isLast
-                  ? "p-4 border-b-none"
-                  : "p-4 border-b border-blue-gray-50";
+            {paginatedbanners.map(({ name, slug, status, _id }, index) => {
+              const isLast = index === paginatedbanners.length - 1;
+              const classes = isLast
+                ? "p-4 border-b-none"
+                : "p-4 border-b border-blue-gray-50";
 
-                return (
-                  <tr key={_id}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-bold"
-                        >
-                          {code}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {name}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {slug}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          size="sm"
-                          variant="ghost"
-                          value={status}
-                          color={status === "Active" ? "green" : "red"}
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex items-center">
-                        <NavLink to={`/dashboard/banner/${_id}`}>
-                          <Tooltip content="Category Info">
-                            <IconButton variant="text">
-                              <View className="size-5 text-secondary" />
-                            </IconButton>
-                          </Tooltip>
-                        </NavLink>
-                        <NavLink to={`/dashboard/edit-banner/${_id}`}>
-                          <Tooltip content="Edit">
-                            <IconButton variant="text">
-                              <Edit className="size-5 text-green-500" />
-                            </IconButton>
-                          </Tooltip>
-                        </NavLink>
-                        <Tooltip content="Delete">
-                          <IconButton
-                            variant="text"
-                            onClick={() => handleBannerDelete(_id)}
-                          >
-                            <Delete className="size-5 text-red-500" />
+              return (
+                <tr key={_id}>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {name}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {slug}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <div className="w-max">
+                      <Chip
+                        size="sm"
+                        variant="ghost"
+                        value={status}
+                        color={status === "Active" ? "green" : "red"}
+                      />
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex items-center">
+                      <NavLink to={`/dashboard/banner/${_id}`}>
+                        <Tooltip content="Category Info">
+                          <IconButton variant="text">
+                            <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+                      </NavLink>
+                      <NavLink to={`/dashboard/edit-banner/${_id}`}>
+                        <Tooltip content="Edit">
+                          <IconButton variant="text">
+                            <Edit className="size-5 text-green-500" />
+                          </IconButton>
+                        </Tooltip>
+                      </NavLink>
+                      <Tooltip content="Delete">
+                        <IconButton
+                          variant="text"
+                          onClick={() => handleBannerDelete(_id)}
+                        >
+                          <Delete className="size-5 text-red-500" />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </CardBody>

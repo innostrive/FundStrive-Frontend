@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import axios from "axios";
 
-const RecentBlogDetails = ({ blogId }) => {
+const RecentBlogDetails = ({ blogId, author, publishedDate }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [blog, setBlog] = useState({});
   useEffect(() => {
@@ -14,7 +14,14 @@ const RecentBlogDetails = ({ blogId }) => {
   return (
     <div>
       <div className="space-y-8">
-        {/* <img src={donate} alt="" className="h-52 w-full object-cover" /> */}
+        <div className="flex justify-between items-center">
+          <p className="text-xs font-semibold tracking-wide">
+            Published At: {publishedDate}
+          </p>
+          <p className="text-xs font-semibold tracking-wide">
+            Author: {author?.name}
+          </p>
+        </div>
         <div
           className="text-sm font-normal leading-normal tracking-wide"
           dangerouslySetInnerHTML={{ __html: blog?.content }}

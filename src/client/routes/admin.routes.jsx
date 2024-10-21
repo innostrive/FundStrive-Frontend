@@ -1,13 +1,23 @@
 import ContactDetails from "../../dashboard/components/ContactDetails/ContactDetails";
 import ProtectedRoute from "../../dashboard/layout/ProtectedRoute";
+import AboutCampaignSettings from "../../dashboard/pages/AboutCampaignSettings/AboutCampaignSettings";
+import CreateAboutSettings from "../../dashboard/pages/AboutCampaignSettings/CreateAboutSettings";
+import EditAboutSettings from "../../dashboard/pages/AboutCampaignSettings/EditAboutSettings";
+import AboutVision from "../../dashboard/pages/AboutVision/AboutVison";
+import CreateAboutVision from "../../dashboard/pages/AboutVision/CreateAboutVision";
+import EditAboutVision from "../../dashboard/pages/AboutVision/EditAboutVision";
 import BlogDetailsData from "../../dashboard/pages/Blog/BlogDetailsData";
 import BlogsData from "../../dashboard/pages/Blog/BlogsData";
 import BlogUpdate from "../../dashboard/pages/Blog/BlogUpdate";
 import CreateBlog from "../../dashboard/pages/Blog/CreateBlog";
 import AdminCampaignDetails from "../../dashboard/pages/Campaign/AdminCampaignDetails";
 import Campaign from "../../dashboard/pages/Campaign/Campaign";
+import CampaignDocuments from "../../dashboard/pages/Campaign/CampaignDocuments";
+import CampaignGallery from "../../dashboard/pages/Campaign/CampaignGallery";
 import CreateCampaign from "../../dashboard/pages/Campaign/CreateCampaign";
 import EditCampaign from "../../dashboard/pages/Campaign/EditCampaign";
+import UploadDocument from "../../dashboard/pages/Campaign/UploadDocument";
+import UploadGallery from "../../dashboard/pages/Campaign/UploadGallery";
 import Category from "../../dashboard/pages/Category/Category";
 import CategoryDetails from "../../dashboard/pages/Category/CategoryDetails";
 import CreateCategory from "../../dashboard/pages/Category/CreateCategory";
@@ -150,6 +160,38 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <CreateCampaign />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "campaign-gallery",
+    element: (
+      <ProtectedRoute>
+        <CampaignGallery />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "campaign-documents",
+    element: (
+      <ProtectedRoute>
+        <CampaignDocuments />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "upload-gallery/:id",
+    element: (
+      <ProtectedRoute>
+        <UploadGallery />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "upload-document/:id",
+    element: (
+      <ProtectedRoute>
+        <UploadDocument />
       </ProtectedRoute>
     ),
   },
@@ -382,6 +424,54 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <Subscribers />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "about-settings",
+    element: (
+      <ProtectedRoute>
+        <AboutCampaignSettings />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-about-settings",
+    element: (
+      <ProtectedRoute>
+        <CreateAboutSettings />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-about-settings/:id",
+    element: (
+      <ProtectedRoute>
+        <EditAboutSettings />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "about-vision",
+    element: (
+      <ProtectedRoute>
+        <AboutVision />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-about-vision",
+    element: (
+      <ProtectedRoute>
+        <CreateAboutVision />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-about-vision/:id",
+    element: (
+      <ProtectedRoute>
+        <EditAboutVision />
       </ProtectedRoute>
     ),
   },

@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
     element: <ResetPassword />,
   },
   {
-    path: "/success/:paymentInfo",
+    path: "/success",
     element: <PaymentSuccessfull />,
   },
   {

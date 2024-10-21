@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
 import useAxiosSecure from "./useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
-const useBanner = () => {
+const useCampaignDocument = () => {
   const axiosSecure = useAxiosSecure();
-  const { refetch, data: banners = [] } = useQuery({
-    queryKey: ["banners"],
+  const URL = import.meta.env.VITE_BASE_URL;
+  const { refetch, data: document = [] } = useQuery({
+    queryKey: ["document"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/banners?slug=HEADER_CARUSEL");
-      return res.data.data.banners;
+      const res = await axios.get(`${URL}/campaigns/asset?type=document`);
+      console.log("gallery:", res.data.data);
+      return res.data.data;
     },
   });
 
-  const handleBannerDelete = (id) => {
+  const handleDocumentDelete = (id) => {
     const data = { ids: [id] };
 
     Swal.fire({
@@ -28,13 +30,13 @@ const useBanner = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete("/api/banners", { data })
+          .delete("/api/campaigns/asset", { data })
           .then((response) => {
             if (response.status === 200) {
               toast.success("Delete Successful");
               refetch();
             } else {
-              toast.warning("Banner not deleted");
+              toast.warning("Category not deleted");
             }
           })
           .catch((error) => {
@@ -45,7 +47,7 @@ const useBanner = () => {
     });
   };
 
-  return [banners, handleBannerDelete];
+  return [document, handleDocumentDelete];
 };
 
-export default useBanner;
+export default useCampaignDocument;

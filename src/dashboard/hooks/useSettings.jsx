@@ -12,7 +12,7 @@ const useSettings = () => {
   const { refetch, data: settings = [] } = useQuery({
     queryKey: ["settings"],
     queryFn: async () => {
-      const res = await axios.get(`${URL}/settings`);
+      const res = await axios.get(`${URL}/settings?slug=NAVMENU`);
       return res.data.data.settings;
     },
   });

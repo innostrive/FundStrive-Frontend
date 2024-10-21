@@ -8,11 +8,29 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import axios from "axios";
 const PaymentSuccess = () => {
-  const { paymentInfo } = useParams();
-  console.log("paymentInfo:", paymentInfo);
+  const URL = import.meta.env.VITE_BASE_URL;
   const [isHover, setIsHover] = useState(false);
+  const [paymentInfo] = useSearchParams();
+  const { email, amount, campaign_id } = {
+    email: paymentInfo.get("email"),
+    amount: paymentInfo.get("amount"),
+    campaign_id: paymentInfo.get("campaign_id"),
+  };
+
+  const payload = {
+    email,
+    amount,
+    campaign_id,
+  };
+  axios.post(`${URL}/payment_success`, payload).then((res) => {
+    if (res.status === 200) {
+      console.log(res.data.message);
+    }
+  });
+
   return (
     <section className="relative h-screen bg-[#f2f2f2]">
       <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-none h-96 w-[500px]">
@@ -64,12 +82,7 @@ const PaymentSuccess = () => {
                     duration: 0.2,
                   }}
                 ></motion.div>
-                <motion.div
-                  className="z-[999]"
-                  animate={{
-                    x: isHover ? -8 : 0,
-                  }}
-                >
+                <motion.div className="z-[999]">
                   <p className=" text-white">Back To Home</p>
                 </motion.div>
               </button>

@@ -10,7 +10,7 @@ import FormCard from "../../../ui/FormCard";
 import { Edit } from "../../../assets/icons/icons";
 import useTopNavData from "../../../hooks/useTopNavData";
 
-const TABLE_HEAD = ["Menu", "Name", "Status", "Action"];
+const TABLE_HEAD = ["Key", "Value", "Status", "Action"];
 const TopNavbarInfo = () => {
   const [topnavInfo] = useTopNavData();
   console.log("topnavInfo:", topnavInfo);
@@ -51,7 +51,7 @@ const TopNavbarInfo = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {slug}
+                          Email
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -94,7 +94,7 @@ const TopNavbarInfo = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {slug}
+                          Phone
                         </Typography>
                       </td>
                       <td className={classes}>

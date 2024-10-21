@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const useNavMenus = () => {
+const useTopNav = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [navmenues, setNavMenues] = useState([]);
   useEffect(() => {
-    axios.get(`${URL}/settings?slug=NAVMENU`).then((res) => {
+    axios.get(`${URL}/settings?slug=NAVINFO`).then((res) => {
       console.log("nav:", res.data.data);
       setNavMenues(res.data.data.settings);
     });
   }, []);
-  // console.log("navmenu:", navmenues);
 
   return navmenues;
 };
 
-export default useNavMenus;
+export default useTopNav;
