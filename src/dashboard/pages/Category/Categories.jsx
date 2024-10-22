@@ -14,7 +14,7 @@ import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 
-const TABLE_HEAD = ["Code", "Category", "Status", "Action"];
+const TABLE_HEAD = ["Category", "Status", "Action"];
 
 const Categories = () => {
   const [categories, handleCategoryDelete] = useCategoriesData();
@@ -74,7 +74,7 @@ const Categories = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedCategories.map(({ code, name, status, _id }, index) => {
+            {paginatedCategories.map(({ name, status, _id }, index) => {
               const isLast = index === paginatedCategories.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
@@ -82,17 +82,6 @@ const Categories = () => {
 
               return (
                 <tr key={_id}>
-                  <td className={classes}>
-                    <div className="flex items-center gap-3">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-bold"
-                      >
-                        {code}
-                      </Typography>
-                    </div>
-                  </td>
                   <td className={classes}>
                     <Typography
                       variant="small"

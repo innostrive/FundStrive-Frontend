@@ -1,13 +1,12 @@
 import { FormProvider, useForm } from "react-hook-form";
-import FormCard from "../../../ui/FormCard";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import TextInput from "../../../ui/TextInput";
-import IButton from "../../../ui/IButton";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import FormCard from "../../ui/FormCard";
+import IButton from "../../ui/IButton";
 
-const CreateBanner = () => {
+const UploadLogo = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
@@ -28,8 +27,8 @@ const CreateBanner = () => {
     formData.append("image", image);
     const postData = {
       ...data,
-      name: "Careusel",
-      slug: "HEADER_CARUSEL",
+      name: "Logo",
+      slug: "Logo",
       image: image,
     };
     try {
@@ -42,7 +41,7 @@ const CreateBanner = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(response.data.message);
-            navigate("/dashboard/banner-list");
+            navigate("/dashboard/website-logo");
           }
         });
     } catch (err) {
@@ -88,4 +87,4 @@ const CreateBanner = () => {
   );
 };
 
-export default CreateBanner;
+export default UploadLogo;

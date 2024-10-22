@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import useCampaignData from "../../hooks/useCampaignData";
 
-const TABLE_HEAD = ["Code", "Campaign", "Title", "Status", "Action"];
+const TABLE_HEAD = ["Campaign", "Title", "Status", "Action"];
 
 const Campaigns = () => {
   const [campaigns, handleCampaignDelete] = useCampaignData();
@@ -82,17 +82,6 @@ const Campaigns = () => {
 
                 return (
                   <tr key={_id}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-bold"
-                        >
-                          {code}
-                        </Typography>
-                      </div>
-                    </td>
                     <td className={classes}>
                       <Typography
                         variant="small"

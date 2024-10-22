@@ -64,14 +64,14 @@ const Header = () => {
         modules={[EffectFade, Navigation, Autoplay, Pagination]}
         onSlideChange={handleSlideChange}
       >
-        {[donate1, donate2, donate3].map((image, index) => (
+        {carusel.map((image, index) => (
           <SwiperSlide key={index}>
             <div className="relative">
               <img
-                src={image}
+                src={imageUrl + image?.image}
                 alt=""
                 className="w-full sm:h-[80vh] h-[60vh] object-cover"
-                // crossOrigin="anonymous"
+                crossOrigin="anonymous"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black to-black opacity-60"></div>
 

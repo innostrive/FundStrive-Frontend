@@ -25,21 +25,22 @@ const EditCampaignFile = ({ id }) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("campaign_id", id);
-    formData.append("asset", fileImage);
     formData.append("type", "image");
-    formData.append("data", JSON.stringify(formData));
+    fileImage.forEach((file) => {
+      formData.append("asset", file);
+    });
 
-    // axiosSecure
-    //   .post("/api/campaigns/asset", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       toast.success(res.data.message);
-    //     }
-    //   });
+    axiosSecure
+      .post("/api/campaigns/asset", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success(res.data.message);
+        }
+      });
 
     console.log("imageFile:", formData.get(Object.fromEntries(formData)));
   };

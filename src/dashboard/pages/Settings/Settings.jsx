@@ -16,7 +16,7 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { FilterSettings } from "./FilterSettings";
 
-const TABLE_HEAD = ["Menu", "Name", "Status", "Action"];
+const TABLE_HEAD = ["Menu", "Status", "Action"];
 const Settings = () => {
   const [settings, handleSettingsDelete] = useSettings();
 
@@ -73,7 +73,7 @@ const Settings = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedSettings.map(({ key, name, status, _id }, index) => {
+            {paginatedSettings.map(({ key, status, _id }, index) => {
               const isLast = index === paginatedSettings.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
@@ -81,15 +81,6 @@ const Settings = () => {
 
               return (
                 <tr key={_id}>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {name}
-                    </Typography>
-                  </td>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
                       <Typography

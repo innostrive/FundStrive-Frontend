@@ -25,24 +25,27 @@ const UploadDocument = () => {
   const handleFileInput = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("campaign_id", id);
-    formData.append("asset", file);
+    formData.append("campaign_id", "66f7966f1eb7e93d8e214c6c");
     formData.append("type", "document");
-    formData.append("data", JSON.stringify(formData));
+    file.forEach((file) => {
+      formData.append("asset", file);
+    });
 
-    // axiosSecure
-    //   .post("/api/campaigns/asset", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       toast.success(res.data.message);
-    //     }
-    //   });
+    axiosSecure
+      .post("/api/campaigns/asset", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success(res.data.message);
+        } else {
+          toast.warning("Something wrong!!!");
+        }
+      });
 
-    console.log("imageFile:", formData.get(Object.fromEntries(formData)));
+    console.log("document:", file);
   };
 
   return (
@@ -62,15 +65,15 @@ const UploadDocument = () => {
             multiple
             id="image"
             name="image"
-            accept="image/*"
+            accept=".pdf, .doc, .docx, .xls, .xlsx"
             onChange={(e) => handleFile(e)}
           />
           <div className="mt-5 flex gap-2">
             {filePreview.length > 0 &&
-              filePreview.map((imagePreview) => (
+              filePreview.map((file) => (
                 <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
                   <img
-                    src={filePreview}
+                    src={file}
                     alt=""
                     className="h-full w-full object-cover object-center rounded-md"
                   />

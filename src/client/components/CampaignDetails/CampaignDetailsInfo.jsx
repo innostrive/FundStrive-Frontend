@@ -35,7 +35,7 @@ const CampaignDetailsInfo = ({ id }) => {
       label: "Gallery",
       value: "gallery",
       icon: GalleryIcon,
-      desc: <Gallery />,
+      desc: <Gallery campaignId={campaignId} />,
     },
     {
       label: "Document",

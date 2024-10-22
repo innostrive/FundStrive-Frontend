@@ -37,11 +37,11 @@ const Blog = ({ blog }) => {
             Author: {author?.name}
           </p>
         </div>
-        <p
+        {/* <p
           dangerouslySetInnerHTML={{
             __html: sliceText(contentWithoutImages, 90),
           }}
-        ></p>
+        ></p> */}
         <h1 className="text-base font-normal">{blog?.title}</h1>
         <div className="flex justify-between items-center">
           <Link to={`/blog/${blog._id}`}>

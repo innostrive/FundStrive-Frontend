@@ -1,7 +1,4 @@
 import Container from "../Container/Container";
-import { Email, Phone } from "../../../dashboard/assets/icons/icons";
-import { Link } from "react-router-dom";
-import useNavMenus from "../../hooks/useNavMenus";
 import TopNavInfo from "./TopNavInfo";
 import useTopNav from "../../hooks/useTopNav";
 const TopNav = () => {

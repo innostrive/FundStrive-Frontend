@@ -15,7 +15,7 @@ import { useState, useMemo } from "react";
 import useUsersData from "../../hooks/useUsersData";
 import useFaqData from "../../hooks/useFaqData";
 
-const TABLE_HEAD = ["Name", "Question", "Status", "Action"];
+const TABLE_HEAD = ["Question", "Status", "Action"];
 
 const UserList = () => {
   const [faq, handleFaqDelete] = useFaqData();
@@ -67,7 +67,7 @@ const UserList = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedFaq.map(({ name, key, status, _id }, index) => {
+            {paginatedFaq.map(({ key, status, _id }, index) => {
               const isLast = index === paginatedFaq.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
@@ -75,15 +75,6 @@ const UserList = () => {
 
               return (
                 <tr key={_id}>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {name}
-                    </Typography>
-                  </td>
                   <td className={classes}>
                     <Typography
                       variant="small"

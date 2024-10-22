@@ -3,6 +3,13 @@ import ProtectedRoute from "../../dashboard/layout/ProtectedRoute";
 import AboutCampaignSettings from "../../dashboard/pages/AboutCampaignSettings/AboutCampaignSettings";
 import CreateAboutSettings from "../../dashboard/pages/AboutCampaignSettings/CreateAboutSettings";
 import EditAboutSettings from "../../dashboard/pages/AboutCampaignSettings/EditAboutSettings";
+import AboutDetails from "../../dashboard/pages/AboutDetails/AboutDetails";
+import AboutHeaderInfo from "../../dashboard/pages/AboutDetails/AboutHeaderInfo";
+import AboutMissionInfo from "../../dashboard/pages/AboutDetails/AboutMissionInfo";
+import CreateAboutHeaderInfo from "../../dashboard/pages/AboutDetails/CreateAboutHeaderInfo";
+import CreateAboutMission from "../../dashboard/pages/AboutDetails/CreateAboutMission";
+import EditAboutHeaderInfo from "../../dashboard/pages/AboutDetails/EditAboutHeaderInfo";
+import EditAboutMissionInfo from "../../dashboard/pages/AboutDetails/EditAboutMissionInfo";
 import AboutVision from "../../dashboard/pages/AboutVision/AboutVison";
 import CreateAboutVision from "../../dashboard/pages/AboutVision/CreateAboutVision";
 import EditAboutVision from "../../dashboard/pages/AboutVision/EditAboutVision";
@@ -46,11 +53,13 @@ import EditPhone from "../../dashboard/pages/Settings/TopNavbarInfo/EditPhone";
 import TopNavbarInfo from "../../dashboard/pages/Settings/TopNavbarInfo/TopNavbarInfo";
 import TopNavInfoDetails from "../../dashboard/pages/Settings/TopNavbarInfo/TopNavInfoDetails";
 import Subscribers from "../../dashboard/pages/Subscribers/Subscribers";
+import UploadLogo from "../../dashboard/pages/UploadLogo/UploadLogo";
 import UserPrivilege from "../../dashboard/pages/UserPrivilege/UserPrivilege";
 import UserProfile from "../../dashboard/pages/UserProfile/UserProfile";
 import EditUser from "../../dashboard/pages/Users/EditUser";
 import UserDetails from "../../dashboard/pages/Users/UserDetails";
 import Users from "../../dashboard/pages/Users/Users";
+import WebsiteLogo from "../../dashboard/pages/WebsiteLogo/WebsiteLogo";
 const adminPath = [
   {
     name: "Dashboard",
@@ -188,7 +197,7 @@ const adminPath = [
     ),
   },
   {
-    path: "upload-document/:id",
+    path: "upload-document",
     element: (
       <ProtectedRoute>
         <UploadDocument />
@@ -472,6 +481,78 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <EditAboutVision />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "about-info",
+    element: (
+      <ProtectedRoute>
+        <AboutDetails />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-about-headerInfo",
+    element: (
+      <ProtectedRoute>
+        <CreateAboutHeaderInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "about-headerInfo",
+    element: (
+      <ProtectedRoute>
+        <AboutHeaderInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-about-headerInfo/:id",
+    element: (
+      <ProtectedRoute>
+        <EditAboutHeaderInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "about-missionInfo",
+    element: (
+      <ProtectedRoute>
+        <AboutMissionInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-about-missionInfo/:id",
+    element: (
+      <ProtectedRoute>
+        <EditAboutMissionInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-about-mission",
+    element: (
+      <ProtectedRoute>
+        <CreateAboutMission />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "website-logo",
+    element: (
+      <ProtectedRoute>
+        <WebsiteLogo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "upload-logo",
+    element: (
+      <ProtectedRoute>
+        <UploadLogo />
       </ProtectedRoute>
     ),
   },

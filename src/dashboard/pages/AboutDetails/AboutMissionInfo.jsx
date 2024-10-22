@@ -1,5 +1,3 @@
-import useBlogsData from "../../hooks/useBlogsData";
-import moment from "moment";
 import {
   CardBody,
   CardFooter,
@@ -10,26 +8,28 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import useCategoriesData from "../../hooks/useCategoriesData";
 import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 
-const TABLE_HEAD = ["Title", "Published Date", "Status", "Action"];
+const TABLE_HEAD = ["Category", "Status", "Action"];
 
-const Blogs = () => {
-  const [blogs, handleBlogDelete] = useBlogsData();
-  console.log("blogs:", blogs);
+const AboutMissionInfo = () => {
+  const [categories, handleCategoryDelete] = useCategoriesData();
+
+  console.log("categories:", categories);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
-  const totalPages = Math.ceil(blogs.length / itemsPerPage);
+  const totalPages = Math.ceil(categories.length / itemsPerPage);
 
-  const paginatedblogs = useMemo(() => {
+  const paginatedCategories = useMemo(() => {
     const start = (active - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return blogs.slice(start, end);
-  }, [blogs, active]);
+    return categories.slice(start, end);
+  }, [categories, active]);
 
   const getItemProps = (index) => ({
     variant: active === index ? "filled" : "text",
@@ -48,13 +48,13 @@ const Blogs = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
+
   return (
     <FormCard
-      title="Blog List"
+      title="Category List"
+      path="/dashboard/create-category"
       icon={<Add />}
-      path="/dashboard/create-blog"
       iconTitle="Add"
-      className="w-full"
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -74,8 +74,8 @@ const Blogs = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedblogs.map(({ created_at, title, status, _id }, index) => {
-              const isLast = index === paginatedblogs.length - 1;
+            {paginatedCategories.map(({ name, status, _id }, index) => {
+              const isLast = index === paginatedCategories.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
                 : "p-4 border-b border-blue-gray-50";
@@ -88,16 +88,7 @@ const Blogs = () => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {title}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {moment(created_at).format("MMMM D, YYYY")}
+                      {name}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -112,14 +103,14 @@ const Blogs = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/blog/${_id}`}>
+                      <NavLink to={`/dashboard/category/${_id}`}>
                         <Tooltip content="Category Info">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-blog/${_id}`}>
+                      <NavLink to={`/dashboard/edit-category/${_id}`}>
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
@@ -129,7 +120,7 @@ const Blogs = () => {
                       <Tooltip content="Delete">
                         <IconButton
                           variant="text"
-                          onClick={() => handleBlogDelete(_id)}
+                          onClick={() => handleCategoryDelete(_id)}
                         >
                           <Delete className="size-5 text-red-500" />
                         </IconButton>
@@ -177,4 +168,4 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+export default AboutMissionInfo;

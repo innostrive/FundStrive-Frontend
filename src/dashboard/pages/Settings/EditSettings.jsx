@@ -46,10 +46,10 @@ const EditSettings = () => {
   };
 
   return (
-    <FormCard title="Settings Details">
+    <FormCard title="Edit Navbar Menu">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-10">
-          <div className="grid grid-cols-1 space-y-2">
+          <div className="grid grid-cols-1 col-span-2 space-y-2">
             <span className="text-sm">Menu</span>
             <input
               type="text"
@@ -59,18 +59,6 @@ const EditSettings = () => {
               name="key"
               defaultValue={settings?.key}
               {...register("key")}
-            />
-          </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Menu URL</span>
-            <input
-              type="text"
-              size="lg"
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="value"
-              name="value"
-              defaultValue={settings?.value}
-              {...register("value")}
             />
           </div>
           <div className="col-span-2">

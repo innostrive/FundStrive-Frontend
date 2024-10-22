@@ -91,9 +91,9 @@ const TeamMemberSlider = () => {
         <Swiper
           spaceBetween={0}
           slidesPerView={1}
-          pagination={{
-            clickable: true,
-          }}
+          // pagination={{
+          //   clickable: true,
+          // }}
           autoplay={{
             delay: 5000,
             disableOnInteraction: false,
@@ -108,6 +108,10 @@ const TeamMemberSlider = () => {
             1024: {
               slidesPerView: 3,
             },
+          }}
+          pagination={{
+            clickable: true,
+            el: ".custom-pagination", // Adding a custom class for pagination
           }}
           modules={[Pagination, Navigation, Autoplay]}
         >

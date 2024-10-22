@@ -96,41 +96,7 @@ export const adminSidebarItems = [
         ></path>
       </svg>
     ),
-    // link: "/dashboard/campaign",
-    subMenus: [
-      {
-        name: "Campaign List",
-        icon: (
-          <svg
-            data-slot="icon"
-            fill="none"
-            stroke-width="1.5"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            className="text-white size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3"
-            ></path>
-          </svg>
-        ),
-        link: "/dashboard/campaign",
-      },
-      {
-        name: "Gallery",
-        icon: <GalleryIcon className="text-white" />,
-        link: "/dashboard/campaign-gallery",
-      },
-      {
-        name: "Documents",
-        icon: <GalleryIcon className="text-white" />,
-        link: "/dashboard/campaign-documents",
-      },
-    ],
+    link: "/dashboard/campaign",
   },
   {
     id: 5,
@@ -183,7 +149,7 @@ export const adminSidebarItems = [
     ),
     subMenus: [
       {
-        name: "Menu Settings",
+        name: "Navbar Menu",
         icon: (
           <svg
             data-slot="icon"
@@ -210,12 +176,12 @@ export const adminSidebarItems = [
         link: "/dashboard/menu-settings",
       },
       {
-        name: "Top Navbar Settings",
+        name: "Top Navbar",
         icon: <GalleryIcon className="text-white" />,
         link: "/dashboard/top-navbar",
       },
       {
-        name: "Header Carusel Settings",
+        name: "Header Carusel",
         icon: <GalleryIcon className="text-white" />,
         link: "/dashboard/banner-list",
       },
@@ -253,6 +219,16 @@ export const adminSidebarItems = [
         name: "About Vision",
         icon: <Question />,
         link: "/dashboard/about-vision",
+      },
+      {
+        name: "About Info",
+        icon: <Question />,
+        link: "/dashboard/about-info",
+      },
+      {
+        name: "Website Logo",
+        icon: <Question />,
+        link: "/dashboard/website-logo",
       },
     ],
   },

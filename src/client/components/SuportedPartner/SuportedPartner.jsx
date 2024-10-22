@@ -26,23 +26,23 @@ const SuportedPartner = () => {
       </div>
       <Container>
         <div className="space-y-10 px-5 sm:px-0">
-          {partners.map((partner) => (
-            <Marquee
-              className="m-5"
-              pauseOnHover={true}
-              autoFill={true}
-              speed={20}
-            >
+          <Marquee
+            className="m-5 flex"
+            pauseOnHover={true}
+            autoFill={true}
+            speed={20}
+          >
+            {partners.map((partner) => (
               <img
                 key={partner?._id}
                 src={imageUrl + partner?.image}
                 alt=""
-                className="object-cover"
+                className="object-cover h-20 w-20"
                 crossOrigin="anonymous"
               />
-            </Marquee>
-          ))}
-          <Marquee
+            ))}
+          </Marquee>
+          {/* <Marquee
             className="gap-4"
             pauseOnHover={true}
             autoFill={true}
@@ -55,7 +55,7 @@ const SuportedPartner = () => {
             <img src={brand10} alt="" className="object-cover" />
             <img src={brand11} alt="" className="object-cover" />
             <img src={brand12} alt="" className="object-cover" />
-          </Marquee>
+          </Marquee> */}
         </div>
       </Container>
     </div>

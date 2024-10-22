@@ -11,30 +11,23 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
-import Campaigns from "./Campaigns";
-import CampaignGallery from "./CampaignGallery";
-import CampaignDocuments from "./CampaignDocuments";
 import FormCard from "../../ui/FormCard";
+import AboutHeaderInfo from "./AboutHeaderInfo";
+import AboutMissionInfo from "./AboutMissionInfo";
 
-const Campaign = () => {
+const AboutDetails = () => {
   const data = [
     {
       label: "Campaign List",
       value: "dashboard",
       icon: Square3Stack3DIcon,
-      desc: <Campaigns />,
+      desc: <AboutHeaderInfo />,
     },
     {
       label: "Gallery List",
       value: "profile",
       icon: UserCircleIcon,
-      desc: <CampaignGallery />,
-    },
-    {
-      label: "Document List",
-      value: "settings",
-      icon: Cog6ToothIcon,
-      desc: <CampaignDocuments />,
+      desc: <AboutMissionInfo />,
     },
   ];
   return (
@@ -62,4 +55,4 @@ const Campaign = () => {
   );
 };
 
-export default Campaign;
+export default AboutDetails;
