@@ -5,11 +5,16 @@ import CreateAboutSettings from "../../dashboard/pages/AboutCampaignSettings/Cre
 import EditAboutSettings from "../../dashboard/pages/AboutCampaignSettings/EditAboutSettings";
 import AboutDetails from "../../dashboard/pages/AboutDetails/AboutDetails";
 import AboutHeaderInfo from "../../dashboard/pages/AboutDetails/AboutHeaderInfo";
+import AboutHeaderInfoView from "../../dashboard/pages/AboutDetails/AboutHeaderInfoView";
 import AboutMissionInfo from "../../dashboard/pages/AboutDetails/AboutMissionInfo";
+import AboutMissionInfoView from "../../dashboard/pages/AboutDetails/AboutMissionInfoView";
 import CreateAboutHeaderInfo from "../../dashboard/pages/AboutDetails/CreateAboutHeaderInfo";
 import CreateAboutMission from "../../dashboard/pages/AboutDetails/CreateAboutMission";
 import EditAboutHeaderInfo from "../../dashboard/pages/AboutDetails/EditAboutHeaderInfo";
 import EditAboutMissionInfo from "../../dashboard/pages/AboutDetails/EditAboutMissionInfo";
+import AboutInfo from "../../dashboard/pages/AboutInfo/AboutInfo";
+import AboutIntroView from "../../dashboard/pages/AboutIntro/AboutIntroView";
+import EditAboutIntro from "../../dashboard/pages/AboutIntro/EditAboutIntro";
 import AboutVision from "../../dashboard/pages/AboutVision/AboutVison";
 import CreateAboutVision from "../../dashboard/pages/AboutVision/CreateAboutVision";
 import EditAboutVision from "../../dashboard/pages/AboutVision/EditAboutVision";
@@ -21,7 +26,9 @@ import AdminCampaignDetails from "../../dashboard/pages/Campaign/AdminCampaignDe
 import Campaign from "../../dashboard/pages/Campaign/Campaign";
 import CampaignDocuments from "../../dashboard/pages/Campaign/CampaignDocuments";
 import CampaignGallery from "../../dashboard/pages/Campaign/CampaignGallery";
+import CampaignGalleryView from "../../dashboard/pages/Campaign/CampaignGalleryView";
 import CreateCampaign from "../../dashboard/pages/Campaign/CreateCampaign";
+import DocumentsView from "../../dashboard/pages/Campaign/DocumentsView";
 import EditCampaign from "../../dashboard/pages/Campaign/EditCampaign";
 import UploadDocument from "../../dashboard/pages/Campaign/UploadDocument";
 import UploadGallery from "../../dashboard/pages/Campaign/UploadGallery";
@@ -53,6 +60,7 @@ import EditPhone from "../../dashboard/pages/Settings/TopNavbarInfo/EditPhone";
 import TopNavbarInfo from "../../dashboard/pages/Settings/TopNavbarInfo/TopNavbarInfo";
 import TopNavInfoDetails from "../../dashboard/pages/Settings/TopNavbarInfo/TopNavInfoDetails";
 import Subscribers from "../../dashboard/pages/Subscribers/Subscribers";
+import EditLogo from "../../dashboard/pages/UploadLogo/EditLogo";
 import UploadLogo from "../../dashboard/pages/UploadLogo/UploadLogo";
 import UserPrivilege from "../../dashboard/pages/UserPrivilege/UserPrivilege";
 import UserProfile from "../../dashboard/pages/UserProfile/UserProfile";
@@ -173,6 +181,14 @@ const adminPath = [
     ),
   },
   {
+    path: "campaign-gallery/:id",
+    element: (
+      <ProtectedRoute>
+        <CampaignGalleryView />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "campaign-gallery",
     element: (
       <ProtectedRoute>
@@ -181,10 +197,10 @@ const adminPath = [
     ),
   },
   {
-    path: "campaign-documents",
+    path: "campaign-documents/:id",
     element: (
       <ProtectedRoute>
-        <CampaignDocuments />
+        <DocumentsView />
       </ProtectedRoute>
     ),
   },
@@ -197,7 +213,7 @@ const adminPath = [
     ),
   },
   {
-    path: "upload-document",
+    path: "upload-document/:id",
     element: (
       <ProtectedRoute>
         <UploadDocument />
@@ -484,14 +500,14 @@ const adminPath = [
       </ProtectedRoute>
     ),
   },
-  {
-    path: "about-info",
-    element: (
-      <ProtectedRoute>
-        <AboutDetails />
-      </ProtectedRoute>
-    ),
-  },
+  // {
+  //   path: "about-info",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <AboutDetails />
+  //     </ProtectedRoute>
+  //   ),
+  // },
   {
     path: "create-about-headerInfo",
     element: (
@@ -505,6 +521,14 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <AboutHeaderInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "about-headerInfo-details/:id",
+    element: (
+      <ProtectedRoute>
+        <AboutHeaderInfoView />
       </ProtectedRoute>
     ),
   },
@@ -525,6 +549,14 @@ const adminPath = [
     ),
   },
   {
+    path: "about-missionInfo-details/:id",
+    element: (
+      <ProtectedRoute>
+        <AboutMissionInfoView />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "edit-about-missionInfo/:id",
     element: (
       <ProtectedRoute>
@@ -541,6 +573,14 @@ const adminPath = [
     ),
   },
   {
+    path: "about-info",
+    element: (
+      <ProtectedRoute>
+        <AboutInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "website-logo",
     element: (
       <ProtectedRoute>
@@ -553,6 +593,30 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <UploadLogo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "update-logo/:id",
+    element: (
+      <ProtectedRoute>
+        <EditLogo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "about-intro-details/:id",
+    element: (
+      <ProtectedRoute>
+        <AboutIntroView />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "edit-about-intro/:id",
+    element: (
+      <ProtectedRoute>
+        <EditAboutIntro />
       </ProtectedRoute>
     ),
   },

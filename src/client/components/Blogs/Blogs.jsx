@@ -4,7 +4,7 @@ import Container from "../Container/Container";
 import Blog from "./Blog";
 import useBlogsData from "../../hooks/useBlogData";
 const Blogs = () => {
-  const { blogs } = useBlogsData();
+  const [blogs] = useBlogsData();
   return (
     <section id="blog" className="py-20">
       <Container>

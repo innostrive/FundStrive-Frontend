@@ -5,13 +5,15 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
-const useCampaignGallery = () => {
+const useCampaignGallery = (id) => {
   const axiosSecure = useAxiosSecure();
   const URL = import.meta.env.VITE_BASE_URL;
   const { refetch, data: gallery = [] } = useQuery({
     queryKey: ["gallery"],
     queryFn: async () => {
-      const res = await axios.get(`${URL}/campaigns/asset?type=image`);
+      const res = await axios.get(
+        `${URL}/campaigns/asset?type=image&campaign_id=${id}`
+      );
       console.log("gallery:", res.data.data);
       return res.data.data;
     },

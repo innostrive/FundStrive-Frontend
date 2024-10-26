@@ -6,7 +6,7 @@ const useVolunteerData = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const axiosSecure = useAxiosSecure();
   const { data: volunteer = [] } = useQuery({
-    queryKey: ["volunteer"],
+    queryKey: ["volunteer-data"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/api/users?role=volunteer`);
       return res.data.data.users;

@@ -12,17 +12,13 @@ import { NavLink } from "react-router-dom";
 import FormCard from "../../ui/FormCard";
 import useLogo from "../../hooks/useLogo";
 
-const TABLE_HEAD = ["Name", "Slug", "Status", "Action"];
+const TABLE_HEAD = ["Name", "Logo", "Status", "Action"];
 
 const WebsiteLogo = () => {
   const [logo, handleLogoDelete] = useLogo();
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   return (
-    <FormCard
-      title="Website Logo"
-      icon={<Add />}
-      iconTitle="Upload"
-      path="/dashboard/upload-logo"
-    >
+    <FormCard title="Website Logo">
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
@@ -41,7 +37,7 @@ const WebsiteLogo = () => {
             </tr>
           </thead>
           <tbody>
-            {logo.map(({ name, slug, status, _id }, index) => {
+            {logo.map(({ name, image, status, _id }, index) => {
               const isLast = index === logo.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
@@ -59,13 +55,12 @@ const WebsiteLogo = () => {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {slug}
-                    </Typography>
+                    <img
+                      src={imageUrl + image}
+                      crossOrigin="anonymous"
+                      alt=""
+                      className="h-16 w-16 object-cover rounded-full"
+                    />
                   </td>
                   <td className={classes}>
                     <div className="w-max">
@@ -80,27 +75,19 @@ const WebsiteLogo = () => {
                   <td className={classes}>
                     <div className="flex items-center">
                       <NavLink to={`/dashboard/banner/${_id}`}>
-                        <Tooltip content="Category Info">
+                        <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-banner/${_id}`}>
+                      <NavLink to={`/dashboard/update-logo/${_id}`}>
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <Tooltip content="Delete">
-                        <IconButton
-                          variant="text"
-                          onClick={() => handleLogoDelete(_id)}
-                        >
-                          <Delete className="size-5 text-red-500" />
-                        </IconButton>
-                      </Tooltip>
                     </div>
                   </td>
                 </tr>

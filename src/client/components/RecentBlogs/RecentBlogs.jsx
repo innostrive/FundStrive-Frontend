@@ -3,7 +3,7 @@ import ShareBlog from "../BlogDetails/ShareBlog";
 import RecentBlog from "./RecentBlog";
 
 const RecentBlogs = ({ author, publishedDate }) => {
-  const { blogs } = useBlogsData();
+  const [blogs] = useBlogsData();
   return (
     <div className="border border-gray-300 rounded-md bg-text-primary w-full h-auto">
       <div className="w-full p-2 bg-secondary">

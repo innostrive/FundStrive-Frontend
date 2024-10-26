@@ -21,7 +21,6 @@ const Payment = ({ id }) => {
       ...data,
       campaign_id: id,
     };
-    console.log("payment:", payload);
     try {
       const response = await axios.post(`${URL}/payment_check`, payload);
       const sessionId = response.data.data.sessionId;

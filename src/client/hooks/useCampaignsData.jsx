@@ -9,7 +9,6 @@ const useCampaignsData = () => {
       setCampaigns(res.data.data.campaigns);
     });
   }, []);
-  console.log("campaign:", campaigns);
   return campaigns;
 };
 

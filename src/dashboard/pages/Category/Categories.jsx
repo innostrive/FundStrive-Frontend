@@ -19,7 +19,6 @@ const TABLE_HEAD = ["Category", "Status", "Action"];
 const Categories = () => {
   const [categories, handleCategoryDelete] = useCategoriesData();
 
-  console.log("categories:", categories);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -104,7 +103,7 @@ const Categories = () => {
                   <td className={classes}>
                     <div className="flex items-center">
                       <NavLink to={`/dashboard/category/${_id}`}>
-                        <Tooltip content="Category Info">
+                        <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>

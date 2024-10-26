@@ -4,8 +4,10 @@ import IButton from "../../ui/IButton";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import FormCard from "../../ui/FormCard";
+import { useParams } from "react-router-dom";
 
 const UploadDocument = () => {
+  const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const [filePreview, setFilePreview] = useState([]);
   const [file, setFile] = useState([]);
@@ -25,7 +27,7 @@ const UploadDocument = () => {
   const handleFileInput = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("campaign_id", "66f7966f1eb7e93d8e214c6c");
+    formData.append("campaign_id", id);
     formData.append("type", "document");
     file.forEach((file) => {
       formData.append("asset", file);

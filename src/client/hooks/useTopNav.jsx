@@ -6,7 +6,6 @@ const useTopNav = () => {
   const [navmenues, setNavMenues] = useState([]);
   useEffect(() => {
     axios.get(`${URL}/settings?slug=NAVINFO`).then((res) => {
-      console.log("nav:", res.data.data);
       setNavMenues(res.data.data.settings);
     });
   }, []);

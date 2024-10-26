@@ -12,14 +12,21 @@ import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
+import useCampaignData from "../../hooks/useCampaignData";
 import useCampaignGallery from "../../hooks/useCampaignGallery";
+import ViewSingleImage from "./ViewSingleImage";
 
-const TABLE_HEAD = ["Campaign", "Type", "Action"];
+const TABLE_HEAD = ["Image", "Action"];
 
-const CampaignGallery = () => {
-  const [gallery, handleGalleryDelete] = useCampaignGallery();
-  console.log("campaigns:", gallery);
+const CampaignGallery = ({ id, campaignName }) => {
+  const [gallery, handleGalleryDelete] = useCampaignGallery(id);
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [active, setActive] = useState(1);
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
+
   const itemsPerPage = 5;
 
   const totalPages = Math.ceil(gallery.length / itemsPerPage);
@@ -50,10 +57,10 @@ const CampaignGallery = () => {
 
   return (
     <FormCard
-      title="Campaign Gallery"
-      icon={<Add />}
-      path="/dashboard/upload-gallery"
-      iconTitle="Upload"
+      title="Gallery List"
+      // icon={<Add />}
+      // path="/dashboard/upload-gallery/:id"
+      // iconTitle="Upload"
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -73,7 +80,7 @@ const CampaignGallery = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedGallery.map(({ type, campaign_id, _id }, index) => {
+            {paginatedGallery.map(({ asset, _id }, index) => {
               const isLast = index === paginatedGallery.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
@@ -82,41 +89,23 @@ const CampaignGallery = () => {
               return (
                 <tr key={_id}>
                   <td className={classes}>
-                    <div className="flex items-center gap-3">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-bold"
-                      >
-                        {campaign_id}
-                      </Typography>
-                    </div>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {type}
-                    </Typography>
+                    <img
+                      src={imageUrl + asset}
+                      crossOrigin="anonymous"
+                      alt=""
+                      className="h-16 w-16 object-cover rounded-full"
+                    />
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/upload-gallery/${_id}`}>
-                        <Tooltip content="Gallery Info">
-                          <IconButton variant="text">
-                            <Add className="size-5 text-secondary" />
-                          </IconButton>
-                        </Tooltip>
-                      </NavLink>
-                      <NavLink to={`/dashboard/campaign/${_id}`}>
-                        <Tooltip content="Gallery Info">
-                          <IconButton variant="text">
-                            <View className="size-5 text-secondary" />
-                          </IconButton>
-                        </Tooltip>
-                      </NavLink>
+                      <Tooltip content="View">
+                        <ViewSingleImage
+                          open={open}
+                          handleOpen={handleOpen}
+                          asset={asset}
+                          campaignName={campaignName}
+                        />
+                      </Tooltip>
                       <Tooltip content="Delete">
                         <IconButton
                           variant="text"

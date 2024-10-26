@@ -39,7 +39,7 @@ const EditPhone = () => {
     // console.log("topnav:", data);
   };
   return (
-    <FormCard>
+    <FormCard title="Update Phone">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 space-y-2">
           <span className="text-sm">Name</span>

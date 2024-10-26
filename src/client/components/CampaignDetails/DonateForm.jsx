@@ -24,6 +24,7 @@ const DonateForm = ({ id }) => {
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState({});
   const [donationAmount, setDonationAmount] = useState("");
+  const [isCustomAmount, setIsCustomAmount] = useState(true);
   const [paymentType, setPaymentType] = useState(false);
   const [error, setError] = useState("");
 
@@ -105,33 +106,41 @@ const DonateForm = ({ id }) => {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
-              disabled={
-                donationAmount === "100" ||
-                donationAmount === "200" ||
-                donationAmount === "300"
-              }
+              disabled={!isCustomAmount} // Disable only when custom is not selected
             />
 
             <div className="flex flex-wrap">
               <Radio
                 name="type"
                 label="$100"
-                onClick={() => setDonationAmount("100")}
+                onClick={() => {
+                  setDonationAmount("100");
+                  setIsCustomAmount(false);
+                }}
               />
               <Radio
                 name="type"
                 label="$200"
-                onClick={() => setDonationAmount("200")}
+                onClick={() => {
+                  setDonationAmount("200");
+                  setIsCustomAmount(false);
+                }}
               />
               <Radio
                 name="type"
                 label="$300"
-                onClick={() => setDonationAmount("300")}
+                onClick={() => {
+                  setDonationAmount("300");
+                  setIsCustomAmount(false);
+                }}
               />
               <Radio
                 name="type"
                 label="Custom"
-                onClick={() => setDonationAmount("")}
+                onClick={() => {
+                  setDonationAmount("");
+                  setIsCustomAmount(true); // Enable input when Custom is selected
+                }}
                 defaultChecked
               />
             </div>

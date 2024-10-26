@@ -19,7 +19,6 @@ const TABLE_HEAD = ["Title", "Published Date", "Status", "Action"];
 
 const Blogs = () => {
   const [blogs, handleBlogDelete] = useBlogsData();
-  console.log("blogs:", blogs);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -113,7 +112,7 @@ const Blogs = () => {
                   <td className={classes}>
                     <div className="flex items-center">
                       <NavLink to={`/dashboard/blog/${_id}`}>
-                        <Tooltip content="Category Info">
+                        <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>

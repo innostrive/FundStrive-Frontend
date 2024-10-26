@@ -38,7 +38,6 @@ const useCampaignData = () => {
           })
           .catch((error) => {
             toast.error("An error occurred");
-            console.error(error);
           });
       }
     });

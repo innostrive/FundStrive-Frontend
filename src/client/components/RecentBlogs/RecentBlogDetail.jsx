@@ -34,6 +34,15 @@ const RecentBlogDetail = () => {
             <RecentBlogs />
           </div>
         </div>
+        {/* <div className="sm:px-0 px-5">
+          <div className="sm:col-span-8">
+            <RecentBlogDetails
+              blogId={id}
+              author={author}
+              publishedDate={publishedDate}
+            />
+          </div>
+        </div> */}
       </Container>
     </div>
   );

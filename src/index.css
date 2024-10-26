@@ -37,7 +37,7 @@
   top: -50px;
   display: flex;
   justify-content: center;
-  z-index: 10;
+  z-index: 999;
 }
 
 .custom-pagination .swiper-pagination-bullet {
@@ -51,4 +51,35 @@
   display: flex;
   flex: wrap;
   gap: 12px;
+}
+
+.ql-container {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  background: #fefcfc;
+}
+
+/* Snow Theme */
+.ql-snow.ql-toolbar {
+  display: block;
+  background: #eaecec;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.ql-editor {
+  min-height: 18em;
+}
+
+.rti-input {
+  height: 20px;
+  display: block;
+  width: 100%;
+  font-weight: 500;
+}
+.rti-container {
+  margin-top: 8px;
+  font-size: small;
+  border: 1px solid #e3e9f1;
+  --rti-main: "#596678";
 }

@@ -36,18 +36,6 @@ const SettingsInfo = () => {
           />
         </div>
         <div className="grid grid-cols-1 space-y-2">
-          <span className="text-sm">Slug</span>
-          <input
-            type="text"
-            size="lg"
-            className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-            id="raisedAmount"
-            name="raised_amount"
-            defaultValue={settings?.slug}
-            disabled
-          />
-        </div>
-        <div className="grid grid-cols-1 space-y-2">
           <span className="text-sm">Menu</span>
           <input
             type="text"
@@ -56,18 +44,6 @@ const SettingsInfo = () => {
             id="raisedAmount"
             name="raised_amount"
             defaultValue={settings?.key}
-            disabled
-          />
-        </div>
-        <div className="grid grid-cols-1 space-y-2">
-          <span className="text-sm">Menu URL</span>
-          <input
-            type="text"
-            size="lg"
-            className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-            id="raisedAmount"
-            name="raised_amount"
-            defaultValue={settings?.value}
             disabled
           />
         </div>

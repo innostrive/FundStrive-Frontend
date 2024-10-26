@@ -18,13 +18,13 @@ import AboutMissionInfo from "./AboutMissionInfo";
 const AboutDetails = () => {
   const data = [
     {
-      label: "Campaign List",
+      label: "About Header",
       value: "dashboard",
       icon: Square3Stack3DIcon,
       desc: <AboutHeaderInfo />,
     },
     {
-      label: "Gallery List",
+      label: "About Mision",
       value: "profile",
       icon: UserCircleIcon,
       desc: <AboutMissionInfo />,

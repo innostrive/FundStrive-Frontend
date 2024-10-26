@@ -17,7 +17,6 @@ const TABLE_HEAD = ["Email", "Status", "Action"];
 
 const Subscribers = () => {
   const [subscribers, handleSubscriberDelete] = useSubscribers();
-  console.log("subscribers:", subscribers);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 

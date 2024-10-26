@@ -64,23 +64,23 @@ const EditBanner = () => {
         },
       })
       .then((response) => {
-        console.log("Server response:", response);
+        // console.log("Server response:", response);
         toast.success(response.data.message);
         navigate("/dashboard/banner-list");
       })
       .catch((error) => {
-        console.error("Error submitting data:", error);
+        // console.error("Error submitting data:", error);
         toast.error(error);
       });
-    console.log("bannerData:", bannerData);
+    // console.log("bannerData:", bannerData);
   };
 
   return (
-    <FormCard title="Upload Banner">
+    <FormCard title="Update Carusel">
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="space-y-5">
-            <div className="grid grid-cols-1 space-y-2">
+            {/* <div className="grid grid-cols-1 space-y-2">
               <span className="text-sm">Name</span>
               <input
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
@@ -97,7 +97,7 @@ const EditBanner = () => {
                 defaultValue={banner?.slug}
                 {...register("slug")}
               />
-            </div>
+            </div> */}
             <div className="col-span-2">
               <select
                 value={selectedStatus}

@@ -1,18 +1,10 @@
 import moment from "moment";
-import { Link } from "react-router-dom";
-import { Edit } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
 import BlogReview from "./BlogReview";
 
 const BlogDetailsInfo = ({ blogInfo, author, blogReviews }) => {
   return (
     <FormCard title="Blog Details">
-      <div className="flex ml-auto p-2 bg-red-200 rounded-md w-10">
-        <Link to={`/dashboard/edit-blog/${blogInfo?._id}`}>
-          {" "}
-          <Edit className="size-6 text-white" />
-        </Link>
-      </div>
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <span className="text-base font-medium text-black">Author:</span>

@@ -91,9 +91,10 @@ const TeamMemberSlider = () => {
         <Swiper
           spaceBetween={0}
           slidesPerView={1}
-          // pagination={{
-          //   clickable: true,
-          // }}
+          pagination={{
+            clickable: true,
+            el: ".custom-pagination", // Adding a custom class for pagination
+          }}
           autoplay={{
             delay: 5000,
             disableOnInteraction: false,
@@ -108,10 +109,6 @@ const TeamMemberSlider = () => {
             1024: {
               slidesPerView: 3,
             },
-          }}
-          pagination={{
-            clickable: true,
-            el: ".custom-pagination", // Adding a custom class for pagination
           }}
           modules={[Pagination, Navigation, Autoplay]}
         >
@@ -128,7 +125,6 @@ const TeamMemberSlider = () => {
                   </div>
                   <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-black/70"></div>
                   <div class="absolute inset-0 flex translate-y-[60%] flex-col items-center justify-center px-9 text-center transition-all duration-500 group-hover:translate-y-20">
-                    {/* <h1 class="text-xl font-medium text-white">Social</h1> */}
                     <div class="flex gap-2 text-text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                       <div className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary">
                         <BiLogoFacebook size={20} />

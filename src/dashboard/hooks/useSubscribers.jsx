@@ -12,7 +12,6 @@ const useSubscribers = () => {
     queryKey: ["subscribers"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/api/subscribers`);
-      console.log("res:", res.data.data);
       return res.data.data.subscribers;
     },
   });
@@ -42,7 +41,6 @@ const useSubscribers = () => {
           })
           .catch((error) => {
             toast.error("An error occurred");
-            console.error(error);
           });
       }
     });

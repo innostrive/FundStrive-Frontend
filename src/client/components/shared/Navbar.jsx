@@ -25,18 +25,17 @@ export function StickyNavbar() {
   const activeMenus = navmenus.filter(
     (item) => item.status === "Active" && item.slug === "NAVMENU"
   );
-  console.log("menus:", activeMenus);
 
   const navList = (
     <ul className="mt-2 mb-4 flex uppercase flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {activeMenus
-        .sort((a, b) => b.key.localeCompare(a.key))
+        .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
         .map((activeMenu) => (
           <Typography
             as="li"
             variant="small"
             className=" text-secondary font-semibold"
-            key={activeMenu?.key}
+            key={activeMenu?._id}
           >
             <a href={`${activeMenu?.value}`} className="flex items-center">
               {activeMenu?.key}

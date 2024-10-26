@@ -36,16 +36,8 @@ const CampaignInfo = ({
   };
   return (
     <section>
-      <FormCard
-        title="Campaign Details"
-        icon={
-          <Edit
-            onClick={() => setEdit(true)}
-            className="size-6 text-secondary"
-          />
-        }
-      >
-        <div className="flex gap-4 items-center justify-center">
+      <FormCard title="Campaign Details">
+        <div className="flex gap-4 items-center justify-center mb-5">
           <div>
             <img
               src={campaignInfo?.image}
@@ -90,22 +82,22 @@ const CampaignInfo = ({
           </div>
           <div className="grid space-y-2">
             <span className="text-sm">Category</span>
-            <Select
+            <select
               label="Category"
+              className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-auto text-base rounded"
+              disabled
               value={category}
-              onChange={(value) => setCategory(value)}
             >
               {categories.map((category) => (
-                <Option
+                <option
                   key={category?._id}
                   value={category?._id}
                   className="text-black"
-                  onClick={() => setValue(category?.name)}
                 >
                   {category.name}
-                </Option>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
           <div className="grid space-y-2">
             <span className="text-sm">Raised Amount</span>

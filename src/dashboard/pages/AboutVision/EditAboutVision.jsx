@@ -46,7 +46,7 @@ const EditAboutVision = () => {
   };
 
   return (
-    <FormCard title="Settings Details">
+    <FormCard title="Update About Vision">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-5">
           <div className="grid grid-cols-1 space-y-2">

@@ -7,15 +7,20 @@ import Form from "../../components/form/Form";
 import IButton from "../../ui/IButton";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import useAboutSettings from "../../hooks/useAboutSettings";
 
 const EditAboutSettings = () => {
   const { id } = useParams();
+  const [aboutSuccess] = useAboutSettings();
   const axiosSecure = useAxiosSecure();
   const URL = import.meta.env.VITE_BASE_URL;
   const [settings, setSettings] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
   const navigate = useNavigate();
   const { register, reset, handleSubmit } = useForm();
+
+  const volunteer = aboutSuccess.filter((item) => item.key === "Volunteer");
+  const donation = aboutSuccess.filter((item) => item.key === "Donation");
 
   useEffect(() => {
     axios.get(`${URL}/settings/${id}`).then((res) => {
@@ -38,7 +43,7 @@ const EditAboutSettings = () => {
     axiosSecure.put(`/api/settings/${id}`, editData).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.message);
-        navigate("/dashboard/about-settings");
+        navigate("/dashboard/about-info");
       }
       console.log(res.data.data);
     });
@@ -46,33 +51,39 @@ const EditAboutSettings = () => {
   };
 
   return (
-    <FormCard title="Settings Details">
+    <FormCard title="Update About Campaign">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-10">
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Name</span>
-            <input
-              type="text"
-              size="lg"
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="key"
-              name="key"
-              defaultValue={settings?.key}
-              {...register("key")}
-            />
-          </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Success Value</span>
-            <input
-              type="text"
-              size="lg"
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              id="value"
-              name="value"
-              defaultValue={settings?.value}
-              {...register("value")}
-            />
-          </div>
+          {volunteer || donation ? (
+            ""
+          ) : (
+            <>
+              <div className="grid grid-cols-1 space-y-2">
+                <span className="text-sm">Name</span>
+                <input
+                  type="text"
+                  size="lg"
+                  className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                  id="key"
+                  name="key"
+                  defaultValue={settings?.key}
+                  {...register("key")}
+                />
+              </div>
+              <div className="grid grid-cols-1 space-y-2">
+                <span className="text-sm">Success Value</span>
+                <input
+                  type="text"
+                  size="lg"
+                  className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                  id="value"
+                  name="value"
+                  defaultValue={settings?.value}
+                  {...register("value")}
+                />
+              </div>
+            </>
+          )}
           <div className="col-span-2">
             <select
               value={selectedStatus}

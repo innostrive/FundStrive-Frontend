@@ -7,7 +7,6 @@ const useWebsiteLogo = () => {
     queryKey: ["logo"],
     queryFn: async () => {
       const res = await axiosSecure.get("/banners?slug=Logo");
-      console.log("logo:", res.data.data.banners);
       return res.data.data.banners;
     },
   });

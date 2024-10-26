@@ -4,13 +4,15 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
-const useCampaignDocument = () => {
+const useCampaignDocument = (id) => {
   const axiosSecure = useAxiosSecure();
   const URL = import.meta.env.VITE_BASE_URL;
   const { refetch, data: document = [] } = useQuery({
     queryKey: ["document"],
     queryFn: async () => {
-      const res = await axios.get(`${URL}/campaigns/asset?type=document`);
+      const res = await axios.get(
+        `${URL}/campaigns/asset?type=document&campaign_id=${id}`
+      );
       console.log("gallery:", res.data.data);
       return res.data.data;
     },

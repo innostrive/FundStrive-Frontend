@@ -21,7 +21,6 @@ const textVariants = {
 const Header = () => {
   const [carusel] = useHeaderCarusel();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
-  console.log("carusel:", carusel);
   const [animateText, setAnimateText] = useState("visible");
 
   const handleSlideChange = () => {
@@ -101,8 +100,7 @@ const Header = () => {
                       : { duration: 0, delay: 0 }
                   }
                 >
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Eligendi, illum.
+                  "Changing Lives Through Generosity and Compassionate Support"
                 </motion.p>
 
                 <Link to="/campaign-list">

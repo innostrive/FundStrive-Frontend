@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import Layout from "../../layout/Layout";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
@@ -18,6 +18,7 @@ const EditUser = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosSecure.get(`/api/users/${id}`).then((res) => {
@@ -43,28 +44,21 @@ const EditUser = () => {
 
   const onSubmit = (data) => {
     const formData = new FormData();
-    // formData.append("image", image);
+    formData.append("image", image);
     const payload = {
       ...data,
       status: selectedStatus,
       image,
     };
-    // formData.append("data", JSON.stringify(payload));
-    console.log(formData.get("data"));
     axiosSecure
-      .put(
-        `/api/users/${id}`,
-        payload
-        //   {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data",
-        //   },
-        // }
-      )
+      .put(`/api/users/${id}`, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
         if (res.status === 200) {
           toast.success(res.data.message);
-          console.log("Server response:", res.data);
           navigate("/dashboard/users");
         }
       })
@@ -72,7 +66,6 @@ const EditUser = () => {
         toast.error(error);
         console.error("Error submitting data:", error);
       });
-    console.log("data:", payload);
   };
 
   return (

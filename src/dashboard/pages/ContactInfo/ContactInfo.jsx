@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { NavLink } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import FormCard from "../../ui/FormCard";
 import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import useContactInfo from "../../hooks/useContactInfo";
@@ -18,7 +18,6 @@ const TABLE_HEAD = ["Name", "Email", "Phone", "Action"];
 
 const ContactInfo = () => {
   const [contactInfo, handleContactInfoDelete] = useContactInfo();
-  console.log("contactInfo:", contactInfo);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -69,14 +68,17 @@ const ContactInfo = () => {
           </thead>
           <tbody>
             {paginatedContactInfo.map(
-              ({ name, email, phone, status, _id }, index) => {
+              ({ name, email, phone, is_read, _id }, index) => {
                 const isLast = index === paginatedContactInfo.length - 1;
                 const classes = isLast
                   ? "p-4 border-b-none"
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={_id}>
+                  <tr
+                    key={_id}
+                    className={is_read === false ? "bg-gray-50" : ""}
+                  >
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <Typography
@@ -106,32 +108,17 @@ const ContactInfo = () => {
                         {phone}
                       </Typography>
                     </td>
-                    {/* <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          size="sm"
-                          variant="ghost"
-                          value={status}
-                          color={status === "Active" ? "green" : "red"}
-                        />
-                      </div>
-                    </td> */}
+
                     <td className={classes}>
                       <div className="flex items-center">
                         <NavLink to={`/dashboard/contact-details/${_id}`}>
-                          <Tooltip content="Category Info">
+                          <Tooltip content="View">
                             <IconButton variant="text">
-                              <View className="size-5 text-secondary" />
+                              <View />
                             </IconButton>
                           </Tooltip>
                         </NavLink>
-                        {/* <NavLink to={`/dashboard/edit-banner/${_id}`}>
-                          <Tooltip content="Edit">
-                            <IconButton variant="text">
-                              <Edit className="size-5 text-green-500" />
-                            </IconButton>
-                          </Tooltip>
-                        </NavLink> */}
+
                         <Tooltip content="Delete">
                           <IconButton
                             variant="text"

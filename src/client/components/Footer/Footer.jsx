@@ -7,8 +7,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { Spinner } from "@material-tailwind/react";
+import useWebsiteLogo from "../../hooks/useWebsiteLogo";
 const Footer = () => {
   const URL = import.meta.env.VITE_BASE_URL;
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
+  const [logo] = useWebsiteLogo();
   const [isLoading, setIsLoading] = useState();
   const {
     register,
@@ -27,16 +30,24 @@ const Footer = () => {
         toast.warning("Something wrong!!!");
       }
     });
-    console.log("email:", data);
   };
   return (
     <div className="py-20 bg-secondary">
       <Container>
         <div className="grid sm:grid-cols-4 grid-cols-1 gap-10 px-5 sm:px-0">
           <div className="space-y-4">
-            <h1 className="text-3xl font-bold text-text-primary uppercase">
+            {logo.map((footerLogo) => (
+              <img
+                src={imageUrl + footerLogo?.image}
+                key={footerLogo?._id}
+                crossOrigin="anonymous"
+                alt="Footer-Logo"
+                className="h-full w-full object-cover"
+              />
+            ))}
+            {/* <h1 className="text-3xl font-bold text-text-primary uppercase">
               Fund<span className="text-primary">strive</span>
-            </h1>
+            </h1> */}
             <p className="text-sm font-light text-white leading-normal">
               We are here for humanity. We are here for help.
             </p>

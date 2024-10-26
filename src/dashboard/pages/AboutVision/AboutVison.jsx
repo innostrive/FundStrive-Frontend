@@ -20,7 +20,6 @@ const TABLE_HEAD = ["Key", "Value", "Status", "Action"];
 
 const AboutVision = () => {
   const [aboutVision, handleAboutVisionDelete] = useAboutVision();
-  console.log("aboutVision:", aboutVision);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -58,12 +57,7 @@ const AboutVision = () => {
     }
   };
   return (
-    <FormCard
-      title="About Vision List"
-      icon={<Add />}
-      iconTitle="Add"
-      path="/dashboard/create-about-vision"
-    >
+    <FormCard title="About Vision List">
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
@@ -127,14 +121,14 @@ const AboutVision = () => {
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <Tooltip content="Delete">
+                      {/* <Tooltip content="Delete">
                         <IconButton
                           variant="text"
                           onClick={() => handleAboutVisionDelete(_id)}
                         >
                           <Delete className="size-5 text-red-500" />
                         </IconButton>
-                      </Tooltip>
+                      </Tooltip> */}
                     </div>
                   </td>
                 </tr>
@@ -144,7 +138,7 @@ const AboutVision = () => {
         </table>
       </CardBody>
 
-      <CardFooter className="flex items-center justify-end p-4">
+      {/* <CardFooter className="flex items-center justify-end p-4">
         <div className="flex items-center gap-4">
           <Button
             variant="text"
@@ -173,7 +167,7 @@ const AboutVision = () => {
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </FormCard>
   );
 };

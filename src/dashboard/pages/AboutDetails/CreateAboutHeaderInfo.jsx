@@ -11,7 +11,14 @@ import IButton from "../../ui/IButton";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import ImageResize from "quill-image-resize-module-react";
-Quill.register("modules/imageResize", ImageResize);
+import TextEditor from "../../components/TextEditor/TextEditor";
+import FroalaEditor from "react-froala-wysiwyg";
+import "froala-editor/css/froala_editor.pkgd.min.css";
+import "froala-editor/css/froala_style.min.css";
+import "froala-editor/js/plugins.pkgd.min.js";
+if (!Quill.imports["modules/imageResize"]) {
+  Quill.register("modules/imageResize", ImageResize);
+}
 const CreateAboutHeaderInfo = () => {
   const axiosSecure = useAxiosSecure();
   const { control, handleSubmit, reset } = useForm();
@@ -27,22 +34,22 @@ const CreateAboutHeaderInfo = () => {
     //       console.log("settings:", response.data.message);
     //       toast.success(response.data.message);
     //       reset();
-    //       // navigate("/dashboard/menu-settings");
+    //       navigate("/dashboard/menu-settings");
     //     }
     //   });
     // } catch (err) {
     //   toast.error(err);
     //   console.log(err);
     // }
-    console.log("data", payload);
   };
+
   return (
     <FormCard>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="h6" color="blue-gray" className="mb-3">
           Content
         </Typography>
-        <EditorToolbar toolbarId={"t2"} />
+        {/* <EditorToolbar toolbarId={"t2"} />
         <Controller
           name="value"
           control={control}
@@ -61,6 +68,11 @@ const CreateAboutHeaderInfo = () => {
               {error && <p className="text-red-500 text-sm">{error.message}</p>}
             </>
           )}
+        /> */}
+        <FroalaEditor
+          tag="textarea"
+          // model={content}
+          // onModelChange={setContent}
         />
         <IButton className="flex ml-auto my-5">Submit</IButton>
       </form>

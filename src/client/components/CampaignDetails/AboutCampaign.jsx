@@ -1,24 +1,32 @@
-import { Progress } from "@material-tailwind/react";
+import { Progress, Typography } from "@material-tailwind/react";
 import useCampaignsInfo from "../../hooks/useCampaignInfo";
 
 const AboutCampaign = ({ id }) => {
   const campaign = useCampaignsInfo(id);
   const goal = campaign?.target_amount;
   const raised = campaign?.raised_amount;
-  const average = (raised + goal) / 2;
-  const initialProgress = Math.round((average / goal) * 100);
+  const initialProgress = ((raised / goal) * 100).toFixed(2);
   return (
     <div className="space-y-5">
       <h1 className="text-base font-medium leading-normal tracking-normal">
         {campaign?.name}
       </h1>
-      <Progress
-        value={initialProgress}
-        label="Completed"
-        size="md"
-        className="bg-secondary h-3"
-        color="cyan"
-      />
+      <div className="w-full">
+        <div className="mb-2 flex items-center justify-between">
+          <Typography color="blue-gray" variant="small">
+            Completed
+          </Typography>
+          <Typography color="blue-gray" variant="small">
+            {initialProgress}%
+          </Typography>
+        </div>
+        <Progress
+          value={initialProgress}
+          className="bg-secondary h-3 text-xs"
+          color="cyan"
+          size="sm"
+        />
+      </div>
       <div className="grid grid-cols-2 place-content-between">
         <div className="text-center text-sm font-light">
           <p>Raised</p>

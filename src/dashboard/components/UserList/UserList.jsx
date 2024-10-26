@@ -19,7 +19,6 @@ const TABLE_HEAD = ["Name", "Country", "Role", "Status", "Action"];
 const UserList = () => {
   const [users, handleUserDelete] = useUsersData();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
-  console.log("users:", users);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -117,7 +116,7 @@ const UserList = () => {
                     <td className={classes}>
                       <div className="flex items-center">
                         <NavLink to={`/dashboard/user-details/${_id}`}>
-                          <Tooltip content="Category Info">
+                          <Tooltip content="View">
                             <IconButton variant="text">
                               <View className="size-5 text-secondary" />
                             </IconButton>

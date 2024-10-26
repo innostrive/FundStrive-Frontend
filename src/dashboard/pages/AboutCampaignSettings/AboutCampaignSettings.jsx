@@ -14,12 +14,26 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import useUsersData from "../../hooks/useUsersData";
 import useAboutSettings from "../../hooks/useAboutSettings";
+import useVolunteerData from "../../../client/hooks/useVolunteerData";
+import useContactCount from "../../../client/hooks/useContactCount";
 
 const TABLE_HEAD = ["Key", "Value", "Status", "Action"];
 
 const AboutCampaignSettings = () => {
-  const [aboutSuccess, handleAboutSuccessDelete] = useAboutSettings();
-  console.log("aboutSuccess:", aboutSuccess);
+  const [aboutSuccess] = useAboutSettings();
+  const [volunteer] = useVolunteerData();
+  const count = useContactCount();
+
+  const about = aboutSuccess.filter((item) => item.key === "Volunteer");
+  const donation = aboutSuccess.filter((item) => item.key === "Donation");
+
+  if (about.length > 0 && donation.length > 0) {
+    about[0].value = volunteer?.length;
+    donation[0].value = count?.raised_amount;
+  } else {
+    console.error("No items found with the key 'Volunteer'");
+  }
+
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -49,12 +63,7 @@ const AboutCampaignSettings = () => {
     if (active > 1) setActive(active - 1);
   };
   return (
-    <FormCard
-      title="About Setting List"
-      icon={<Add />}
-      iconTitle="Add"
-      path="/dashboard/create-about-settings"
-    >
+    <FormCard title="About Setting List">
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
@@ -118,14 +127,14 @@ const AboutCampaignSettings = () => {
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <Tooltip content="Delete">
+                      {/* <Tooltip content="Delete">
                         <IconButton
                           variant="text"
                           onClick={() => handleAboutSuccessDelete(_id)}
                         >
                           <Delete className="size-5 text-red-500" />
                         </IconButton>
-                      </Tooltip>
+                      </Tooltip> */}
                     </div>
                   </td>
                 </tr>

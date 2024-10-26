@@ -19,7 +19,6 @@ const TABLE_HEAD = ["Category", "Status", "Action"];
 const AboutHeaderInfo = () => {
   const [categories, handleCategoryDelete] = useCategoriesData();
 
-  console.log("categories:", categories);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -51,7 +50,7 @@ const AboutHeaderInfo = () => {
 
   return (
     <FormCard
-      title="Header"
+      title="Header List"
       path="/dashboard/create-about-headerInfo"
       icon={<Add />}
       iconTitle="Add"
@@ -103,14 +102,16 @@ const AboutHeaderInfo = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/category/${_id}`}>
-                        <Tooltip content="Category Info">
+                      <NavLink
+                        to={`/dashboard/about-headerInfo-details/${_id}`}
+                      >
+                        <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-category/${_id}`}>
+                      <NavLink to={`/dashboard/edit-about-headerInfo/${_id}`}>
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

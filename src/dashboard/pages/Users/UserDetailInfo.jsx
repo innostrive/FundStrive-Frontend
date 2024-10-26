@@ -1,4 +1,4 @@
-import { Button } from "@material-tailwind/react";
+import { Breadcrumbs, Button } from "@material-tailwind/react";
 import FormCard from "../../ui/FormCard";
 import { useState } from "react";
 import IButton from "../../ui/IButton";
@@ -9,15 +9,7 @@ const UserDetailInfo = ({ userInfo }) => {
   const { register } = useForm();
   return (
     <section>
-      <FormCard
-        title="User Information"
-        icon={
-          <Edit
-            onClick={() => setEdit(true)}
-            className="size-6 text-secondary"
-          />
-        }
-      >
+      <FormCard title="User Information">
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 my-5">
           <div className="grid space-y-2">
             <label className="text-sm">Name</label>

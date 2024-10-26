@@ -19,7 +19,6 @@ const TABLE_HEAD = ["Category", "Status", "Action"];
 const AboutMissionInfo = () => {
   const [categories, handleCategoryDelete] = useCategoriesData();
 
-  console.log("categories:", categories);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -51,8 +50,8 @@ const AboutMissionInfo = () => {
 
   return (
     <FormCard
-      title="Category List"
-      path="/dashboard/create-category"
+      title="Mission List"
+      path="/dashboard/create-about-mission"
       icon={<Add />}
       iconTitle="Add"
     >
@@ -103,14 +102,16 @@ const AboutMissionInfo = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/category/${_id}`}>
-                        <Tooltip content="Category Info">
+                      <NavLink
+                        to={`/dashboard/about-missionInfo-details/${_id}`}
+                      >
+                        <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-category/${_id}`}>
+                      <NavLink to={`/dashboard/edit-about-missionInfo/${_id}`}>
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

@@ -10,10 +10,7 @@ const VisitorReview = ({ campaignId }) => {
     (item) => item?.campaign_id === campaignId
   );
 
-  console.log("review:", reviews);
-
   const handleDelete = async (id) => {
-    console.log("id:", id);
     const data = {
       ids: [id],
     };
@@ -30,7 +27,11 @@ const VisitorReview = ({ campaignId }) => {
         Total Comments {campaignReviews.length}
       </span>
       {campaignReviews?.map((review) => (
-        <ReviewCard review={review} handleDelete={handleDelete} />
+        <ReviewCard
+          key={review?._id}
+          review={review}
+          handleDelete={handleDelete}
+        />
       ))}
     </div>
   );

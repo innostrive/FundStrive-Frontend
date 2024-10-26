@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import useAxiosSecure from "./useAxiosSecure";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const useBlogDetails = (id) => {
@@ -9,7 +8,7 @@ const useBlogDetails = (id) => {
     axios.get(`${URL}/posts/${id}`).then((res) => {
       setBlog(res.data.data);
     });
-  }, []);
+  }, [id]);
   return blog;
 };
 

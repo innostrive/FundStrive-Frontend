@@ -6,7 +6,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -25,11 +25,9 @@ const PaymentSuccess = () => {
     amount,
     campaign_id,
   };
-  axios.post(`${URL}/payment_success`, payload).then((res) => {
-    if (res.status === 200) {
-      console.log(res.data.message);
-    }
-  });
+  useEffect(() => {
+    axios.post(`${URL}/payment_success`, payload);
+  }, []);
 
   return (
     <section className="relative h-screen bg-[#f2f2f2]">
@@ -44,7 +42,7 @@ const PaymentSuccess = () => {
               <svg
                 data-slot="icon"
                 fill="none"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,8 +50,8 @@ const PaymentSuccess = () => {
                 className="size-10"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="m4.5 12.75 6 6 9-13.5"
                 ></path>
               </svg>

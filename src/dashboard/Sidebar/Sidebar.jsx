@@ -66,7 +66,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <div
       ref={sidebar}
-      className={`absolute left-0 top-0 z-[9999] flex h-screen md:w-62.5 lg:w-[304px] flex-col overflow-y-hidden bg-secondary duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 z-[9999] flex min-h-screen h-auto md:w-62.5 lg:w-[304px] flex-col overflow-y-auto  bg-secondary duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full z-[9999]"
       }`}
     >
@@ -79,7 +79,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="5"
+            strokeWidth="5"
             stroke="currentColor"
             className="size-8 text-white cursor-pointer"
             initial={{ rotate: false }}
@@ -91,8 +91,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             }}
           >
             <motion.path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M6 18 18 6M6 6l12 12"
             />
           </motion.svg>

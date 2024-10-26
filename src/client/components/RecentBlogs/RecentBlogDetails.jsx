@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import axios from "axios";
+import BlogReview from "../BlogDetails/BlogReview";
 
 const RecentBlogDetails = ({ blogId, author, publishedDate }) => {
   const URL = import.meta.env.VITE_BASE_URL;
@@ -9,8 +9,7 @@ const RecentBlogDetails = ({ blogId, author, publishedDate }) => {
     axios.get(`${URL}/posts/${blogId}`).then((res) => {
       setBlog(res.data.data);
     });
-  }, []);
-  console.log("blog:", blog);
+  }, [blogId]);
   return (
     <div>
       <div className="space-y-8">
@@ -26,6 +25,7 @@ const RecentBlogDetails = ({ blogId, author, publishedDate }) => {
           className="text-sm font-normal leading-normal tracking-wide"
           dangerouslySetInnerHTML={{ __html: blog?.content }}
         ></div>
+        <BlogReview blog={blog} />
       </div>
     </div>
   );

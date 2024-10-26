@@ -80,7 +80,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
     // console.log("edit-campaign:", campaignData);
   };
   return (
-    <FormCard title="Campaign Details">
+    <FormCard title="Update Campaign">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-1 grid sm:grid-cols-2 grid-cols-1 gap-10">
           <div className="grid grid-cols-1 space-y-2">
@@ -209,9 +209,9 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
           />
         ))}
       </div>
-      <div className="my-16">
+      {/* <div className="my-16">
         <EditCampaignFile id={id} />
-      </div>
+      </div> */}
     </FormCard>
   );
 };

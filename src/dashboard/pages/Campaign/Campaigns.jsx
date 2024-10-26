@@ -18,7 +18,6 @@ const TABLE_HEAD = ["Campaign", "Title", "Status", "Action"];
 
 const Campaigns = () => {
   const [campaigns, handleCampaignDelete] = useCampaignData();
-  console.log("campaigns:", campaigns);
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -113,7 +112,7 @@ const Campaigns = () => {
                     <td className={classes}>
                       <div className="flex items-center">
                         <NavLink to={`/dashboard/campaign/${_id}`}>
-                          <Tooltip content="Category Info">
+                          <Tooltip content="View">
                             <IconButton variant="text">
                               <View className="size-5 text-secondary" />
                             </IconButton>

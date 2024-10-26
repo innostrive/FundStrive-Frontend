@@ -11,7 +11,6 @@ const useContactInfo = () => {
     queryKey: ["contact-info"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/api/contact-us`);
-      console.log("contactInfo:", res.data.data);
       return res.data.data.contactUs;
     },
   });
@@ -41,7 +40,6 @@ const useContactInfo = () => {
           })
           .catch((error) => {
             toast.error("An error occurred");
-            console.error(error);
           });
       }
     });

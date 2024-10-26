@@ -14,6 +14,14 @@ const ContactDetails = () => {
       }
     });
   }, []);
+
+  const payload = {
+    is_read: true,
+  };
+  axiosSecure.put(`/api/contact-us/${id}`, payload).then((res) => {
+    // console.log(res.data.message);
+  });
+
   return (
     <FormCard title="Contact Details" className="space-y-5">
       <div className="flex justify-between items-center">

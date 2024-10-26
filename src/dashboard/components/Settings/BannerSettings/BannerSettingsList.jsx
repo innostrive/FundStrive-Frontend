@@ -14,11 +14,11 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import FormCard from "../../../ui/FormCard";
 
-const TABLE_HEAD = ["Name", "Slug", "Status", "Action"];
+const TABLE_HEAD = ["Name", "Carusel", "Status", "Action"];
 
 const BannerSettingsList = () => {
   const [banners, handleBannerDelete] = useBanner();
-  console.log("banner:", banners);
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -73,7 +73,8 @@ const BannerSettingsList = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedbanners.map(({ name, slug, status, _id }, index) => {
+            {paginatedbanners.map(({ image, slug, status, _id }, index) => {
+              const serial = index + 1;
               const isLast = index === paginatedbanners.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
@@ -87,17 +88,16 @@ const BannerSettingsList = () => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {name}
+                      {serial}. {slug}
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {slug}
-                    </Typography>
+                    <img
+                      src={imageUrl + image}
+                      crossOrigin="anonymous"
+                      alt=""
+                      className="h-16 w-16 object-cover rounded-full"
+                    />
                   </td>
                   <td className={classes}>
                     <div className="w-max">
@@ -112,7 +112,7 @@ const BannerSettingsList = () => {
                   <td className={classes}>
                     <div className="flex items-center">
                       <NavLink to={`/dashboard/banner/${_id}`}>
-                        <Tooltip content="Category Info">
+                        <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>

@@ -97,7 +97,7 @@ const UserList = () => {
                   <td className={classes}>
                     <div className="flex items-center">
                       <NavLink to={`/dashboard/faq-details/${_id}`}>
-                        <Tooltip content="Category Info">
+                        <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>

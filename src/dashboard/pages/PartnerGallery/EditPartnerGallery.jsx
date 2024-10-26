@@ -64,10 +64,10 @@ const EditPartnerGallery = () => {
   };
 
   return (
-    <FormCard title="Partner Gallery">
+    <FormCard title="Update Partner Gallery">
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
         <div className="space-y-5">
-          <div className="grid grid-cols-1 space-y-2">
+          {/* <div className="grid grid-cols-1 space-y-2">
             <span className="text-sm">Name</span>
             <input
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
@@ -84,7 +84,7 @@ const EditPartnerGallery = () => {
               defaultValue={partnerImage?.slug}
               {...register("slug")}
             />
-          </div>
+          </div> */}
           <div className="col-span-2">
             <select
               value={selectedStatus}

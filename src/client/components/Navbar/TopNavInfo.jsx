@@ -5,7 +5,6 @@ import useWebsiteLogo from "../../hooks/useWebsiteLogo";
 const TopNavInfo = ({ info }) => {
   const [logo] = useWebsiteLogo();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
-  console.log("logo:", logo);
   return (
     <div className="flex sm:flex-row flex-col sm:justify-between justify-center items-center w-full h-56 sm:h-32 sm:py-0 py-5 gap-5">
       <div className="flex gap-2 items-center">

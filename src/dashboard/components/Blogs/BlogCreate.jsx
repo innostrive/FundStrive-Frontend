@@ -110,9 +110,9 @@ const BlogCreate = () => {
           </Typography>
           <EditorToolbar toolbarId={"t2"} />
           <Controller
-            name="description"
+            name="content"
             control={control}
-            rules={{ required: "Description is required" }}
+            rules={{ required: "Content is required" }}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <>
                 <ReactQuill
@@ -121,7 +121,7 @@ const BlogCreate = () => {
                   onChange={onChange}
                   modules={modules("t2")}
                   formats={formats}
-                  placeholder="Write description here..."
+                  placeholder="Write content here..."
                 />
                 {error && (
                   <p className="text-red-500 text-sm">{error.message}</p>

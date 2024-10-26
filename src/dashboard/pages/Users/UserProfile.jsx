@@ -10,11 +10,7 @@ const UserProfile = ({ userInfo }) => {
     "http://localhost:4000/public/uploads/campaigns/1728392970293.jpeg";
   console.log("userInfo:", imageUrl + userInfo?.image);
   return (
-    <FormCard
-      icon={
-        <Edit onClick={() => setEdit(true)} className="size-6 text-secondary" />
-      }
-    >
+    <FormCard>
       <div className="flex gap-4 items-center mb-10">
         <div>
           <img

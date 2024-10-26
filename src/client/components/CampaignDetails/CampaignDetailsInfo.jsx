@@ -8,7 +8,6 @@ import {
 } from "@material-tailwind/react";
 import donate from "../../assets/donate-1.jpg";
 import Gallery from "./Gallery";
-import Document from "./Document";
 import { useParams } from "react-router-dom";
 import useCampaignsInfo from "../../hooks/useCampaignInfo";
 import {
@@ -18,6 +17,7 @@ import {
   DescriptionIcon,
 } from "../../assets/icons/icons";
 import Reviews from "../Reviews/Reviews";
+import CampaignDocument from "./CampaignDocument";
 
 const CampaignDetailsInfo = ({ id }) => {
   const campaign = useCampaignsInfo(id);
@@ -41,7 +41,7 @@ const CampaignDetailsInfo = ({ id }) => {
       label: "Document",
       value: "document",
       icon: DocumentIcon,
-      desc: <Document />,
+      desc: <CampaignDocument campaignId={campaignId} />,
     },
     {
       label: "Reviews",

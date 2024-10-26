@@ -14,11 +14,11 @@ import usePartnerGallery from "../../hooks/usePartnerGallery";
 import FormCard from "../../ui/FormCard";
 import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 
-const TABLE_HEAD = ["Name", "Slug", "Status", "Action"];
+const TABLE_HEAD = ["Name", "Image", "Status", "Action"];
 
 const PrtnerGallery = () => {
   const [partner, handlePartnerDelete] = usePartnerGallery();
-  console.log("partner:", partner);
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -73,7 +73,7 @@ const PrtnerGallery = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedPartner.map(({ name, slug, status, _id }, index) => {
+            {paginatedPartner.map(({ name, image, status, _id }, index) => {
               const isLast = index === paginatedPartner.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
@@ -91,13 +91,12 @@ const PrtnerGallery = () => {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {slug}
-                    </Typography>
+                    <img
+                      src={imageUrl + image}
+                      crossOrigin="anonymous"
+                      alt=""
+                      className="h-16 w-16 object-cover rounded-full"
+                    />
                   </td>
                   <td className={classes}>
                     <div className="w-max">
@@ -112,7 +111,7 @@ const PrtnerGallery = () => {
                   <td className={classes}>
                     <div className="flex items-center">
                       <NavLink to={`/dashboard/partner-gallery-view/${_id}`}>
-                        <Tooltip content="Category Info">
+                        <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
