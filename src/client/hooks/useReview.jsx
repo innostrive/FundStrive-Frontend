@@ -6,7 +6,7 @@ const useReview = () => {
   const { refetch, data: reviews = [] } = useQuery({
     queryKey: ["review"],
     queryFn: async () => {
-      const res = await axios.get(`${URL}/reviews`);
+      const res = await axios.get(`${URL}/reviews?&status=Active`);
       return res.data.data.reviews;
     },
   });

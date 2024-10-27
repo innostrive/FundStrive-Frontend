@@ -8,90 +8,18 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import useVolunteerData from "../../hooks/useVolunteerData";
+import { useTranslation } from "react-i18next";
 
-const teamMember = [
-  {
-    id: 1,
-    name: "John Doe",
-    position: "CEO",
-    image: "https://example.com/images/johndoe.jpg",
-    socialMedia: {
-      facebook: "https://facebook.com/johndoe",
-      instagram: "https://instagram.com/johndoe",
-      linkedin: "https://linkedin.com/in/johndoe",
-      twitter: "https://twitter.com/johndoe",
-    },
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    position: "CTO",
-    image: "https://example.com/images/janesmith.jpg",
-    socialMedia: {
-      facebook: "https://facebook.com/janesmith",
-      instagram: "https://instagram.com/janesmith",
-      linkedin: "https://linkedin.com/in/janesmith",
-      twitter: "https://twitter.com/janesmith",
-    },
-  },
-  {
-    id: 3,
-    name: "Michael Brown",
-    position: "CFO",
-    image: "https://example.com/images/michaelbrown.jpg",
-    socialMedia: {
-      facebook: "https://facebook.com/michaelbrown",
-      instagram: "https://instagram.com/michaelbrown",
-      linkedin: "https://linkedin.com/in/michaelbrown",
-      twitter: "https://twitter.com/michaelbrown",
-    },
-  },
-  {
-    id: 4,
-    name: "Emily Davis",
-    position: "CMO",
-    image: "https://example.com/images/emilydavis.jpg",
-    socialMedia: {
-      facebook: "https://facebook.com/emilydavis",
-      instagram: "https://instagram.com/emilydavis",
-      linkedin: "https://linkedin.com/in/emilydavis",
-      twitter: "https://twitter.com/emilydavis",
-    },
-  },
-  {
-    id: 5,
-    name: "Chris Johnson",
-    position: "COO",
-    image: "https://example.com/images/chrisjohnson.jpg",
-    socialMedia: {
-      facebook: "https://facebook.com/chrisjohnson",
-      instagram: "https://instagram.com/chrisjohnson",
-      linkedin: "https://linkedin.com/in/chrisjohnson",
-      twitter: "https://twitter.com/chrisjohnson",
-    },
-  },
-  {
-    id: 6,
-    name: "Sophia Martinez",
-    position: "Head of HR",
-    image: "https://example.com/images/sophiamartinez.jpg",
-    socialMedia: {
-      facebook: "https://facebook.com/sophiamartinez",
-      instagram: "https://instagram.com/sophiamartinez",
-      linkedin: "https://linkedin.com/in/sophiamartinez",
-      twitter: "https://twitter.com/sophiamartinez",
-    },
-  },
-];
 const Volunteer = () => {
   const [volunteer] = useVolunteerData();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
-
+  const { t } = useTranslation();
+  const title = t("componentTitle.volunteerTitle");
   return (
     <div className="bg-[#f3f4f7] py-20">
       <Container>
         <div className="py-20">
-          <Title title="Our best volunteers" />
+          <Title title={title} />
           <div className="h-2 w-20 bg-[#2B2A27] rounded-full mx-auto mt-3"></div>
         </div>
         <Swiper

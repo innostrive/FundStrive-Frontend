@@ -15,7 +15,7 @@ const CampaignDocument = ({ campaignId }) => {
   });
 
   return (
-    <div className="pdf-actions">
+    <div className="flex gap-5 flex-wrap">
       {documents.map((item) => (
         <Documents item={item} key={item?._id} />
       ))}

@@ -46,7 +46,7 @@ const EditAboutIntro = () => {
   };
 
   return (
-    <FormCard title="Update About Vision">
+    <FormCard title="Update">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-5">
           <div className="grid grid-cols-1 space-y-2">

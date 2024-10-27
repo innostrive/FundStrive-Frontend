@@ -6,7 +6,9 @@ const useContactCount = () => {
   const { data: count } = useQuery({
     queryKey: ["count"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/api/dashboard/count-data`);
+      const res = await axiosSecure.get(
+        `/api/dashboard/count-data?&status=Active`
+      );
       return res.data.data;
     },
   });

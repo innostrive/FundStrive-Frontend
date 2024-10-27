@@ -5,7 +5,7 @@ const useCampaignsData = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [campaigns, setCampaigns] = useState([]);
   useEffect(() => {
-    axios.get(`${URL}/campaigns`).then((res) => {
+    axios.get(`${URL}/campaigns?&status=Active`).then((res) => {
       setCampaigns(res.data.data.campaigns);
     });
   }, []);

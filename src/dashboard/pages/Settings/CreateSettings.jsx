@@ -25,8 +25,8 @@ const CreateSettings = () => {
   const onSubmit = async (data) => {
     const payload = {
       ...data,
-      name: "Menu",
-      slug: "NAVMENU",
+      name: "Carusel Title",
+      slug: "CARUSEL_TITLE",
     };
     try {
       await axiosSecure.post("/api/settings", payload).then((response) => {
@@ -34,7 +34,7 @@ const CreateSettings = () => {
           console.log("settings:", response.data.message);
           toast.success(response.data.message);
           reset();
-          navigate("/dashboard/menu-settings");
+          // navigate("/dashboard/menu-settings");
         }
       });
     } catch (err) {

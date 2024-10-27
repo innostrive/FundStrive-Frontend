@@ -1,8 +1,6 @@
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { motion } from "framer-motion";
-import donate1 from "../../assets/donate-1.jpg";
-import donate2 from "../../assets/donate-2.jpg";
-import donate3 from "../../assets/donate-3.jpg";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
@@ -12,6 +10,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../../Styles/Styles";
 import { useEffect, useState } from "react";
 import useHeaderCarusel from "../../hooks/useHeaderCarusel";
+import useCaruselTitle from "../../../dashboard/hooks/useCaruselTitle";
 
 const textVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -20,6 +19,7 @@ const textVariants = {
 
 const Header = () => {
   const [carusel] = useHeaderCarusel();
+  const [caruselTitle] = useCaruselTitle();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [animateText, setAnimateText] = useState("visible");
 
@@ -29,6 +29,7 @@ const Header = () => {
       setAnimateText("visible");
     }, 500);
   };
+
   const [navigateButton, setNavigateButton] = useState(true);
   const handleResize = () => {
     if (window.innerWidth < 768) {
@@ -46,15 +47,14 @@ const Header = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <section id="home" className="scroll-mt-48">
       <Swiper
         spaceBetween={30}
         effect={"fade"}
-        // navigation={navigateButton ? true : false}
         pagination={{
           clickable: true,
-          // el: ".custom-pagination",
         }}
         autoplay={{
           delay: 12000,
@@ -86,7 +86,7 @@ const Header = () => {
                       : { duration: 0 }
                   }
                 >
-                  Sponsor a Child
+                  {caruselTitle[index]?.key}
                 </motion.h1>
 
                 <motion.p
@@ -100,7 +100,7 @@ const Header = () => {
                       : { duration: 0, delay: 0 }
                   }
                 >
-                  "Changing Lives Through Generosity and Compassionate Support"
+                  {caruselTitle[index]?.value}
                 </motion.p>
 
                 <Link to="/campaign-list">

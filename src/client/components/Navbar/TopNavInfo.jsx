@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Email, Phone } from "../../../dashboard/assets/icons/icons";
 import useWebsiteLogo from "../../hooks/useWebsiteLogo";
+import LanguageSelector from "../LanguageSelector/LanguageSelector";
 
 const TopNavInfo = ({ info }) => {
   const [logo] = useWebsiteLogo();
@@ -35,6 +36,7 @@ const TopNavInfo = ({ info }) => {
           <span className="text-sm font-normal">{info?.value}</span>
         </div>
       </div>
+      <LanguageSelector></LanguageSelector>
     </div>
   );
 };

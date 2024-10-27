@@ -1,4 +1,5 @@
 import ContactDetails from "../../dashboard/components/ContactDetails/ContactDetails";
+import CreateUser from "../../dashboard/components/UserList/CreateUser";
 import ProtectedRoute from "../../dashboard/layout/ProtectedRoute";
 import AboutCampaignSettings from "../../dashboard/pages/AboutCampaignSettings/AboutCampaignSettings";
 import CreateAboutSettings from "../../dashboard/pages/AboutCampaignSettings/CreateAboutSettings";
@@ -83,6 +84,14 @@ const adminPath = [
     element: (
       <ProtectedRoute>
         <Users />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "create-user",
+    element: (
+      <ProtectedRoute>
+        <CreateUser />
       </ProtectedRoute>
     ),
   },

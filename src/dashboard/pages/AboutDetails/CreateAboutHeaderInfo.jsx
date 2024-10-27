@@ -1,24 +1,11 @@
 import { Typography } from "@material-tailwind/react";
 import FormCard from "../../ui/FormCard";
-import EditorToolbar, {
-  modules,
-  formats,
-} from "../../components/EditToolbar/EditToolbar";
 import "react-quill/dist/quill.snow.css";
-import ReactQuill, { Quill } from "react-quill";
 import { Controller, useForm } from "react-hook-form";
 import IButton from "../../ui/IButton";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import ImageResize from "quill-image-resize-module-react";
-import TextEditor from "../../components/TextEditor/TextEditor";
-import FroalaEditor from "react-froala-wysiwyg";
-import "froala-editor/css/froala_editor.pkgd.min.css";
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/js/plugins.pkgd.min.js";
-if (!Quill.imports["modules/imageResize"]) {
-  Quill.register("modules/imageResize", ImageResize);
-}
+
 const CreateAboutHeaderInfo = () => {
   const axiosSecure = useAxiosSecure();
   const { control, handleSubmit, reset } = useForm();
@@ -69,11 +56,11 @@ const CreateAboutHeaderInfo = () => {
             </>
           )}
         /> */}
-        <FroalaEditor
+        {/* <FroalaEditor
           tag="textarea"
-          // model={content}
-          // onModelChange={setContent}
-        />
+          model={content}
+          onModelChange={setContent}
+        /> */}
         <IButton className="flex ml-auto my-5">Submit</IButton>
       </form>
     </FormCard>

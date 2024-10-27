@@ -224,9 +224,9 @@ const CampaignDocuments = ({ id }) => {
   return (
     <FormCard
       title="Document List"
-      // icon={<Add />}
-      // path="/dashboard/upload-gallery/:id"
-      // iconTitle="Upload"
+      icon={<Add />}
+      path={`/dashboard/upload-document/${id}`}
+      iconTitle="Upload"
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">

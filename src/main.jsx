@@ -8,7 +8,7 @@ import "react-quill/dist/quill.snow.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
-
+import "../i18next.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ToastContainer position="top-right" autoClose={5000} pauseOnHover />

@@ -22,7 +22,7 @@ const AboutCampaign = ({ id }) => {
         </div>
         <Progress
           value={initialProgress}
-          className="bg-secondary h-3 text-xs"
+          className="bg-secondary text-xs"
           color="cyan"
           size="sm"
         />

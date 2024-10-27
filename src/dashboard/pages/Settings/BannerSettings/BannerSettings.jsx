@@ -10,7 +10,12 @@ import { Square3Stack3DIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import BannerSettingsList from "../../../components/Settings/BannerSettings/BannerSettingsList";
 import FormCard from "../../../ui/FormCard";
 import PartnerGallery from "../../PartnerGallery/PartnerGallery";
-import { GalleryIcon, SliderIcon } from "../../../assets/icons/icons";
+import {
+  GalleryIcon,
+  SliderIcon,
+  DocumentIcon,
+} from "../../../assets/icons/icons";
+import CaruselTitle from "../CaruselTitle/CaruselTitle";
 const BannerSettings = () => {
   const data = [
     {
@@ -18,6 +23,12 @@ const BannerSettings = () => {
       value: "dashboard",
       icon: SliderIcon,
       desc: <BannerSettingsList />,
+    },
+    {
+      label: "Carusel Title",
+      value: "title",
+      icon: DocumentIcon,
+      desc: <CaruselTitle />,
     },
     {
       label: "Partner Gallery",

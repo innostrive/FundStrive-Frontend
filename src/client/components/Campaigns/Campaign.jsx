@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Range } from "react-range";
 import donate from "../../assets/donate-1.jpg";
 import { Link } from "react-router-dom";
 import { Button, Progress, Typography } from "@material-tailwind/react";
@@ -67,7 +66,7 @@ const Campaign = ({ campaign }) => {
             </div>
             <Progress
               value={initialProgress}
-              className="bg-secondary h-3 text-xs"
+              className="bg-secondary text-xs"
               color="cyan"
               size="sm"
             />

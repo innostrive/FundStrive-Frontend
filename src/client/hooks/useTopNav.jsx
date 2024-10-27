@@ -5,7 +5,7 @@ const useTopNav = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [navmenues, setNavMenues] = useState([]);
   useEffect(() => {
-    axios.get(`${URL}/settings?slug=NAVINFO`).then((res) => {
+    axios.get(`${URL}/settings?slug=NAVINFO&status=Active`).then((res) => {
       setNavMenues(res.data.data.settings);
     });
   }, []);

@@ -2,11 +2,14 @@ import { Title } from "../../Styles/Styles";
 import Container from "../Container/Container";
 import donate from "../../assets/donate-1.jpg";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 const JoinMisson = () => {
+  const { t } = useTranslation();
+  const title = t("componentTitle.missionTitle");
   return (
     <section className="py-20">
       <Container>
-        <Title title="Join Our Mission" />
+        <Title title={title} />
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 py-20 sm:px-0 px-5">
           <div className="space-y-5">
             <div className="grid grid-rows-1 grid-flow-col gap-5">

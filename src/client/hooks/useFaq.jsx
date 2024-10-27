@@ -7,7 +7,7 @@ const useFaq = () => {
   const { data: faq = [] } = useQuery({
     queryKey: ["faq-data"],
     queryFn: async () => {
-      const res = await axios.get(`${URL}/settings?slug=FAQ`);
+      const res = await axios.get(`${URL}/settings?slug=FAQ&status=Active`);
       return res.data.data.settings;
     },
   });

@@ -1,13 +1,27 @@
 import Container from "../Container/Container";
 import happy from "../../assets/glitter.png";
-import volunteer from "../../assets/shirt.png";
-import donation from "../../assets/cash.png";
+import volunteers from "../../assets/shirt.png";
+import donations from "../../assets/cash.png";
 import award from "../../assets/medal.png";
 import useAboutActivitySettings from "../../hooks/useAboutActivitySettings";
+import useVolunteerData from "../../hooks/useVolunteerData";
+import useContactCount from "../../hooks/useContactCount";
 const Projects = () => {
   const [aboutActivity] = useAboutActivitySettings();
   const color = ["#2B2A27", "#f47721", "#6295A2", "#7469B6"];
-  const image = [happy, award, volunteer, donation];
+  const image = [happy, award, volunteers, donations];
+  const count = useContactCount();
+  const [volunteer] = useVolunteerData();
+  const about = aboutActivity.filter((item) => item.key === "Volunteer");
+  const donation = aboutActivity.filter((item) => item.key === "Donation");
+
+  if (about.length > 0 && donation.length > 0) {
+    about[0].value = volunteer?.length;
+    donation[0].value = count?.raised_amount;
+  } else {
+    console.error("No items found with the key 'Volunteer'");
+  }
+
   const combinedArray = aboutActivity.map((n, index) => ({
     name: n,
     color: color[index],

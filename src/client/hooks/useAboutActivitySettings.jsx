@@ -7,7 +7,9 @@ const useAboutActivitySettings = () => {
   const { data: aboutActivity = [] } = useQuery({
     queryKey: ["aboutActivity"],
     queryFn: async () => {
-      const res = await axios.get(`${URL}/settings?slug=ACTIVITIES`);
+      const res = await axios.get(
+        `${URL}/settings?slug=ACTIVITIES&status=Active`
+      );
       return res.data.data.settings;
     },
   });

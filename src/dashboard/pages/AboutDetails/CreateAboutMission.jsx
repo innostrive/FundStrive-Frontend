@@ -1,15 +1,11 @@
 import { Typography } from "@material-tailwind/react";
 import FormCard from "../../ui/FormCard";
-import EditorToolbar, {
-  modules,
-  formats,
-} from "../../components/EditToolbar/EditToolbar";
+
 import { Controller, useForm } from "react-hook-form";
 import IButton from "../../ui/IButton";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
-import Editor from "../../components/BlogEditor/EditorWithUseQuill";
 
 const CreateAboutMission = () => {
   const axiosSecure = useAxiosSecure();
@@ -68,12 +64,12 @@ const CreateAboutMission = () => {
             </>
           )}
         /> */}
-        <Editor
-          // onEditorChange={handleEditorChange}
-          // value={editorContent}
-          // placeholder="Start typing here..."
+        {/* <Editor
+          onEditorChange={handleEditorChange}
+          value={editorContent}
+          placeholder="Start typing here..."
           onChange={handleEditorChange}
-        />
+        /> */}
         <IButton className="flex ml-auto my-5">Submit</IButton>
       </form>
     </FormCard>

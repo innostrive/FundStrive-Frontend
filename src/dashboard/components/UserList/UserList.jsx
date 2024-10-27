@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { Delete, Edit, View } from "../../assets/icons/icons";
+import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
@@ -48,7 +48,12 @@ const UserList = () => {
     if (active > 1) setActive(active - 1);
   };
   return (
-    <FormCard title="User List">
+    <FormCard
+      title="User List"
+      icon={<Add />}
+      iconTitle="Add"
+      path="/dashboard/create-user"
+    >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>

@@ -4,14 +4,14 @@ import IButton from "../../ui/IButton";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import FormCard from "../../ui/FormCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UploadDocument = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const [filePreview, setFilePreview] = useState([]);
   const [file, setFile] = useState([]);
-
+  const navigate = useNavigate();
   const handleFile = (e) => {
     const file = e.target.files[0];
     setFile((prev) => [...prev, file]);
@@ -44,6 +44,7 @@ const UploadDocument = () => {
           toast.success(res.data.message);
         } else {
           toast.warning("Something wrong!!!");
+          navigate(`/dashboard/campaign/${id}`);
         }
       });
 

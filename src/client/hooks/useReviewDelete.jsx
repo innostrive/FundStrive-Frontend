@@ -9,7 +9,9 @@ const useReviewDelete = (id) => {
   const { refetch, data: reviews = [] } = useQuery({
     queryKey: ["review"],
     queryFn: async () => {
-      const res = await axios.delete(`${URL}/reviews`, { deletedId });
+      const res = await axios.delete(`${URL}/reviews?&status=Active`, {
+        deletedId,
+      });
       return res.data.data.reviews;
     },
   });

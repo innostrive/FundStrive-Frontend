@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import useAxiosSecure from "./useAxiosSecure";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,7 +6,7 @@ const useBlogsData = () => {
   const { refetch, data: blogs = [] } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await axios.get(`${URL}/posts`);
+      const res = await axios.get(`${URL}/posts?&status=Hidden`);
       return res.data.data.posts;
     },
   });

@@ -3,14 +3,14 @@ import IButton from "../../ui/IButton";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import FormCard from "../../ui/FormCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UploadGallery = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const [fileImagePreview, setFileImagePreview] = useState([]);
   const [fileImage, setFileImage] = useState([]);
-
+  const navigate = useNavigate();
   const handleFileImage = (e) => {
     const file = e.target.files[0];
     setFileImage((prev) => [...prev, file]);
@@ -41,6 +41,7 @@ const UploadGallery = () => {
       .then((res) => {
         if (res.status === 200) {
           toast.success(res.data.message);
+          navigate(`/dashboard/campaign/${id}`);
         }
       });
 

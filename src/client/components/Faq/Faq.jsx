@@ -7,6 +7,7 @@ import {
 import Container from "../Container/Container";
 import { Title } from "../../Styles/Styles";
 import useFaq from "../../hooks/useFaq";
+import { useTranslation } from "react-i18next";
 
 function Icon({ id, open }) {
   return (
@@ -32,7 +33,8 @@ function Icon({ id, open }) {
 const Faq = () => {
   const [faq] = useFaq();
   const [open, setOpen] = useState(0);
-
+  const { t } = useTranslation();
+  const title = t("componentTitle.faqTitle");
   const handleOpen = (index) => {
     setOpen(open === index ? 0 : index);
   };
@@ -40,7 +42,7 @@ const Faq = () => {
     <div className="py-20 bg-[#f3f4f7]">
       <Container>
         <div className="py-10">
-          <Title title="FAQ" />
+          <Title title={title} />
           <div className="h-2 w-20 bg-[#2B2A27] rounded-full mx-auto mt-3"></div>
         </div>
         <div className="space-y-4 px-5 sm:px-0">

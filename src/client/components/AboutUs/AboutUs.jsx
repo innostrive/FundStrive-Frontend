@@ -10,6 +10,7 @@ import AboutActivity from "./AboutActivity";
 import useVolunteerData from "../../hooks/useVolunteerData";
 import useAboutIntroData from "../../../dashboard/hooks/useAboutIntroData";
 import useContactCount from "../../hooks/useContactCount";
+import { useTranslation } from "react-i18next";
 const AboutUs = () => {
   const [aboutActivity] = useAboutActivitySettings();
   const [volunteer] = useVolunteerData();
@@ -30,6 +31,7 @@ const AboutUs = () => {
     name: n,
     image: image[index],
   }));
+
   return (
     <section id="about-us" className="py-20 scroll-mt-10">
       <Container>

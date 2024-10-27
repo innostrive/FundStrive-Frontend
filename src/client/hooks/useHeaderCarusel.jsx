@@ -6,7 +6,9 @@ const useHeaderCarusel = () => {
   const { data: carusel = [] } = useQuery({
     queryKey: ["header-carusel"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/banners?slug=HEADER_CARUSEL");
+      const res = await axiosSecure.get(
+        "/banners?slug=HEADER_CARUSEL&status=Active"
+      );
       return res.data.data.banners;
     },
   });

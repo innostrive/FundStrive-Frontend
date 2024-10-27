@@ -77,7 +77,7 @@ const ContactInfo = () => {
                 return (
                   <tr
                     key={_id}
-                    className={is_read === false ? "bg-gray-50" : ""}
+                    className={is_read === false ? "bg-cyan-700" : ""}
                   >
                     <td className={classes}>
                       <div className="flex items-center gap-3">
