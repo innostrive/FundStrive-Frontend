@@ -5,17 +5,18 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
-// import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
-
-// If you're using Next.js please use the dynamic import for react-apexcharts and remove the import from the top for the react-apexcharts
-// import dynamic from "next/dynamic";
-// const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const chartConfig = {
   type: "pie",
-  width: 280,
-  height: 280,
-  series: [44, 55, 13, 43, 22],
+  width: 380,
+  height: 380,
+  series: [
+    2,
+    14,
+    1,
+    2,
+    5
+  ],
   options: {
     chart: {
       toolbar: {
@@ -28,9 +29,15 @@ const chartConfig = {
     dataLabels: {
       enabled: false,
     },
+    labels: [
+			"Health & Wellness",
+			"Education",
+			"Arts & Culture",
+			"Environment"
+		],
     colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
     legend: {
-      show: false,
+      show: true,
     },
   },
 };
@@ -44,19 +51,18 @@ export default function PieChart() {
         color="transparent"
         className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
       >
-        <div className="w-max rounded-lg bg-gray-900 p-5 text-white">
-          {/* <Square3Stack3DIcon className="h-6 w-6" /> */}
+        <div className="w-max rounded-lg bg-orange-700 p-5 text-white">
         </div>
         <div>
           <Typography variant="h6" color="blue-gray">
-            Pie Chart
+            Category Wise Campaigns
           </Typography>
           <Typography
             variant="small"
             color="gray"
             className="max-w-sm font-normal"
           >
-            Visualize your data in a simple way using the FundStrive.
+            Visualize campaign data of the FundStrive.
           </Typography>
         </div>
       </CardHeader>
