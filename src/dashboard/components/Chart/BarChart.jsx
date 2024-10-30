@@ -6,6 +6,7 @@ import {
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
 import useAxiosSecure from "../../../client/hooks/useAxiosSecure";
+import { useEffect, useState } from "react";
 
 const BarChart = () => {
   // const [series, levels] = useDashboardCampaignData();

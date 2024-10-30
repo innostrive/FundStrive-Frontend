@@ -133,6 +133,7 @@ import {
 } from "@material-tailwind/react";
 import Container from "../Container/Container";
 import useNavMenus from "../../hooks/useNavMenus";
+import { NavLink } from "react-router-dom";
 
 export function StickyNavbar() {
   const [openNav, setOpenNav] = useState(false);
@@ -158,27 +159,78 @@ export function StickyNavbar() {
   };
 
   const navList = (
+    // <ul className="mt-2 mb-4 flex uppercase flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    //   {activeMenus
+    //     .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+    //     .map((activeMenu) => (
+    //       <Typography
+    //         as="li"
+    //         variant="small"
+    //         className={`text-secondary font-semibold ${
+    //           activeLink === activeMenu?.value ? "text-primary" : ""
+    //         }`}
+    //         key={activeMenu?._id}
+    //       >
+    //         {activeMenu?.key === "Contact Us" ? (
+    //           <NavLink
+    //             to={activeMenu?.value}
+    //             style={({ isActive }) => ({
+    //               color: isActive ? "#00CCDD" : "black", // Active link color
+    //             })}
+    //           >
+    //             <p className="flex items-center">{activeMenu?.key}</p>
+    //           </NavLink>
+    //         ) : (
+    //           <a
+    //             href={`${activeMenu?.value}`}
+    //             onClick={() => setActiveLink(activeMenu?.value)}
+    //             className="flex items-center"
+    //           >
+    //             {activeMenu?.key}
+    //           </a>
+    //         )}
+    //       </Typography>
+    //     ))}
+    // </ul>
     <ul className="mt-2 mb-4 flex uppercase flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {activeMenus
         .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
-        .map((activeMenu) => (
-          <Typography
-            as="li"
-            variant="small"
-            className={`text-secondary font-semibold ${
-              activeLink === activeMenu?.value ? "text-primary" : ""
-            }`}
-            key={activeMenu?._id}
-          >
-            <a
-              href={`${activeMenu?.value}`}
-              onClick={() => setActiveLink(activeMenu?.value)}
-              className="flex items-center"
+        .map((activeMenu) => {
+          const isExternal = activeMenu.key !== "Contact Us";
+
+          return (
+            <Typography
+              as="li"
+              variant="small"
+              key={activeMenu._id}
+              className={`text-secondary font-semibold ${
+                activeLink === activeMenu.value ? "text-primary" : ""
+              }`}
             >
-              {activeMenu?.key}
-            </a>
-          </Typography>
-        ))}
+              {isExternal ? (
+                <a
+                  href={activeMenu.value}
+                  onClick={() => setActiveLink(activeMenu.value)}
+                  className={`flex items-center ${
+                    activeLink === activeMenu.value ? "text-primary" : ""
+                  }`}
+                >
+                  {activeMenu.key}
+                </a>
+              ) : (
+                <NavLink
+                  to={activeMenu.value}
+                  className={({ isActive }) =>
+                    `flex items-center ${isActive ? "text-primary" : ""}`
+                  }
+                  onClick={() => setActiveLink(activeMenu.value)}
+                >
+                  {activeMenu.key}
+                </NavLink>
+              )}
+            </Typography>
+          );
+        })}
     </ul>
   );
 
