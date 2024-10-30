@@ -5,13 +5,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useEffect, useState } from "react";
-// import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
-
-// If you're using Next.js please use the dynamic import for react-apexcharts and remove the import from the top for the react-apexcharts
-// import dynamic from "next/dynamic";
-// const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import useAxiosSecure from "../../../client/hooks/useAxiosSecure";
 
 const BarChart = () => {
   // const [series, levels] = useDashboardCampaignData();
@@ -112,19 +106,17 @@ const BarChart = () => {
         color="transparent"
         className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
       >
-        <div className="w-max rounded-lg bg-gray-900 p-5 text-white">
-          {/* <Square3Stack3DIcon className="h-6 w-6" /> */}
-        </div>
+        <div className="w-max rounded-lg bg-[#8BC34A] p-5 text-white"></div>
         <div>
           <Typography variant="h6" color="blue-gray">
-            Bar Chart
+            Month Wise Donation Raised
           </Typography>
           <Typography
             variant="small"
             color="gray"
             className="max-w-sm font-normal"
           >
-            Visualize your data in a simple way using the FundStrive.
+            Visualize campaign data of the FundStrive.
           </Typography>
         </div>
       </CardHeader>
