@@ -21,6 +21,7 @@ import CampaignDocument from "./CampaignDocument";
 
 const CampaignDetailsInfo = ({ id }) => {
   const campaign = useCampaignsInfo(id);
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const campaignId = campaign?._id;
   const data = [
     {
@@ -53,7 +54,12 @@ const CampaignDetailsInfo = ({ id }) => {
   return (
     <section>
       <div>
-        <img src={donate} alt="" className="h-80 w-full object-cover" />
+        <img
+          src={imageUrl + campaign?.image}
+          crossOrigin="anonymous"
+          alt=""
+          className="h-80 w-full object-cover"
+        />
       </div>
       <Tabs value="description" className="my-5">
         <TabsHeader className="border border-gray-200 bg-white">

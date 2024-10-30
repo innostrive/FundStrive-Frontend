@@ -1,26 +1,104 @@
-import { useState } from "react";
-import donate from "../../assets/donate-1.jpg";
 import { Link } from "react-router-dom";
-import { Button, Progress, Typography } from "@material-tailwind/react";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Progress,
+  Typography,
+} from "@material-tailwind/react";
 import IButton from "../../../dashboard/ui/IButton";
 const Campaign = ({ campaign }) => {
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
-  const goal = campaign?.target_amount;
-  const raised = campaign?.raised_amount;
-  const initialProgress = ((raised / goal) * 100).toFixed(2);
+  const goal = campaign?.target_amount || 0;
+  const raised = campaign?.raised_amount || 0;
+  const initialProgress =
+    goal > 0 ? ((raised / goal) * 100).toFixed(2) : "0.00";
 
   return (
-    <div
-      className="h-auto w-full sm:max-w-96 rounded-md bg-white"
+    // <Card
+    //   className="h-[30rem] w-full sm:max-w-96 rounded-md bg-white flex flex-col"
+    //   key={campaign?._id}
+    // >
+    //   <CardHeader shadow={false} floated={false}>
+    //     <img
+    //       src={imageUrl + campaign?.image}
+    //       crossOrigin="anonymous"
+    //       alt=""
+    //       className="h-full w-full object-cover"
+    //     />
+    //   </CardHeader>
+
+    //   <CardBody className="flex-grow space-y-5 p-5">
+    //     <div className="flex items-center justify-between">
+    //       <div className="flex items-center gap-2">
+    //         <img
+    //           src={imageUrl + campaign?.image}
+    //           crossOrigin="anonymous"
+    //           alt=""
+    //           className="h-10 w-10 rounded-full"
+    //         />
+    //         <p className="text-sm font-normal">{campaign?.name}</p>
+    //       </div>
+    //       <Link to={`/campaign/${campaign?._id}`}>
+    //         <IButton className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase">
+    //           Donate
+    //         </IButton>
+    //       </Link>
+    //     </div>
+    //     <h1 className="font-medium text-secondary text-base">
+    //       {campaign?.title}
+    //     </h1>
+    //   </CardBody>
+    //   <CardFooter>
+    //     <div className="p-5 bg-[#f3f4f7] w-full">
+    //       <div className="flex items-center justify-between mb-2">
+    //         <Typography color="blue-gray" variant="small">
+    //           Completed
+    //         </Typography>
+    //         <Typography color="blue-gray" variant="small">
+    //           {initialProgress}%
+    //         </Typography>
+    //       </div>
+    //       <Progress
+    //         value={initialProgress}
+    //         className="bg-secondary text-xs"
+    //         color="cyan"
+    //         size="sm"
+    //       />
+    //     </div>
+    //     <div className="flex justify-between mt-5">
+    //       <p className="font-bold text-sm text-secondary">
+    //         ${campaign?.raised_amount > 0 ? campaign?.raised_amount : 0}
+    //         <span className="font-semibold text-sm ml-1 tracking-normal text-primary">
+    //           Raised
+    //         </span>
+    //       </p>
+    //       <p className="font-bold text-sm text-secondary">
+    //         ${campaign?.target_amount}
+    //         <span className="font-semibold text-sm ml-1 tracking-normal text-[#219558]">
+    //           Goal
+    //         </span>
+    //       </p>
+    //     </div>
+    //   </CardFooter>
+    // </Card>
+    <Card
+      className="h-[30rem] w-full sm:max-w-96 rounded-md bg-white flex flex-col"
       key={campaign?._id}
     >
-      <img
-        src={imageUrl + campaign?.image}
-        crossOrigin="anonymous"
-        alt=""
-        className="h-52 w-full object-cover"
-      />
-      <div className="space-y-5 p-5">
+      {/* Fixed height Card Header */}
+      <CardHeader shadow={false} floated={false} className="h-40 flex-shrink-0">
+        <img
+          src={imageUrl + campaign?.image}
+          crossOrigin="anonymous"
+          alt=""
+          className="h-full w-full object-cover"
+        />
+      </CardHeader>
+
+      {/* Auto height Card Body */}
+      <CardBody className="flex-grow space-y-5 p-5 max-h-36">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img
@@ -32,50 +110,37 @@ const Campaign = ({ campaign }) => {
             <p className="text-sm font-normal">{campaign?.name}</p>
           </div>
           <Link to={`/campaign/${campaign?._id}`}>
-            <div>
-              <IButton className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase">
-                Donate
-              </IButton>
-            </div>
+            <IButton className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase">
+              Donate
+            </IButton>
           </Link>
         </div>
-        <div className="">
-          <h1 className="font-medium text-secondary text-base">
-            {campaign?.title}
-          </h1>
-        </div>
+        <h1 className="font-medium text-secondary text-base">
+          {campaign?.title}
+        </h1>
+      </CardBody>
 
-        <div className="p-5 bg-[#f3f4f7]">
-          {/* <div>
-            <Progress
-              value={initialProgress}
-              label="Completed"
-              size="md"
-              className="bg-secondary h-3 text-xs"
-              color="cyan"
-            />
-          </div> */}
-          <div className="w-full">
-            <div className="mb-2 flex items-center justify-between">
-              <Typography color="blue-gray" variant="small">
-                Completed
-              </Typography>
-              <Typography color="blue-gray" variant="small">
-                {initialProgress}%
-              </Typography>
-            </div>
-            <Progress
-              value={initialProgress}
-              className="bg-secondary text-xs"
-              color="cyan"
-              size="sm"
-            />
+      {/* Fixed height Card Footer */}
+      <CardFooter className="h-24 flex-shrink-0">
+        <div className="p-5 bg-[#f3f4f7] w-full">
+          <div className="flex items-center justify-between mb-2">
+            <Typography color="blue-gray" variant="small">
+              Completed
+            </Typography>
+            <Typography color="blue-gray" variant="small">
+              {initialProgress}%
+            </Typography>
           </div>
+          <Progress
+            value={initialProgress}
+            className="bg-secondary text-xs"
+            color="cyan"
+            size="sm"
+          />
         </div>
-
-        <div className="flex justify-between">
+        <div className="flex justify-between mt-5">
           <p className="font-bold text-sm text-secondary">
-            ${campaign?.raised_amount}
+            ${campaign?.raised_amount > 0 ? campaign?.raised_amount : 0}
             <span className="font-semibold text-sm ml-1 tracking-normal text-primary">
               Raised
             </span>
@@ -87,8 +152,8 @@ const Campaign = ({ campaign }) => {
             </span>
           </p>
         </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };
 

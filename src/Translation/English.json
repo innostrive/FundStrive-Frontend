@@ -8,7 +8,7 @@
     "blogsTitle": "Blogs",
     "missionTitle": "Join Our Mission"
   },
-  "admin": {
+  "dashboard": {
     "dashboardTitle": {
       "dashboard": "Dashboard",
       "userList": "User List",
@@ -58,6 +58,22 @@
       "updateNavbarLogo": "Update Navbar Logo",
       "footerLogo": "Footer Logo",
       "updateFooterLogo": "Update Footer Logo"
+    },
+    "sidebarRoutesName": {
+      "dashboard": "Dashboard",
+      "users": "Users",
+      "category": "Category",
+      "campaign": "Campaign",
+      "blogs": "Blogs",
+      "systemSettings": "System Settings",
+      "navbarMenu": "Navbar Menu",
+      "gallerySettings": "Gallery Settings",
+      "userPrivilege": "User Privilege",
+      "contactInfo": "Contact Info",
+      "subscribers": "Subscribers",
+      "faqSettings": "FAQ Settings",
+      "aboutInfo": "About Info",
+      "websiteLogo": "Website Logo"
     }
   }
 }

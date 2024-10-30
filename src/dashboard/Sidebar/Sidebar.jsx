@@ -3,10 +3,62 @@ import { motion } from "framer-motion";
 import { NavLink, useLocation } from "react-router-dom";
 import { adminSidebarItems, userSidebarItems } from "./SidebarRoutes";
 import { BsChevronDown } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
+import { getTranslationObject } from "../../../i18next";
+import LanguageSelector from "../../client/components/LanguageSelector/LanguageSelector";
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [activeItem, setActiveItem] = useState(null);
   const userRole = localStorage.getItem("role");
   const [openSubmenu, setOpenSubmenu] = useState(null);
+  const { t } = useTranslation();
+  console.log("t:", t("sidebarRoutesName"));
+  const sidebarRoutes = getTranslationObject("dashboard.sidebarRoutesName");
+  console.log("first:", sidebarRoutes);
+  const sidebarRoutesArray = Object.entries(sidebarRoutes).map(
+    ([key, value]) => ({
+      key,
+      value,
+    })
+  );
+  const translatedAdminSidebarItems = adminSidebarItems.map((item, index) => ({
+    ...item,
+    name: sidebarRoutesArray[index]?.value || item.name,
+  }));
+
+  const replaceSidebarNames = (adminSidebarItems, sidebarRoutesArray) => {
+    return adminSidebarItems.map((item) => {
+      const mainTranslation = sidebarRoutesArray.find(
+        (t) => t.key.toLowerCase() === item.name.toLowerCase()
+      );
+
+      const updatedItem = {
+        ...item,
+        name: mainTranslation ? mainTranslation.value : item.name,
+      };
+      if (updatedItem.subMenus) {
+        updatedItem.subMenus = updatedItem.subMenus.map((subItem) => {
+          const subKey = subItem.name.toLowerCase().replace(" ", "");
+          const subTranslation = sidebarRoutesArray.find(
+            (t) => t.key.toLowerCase().replace(" ", "") === subKey
+          );
+
+          return {
+            ...subItem,
+            name: subTranslation ? subTranslation.value : subItem.name,
+          };
+        });
+      }
+
+      return updatedItem;
+    });
+  };
+
+  const updatedAdminSidebarItems = replaceSidebarNames(
+    adminSidebarItems,
+    sidebarRoutesArray
+  );
+
+  console.log("updatedAdminSidebarItems:", updatedAdminSidebarItems);
 
   const handleItemClick = (id) => {
     setActiveItem(id);
@@ -113,10 +165,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         transition={{ type: "spring", stiffness: 300 }}
-                        onClick={() => handleItemClick(item.id)}
+                        onClick={() => handleItemClick(item?.id)}
                       >
                         <span className="mr-4 text-xl">{item?.icon}</span>
-                        {item.name}
+                        {item?.name}
                       </motion.div>
                     </NavLink>
                   ) : (
@@ -192,6 +244,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             </>
           )}
         </ul>
+        {/* <LanguageSelector></LanguageSelector> */}
       </div>
     </div>
   );

@@ -6,15 +6,18 @@ import useCampaignsData from "../../hooks/useCampaignsData";
 import { useState } from "react";
 import Campaign from "./Campaign";
 import { useTranslation } from "react-i18next";
+import { getTranslationObject } from "../../../../i18next";
 const Campaigns = () => {
   const campaigns = useCampaignsData();
   // const [values, setValues] = useState(campaigns?.raised_amount);
   const { t } = useTranslation();
   const title = t("componentTitle.campaignTitle");
+  const { campaignTitle } = getTranslationObject("componentTitle");
+  // console.log("dfdf:", sidebarRoutes);
   return (
     <div id="campaign" className="bg-[#f3f4f7] py-20 scroll-mt-10">
       <div>
-        <Title title={title} />
+        <Title title={campaignTitle} />
         <div className="h-2 w-20 bg-[#2B2A27] rounded-full mx-auto mt-3"></div>
       </div>
       <Container>

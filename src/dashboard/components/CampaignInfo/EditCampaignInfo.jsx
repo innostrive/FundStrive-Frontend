@@ -15,7 +15,7 @@ import EditCampaignReview from "./EditCampaignReview";
 import EditCampaignFile from "./EditCampaignFile";
 const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
   const { id } = useParams();
-  console.log("id:", id);
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [categories] = useCategoriesData();
@@ -51,7 +51,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
 
   useEffect(() => {
     reset();
-  }, [campaignInfo]);
+  }, [campaignInfo, id]);
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -62,6 +62,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
       category: selectedCategory,
       description: campaignDescription,
       deadline: deadline,
+      image,
     };
     axiosSecure
       .put(`/api/campaigns/${id}`, campaignData, {
@@ -165,6 +166,16 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
                 modules={modules("t2")}
                 formats={formats}
                 placeholder="Write description here..."
+              />
+            </div>
+          </div>
+          <div className="col-span-2">
+            <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+              <img
+                src={imageUrl + campaignInfo?.image}
+                crossOrigin="anonymous"
+                alt="Image preview"
+                className="h-full w-full object-cover object-center rounded-md"
               />
             </div>
           </div>
