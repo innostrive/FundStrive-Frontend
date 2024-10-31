@@ -58,7 +58,7 @@ export const adminSidebarItems = [
         ></path>
       </svg>
     ),
-    link: "/dashboard/users",
+    link: "/admin-dashboard/users",
   },
   {
     id: 3,
@@ -81,7 +81,7 @@ export const adminSidebarItems = [
         ></path>
       </svg>
     ),
-    link: "/dashboard/category",
+    link: "/admin-dashboard/categories",
   },
   {
     id: 4,
@@ -104,7 +104,7 @@ export const adminSidebarItems = [
         ></path>
       </svg>
     ),
-    link: "/dashboard/campaign",
+    link: "/admin-dashboard/campaigns",
   },
   {
     id: 5,
@@ -127,7 +127,7 @@ export const adminSidebarItems = [
         ></path>
       </svg>
     ),
-    link: "/dashboard/blogs",
+    link: "/admin-dashboard/blogs",
   },
   {
     id: 6,
@@ -159,62 +159,62 @@ export const adminSidebarItems = [
       {
         name: "Navbar Menu",
         icon: <MenuIcon className="text-text-primary" />,
-        link: "/dashboard/menu-settings",
+        link: "/admin-dashboard/navmenus",
       },
       // {
       //   name: "Top Navbar",
       //   icon: <MenuSettingsIcon className="text-white" />,
-      //   link: "/dashboard/top-navbar",
+      //   link: "/admin-dashboard/top-navbar",
       // },
       {
         name: "Gallery Settings",
         icon: <SliderIcon className="text-white" />,
-        link: "/dashboard/banner-list",
+        link: "/admin-dashboard/banners",
       },
       // {
       //   name: "Partner Gallery",
       //   icon: <GalleryIcon className="text-white" />,
-      //   link: "/dashboard/partner-gallery",
+      //   link: "/admin-dashboard/partner-gallery",
       // },
       {
         name: "User Privilege",
         icon: <Privilege className="text-white" />,
-        link: "/dashboard/user-privilege",
+        link: "/admin-dashboard/user-privilege",
       },
       {
         name: "Contact Info",
         icon: <ContactInfoIcon />,
-        link: "/dashboard/contact-info",
+        link: "/admin-dashboard/contact-info",
       },
       {
         name: "Subscribers",
         icon: <ContactIcon />,
-        link: "/dashboard/subscribers-list",
+        link: "/admin-dashboard/subscribers-list",
       },
       {
         name: "FAQ Settings",
         icon: <Question />,
-        link: "/dashboard/faq-settings",
+        link: "/admin-dashboard/faq",
       },
       // {
       //   name: "About Campaign",
       //   icon: <InfoIcon />,
-      //   link: "/dashboard/about-settings",
+      //   link: "/admin-dashboard/about-settings",
       // },
       // {
       //   name: "About Vision",
       //   icon: <TargetIcon />,
-      //   link: "/dashboard/about-vision",
+      //   link: "/admin-dashboard/about-vision",
       // },
       {
         name: "About Info",
         icon: <Question />,
-        link: "/dashboard/about-info",
+        link: "/admin-dashboard/about-info",
       },
       {
         name: "Website Logo",
         icon: <WebsiteIcon />,
-        link: "/dashboard/website-logo",
+        link: "/admin-dashboard/website-logo",
       },
     ],
   },

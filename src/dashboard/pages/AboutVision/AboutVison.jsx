@@ -114,7 +114,9 @@ const AboutVision = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/edit-about-vision/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/about-info/edit-about-vision/${_id}`}
+                      >
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

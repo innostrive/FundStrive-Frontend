@@ -77,7 +77,9 @@ const TopNavbarInfo = () => {
                     </td>
                     <td className={classes}>
                       <div className="flex items-center">
-                        <NavLink to={`/dashboard/edit-emailInfo/${_id}`}>
+                        <NavLink
+                          to={`/admin-dashboard/navmenus/top-navbar-edit-emailInfo/${_id}`}
+                        >
                           <Tooltip content="Edit">
                             <IconButton variant="text">
                               <Edit className="size-5 text-green-500" />
@@ -123,7 +125,9 @@ const TopNavbarInfo = () => {
                     </td>
                     <td className={classes}>
                       <div className="flex items-center">
-                        <NavLink to={`/dashboard/edit-phoneInfo/${_id}`}>
+                        <NavLink
+                          to={`/admin-dashboard/navmenus/top-navbar-edit-phoneInfo/${_id}`}
+                        >
                           <Tooltip content="Edit">
                             <IconButton variant="text">
                               <Edit className="size-5 text-green-500" />

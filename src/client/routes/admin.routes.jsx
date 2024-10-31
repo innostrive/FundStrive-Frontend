@@ -509,14 +509,6 @@ const adminPath = [
       </ProtectedRoute>
     ),
   },
-  // {
-  //   path: "about-info",
-  //   element: (
-  //     <ProtectedRoute>
-  //       <AboutDetails />
-  //     </ProtectedRoute>
-  //   ),
-  // },
   {
     path: "create-about-headerInfo",
     element: (

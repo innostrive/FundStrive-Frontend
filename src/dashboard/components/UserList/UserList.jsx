@@ -52,7 +52,7 @@ const UserList = () => {
       title="User List"
       icon={<Add />}
       iconTitle="Add"
-      path="/dashboard/create-user"
+      path="/admin-dashboard/users/create-user"
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -120,14 +120,16 @@ const UserList = () => {
                     </td>
                     <td className={classes}>
                       <div className="flex items-center">
-                        <NavLink to={`/dashboard/user-details/${_id}`}>
+                        <NavLink
+                          to={`/admin-dashboard/users/user-details/${_id}`}
+                        >
                           <Tooltip content="View">
                             <IconButton variant="text">
                               <View className="size-5 text-secondary" />
                             </IconButton>
                           </Tooltip>
                         </NavLink>
-                        <NavLink to={`/dashboard/edit-user/${_id}`}>
+                        <NavLink to={`/admin-dashboard/users/edit-user/${_id}`}>
                           <Tooltip content="Edit">
                             <IconButton variant="text">
                               <Edit className="size-5 text-green-500" />

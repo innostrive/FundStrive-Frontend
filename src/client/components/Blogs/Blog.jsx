@@ -47,17 +47,23 @@ const Blog = ({ blog }) => {
       </CardHeader>
       <CardBody className="h-auto flex-grow max-h-32">
         <div className="mb-2 flex items-center justify-between">
-          <Typography color="blue-gray" className="font-medium">
+          <Typography
+            color="blue-gray"
+            className="font-medium text-sm text-secondary"
+          >
             Published At: {publishedDate}
           </Typography>
-          <Typography color="blue-gray" className="font-medium">
+          <Typography
+            color="blue-gray"
+            className="font-medium text-sm text-secondary"
+          >
             Author: {author?.name}
           </Typography>
         </div>
         <Typography
           variant="small"
           color="gray"
-          className="font-normal opacity-75"
+          className="font-medium text-secondary text-base"
         >
           {blog?.title}
         </Typography>

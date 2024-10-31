@@ -81,7 +81,9 @@ const NavbarLogo = () => {
                             </IconButton>
                           </Tooltip>
                         </NavLink> */}
-                      <NavLink to={`/dashboard/update-logo/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/website-logo/update-navbar-logo/${_id}`}
+                      >
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

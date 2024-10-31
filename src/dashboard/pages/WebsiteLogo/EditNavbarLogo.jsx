@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import IButton from "../../ui/IButton";
-import DashboardLayout from "../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
 
-const EditPartnerGallery = () => {
+const EditNavbarLogo = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const [partnerImage, setPartnerImage] = useState({});
+  const [navbarLogo, setNavbarLogo] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
@@ -20,14 +19,14 @@ const EditPartnerGallery = () => {
 
   useEffect(() => {
     axiosSecure.get(`/banners/${id}`).then((res) => {
-      setPartnerImage(res.data.data);
+      setNavbarLogo(res.data.data);
       setSelectedStatus(res.data.data.status);
     });
   }, [id]);
 
   useEffect(() => {
     reset();
-  }, [partnerImage]);
+  }, [navbarLogo]);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -56,7 +55,7 @@ const EditPartnerGallery = () => {
       .then((response) => {
         console.log("Server response:", response);
         toast.success(response.data.message);
-        navigate("/dashboard/partner-gallery");
+        navigate("/admin-dashboard/website-logo");
       })
       .catch((error) => {
         console.error("Error submitting data:", error);
@@ -66,14 +65,14 @@ const EditPartnerGallery = () => {
   };
 
   return (
-    <DashboardLayout>
+    <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
-        <NavLink to="/admin-dashboard/banners" className="opacity-60">
-          Banners
+        <NavLink to="/admin-dashboard/website-logo" className="opacity-60">
+          Website Logo
         </NavLink>
-        <span className="cursor-context-menu">Update Partner Image</span>
+        <span className="cursor-context-menu">Update Navbar Logo</span>
       </Breadcrumbs>
-      <FormCard title="Update Partner Gallery">
+      <FormCard title="Update Logo">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="space-y-5">
             {/* <div className="grid grid-cols-1 space-y-2">
@@ -135,8 +134,8 @@ const EditPartnerGallery = () => {
           <IButton className="flex ml-auto">Submit</IButton>
         </form>
       </FormCard>
-    </DashboardLayout>
+    </section>
   );
 };
 
-export default EditPartnerGallery;
+export default EditNavbarLogo;

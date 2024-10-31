@@ -6,6 +6,7 @@ import {
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
 import useDashboardCampaignData from "../../hooks/useDashboardCmpaignData";
+import { FaChartLine } from "react-icons/fa6";
 
 const LineChart = () => {
   const [series, levels] = useDashboardCampaignData();
@@ -95,7 +96,9 @@ const LineChart = () => {
         // color="transparent"
         className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
       >
-        <div className="w-max rounded-lg bg-[#b9a6ff] p-5 text-white"></div>
+        <div className="w-max rounded-lg bg-[#b9a6ff] p-5 text-white">
+          <FaChartLine className="h-5 w-5" />
+        </div>
         <div>
           <Typography variant="h6" color="blue-gray">
             Month Wise Campaign Created

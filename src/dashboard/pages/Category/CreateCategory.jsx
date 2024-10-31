@@ -1,4 +1,5 @@
 import {
+  Breadcrumbs,
   Button,
   Card,
   Input,
@@ -8,7 +9,6 @@ import {
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
-import Layout from "../../layout/Layout";
 import Form from "../../components/form/Form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import categorySchema from "../../schemas/category.schema";
@@ -16,12 +16,13 @@ import TextInput from "../../ui/TextInput";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
-import { json, useNavigate, useParams } from "react-router-dom";
+import { json, NavLink, useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import EditorToolbar, {
   modules,
   formats,
 } from "../../components/EditToolbar/EditToolbar";
+import DashboardLayout from "../../layout/DashboardLayout";
 const CreateCategory = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
@@ -75,7 +76,13 @@ const CreateCategory = () => {
   };
 
   return (
-    <section>
+    <DashboardLayout>
+      <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
+        <NavLink to="/admin-dashboard/categories" className="opacity-60">
+          Categories
+        </NavLink>
+        <span className="cursor-context-menu">Create Category</span>
+      </Breadcrumbs>
       <FormCard title="Create category">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="mb-1 grid gap-6">
@@ -156,7 +163,7 @@ const CreateCategory = () => {
           <IButton className="flex ml-auto">Submit</IButton>
         </form>
       </FormCard>
-    </section>
+    </DashboardLayout>
   );
 };
 

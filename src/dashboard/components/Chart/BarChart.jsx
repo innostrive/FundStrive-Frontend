@@ -7,7 +7,7 @@ import {
 import Chart from "react-apexcharts";
 import useAxiosSecure from "../../../client/hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
-
+import { ImStatsBars } from "react-icons/im";
 const BarChart = () => {
   // const [series, levels] = useDashboardCampaignData();
   const axiosSecure = useAxiosSecure();
@@ -107,7 +107,9 @@ const BarChart = () => {
         color="transparent"
         className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
       >
-        <div className="w-max rounded-lg bg-[#8BC34A] p-5 text-white"></div>
+        <div className="w-max rounded-lg bg-[#8BC34A] p-5 text-white">
+          <ImStatsBars className="h-5 w-5" />
+        </div>
         <div>
           <Typography variant="h6" color="blue-gray">
             Month Wise Donation Raised

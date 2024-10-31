@@ -5,8 +5,10 @@ import IButton from "../../../ui/IButton";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import DashboardLayout from "../../../layout/DashboardLayout";
+import { Breadcrumbs } from "@material-tailwind/react";
 
 const EditBanner = () => {
   const { id } = useParams();
@@ -76,11 +78,18 @@ const EditBanner = () => {
   };
 
   return (
-    <FormCard title="Update Carusel">
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
-          <div className="space-y-5">
-            {/* <div className="grid grid-cols-1 space-y-2">
+    <DashboardLayout>
+      <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
+        <NavLink to="/admin-dashboard/banners" className="opacity-60">
+          Banners
+        </NavLink>
+        <span className="cursor-context-menu">Update Carusel</span>
+      </Breadcrumbs>
+      <FormCard title="Update Carusel">
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
+            <div className="space-y-5">
+              {/* <div className="grid grid-cols-1 space-y-2">
               <span className="text-sm">Name</span>
               <input
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
@@ -98,48 +107,49 @@ const EditBanner = () => {
                 {...register("slug")}
               />
             </div> */}
-            <div className="col-span-2">
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-full text-base rounded"
+              <div className="col-span-2">
+                <select
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                  className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-full text-base rounded"
+                >
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div className="col-span-2 mt-5">
+              <label
+                htmlFor="image"
+                className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
               >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
+                Upload Image
+              </label>
+              <input
+                type="file"
+                className="hidden"
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={(e) => handleImage(e)}
+              />
+              <div className="mt-5">
+                {imagePreview && (
+                  <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                    <img
+                      src={imagePreview}
+                      alt=""
+                      className="h-full w-full object-cover object-center rounded-md"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="col-span-2 mt-5">
-            <label
-              htmlFor="image"
-              className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
-            >
-              Upload Image
-            </label>
-            <input
-              type="file"
-              className="hidden"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={(e) => handleImage(e)}
-            />
-            <div className="mt-5">
-              {imagePreview && (
-                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
-                  <img
-                    src={imagePreview}
-                    alt=""
-                    className="h-full w-full object-cover object-center rounded-md"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-          <IButton className="flex ml-auto">Submit</IButton>
-        </form>
-      </FormProvider>
-    </FormCard>
+            <IButton className="flex ml-auto">Submit</IButton>
+          </form>
+        </FormProvider>
+      </FormCard>
+    </DashboardLayout>
   );
 };
 

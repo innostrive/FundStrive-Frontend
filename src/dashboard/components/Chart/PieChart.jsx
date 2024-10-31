@@ -7,7 +7,7 @@ import {
 import Chart from "react-apexcharts";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
-
+import { FaChartPie } from "react-icons/fa";
 const PieChart = () => {
   const axiosSecure = useAxiosSecure();
   const [series, setSeries] = useState([]);
@@ -51,7 +51,9 @@ const PieChart = () => {
         color="transparent"
         className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
       >
-        <div className="w-max rounded-lg bg-orange-700 p-5 text-white"></div>
+        <div className="w-max rounded-lg bg-orange-700 p-5 text-white">
+          <FaChartPie className="h-5 w-5" />
+        </div>
         <div>
           <Typography variant="h6" color="blue-gray">
             Category Wise Campaigns
