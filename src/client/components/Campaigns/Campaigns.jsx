@@ -22,7 +22,7 @@ const Campaigns = () => {
       </div>
       <Container>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mt-5 px-5 sm:px-0">
-          {campaigns.map((campaign) => (
+          {campaigns.slice(0, 6).map((campaign) => (
             <Campaign campaign={campaign} key={campaign?._id} />
           ))}
         </div>

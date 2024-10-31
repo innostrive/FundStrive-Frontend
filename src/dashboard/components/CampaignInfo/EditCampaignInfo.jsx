@@ -49,6 +49,11 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
     reader.readAsDataURL(file);
   };
 
+  const handleRemoveImage = () => {
+    setImage(null);
+    setImagePreview("");
+  };
+
   useEffect(() => {
     reset();
   }, [campaignInfo, id]);
@@ -73,7 +78,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
       .then((response) => {
         console.log("Server response:", response);
         toast.success(response.data.message);
-        navigate("/dashboard/campaign");
+        navigate("/admin-dashboard/campaigs");
       })
       .catch((error) => {
         console.error("Error submitting data:", error);
@@ -198,12 +203,19 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
             />
             <div className="mt-5 flex gap-2">
               {imagePreview && (
-                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2 relative">
                   <img
                     src={imagePreview}
                     alt="Image preview"
                     className="h-full w-full object-cover object-center rounded-md"
                   />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white text-xs p-1 rounded-full size-6 flex items-center justify-center"
+                  >
+                    X
+                  </button>
                 </div>
               )}
             </div>

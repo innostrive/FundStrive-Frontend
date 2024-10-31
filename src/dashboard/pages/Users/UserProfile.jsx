@@ -6,18 +6,16 @@ import { Edit } from "../../assets/icons/icons";
 
 const UserProfile = ({ userInfo }) => {
   const [edit, setEdit] = useState(false);
-  const imageUrl =
-    "http://localhost:4000/public/uploads/campaigns/1728392970293.jpeg";
-  console.log("userInfo:", imageUrl + userInfo?.image);
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   return (
     <FormCard>
       <div className="flex gap-4 items-center mb-10">
         <div>
           <img
-            src={`${imageUrl}`}
+            src={imageUrl + userInfo?.image}
             crossOrigin="anonymous"
             alt=""
-            className="rounded-full h-20 w-20"
+            className="rounded-full h-20 w-20 object-cover"
           />
         </div>
         <div className="space-y-1">

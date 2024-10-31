@@ -17,6 +17,7 @@ const EditPartnerGallery = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const { register, reset, handleSubmit } = useForm();
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
 
   useEffect(() => {
     axiosSecure.get(`/banners/${id}`).then((res) => {
@@ -39,6 +40,11 @@ const EditPartnerGallery = () => {
     reader.readAsDataURL(file);
   };
 
+  const clearImage = () => {
+    setImage(null);
+    setImagePreview("");
+  };
+
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("image", image);
@@ -56,7 +62,7 @@ const EditPartnerGallery = () => {
       .then((response) => {
         console.log("Server response:", response);
         toast.success(response.data.message);
-        navigate("/dashboard/partner-gallery");
+        navigate("/admin-dashboard/banners");
       })
       .catch((error) => {
         console.error("Error submitting data:", error);
@@ -76,24 +82,6 @@ const EditPartnerGallery = () => {
       <FormCard title="Update Partner Gallery">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="space-y-5">
-            {/* <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Name</span>
-            <input
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              type="text"
-              {...register("name")}
-              defaultValue={partnerImage?.name}
-            />
-          </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Slug</span>
-            <input
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              type="text"
-              defaultValue={partnerImage?.slug}
-              {...register("slug")}
-            />
-          </div> */}
             <div className="col-span-2">
               <select
                 value={selectedStatus}
@@ -103,6 +91,17 @@ const EditPartnerGallery = () => {
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 col-span-2 space-y-2 mt-5">
+            <span className="text-sm">Image</span>
+            <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+              <img
+                src={imageUrl + partnerImage?.image}
+                alt="user"
+                className="h-full w-full object-cover object-center rounded-md"
+                crossOrigin="anonymous"
+              />
             </div>
           </div>
           <div className="col-span-2 mt-5">
@@ -118,16 +117,23 @@ const EditPartnerGallery = () => {
               id="image"
               name="image"
               accept="image/*"
-              onChange={(e) => handleImage(e)}
+              onChange={handleImage}
             />
             <div className="mt-5">
               {imagePreview && (
-                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                <div className="relative size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
                   <img
                     src={imagePreview}
                     alt=""
                     className="h-full w-full object-cover object-center rounded-md"
                   />
+                  <button
+                    type="button"
+                    onClick={clearImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 size-6 flex items-center justify-center"
+                  >
+                    X
+                  </button>
                 </div>
               )}
             </div>

@@ -32,6 +32,7 @@ const EditBlog = () => {
   const [imagePreview, setImagePreview] = useState("");
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
 
   const [reviews, refetch] = useReviewData();
   const URL = import.meta.env.VITE_BASE_URL;
@@ -73,6 +74,11 @@ const EditBlog = () => {
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setImage(null);
+    setImagePreview("");
   };
 
   const handleContentChange = (value) => {
@@ -151,6 +157,7 @@ const EditBlog = () => {
               {...register("tags")}
               defaultValue={blogData?.tags}
             />
+
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Content
             </Typography>
@@ -163,6 +170,17 @@ const EditBlog = () => {
               modules={modules("t2")}
               formats={formats}
             />
+            <div className="grid grid-cols-1 col-span-2 space-y-2">
+              <span className="text-sm">Image</span>
+              <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                <img
+                  src={imageUrl + blogData?.image}
+                  alt="user"
+                  className="h-full w-full object-cover object-center rounded-md"
+                  crossOrigin="anonymous"
+                />
+              </div>
+            </div>
             <label
               htmlFor="image"
               className="text-base text-black text-center font-medium cursor-pointer block h-full w-full border border-gray-400 p-2 rounded-md"
@@ -180,12 +198,19 @@ const EditBlog = () => {
             />
             <div>
               {imagePreview && (
-                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2 relative">
                   <img
                     src={imagePreview}
                     alt=""
                     className="h-full w-full object-cover object-center rounded-md"
                   />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white text-xs p-1 rounded-full size-6 flex items-center justify-center"
+                  >
+                    X
+                  </button>
                 </div>
               )}
             </div>

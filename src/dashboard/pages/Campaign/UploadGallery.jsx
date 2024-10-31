@@ -205,7 +205,8 @@ import IButton from "../../ui/IButton";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import FormCard from "../../ui/FormCard";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { Breadcrumbs } from "@material-tailwind/react";
 
 const UploadGallery = () => {
   const { id } = useParams();
@@ -258,7 +259,7 @@ const UploadGallery = () => {
       .then((res) => {
         if (res.status === 200) {
           toast.success(res.data.message);
-          navigate(`/dashboard/campaign/${id}`);
+          navigate(`/admin-dashboard/campaigns/campaign-details/${id}`);
         }
       });
 
@@ -266,54 +267,67 @@ const UploadGallery = () => {
   };
 
   return (
-    <FormCard>
-      <span className="text-base font-normal text-secondary">Image Upload</span>
-      <form onSubmit={handleFileInput}>
-        <div className="mt-5">
-          <label
-            htmlFor="image"
-            className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
-          >
-            Upload Image
-          </label>
-          <input
-            type="file"
-            placeholder="Upload Image"
-            className="hidden"
-            multiple
-            id="image"
-            name="image"
-            accept="image/*"
-            onChange={handleFileImage}
-          />
-          <div className="mt-5 flex gap-2 flex-wrap">
-            {fileImagePreview.length > 0 &&
-              fileImagePreview.map((imagePreview, index) => (
-                <div
-                  key={index}
-                  className="relative border-2 border-dashed border-gray-400 rounded-md p-2"
-                >
-                  <img
-                    src={imagePreview}
-                    alt=""
-                    className="h-32 w-36 object-cover object-center rounded-md"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleDeselectImage(index)}
-                    className="absolute top-1 right-1 bg-red-500 text-white h-5 w-5 flex items-center justify-center rounded-full p-1 text-xs"
+    <section>
+      <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
+        <NavLink
+          to={`/admin-dashboard/campaigns/campaign-details/${id}`}
+          className="opacity-60"
+        >
+          Campaign Details
+        </NavLink>
+        <span className="cursor-context-menu">Upload Image</span>
+      </Breadcrumbs>
+      <FormCard>
+        <span className="text-base font-normal text-secondary">
+          Image Upload
+        </span>
+        <form onSubmit={handleFileInput}>
+          <div className="mt-5">
+            <label
+              htmlFor="image"
+              className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
+            >
+              Upload Image
+            </label>
+            <input
+              type="file"
+              placeholder="Upload Image"
+              className="hidden"
+              multiple
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleFileImage}
+            />
+            <div className="mt-5 flex gap-2 flex-wrap">
+              {fileImagePreview.length > 0 &&
+                fileImagePreview.map((imagePreview, index) => (
+                  <div
+                    key={index}
+                    className="relative border-2 border-dashed border-gray-400 rounded-md p-2"
                   >
-                    X
-                  </button>
-                </div>
-              ))}
+                    <img
+                      src={imagePreview}
+                      alt=""
+                      className="h-32 w-36 object-cover object-center rounded-md"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleDeselectImage(index)}
+                      className="absolute top-1 right-1 bg-red-500 text-white h-5 w-5 flex items-center justify-center rounded-full p-1 text-xs"
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
+            </div>
           </div>
-        </div>
-        <IButton type="submit" className="mt-5 flex ml-auto">
-          Upload
-        </IButton>
-      </form>
-    </FormCard>
+          <IButton type="submit" className="mt-5 flex ml-auto">
+            Upload
+          </IButton>
+        </form>
+      </FormCard>
+    </section>
   );
 };
 

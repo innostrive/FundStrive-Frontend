@@ -174,6 +174,7 @@ import EditAboutIntro from "../../dashboard/pages/AboutIntro/EditAboutIntro";
 import DashboardLayout from "../../dashboard/layout/DashboardLayout";
 import EditNavbarLogo from "../../dashboard/pages/WebsiteLogo/EditNavbarLogo";
 import EditFooterLogo from "../../dashboard/pages/WebsiteLogo/EditFooterLogo";
+import EditCaruselTitle from "../../dashboard/pages/Settings/CaruselTitle/EditCaruselTitle";
 
 export const router = createBrowserRouter([
   {
@@ -251,7 +252,9 @@ export const router = createBrowserRouter([
     path: "admin-dashboard/users/create-user",
     element: (
       <ProtectedRoute>
-        <CreateUser />
+        <DashboardLayout>
+          <CreateUser />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
@@ -275,7 +278,9 @@ export const router = createBrowserRouter([
     path: "admin-dashboard/profile",
     element: (
       <ProtectedRoute>
-        <UserProfile />
+        <DashboardLayout>
+          <UserProfile />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
@@ -374,18 +379,22 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "admin-dashboard/upload-gallery/:id",
+    path: "admin-dashboard/campaigns/upload-gallery/:id",
     element: (
       <ProtectedRoute>
-        <UploadGallery />
+        <DashboardLayout>
+          <UploadGallery />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
   {
-    path: "admin-dashboard/upload-document/:id",
+    path: "admin-dashboard/campaigns/upload-document/:id",
     element: (
       <ProtectedRoute>
-        <UploadDocument />
+        <DashboardLayout>
+          <UploadDocument />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
@@ -522,6 +531,16 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <BannerInfo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "admin-dashboard/banners/edit-carusel-title/:id",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout>
+          <EditCaruselTitle></EditCaruselTitle>
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },

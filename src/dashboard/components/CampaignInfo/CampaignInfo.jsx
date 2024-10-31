@@ -24,6 +24,7 @@ const CampaignInfo = ({
   const [edit, setEdit] = useState(false);
   const { register } = useForm();
   const [value, setValue] = useState();
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const campaignDeadline = moment(campaignInfo?.deadline).format(
     "MMMM Do YYYY, h:mm:ss a"
   );
@@ -41,9 +42,10 @@ const CampaignInfo = ({
         <div className="flex gap-4 items-center justify-center mb-5">
           <div>
             <img
-              src={campaignInfo?.image}
+              src={imageUrl + campaignInfo?.image}
               alt=""
-              className="rounded-full h-20 w-20"
+              className="rounded-full h-20 w-20 object-cover"
+              crossOrigin="anonymous"
             />
           </div>
           <div className="space-y-1">

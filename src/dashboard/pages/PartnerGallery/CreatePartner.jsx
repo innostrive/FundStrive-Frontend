@@ -49,7 +49,7 @@ const CreatePartner = () => {
         .then((response) => {
           if (response.status === 200) {
             toast.success(response.data.message);
-            navigate("/dashboard/partner-gallery");
+            navigate("/admin-dashboard/banners");
           }
         });
     } catch (err) {

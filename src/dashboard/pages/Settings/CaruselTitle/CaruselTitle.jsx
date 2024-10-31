@@ -19,6 +19,7 @@ const TABLE_HEAD = ["Title", "Status", "Action"];
 
 const CaruselTitle = () => {
   const [caruselTitle, handleBannerDelete] = useCaruselTitle();
+  console.log("first:", caruselTitle);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
@@ -54,7 +55,7 @@ const CaruselTitle = () => {
       title="Header Caruesl List"
       icon={<Add />}
       iconTitle="Add"
-      path="/dashboard/create-banner"
+      path="/admin-dashboard/banners/create-carusel-title"
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -103,14 +104,16 @@ const CaruselTitle = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/banner/${_id}`}>
+                      {/* <NavLink to={`/dashboard/banner/${_id}`}>
                         <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
-                      </NavLink>
-                      <NavLink to={`/dashboard/edit-banner/${_id}`}>
+                      </NavLink> */}
+                      <NavLink
+                        to={`/admin-dashboard/banners/edit-carusel-title/${_id}`}
+                      >
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

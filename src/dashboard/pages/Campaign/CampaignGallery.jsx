@@ -61,7 +61,7 @@ const CampaignGallery = ({ id, campaignName }) => {
     <FormCard
       title="Gallery List"
       icon={<Add />}
-      path={`/dashboard/upload-gallery/${id}`}
+      path={`/admin-dashboard/campaigns/upload-gallery/${id}`}
       iconTitle="Upload"
     >
       <CardBody className="border p-0">

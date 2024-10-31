@@ -6,7 +6,7 @@ const FormCard = ({ children, className, title, icon, path, iconTitle }) => {
   return (
     <div
       className={twMerge(
-        "border border-b border-gray-200 rounded-md p-5 w-auto grid mx-auto bg-white",
+        "border  border-gray-200 rounded-md p-5 w-auto grid mx-auto bg-white",
         className
       )}
     >

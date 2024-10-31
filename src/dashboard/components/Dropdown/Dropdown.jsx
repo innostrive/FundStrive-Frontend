@@ -6,9 +6,10 @@ import {
   MenuList,
   Typography,
 } from "@material-tailwind/react";
-import user from "../../../dashboard/assets/Logo/user.jpg";
+import user from "../../../dashboard/assets/volunteer-03.jpg";
 import { Link, useNavigate } from "react-router-dom";
 export default function Dropdown() {
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -28,7 +29,7 @@ export default function Dropdown() {
       </MenuHandler>
       <MenuList>
         <MenuItem>
-          <Link to="/dashboard/profile">
+          <Link to="/admin-dashboard/profile">
             <div className="flex items-center gap-2">
               <svg
                 width="16"

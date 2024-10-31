@@ -26,11 +26,11 @@ const SettingsInfo = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/navmenus" className="opacity-60">
-          Navmenus
+          Navbar Menus
         </NavLink>
-        <span className="cursor-context-menu">Navmenu Details</span>
+        <span className="cursor-context-menu">Navbar Menu Details</span>
       </Breadcrumbs>
-      <FormCard title="Settings Details">
+      <FormCard title="Navbar Menu Details">
         <div className="grid grid-cols-2 gap-10">
           <div className="grid grid-cols-1 space-y-2">
             <span className="text-sm">Name</span>

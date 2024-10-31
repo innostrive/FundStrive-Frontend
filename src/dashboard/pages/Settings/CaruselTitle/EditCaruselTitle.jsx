@@ -1,16 +1,15 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import FormCard from "../../ui/FormCard";
 import { useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
-import Form from "../../components/form/Form";
-import IButton from "../../ui/IButton";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import DashboardLayout from "../../layout/DashboardLayout";
+import DashboardLayout from "../../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import FormCard from "../../../ui/FormCard";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import IButton from "../../../ui/IButton";
 
-const EditSettings = () => {
+const EditCaruselTitle = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const URL = import.meta.env.VITE_BASE_URL;
@@ -33,14 +32,14 @@ const EditSettings = () => {
   const onSubmit = (data) => {
     const editData = {
       ...data,
-      name: "Menu",
-      slug: "NAVMENU",
+      name: "Carusel Title",
+      slug: "CARUSEL_TITLE",
       status: selectedStatus,
     };
     axiosSecure.put(`/api/settings/${id}`, editData).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.message);
-        navigate("/dashboard/menu-settings");
+        navigate("/admin-dashboard/banners");
       }
       console.log(res.data.data);
     });
@@ -48,17 +47,17 @@ const EditSettings = () => {
   };
 
   return (
-    <DashboardLayout>
+    <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
-        <NavLink to="/admin-dashboard/navmenus" className="opacity-60">
-          Navmenus
+        <NavLink to="/admin-dashboard/banners" className="opacity-60">
+          Banners
         </NavLink>
-        <span className="cursor-context-menu">Update Navbar Menu</span>
+        <span className="cursor-context-menu">Update Carusel Title</span>
       </Breadcrumbs>
-      <FormCard title="Update Navbar Menu">
+      <FormCard title="Edit Navbar Menu">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-10">
-            <div className="grid grid-cols-1 col-span-2 space-y-2">
+            <div className="grid grid-cols-1 space-y-2">
               <span className="text-sm">Menu</span>
               <input
                 type="text"
@@ -68,6 +67,18 @@ const EditSettings = () => {
                 name="key"
                 defaultValue={settings?.key}
                 {...register("key")}
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Menu</span>
+              <input
+                type="text"
+                size="lg"
+                className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                id="value"
+                name="value"
+                defaultValue={settings?.value}
+                {...register("value")}
               />
             </div>
             <div className="col-span-2">
@@ -86,8 +97,8 @@ const EditSettings = () => {
           </IButton>
         </form>
       </FormCard>
-    </DashboardLayout>
+    </section>
   );
 };
 
-export default EditSettings;
+export default EditCaruselTitle;
