@@ -36,7 +36,7 @@ const Blog = ({ blog }) => {
     }
   };
   return (
-    <Card className="w-96 border shadow-sm flex flex-col h-[24rem]">
+    <Card className="w-96 border shadow-sm flex flex-col min-h-[24rem] h-auto">
       <CardHeader shadow={false} floated={false} className="h-40 flex-shrink-0">
         <img
           src={imageUrl + blog?.image}
@@ -45,26 +45,20 @@ const Blog = ({ blog }) => {
           className="h-full w-full object-cover"
         />
       </CardHeader>
-      <CardBody className="h-auto flex-grow max-h-32">
-        <div className="mb-2 flex items-center justify-between">
-          <Typography
-            color="blue-gray"
-            className="font-medium text-sm text-secondary"
-          >
-            Published At: {publishedDate}
-          </Typography>
-          <Typography
-            color="blue-gray"
-            className="font-medium text-sm text-secondary"
-          >
-            Author: {author?.name}
-          </Typography>
+      <CardBody className="h-auto flex-grow min-h-32">
+        <div className="mb-2 flex items-center justify-between space-y-2">
+          <div className="h-10 w-auto px-2 rounded-md bg-orange-600 bg-opacity-[10%] flex justify-center items-center">
+            <Typography className="font-semibold text-xs leading-5 text-orange-600">
+              Published At: {publishedDate}
+            </Typography>
+          </div>
+          <div className="h-10 w-auto px-2 rounded-md bg-green-600 bg-opacity-[10%] flex justify-center items-center">
+            <Typography className="font-semibold text-xs leading-5 text-green-600">
+              Author: {author?.name}
+            </Typography>
+          </div>
         </div>
-        <Typography
-          variant="small"
-          color="gray"
-          className="font-medium text-secondary text-base"
-        >
+        <Typography className="font-medium text-secondary text-base leading-normal">
           {blog?.title}
         </Typography>
       </CardBody>

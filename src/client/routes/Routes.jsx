@@ -175,6 +175,10 @@ import DashboardLayout from "../../dashboard/layout/DashboardLayout";
 import EditNavbarLogo from "../../dashboard/pages/WebsiteLogo/EditNavbarLogo";
 import EditFooterLogo from "../../dashboard/pages/WebsiteLogo/EditFooterLogo";
 import EditCaruselTitle from "../../dashboard/pages/Settings/CaruselTitle/EditCaruselTitle";
+import FooterSettings from "../../dashboard/pages/FooterSettings/FooterSettings";
+import EditFooter from "../../dashboard/pages/FooterSettings/EditFooter";
+import EditSocialMedia from "../../dashboard/pages/SocialMedia/EditSocialMedia";
+import SocialMedia from "../../dashboard/pages/SocialMedia/SocialMedia";
 
 export const router = createBrowserRouter([
   {
@@ -438,14 +442,14 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-  // {
-  //   path: "admin-dashboard/create-settings",
-  //   element: (
-  //     <ProtectedRoute>
-  //       <CreateSettings />
-  //     </ProtectedRoute>
-  //   ),
-  // },
+  {
+    path: "admin-dashboard/create-settings",
+    element: (
+      <ProtectedRoute>
+        <CreateSettings />
+      </ProtectedRoute>
+    ),
+  },
   {
     path: "admin-dashboard/navmenus/navmenu-details/:id",
     element: (
@@ -869,6 +873,46 @@ export const router = createBrowserRouter([
       <ProtectedRoute>
         <DashboardLayout>
           <EditLogo />
+        </DashboardLayout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "admin-dashboard/footer",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout>
+          <FooterSettings />
+        </DashboardLayout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "admin-dashboard/footer/edit-footer/:id",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout>
+          <EditFooter />
+        </DashboardLayout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "admin-dashboard/social-media",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout>
+          <SocialMedia />
+        </DashboardLayout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "admin-dashboard/social-media/edit-social-media/:id",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout>
+          <EditSocialMedia />
         </DashboardLayout>
       </ProtectedRoute>
     ),

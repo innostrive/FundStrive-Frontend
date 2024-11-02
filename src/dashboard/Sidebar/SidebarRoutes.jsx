@@ -12,7 +12,8 @@ import {
   WebsiteIcon,
 } from "../assets/icons/icons";
 import AboutInfo from "../pages/AboutInfo/AboutInfo";
-
+import { TbSocial } from "react-icons/tb";
+import { MdWrapText } from "react-icons/md";
 export const adminSidebarItems = [
   {
     id: 1,
@@ -215,6 +216,16 @@ export const adminSidebarItems = [
         name: "Website Logo",
         icon: <WebsiteIcon />,
         link: "/admin-dashboard/website-logo",
+      },
+      {
+        name: "Footer",
+        icon: <MdWrapText className="h-6 w-6 text-text-primary" />,
+        link: "/admin-dashboard/footer",
+      },
+      {
+        name: "Socail Medial",
+        icon: <TbSocial className="h-6 w-6 text-text-primary" />,
+        link: "/admin-dashboard/social-media",
       },
     ],
   },

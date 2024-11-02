@@ -9,8 +9,13 @@ import { useState } from "react";
 import { Spinner } from "@material-tailwind/react";
 import useWebsiteLogo from "../../hooks/useWebsiteLogo";
 import useNavMenus from "../../hooks/useNavMenus";
+import useFooterData from "../../../dashboard/hooks/useFooterData";
+import useSocialMediaData from "../../../dashboard/hooks/useSocialMediaData";
+import { FaXTwitter } from "react-icons/fa6";
 const Footer = () => {
   const URL = import.meta.env.VITE_BASE_URL;
+  const footerData = useFooterData();
+  const [socialMediaLink] = useSocialMediaData();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [logo] = useWebsiteLogo();
   const navmenus = useNavMenus();
@@ -36,6 +41,13 @@ const Footer = () => {
       }
     });
   };
+  const socialIcons = [
+    { name: "LinkedIn", icon: <BiLogoLinkedin className="size-5" /> },
+    { name: "Google", icon: <FaXTwitter className="size-5" /> },
+    { name: "Instagram", icon: <FaInstagram className="size-5" /> },
+    { name: "Facebook", icon: <BiLogoFacebook className="size-5" /> },
+  ];
+
   return (
     <div className="py-20 bg-secondary">
       <Container>
@@ -120,45 +132,30 @@ const Footer = () => {
               </span>
             )}
             <div className="flex gap-4">
-              <a
-                href="https://www.facebook.com/"
-                target="__blank"
-                className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary"
-              >
-                <BiLogoFacebook size={20} />
-              </a>
-              <a
-                href="https://bd.linkedin.com"
-                target="__blank"
-                className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary"
-              >
-                <BiLogoLinkedin size={20} />
-              </a>
-              <a
-                href="https://www.instagram.com"
-                target="__blank"
-                className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary"
-              >
-                <FaInstagram size={20} />
-              </a>
-              <a
-                href="https://mail.google.com/"
-                target="__blank"
-                className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary"
-              >
-                <FaGoogle size={20} />
-              </a>
+              {socialMediaLink.map((link, index) => (
+                <a
+                  key={index}
+                  href={link?.value}
+                  target="__blank"
+                  className="h-10 w-10 flex items-center justify-center rounded-md bg-primary text-text-primary hover:bg-white hover:text-primary duration-300 delay-75 ease-in-out cursor-pointer"
+                >
+                  {socialIcons[index]?.icon}
+                </a>
+              ))}
             </div>
             <div></div>
           </div>
         </div>
         <div className="py-10 space-y-4">
           <hr />
-          <p className="text-sm font-light text-text-primary text-center">
-            Copyright 2024 Onobhoti - FUND
-            <span className="text-primary">STRIVE</span> Platform All Rights
-            Reserved.
-          </p>
+          {footerData.map((data) => (
+            <p
+              className="text-sm font-light text-text-primary text-center"
+              key={data?._id}
+            >
+              {data?.value}
+            </p>
+          ))}
         </div>
       </Container>
     </div>

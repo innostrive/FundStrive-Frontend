@@ -14,7 +14,6 @@ const CreateSettings = () => {
   const axiosSecure = useAxiosSecure();
   const [value, setValue] = useState([]);
   const navigate = useNavigate();
-  console.log("settings:", settings);
   const {
     reset,
     handleSubmit,
@@ -31,7 +30,6 @@ const CreateSettings = () => {
     try {
       await axiosSecure.post("/api/settings", payload).then((response) => {
         if (response.status === 200) {
-          console.log("settings:", response.data.message);
           toast.success(response.data.message);
           reset();
           // navigate("/dashboard/menu-settings");
@@ -39,9 +37,7 @@ const CreateSettings = () => {
       });
     } catch (err) {
       toast.error(err);
-      console.log(err);
     }
-    console.log("data", data);
   };
   return (
     <FormCard title="Create Settings">
