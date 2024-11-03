@@ -8,8 +8,19 @@ import {
 } from "@material-tailwind/react";
 import user from "../../../dashboard/assets/volunteer-03.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useEffect, useState } from "react";
 export default function Dropdown() {
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
+  const [userInfo, setUserInfo] = useState({});
+  const userId = localStorage.getItem("userId");
+
+  const axiosSecure = useAxiosSecure();
+  useEffect(() => {
+    axiosSecure.get(`/api/users/${userId}`).then((res) => {
+      setUserInfo(res.data.data);
+    });
+  }, [userId]);
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -24,7 +35,8 @@ export default function Dropdown() {
           variant="circular"
           alt="tania andrew"
           className="cursor-pointer"
-          src={user}
+          src={imageUrl + userInfo?.image}
+          crossOrigin="anonymous"
         />
       </MenuHandler>
       <MenuList>

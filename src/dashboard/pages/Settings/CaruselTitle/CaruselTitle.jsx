@@ -123,7 +123,7 @@ const CaruselTitle = () => {
                       <Tooltip content="Delete">
                         <IconButton
                           variant="text"
-                          //   onClick={() => handleBannerDelete(_id)}
+                          onClick={() => handleBannerDelete(_id)}
                         >
                           <Delete className="size-5 text-red-500" />
                         </IconButton>
