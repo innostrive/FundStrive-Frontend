@@ -21,47 +21,18 @@ import { toast } from "react-toastify";
 const TABLE_HEAD = ["Name", "Action"];
 
 const EditPriviliegeModal = ({ role }) => {
-  const rolePrivilegeValue = useRolePrivilegeValue(role);
+  const roleValue = useRolePrivilegeValue(role);
+  const [rolePrivilegeValue, setRolePrivilegeValue] = useState({
+    ...roleValue,
+  });
   const URL = import.meta.env.VITE_BASE_URL;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
   const [privilegeValue, setPrivilegeValue] = useState({});
   const { handleSubmit } = useForm();
-  const roleValue = {};
   useEffect(() => {
-    role
-      ? Object.keys(role).map((privilege) => {
-          if (!roleValue.hasOwnProperty(privilege)) {
-            roleValue[privilege] = [];
-          }
-          if (role[privilege][0] === "*") {
-            roleValue[privilege] = ["All", "INSERT", "VIEW", "EDIT", "DELETE"];
-          }
-          if (role[privilege].length > 0) {
-            role[privilege].map((item) => {
-              switch (item) {
-                case "INSERT":
-                  roleValue[privilege].push("POST");
-                  break;
-                case "VIEW":
-                  roleValue[privilege].push("GET");
-                  break;
-                case "EDIT":
-                  roleValue[privilege].push("PUT");
-                  break;
-                case "DELETE":
-                  roleValue[privilege].push("DELETE");
-                  break;
-
-                default:
-                  break;
-              }
-            });
-          }
-        })
-      : [];
-    setPrivilegeValue(roleValue);
-  }, [role]);
+    setRolePrivilegeValue(roleValue);
+  }, [roleValue]);
 
   const onSubmit = (data) => {
     axios.put(`${URL}/settings/role-privilige`).then((res) => {
@@ -70,6 +41,42 @@ const EditPriviliegeModal = ({ role }) => {
       }
     });
   };
+
+  const handleCheckboxChange = (event) => {
+    let privilegeValue = [];
+    const { name, checked } = event.target;
+    const [action, privilege] = name.split("@");
+    if (checked) {
+      if (action === "All") {
+        privilegeValue = ["All", "INSERT", "VIEW", "EDIT", "DELETE"];
+      } else {
+        privilegeValue = [...rolePrivilegeValue[privilege], action];
+      }
+    } else {
+      if (action === "All") {
+        privilegeValue = [];
+      } else {
+        privilegeValue = privilegeValue[privilege].filter(
+          (item) => item !== action
+        );
+      }
+    }
+
+    setRolePrivilegeValue((prevState) => ({
+      ...prevState,
+      [privilege]: privilegeValue,
+    }));
+    console.log(
+      "🚀 ~ onChange ~ value:",
+      privilege,
+      " => ",
+      rolePrivilegeValue[privilege]
+    );
+  };
+  useEffect(() => {
+    console.log("🚀 ~ useEffect ~ rolePrivilegeValue:", rolePrivilegeValue);
+    // setRolePrivilegeValue(rolePrivilegeValue);
+  }, [rolePrivilegeValue]);
 
   return (
     <>
@@ -131,6 +138,7 @@ const EditPriviliegeModal = ({ role }) => {
                                     </Typography>
                                     <Checkbox
                                       color="blue"
+                                      name={action + "@" + privilege}
                                       defaultChecked={
                                         rolePrivilegeValue[privilege]
                                           ? rolePrivilegeValue[
@@ -138,6 +146,7 @@ const EditPriviliegeModal = ({ role }) => {
                                             ].includes(action)
                                           : false
                                       }
+                                      onChange={handleCheckboxChange}
                                       containerProps={{ className: "p-0" }}
                                     />
                                   </div>
