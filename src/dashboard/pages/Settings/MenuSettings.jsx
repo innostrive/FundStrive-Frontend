@@ -99,14 +99,18 @@ const MenuSettings = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/settings/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/navmenus/navmenu-details/${_id}`}
+                      >
                         <Tooltip content="Menu Info">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-settings/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/navmenus/edit-navmenu/${_id}`}
+                      >
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

@@ -51,7 +51,7 @@ const Categories = () => {
   return (
     <FormCard
       title="Category List"
-      path="/dashboard/create-category"
+      path="/admin-dashboard/categories/create-category"
       icon={<Add />}
       iconTitle="Add"
     >
@@ -102,14 +102,18 @@ const Categories = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/category/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/categories/category-details/${_id}`}
+                      >
                         <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-category/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/categories/edit-category/${_id}`}
+                      >
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

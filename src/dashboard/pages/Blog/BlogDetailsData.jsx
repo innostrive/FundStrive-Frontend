@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import BlogDetailsInfo from "../../components/Blogs/BlogDetailsInfo";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Layout from "../../layout/Layout";
 import { useParams } from "react-router-dom";
 import useReviewData from "../../hooks/useReviewData";
 

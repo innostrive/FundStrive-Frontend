@@ -53,7 +53,7 @@ const PrtnerGallery = () => {
       title="Partner List"
       icon={<Add />}
       iconTitle="Add"
-      path="/dashboard/create-partner"
+      path="/admin-dashboard/banners/create-partner"
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -110,14 +110,18 @@ const PrtnerGallery = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/partner-gallery-view/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/banners/partner-gallery-view/${_id}`}
+                      >
                         <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-partner-gallery/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/banners/edit-partner-gallery/${_id}`}
+                      >
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

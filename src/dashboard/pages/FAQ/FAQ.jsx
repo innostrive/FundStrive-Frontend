@@ -48,7 +48,11 @@ const UserList = () => {
     if (active > 1) setActive(active - 1);
   };
   return (
-    <FormCard title="FAQ List" icon={<Add />} path="/dashboard/create-faq">
+    <FormCard
+      title="FAQ List"
+      icon={<Add />}
+      path="/admin-dashboard/faq/create-faq"
+    >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
@@ -96,14 +100,14 @@ const UserList = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/faq-details/${_id}`}>
+                      <NavLink to={`/admin-dashboard/faq/faq-details/${_id}`}>
                         <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-faq/${_id}`}>
+                      <NavLink to={`/admin-dashboard/faq/edit-faq/${_id}`}>
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

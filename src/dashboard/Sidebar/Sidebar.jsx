@@ -3,22 +3,24 @@ import { motion } from "framer-motion";
 import { NavLink, useLocation } from "react-router-dom";
 import { adminSidebarItems, userSidebarItems } from "./SidebarRoutes";
 import { BsChevronDown } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
+import { getTranslationObject } from "../../../i18next";
+import LanguageSelector from "../../client/components/LanguageSelector/LanguageSelector";
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [activeItem, setActiveItem] = useState(null);
   const userRole = localStorage.getItem("role");
   const [openSubmenu, setOpenSubmenu] = useState(null);
+  const location = useLocation();
+  const { pathname } = location;
 
   const handleItemClick = (id) => {
     setActiveItem(id);
     if (openSubmenu === id) {
-      setOpenSubmenu(null); // Close the submenu if clicked again
+      setOpenSubmenu(null);
     } else {
-      setOpenSubmenu(id); // Open the submenu
+      setOpenSubmenu(id);
     }
   };
-
-  const location = useLocation();
-  const { pathname } = location;
 
   const trigger = useRef(null);
   const sidebar = useRef(null);
@@ -105,18 +107,25 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {adminSidebarItems.map((item) => (
                 <li key={item.id} className="cursor-pointer text-sm">
                   {item.link ? (
-                    <NavLink to={item?.link}>
+                    <NavLink
+                      to={item?.link}
+                      className={({ isActive }) =>
+                        `flex items-center p-3 rounded-lg ${
+                          isActive || location.pathname.startsWith(item?.link)
+                            ? "bg-primary text-white"
+                            : ""
+                        }`
+                      }
+                      onClick={() => handleItemClick(item?.id)}
+                    >
                       <motion.div
-                        className={`flex items-center p-3 rounded-lg ${
-                          pathname === item.link ? "bg-primary text-white" : ""
-                        }`}
+                        className="flex items-center"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         transition={{ type: "spring", stiffness: 300 }}
-                        onClick={() => handleItemClick(item.id)}
                       >
                         <span className="mr-4 text-xl">{item?.icon}</span>
-                        {item.name}
+                        {item?.name}
                       </motion.div>
                     </NavLink>
                   ) : (
@@ -149,14 +158,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     >
                       {item.subMenus.map((subItem) => (
                         <li key={subItem.name} className="px-2">
-                          <NavLink to={subItem.link}>
-                            <div
-                              className={`flex items-center p-3 rounded-lg ${
-                                pathname === subItem.link
+                          <NavLink
+                            to={subItem.link}
+                            className={({ isActive }) =>
+                              `flex items-center rounded-lg ${
+                                isActive ||
+                                location.pathname.startsWith(subItem?.link)
                                   ? "bg-primary text-white"
                                   : ""
-                              }`}
-                            >
+                              }`
+                            }
+                          >
+                            <div className="flex items-center p-3 rounded-lg">
                               <span className="mr-2">{subItem.icon}</span>
                               {subItem.name}
                             </div>
@@ -192,6 +205,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             </>
           )}
         </ul>
+        {/* <LanguageSelector></LanguageSelector> */}
       </div>
     </div>
   );

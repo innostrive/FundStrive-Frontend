@@ -51,7 +51,7 @@ const Campaigns = () => {
     <FormCard
       title="Campaign List"
       icon={<Add />}
-      path="/dashboard/create-campaign"
+      path="/admin-dashboard/campaigns/create-campaign"
       iconTitle="Add"
     >
       <CardBody className="border p-0">
@@ -111,14 +111,18 @@ const Campaigns = () => {
                     </td>
                     <td className={classes}>
                       <div className="flex items-center">
-                        <NavLink to={`/dashboard/campaign/${_id}`}>
+                        <NavLink
+                          to={`/admin-dashboard/campaigns/campaign-details/${_id}`}
+                        >
                           <Tooltip content="View">
                             <IconButton variant="text">
                               <View className="size-5 text-secondary" />
                             </IconButton>
                           </Tooltip>
                         </NavLink>
-                        <NavLink to={`/dashboard/edit-campaign/${_id}`}>
+                        <NavLink
+                          to={`/admin-dashboard/campaigns/edit-campaign/${_id}`}
+                        >
                           <Tooltip content="Edit">
                             <IconButton variant="text">
                               <Edit className="size-5 text-green-500" />

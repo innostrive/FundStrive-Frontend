@@ -5,44 +5,44 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useEffect, useState } from "react";
+import { FaChartPie } from "react-icons/fa";
+const PieChart = () => {
+  const axiosSecure = useAxiosSecure();
+  const [series, setSeries] = useState([]);
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    axiosSecure.get("/api/dashboard/get-month-wise-raised-data").then((res) => {
+      console.log("res:", res.data.data);
+      setSeries(res.data.data.series);
+      setCategories(res.data.data.categories);
+    });
+  }, []);
 
-const chartConfig = {
-  type: "pie",
-  width: 380,
-  height: 380,
-  series: [
-    2,
-    14,
-    1,
-    2,
-    5
-  ],
-  options: {
-    chart: {
-      toolbar: {
+  const chartConfig = {
+    type: "pie",
+    width: 280,
+    height: 280,
+    series: series,
+    options: {
+      chart: {
+        toolbar: {
+          show: false,
+        },
+      },
+      title: {
+        show: "",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
+      legend: {
         show: false,
       },
     },
-    title: {
-      show: "",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    labels: [
-			"Health & Wellness",
-			"Education",
-			"Arts & Culture",
-			"Environment"
-		],
-    colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
-    legend: {
-      show: true,
-    },
-  },
-};
-
-export default function PieChart() {
+  };
   return (
     <Card>
       <CardHeader
@@ -52,6 +52,7 @@ export default function PieChart() {
         className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
       >
         <div className="w-max rounded-lg bg-orange-700 p-5 text-white">
+          <FaChartPie className="h-5 w-5" />
         </div>
         <div>
           <Typography variant="h6" color="blue-gray">
@@ -71,4 +72,6 @@ export default function PieChart() {
       </CardBody>
     </Card>
   );
-}
+};
+
+export default PieChart;

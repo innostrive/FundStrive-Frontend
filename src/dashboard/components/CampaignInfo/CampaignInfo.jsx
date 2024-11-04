@@ -9,9 +9,10 @@ import EditorToolbar, {
   formats,
 } from "../../components/EditToolbar/EditToolbar";
 import IButton from "../../ui/IButton";
-import { Button, Option, Select } from "@material-tailwind/react";
+import { Breadcrumbs, Button, Option, Select } from "@material-tailwind/react";
 import useCategoriesData from "../../hooks/useCategoriesData";
 import CampaignReview from "./CampaignReview";
+import { NavLink } from "react-router-dom";
 
 const CampaignInfo = ({
   campaignInfo,
@@ -23,6 +24,7 @@ const CampaignInfo = ({
   const [edit, setEdit] = useState(false);
   const { register } = useForm();
   const [value, setValue] = useState();
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const campaignDeadline = moment(campaignInfo?.deadline).format(
     "MMMM Do YYYY, h:mm:ss a"
   );
@@ -40,9 +42,10 @@ const CampaignInfo = ({
         <div className="flex gap-4 items-center justify-center mb-5">
           <div>
             <img
-              src={campaignInfo?.image}
+              src={imageUrl + campaignInfo?.image}
               alt=""
-              className="rounded-full h-20 w-20"
+              className="rounded-full h-20 w-20 object-cover"
+              crossOrigin="anonymous"
             />
           </div>
           <div className="space-y-1">

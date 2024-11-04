@@ -15,11 +15,16 @@ const resources = {
 };
 
 i18next.use(initReactI18next).init({
+  returnObjects: true,
   debug: true,
-  retrunObjects: true,
   fallbackLng: "en",
   resources,
   lng: "en", //default language
 });
+
+export const getTranslationObject = (key) => {
+  const t = i18next.getFixedT(i18next.language);
+  return t(key, { returnObjects: true });
+};
 
 export default i18next;

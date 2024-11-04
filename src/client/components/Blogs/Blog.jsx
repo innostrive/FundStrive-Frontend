@@ -36,36 +36,8 @@ const Blog = ({ blog }) => {
     }
   };
   return (
-    // <div className="h-auto w-full sm:max-w-96 rounded-md shadow-sm bg-white border border-gray-100">
-    //   <img
-    //     src={imageUrl + blog?.image}
-    //     crossOrigin="anonymous"
-    //     alt=""
-    //     className="h-52 w-full object-cover"
-    //   />
-    //   <div className="space-y-4 p-4">
-    //     <div className="flex justify-between items-center">
-    //       <p className="text-xs font-semibold tracking-wide">
-    //         Published At: {publishedDate}
-    //       </p>
-    //       <p className="text-xs font-semibold tracking-wide">
-    //         Author: {author?.name}
-    //       </p>
-    //     </div>
-    //     <h1 className="text-base font-normal">{blog?.title}</h1>
-    //     <div className="flex justify-between items-center">
-    //       <Link to={`/blog/${blog._id}`}>
-    //         {" "}
-    //         <Button
-    //           label="Read More"
-    //           className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase"
-    //         />
-    //       </Link>
-    //     </div>
-    //   </div>
-    // </div>
-    <Card className="w-96 border shadow-sm">
-      <CardHeader shadow={false} floated={false} className="h-80">
+    <Card className="w-96 border shadow-sm flex flex-col min-h-[24rem] h-auto">
+      <CardHeader shadow={false} floated={false} className="h-40 flex-shrink-0">
         <img
           src={imageUrl + blog?.image}
           crossOrigin="anonymous"
@@ -73,24 +45,24 @@ const Blog = ({ blog }) => {
           className="h-full w-full object-cover"
         />
       </CardHeader>
-      <CardBody className="h-auto">
-        <div className="mb-2 flex items-center justify-between">
-          <Typography color="blue-gray" className="font-medium">
-            Published At: {publishedDate}
-          </Typography>
-          <Typography color="blue-gray" className="font-medium">
-            Author: {author?.name}
-          </Typography>
+      <CardBody className="h-auto flex-grow min-h-32">
+        <div className="mb-2 flex items-center justify-between space-y-2">
+          <div className="h-10 w-auto px-2 rounded-md bg-orange-600 bg-opacity-[10%] flex justify-center items-center">
+            <Typography className="font-semibold text-xs leading-5 text-orange-600">
+              Published At: {publishedDate}
+            </Typography>
+          </div>
+          <div className="h-10 w-auto px-2 rounded-md bg-green-600 bg-opacity-[10%] flex justify-center items-center">
+            <Typography className="font-semibold text-xs leading-5 text-green-600">
+              Author: {author?.name}
+            </Typography>
+          </div>
         </div>
-        <Typography
-          variant="small"
-          color="gray"
-          className="font-normal opacity-75"
-        >
+        <Typography className="font-medium text-secondary text-base leading-normal">
           {blog?.title}
         </Typography>
       </CardBody>
-      <CardFooter>
+      <CardFooter className="h-16 flex items-center flex-shrink-0">
         <Link to={`/blog/${blog._id}`}>
           <Button
             ripple={false}

@@ -15,7 +15,7 @@ import EditCampaignReview from "./EditCampaignReview";
 import EditCampaignFile from "./EditCampaignFile";
 const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
   const { id } = useParams();
-  console.log("id:", id);
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [categories] = useCategoriesData();
@@ -49,9 +49,14 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
     reader.readAsDataURL(file);
   };
 
+  const handleRemoveImage = () => {
+    setImage(null);
+    setImagePreview("");
+  };
+
   useEffect(() => {
     reset();
-  }, [campaignInfo]);
+  }, [campaignInfo, id]);
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -62,6 +67,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
       category: selectedCategory,
       description: campaignDescription,
       deadline: deadline,
+      image,
     };
     axiosSecure
       .put(`/api/campaigns/${id}`, campaignData, {
@@ -72,7 +78,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
       .then((response) => {
         console.log("Server response:", response);
         toast.success(response.data.message);
-        navigate("/dashboard/campaign");
+        navigate("/admin-dashboard/campaigs");
       })
       .catch((error) => {
         console.error("Error submitting data:", error);
@@ -169,6 +175,16 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
             </div>
           </div>
           <div className="col-span-2">
+            <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+              <img
+                src={imageUrl + campaignInfo?.image}
+                crossOrigin="anonymous"
+                alt="Image preview"
+                className="h-full w-full object-cover object-center rounded-md"
+              />
+            </div>
+          </div>
+          <div className="col-span-2">
             <label
               htmlFor="fileImage"
               className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
@@ -187,12 +203,19 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
             />
             <div className="mt-5 flex gap-2">
               {imagePreview && (
-                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2 relative">
                   <img
                     src={imagePreview}
                     alt="Image preview"
                     className="h-full w-full object-cover object-center rounded-md"
                   />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white text-xs p-1 rounded-full size-6 flex items-center justify-center"
+                  >
+                    X
+                  </button>
                 </div>
               )}
             </div>

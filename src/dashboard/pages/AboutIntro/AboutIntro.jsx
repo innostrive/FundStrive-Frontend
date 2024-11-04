@@ -84,14 +84,18 @@ const AboutIntro = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/about-intro-details/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/about-info/about-intro-details/${_id}`}
+                      >
                         <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-about-intro/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/about-info/edit-about-intro/${_id}`}
+                      >
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />

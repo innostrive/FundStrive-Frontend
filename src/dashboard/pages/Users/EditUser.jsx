@@ -1,14 +1,14 @@
-import { Button, Option, Select } from "@material-tailwind/react";
+import { Breadcrumbs, Button, Option, Select } from "@material-tailwind/react";
 import { useForm, Controller } from "react-hook-form";
-import Layout from "../../layout/Layout";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
 import TextInput from "../../ui/TextInput";
 import Form from "../../components/form/Form";
+import DashboardLayout from "../../layout/DashboardLayout";
 
 const EditUser = () => {
   const { id } = useParams();
@@ -19,7 +19,7 @@ const EditUser = () => {
   const [imagePreview, setImagePreview] = useState("");
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   useEffect(() => {
     axiosSecure.get(`/api/users/${id}`).then((res) => {
       const userData = res.data.data;
@@ -42,6 +42,11 @@ const EditUser = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleRemoveImage = () => {
+    setImage(null);
+    setImagePreview("");
+  };
+
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("image", image);
@@ -59,7 +64,7 @@ const EditUser = () => {
       .then((res) => {
         if (res.status === 200) {
           toast.success(res.data.message);
-          navigate("/dashboard/users");
+          navigate("/admin-dashboard/users");
         }
       })
       .catch((error) => {
@@ -69,109 +74,135 @@ const EditUser = () => {
   };
 
   return (
-    <FormCard title="Update User">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid sm:grid-cols-2 grid-cols-1 gap-10">
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Name</span>
-            <input
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              type="text"
-              defaultValue={userInfo?.name}
-              {...register("name")} // Register the input
-            />
+    <DashboardLayout>
+      <Breadcrumbs className="mb-5 bg-gray-400 bg-opacity-30">
+        <NavLink to="/admin-dashboard/users" className="opacity-60">
+          Users
+        </NavLink>
+        <span className="cursor-context-menu">Update User</span>
+      </Breadcrumbs>
+      <FormCard title="Update User">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid sm:grid-cols-2 grid-cols-1 gap-10">
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Name</span>
+              <input
+                className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.name}
+                {...register("name")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Email</span>
+              <input
+                className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="email"
+                defaultValue={userInfo?.email} // Show default value
+                {...register("email")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Phone Number</span>
+              <input
+                className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.phone_number} // Show default value
+                {...register("phone_number")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Country</span>
+              <input
+                className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.country} // Show default value
+                {...register("country")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Status</span>
+              <select
+                label="Select Status"
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-auto text-base rounded"
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <div className="grid grid-cols-1 space-y-2">
+              <span className="text-sm">Post Code</span>
+              <input
+                className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.post_code} // Show default value
+                {...register("post_code")} // Register the input
+              />
+            </div>
+            <div className="grid grid-cols-1 col-span-2 space-y-2">
+              <span className="text-sm">Address</span>
+              <input
+                className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
+                type="text"
+                defaultValue={userInfo?.address} // Show default value
+                {...register("address")} // Register the input
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Email</span>
-            <input
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              type="email"
-              defaultValue={userInfo?.email} // Show default value
-              {...register("email")} // Register the input
-            />
+          <div className="grid grid-cols-1 col-span-2 space-y-2 mt-5">
+            <span className="text-sm">Image</span>
+            <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
+              <img
+                src={imageUrl + userInfo?.image}
+                alt="user"
+                className="h-full w-full object-cover object-center rounded-md"
+                crossOrigin="anonymous"
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Phone Number</span>
-            <input
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              type="text"
-              defaultValue={userInfo?.phone_number} // Show default value
-              {...register("phone_number")} // Register the input
-            />
-          </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Country</span>
-            <input
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              type="text"
-              defaultValue={userInfo?.country} // Show default value
-              {...register("country")} // Register the input
-            />
-          </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Status</span>
-            <select
-              label="Select Status"
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-              className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-auto text-base rounded"
+          <div className="grid grid-cols-1 mt-7">
+            <label
+              htmlFor="image"
+              className="text-base text-black font-medium text-center cursor-pointer block h-full w-full border border-gray-300 p-2 rounded-md"
             >
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Post Code</span>
+              Upload Image
+            </label>
             <input
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              type="text"
-              defaultValue={userInfo?.post_code} // Show default value
-              {...register("post_code")} // Register the input
+              type="file"
+              placeholder="Upload Image"
+              className="hidden"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={(e) => handleImage(e)}
             />
+            <div className="mt-5">
+              {imagePreview && (
+                <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2 relative">
+                  <img
+                    src={imagePreview}
+                    alt=""
+                    className="h-full w-full object-cover object-center rounded-md"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white text-xs p-1 rounded-full size-6 flex items-center justify-center"
+                  >
+                    X
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Address</span>
-            <input
-              className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
-              type="text"
-              defaultValue={userInfo?.address} // Show default value
-              {...register("address")} // Register the input
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 mt-7">
-          <label
-            htmlFor="image"
-            className="text-base text-black font-medium text-center cursor-pointer block h-full w-full border border-gray-300 p-2 rounded-md"
-          >
-            Upload Image
-          </label>
-          <input
-            type="file"
-            placeholder="Upload Image"
-            className="hidden"
-            id="image"
-            name="image"
-            accept="image/*"
-            onChange={(e) => handleImage(e)}
-          />
-          <div className="mt-5">
-            {imagePreview && (
-              <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
-                <img
-                  src={imagePreview}
-                  alt=""
-                  className="h-full w-full object-cover object-center rounded-md"
-                />
-              </div>
-            )}
-          </div>
-        </div>
-        <IButton title="update" className="flex ml-auto my-5">
-          update
-        </IButton>
-      </form>
-    </FormCard>
+          <IButton title="update" className="flex ml-auto my-5">
+            update
+          </IButton>
+        </form>
+      </FormCard>
+    </DashboardLayout>
   );
 };
 

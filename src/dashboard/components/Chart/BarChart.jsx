@@ -5,96 +5,100 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
-
-const chartConfig = {
-  type: "bar",
-  height: 240,
-  series: [
-    {
-      name: "Sales",
-      data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
-    },
-  ],
-  options: {
-    chart: {
-      toolbar: {
-        show: false,
+import useAxiosSecure from "../../../client/hooks/useAxiosSecure";
+import { useEffect, useState } from "react";
+import { ImStatsBars } from "react-icons/im";
+const BarChart = () => {
+  // const [series, levels] = useDashboardCampaignData();
+  const axiosSecure = useAxiosSecure();
+  const [series, setSeries] = useState([]);
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    axiosSecure
+      .get("/api/dashboard/get-month-wise-campaign-data")
+      .then((res) => {
+        console.log("res:", res.data.data);
+        setSeries(res.data.data.series);
+        setCategories(res.data.data.categories);
+      });
+  }, []);
+  const chartConfig = {
+    type: "bar",
+    height: 240,
+    series: [
+      {
+        name: "Campaign",
+        data: series,
       },
-    },
-    title: {
-      show: "",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    colors: ["#020617"],
-    plotOptions: {
-      bar: {
-        columnWidth: "40%",
-        borderRadius: 2,
-      },
-    },
-    xaxis: {
-      axisTicks: {
-        show: false,
-      },
-      axisBorder: {
-        show: false,
-      },
-      labels: {
-        style: {
-          colors: "#616161",
-          fontSize: "12px",
-          fontFamily: "inherit",
-          fontWeight: 400,
+    ],
+    options: {
+      chart: {
+        toolbar: {
+          show: false,
         },
       },
-      categories: [
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "#616161",
-          fontSize: "12px",
-          fontFamily: "inherit",
-          fontWeight: 400,
+      title: {
+        show: "",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      colors: ["#020617"],
+      plotOptions: {
+        bar: {
+          columnWidth: "40%",
+          borderRadius: 2,
         },
       },
-    },
-    grid: {
-      show: true,
-      borderColor: "#dddddd",
-      strokeDashArray: 5,
       xaxis: {
-        lines: {
-          show: true,
+        axisTicks: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        labels: {
+          style: {
+            colors: "#616161",
+            fontSize: "12px",
+            fontFamily: "inherit",
+            fontWeight: 400,
+          },
+        },
+        categories: categories,
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: "#616161",
+            fontSize: "12px",
+            fontFamily: "inherit",
+            fontWeight: 400,
+          },
         },
       },
-      padding: {
-        top: 5,
-        right: 20,
+      grid: {
+        show: true,
+        borderColor: "#dddddd",
+        strokeDashArray: 5,
+        xaxis: {
+          lines: {
+            show: true,
+          },
+        },
+        padding: {
+          top: 5,
+          right: 20,
+        },
+      },
+      fill: {
+        opacity: 0.8,
+      },
+      tooltip: {
+        theme: "dark",
       },
     },
-    fill: {
-      opacity: 0.8,
-    },
-    tooltip: {
-      theme: "dark",
-    },
-  },
-};
-
-export default function BarChart() {
+  };
   return (
     <Card>
       <CardHeader
@@ -104,6 +108,7 @@ export default function BarChart() {
         className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
       >
         <div className="w-max rounded-lg bg-[#8BC34A] p-5 text-white">
+          <ImStatsBars className="h-5 w-5" />
         </div>
         <div>
           <Typography variant="h6" color="blue-gray">
@@ -123,4 +128,6 @@ export default function BarChart() {
       </CardBody>
     </Card>
   );
-}
+};
+
+export default BarChart;

@@ -7,10 +7,10 @@ const TopNavInfo = ({ info }) => {
   const [logo] = useWebsiteLogo();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   return (
-    <div className="flex sm:flex-row flex-col sm:justify-between justify-center items-center w-full h-56 sm:h-32 sm:py-0 py-5 gap-5">
+    <div className="flex sm:flex-row flex-col sm:justify-between justify-center items-center w-full h-60 sm:h-32 sm:py-0 py-5 gap-5">
       <div className="flex gap-2 items-center">
         <Link to="/">
-          {" "}
+          {/* {" "}
           {logo.map((image) => (
             <img
               src={imageUrl + image?.image}
@@ -19,10 +19,13 @@ const TopNavInfo = ({ info }) => {
               className="h-full w-full object-cover"
               crossOrigin="anonymous"
             />
-          ))}
+          ))} */}
+          <h1 className="text-3xl font-bold text-secondary uppercase">
+            Fund<span className="text-primary">strive</span>
+          </h1>
         </Link>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 sm:ml-0 ml-[97px]">
         <Email />
         <div>
           <h1 className="text-xl font-semibold">Email</h1>
@@ -36,7 +39,9 @@ const TopNavInfo = ({ info }) => {
           <span className="text-sm font-normal">{info?.value}</span>
         </div>
       </div>
-      <LanguageSelector></LanguageSelector>
+      <div>
+        <LanguageSelector></LanguageSelector>
+      </div>
     </div>
   );
 };

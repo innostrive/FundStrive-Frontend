@@ -1,7 +1,8 @@
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import FormCard from "../../ui/FormCard";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Breadcrumbs } from "@material-tailwind/react";
 
 const ContactDetails = () => {
   const { id } = useParams();
@@ -23,26 +24,34 @@ const ContactDetails = () => {
   });
 
   return (
-    <FormCard title="Contact Details" className="space-y-5">
-      <div className="flex justify-between items-center">
-        <div className="flex flex-col gap-1">
-          <span className="text-base font-bold text-black">
-            {contactInfo?.name}
-          </span>
-          <span className="text-sm font-light text-black">
-            {contactInfo?.email}
-          </span>
+    <section>
+      <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
+        <NavLink to="/admin-dashboard/contact-info" className="opacity-60">
+          Contact Info
+        </NavLink>
+        <span className="cursor-context-menu">Contact Details</span>
+      </Breadcrumbs>
+      <FormCard title="Contact Details" className="space-y-5">
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col gap-1">
+            <span className="text-base font-bold text-black">
+              {contactInfo?.name}
+            </span>
+            <span className="text-sm font-light text-black">
+              {contactInfo?.email}
+            </span>
+          </div>
+          <div className="text-base font-semibold text-black">
+            <span>{contactInfo?.phone}</span>
+          </div>
         </div>
-        <div className="text-base font-semibold text-black">
-          <span>{contactInfo?.phone}</span>
+        <div>
+          <p className="text-lg font-light tracking-wide text-black">
+            {contactInfo?.message}
+          </p>
         </div>
-      </div>
-      <div>
-        <p className="text-lg font-light tracking-wide text-black">
-          {contactInfo?.message}
-        </p>
-      </div>
-    </FormCard>
+      </FormCard>
+    </section>
   );
 };
 

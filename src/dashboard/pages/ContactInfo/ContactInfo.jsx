@@ -111,7 +111,9 @@ const ContactInfo = () => {
 
                     <td className={classes}>
                       <div className="flex items-center">
-                        <NavLink to={`/dashboard/contact-details/${_id}`}>
+                        <NavLink
+                          to={`/admin-dashboard/contact-info/contact-details/${_id}`}
+                        >
                           <Tooltip content="View">
                             <IconButton variant="text">
                               <View />

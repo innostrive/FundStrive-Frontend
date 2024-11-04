@@ -1,10 +1,12 @@
 import EditCampaignInfo from "../../components/CampaignInfo/EditCampaignInfo";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import useReviewData from "../../hooks/useReviewData";
 import axios from "axios";
 import { toast } from "react-toastify";
+import DashboardLayout from "../../layout/DashboardLayout";
+import { Breadcrumbs } from "@material-tailwind/react";
 
 const EditCampaign = () => {
   const { id } = useParams();
@@ -39,17 +41,25 @@ const EditCampaign = () => {
     });
   };
   return (
-    <EditCampaignInfo
-      campaignInfo={campaignInfo}
-      selectedStatus={selectedStatus}
-      setSelectedStatus={setSelectedStatus}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-      campaignDescription={campaignDescription}
-      setCampaignDescription={setCampaignDescription}
-      campaignReviews={campaignReviews}
-      handleDelete={handleDelete}
-    />
+    <DashboardLayout>
+      <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
+        <NavLink to="/admin-dashboard/campaigns" className="opacity-60">
+          Campaigns
+        </NavLink>
+        <span className="cursor-context-menu">Update Campaign</span>
+      </Breadcrumbs>
+      <EditCampaignInfo
+        campaignInfo={campaignInfo}
+        selectedStatus={selectedStatus}
+        setSelectedStatus={setSelectedStatus}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        campaignDescription={campaignDescription}
+        setCampaignDescription={setCampaignDescription}
+        campaignReviews={campaignReviews}
+        handleDelete={handleDelete}
+      />
+    </DashboardLayout>
   );
 };
 

@@ -13,7 +13,7 @@ const Documents = ({ item }) => {
   return (
     <button
       onClick={openPdfInNewTab}
-      className="open-btn h-32 w-auto px-5 rounded-md border space-y-2 bg-white"
+      className="open-btn h-32 w-36  rounded-md border space-y-2 bg-white overflow-hidden"
     >
       <span>
         {" "}

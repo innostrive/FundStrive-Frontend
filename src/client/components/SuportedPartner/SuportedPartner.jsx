@@ -11,7 +11,7 @@ const SuportedPartner = () => {
   const title = t("componentTitle.partnerTitle");
   return (
     <div className="py-20">
-      <div className="py-20">
+      <div className="pb-5">
         <Title title={title} />
         <div className="h-2 w-20 bg-[#2B2A27] rounded-full mx-auto mt-3"></div>
       </div>
@@ -20,33 +20,19 @@ const SuportedPartner = () => {
           <Marquee
             className="m-5 flex"
             pauseOnHover={true}
-            autoFill={true}
             speed={20}
+            autoFill={true}
           >
             {partners.map((partner) => (
               <img
                 key={partner?._id}
                 src={imageUrl + partner?.image}
-                alt=""
-                className="object-cover h-20 w-20"
+                alt={partner?.name || "Partner Logo"}
+                className="object-cover h-20 w-20 rounded-full mx-4"
                 crossOrigin="anonymous"
               />
             ))}
           </Marquee>
-          {/* <Marquee
-            className="gap-4"
-            pauseOnHover={true}
-            autoFill={true}
-            direction="right"
-            speed={20}
-          >
-            <img src={brand7} alt="" className="object-cover" />
-            <img src={brand8} alt="" className="object-cover" />
-            <img src={brand9} alt="" className="object-cover" />
-            <img src={brand10} alt="" className="object-cover" />
-            <img src={brand11} alt="" className="object-cover" />
-            <img src={brand12} alt="" className="object-cover" />
-          </Marquee> */}
         </div>
       </Container>
     </div>

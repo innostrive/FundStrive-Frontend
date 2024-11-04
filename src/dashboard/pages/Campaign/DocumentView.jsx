@@ -10,7 +10,7 @@ const DocumentView = ({ asset }) => {
   const fileName = documentUrl.split("/").pop();
   return (
     <div
-      className="flex flex-col items-center space-y-5 h-auto w-32 cursor-pointer"
+      className="flex flex-col items-center space-y-5 h-auto w-32 cursor-pointer overflow-hidden"
       onClick={openPdfInNewTab}
     >
       <FaFilePdf size={20} className="text-red-400" />

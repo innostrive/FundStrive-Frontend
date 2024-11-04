@@ -1,7 +1,9 @@
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import FormCard from "../../ui/FormCard";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
+import DashboardLayout from "../../layout/DashboardLayout";
+import { Breadcrumbs } from "@material-tailwind/react";
 
 const PartnerGalleryView = () => {
   const { id } = useParams();
@@ -14,16 +16,24 @@ const PartnerGalleryView = () => {
     });
   }, [id]);
   return (
-    <FormCard title="Partner Gallery">
-      <div className="flex mx-auto my-5">
-        <img
-          src={imageUrl + partnerImage?.image}
-          crossOrigin="anonymous"
-          alt=""
-          className="h-32 w-44 object-contain"
-        />
-      </div>
-    </FormCard>
+    <DashboardLayout>
+      <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
+        <NavLink to="/admin-dashboard/banners" className="opacity-60">
+          Banners
+        </NavLink>
+        <span className="cursor-context-menu">Update Carusel</span>
+      </Breadcrumbs>
+      <FormCard title="Partner Gallery">
+        <div className="flex mx-auto my-5">
+          <img
+            src={imageUrl + partnerImage?.image}
+            crossOrigin="anonymous"
+            alt=""
+            className="h-32 w-44 object-contain"
+          />
+        </div>
+      </FormCard>
+    </DashboardLayout>
   );
 };
 

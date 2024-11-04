@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import CampaignInfo from "../../components/CampaignInfo/CampaignInfo";
@@ -10,6 +10,7 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  Breadcrumbs,
 } from "@material-tailwind/react";
 import {
   Square3Stack3DIcon,
@@ -24,6 +25,7 @@ import {
   GalleryIcon,
   DocumentIcon,
 } from "../../assets/icons/icons";
+import DashboardLayout from "../../layout/DashboardLayout";
 const AdminCampaignDetails = () => {
   const { id } = useParams();
   const [reviews] = useReviewData();
@@ -67,7 +69,13 @@ const AdminCampaignDetails = () => {
     },
   ];
   return (
-    <>
+    <DashboardLayout>
+      <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
+        <NavLink to="/admin-dashboard/campaigns" className="opacity-60">
+          Campaigns
+        </NavLink>
+        <span className="cursor-context-menu">Campaign Details</span>
+      </Breadcrumbs>
       <FormCard>
         <Tabs value="dashboard" className="bg-white">
           <TabsHeader className="relative w-1/3 bg-gray-300">
@@ -89,7 +97,7 @@ const AdminCampaignDetails = () => {
           </TabsBody>
         </Tabs>
       </FormCard>
-    </>
+    </DashboardLayout>
   );
 };
 

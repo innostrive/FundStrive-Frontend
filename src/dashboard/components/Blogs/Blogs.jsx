@@ -51,7 +51,7 @@ const Blogs = () => {
     <FormCard
       title="Blog List"
       icon={<Add />}
-      path="/dashboard/create-blog"
+      path="/admin-dashboard/blogs/create-blog"
       iconTitle="Add"
       className="w-full"
     >
@@ -111,14 +111,16 @@ const Blogs = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <NavLink to={`/dashboard/blog/${_id}`}>
+                      <NavLink
+                        to={`/admin-dashboard/blogs/blog-details/${_id}`}
+                      >
                         <Tooltip content="View">
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink to={`/dashboard/edit-blog/${_id}`}>
+                      <NavLink to={`/admin-dashboard/blogs/edit-blog/${_id}`}>
                         <Tooltip content="Edit">
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
