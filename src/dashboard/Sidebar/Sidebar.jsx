@@ -149,15 +149,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   )}
                   {item.subMenus && item.subMenus.length > 0 && (
                     <motion.ul
-                      initial={{ height: 0 }}
+                      initial={false}
                       animate={{
-                        height: openSubmenu === item.id ? "auto" : 0,
+                        height: openSubmenu === item?.id ? "auto" : 0,
                       }}
                       transition={{ type: "spring", stiffness: 200 }}
                       className="overflow-hidden"
                     >
                       {item.subMenus.map((subItem) => (
-                        <li key={subItem.name} className="px-2">
+                        <li key={subItem.id} className="px-2">
                           <NavLink
                             to={subItem.link}
                             className={({ isActive }) =>
@@ -168,6 +168,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   : ""
                               }`
                             }
+                            onClick={() => handleItemClick(subItem?.id)}
                           >
                             <div className="flex items-center p-3 rounded-lg">
                               <span className="mr-2">{subItem.icon}</span>
