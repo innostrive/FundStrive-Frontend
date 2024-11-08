@@ -15,8 +15,7 @@ import { useState, useMemo } from "react";
 import useUsersData from "../../hooks/useUsersData";
 import useAboutSettings from "../../hooks/useAboutSettings";
 import useAboutVision from "../../hooks/useAboutVision";
-
-const TABLE_HEAD = ["Key", "Value", "Status", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const AboutVision = () => {
   const [aboutVision, handleAboutVisionDelete] = useAboutVision();
@@ -56,8 +55,13 @@ const AboutVision = () => {
       return text;
     }
   };
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { aboutVision: aboutVisionT } = dashboardTranslations.aboutInfo;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { key, value, status, action } = dashboardTranslationsHeading;
+  const TABLE_HEAD = [key, value, status, action];
   return (
-    <FormCard title="About Vision List">
+    <FormCard title={aboutVisionT}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>

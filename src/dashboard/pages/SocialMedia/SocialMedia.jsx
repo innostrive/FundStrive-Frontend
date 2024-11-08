@@ -15,14 +15,17 @@ import FormCard from "../../ui/FormCard";
 import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import useFooterData from "../../hooks/useFooterData";
 import useSocialMediaData from "../../hooks/useSocialMediaData";
-
-const TABLE_HEAD = ["Name", "Link", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const SocialMedia = () => {
   const [socialMediaLink] = useSocialMediaData();
-
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { socialMedia } = dashboardTranslations.socialMedia;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { name, action, link } = dashboardTranslationsHeading;
+  const TABLE_HEAD = [name, link, action];
   return (
-    <FormCard title="Footer">
+    <FormCard title={socialMedia}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>

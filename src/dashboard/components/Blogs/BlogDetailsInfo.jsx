@@ -4,17 +4,20 @@ import BlogReview from "./BlogReview";
 import DashboardLayout from "../../layout/DashboardLayout";
 import { NavLink } from "react-router-dom";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const BlogDetailsInfo = ({ blogInfo, author, blogReviews }) => {
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { blogs, blogDetails, totalComments } = dashboardTranslations.blog;
   return (
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/blogs" className="opacity-60">
-          Blogs
+          {blogs}
         </NavLink>
-        <span className="cursor-context-menu">Blog Details</span>
+        <span className="cursor-context-menu">{blogDetails}</span>
       </Breadcrumbs>
-      <FormCard title="Blog Details">
+      <FormCard title={blogDetails}>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <span className="text-base font-medium text-black">Author:</span>
@@ -36,9 +39,11 @@ const BlogDetailsInfo = ({ blogInfo, author, blogReviews }) => {
           ></div>
         </div>
         <div className="space-y-5 my-10">
-          <span>Total Comments {blogReviews.length}</span>
-          {blogReviews.map((review) => (
-            <BlogReview review={review} />
+          <span>
+            {totalComments}: {blogReviews.length}
+          </span>
+          {blogReviews.map((review, i) => (
+            <BlogReview review={review} key={i} />
           ))}
         </div>
       </FormCard>

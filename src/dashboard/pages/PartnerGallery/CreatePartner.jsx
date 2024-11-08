@@ -7,12 +7,15 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import IButton from "../../ui/IButton";
 import DashboardLayout from "../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const CreatePartner = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { uploadPartnerImage, submit, carusel } = dashboardTranslations.carusel;
   const {
     register,
     reset,
@@ -54,18 +57,16 @@ const CreatePartner = () => {
         });
     } catch (err) {
       toast.error(err);
-      console.log(err);
     }
-    console.log("data", data);
   };
 
   return (
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/banners" className="opacity-60">
-          Banners
+          {carusel}
         </NavLink>
-        <span className="cursor-context-menu">Upload Partner Image</span>
+        <span className="cursor-context-menu">{uploadPartnerImage}</span>
       </Breadcrumbs>
       <FormCard title="Upload Partner Image">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
@@ -74,7 +75,7 @@ const CreatePartner = () => {
               htmlFor="image"
               className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
             >
-              Upload Image
+              {uploadPartnerImage}
             </label>
             <input
               type="file"
@@ -96,7 +97,7 @@ const CreatePartner = () => {
               )}
             </div>
           </div>
-          <IButton className="flex ml-auto">Submit</IButton>
+          <IButton className="flex ml-auto">{submit}</IButton>
         </form>
       </FormCard>
     </DashboardLayout>

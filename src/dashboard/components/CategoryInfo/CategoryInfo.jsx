@@ -10,7 +10,12 @@ import EditorToolbar, {
   modules,
   formats,
 } from "../../components/EditToolbar/EditToolbar";
-const CategoryInfo = ({ categoryInfo, setBlogContent, blogContent }) => {
+const CategoryInfo = ({
+  categoryInfo,
+  setBlogContent,
+  blogContent,
+  categoryInformation,
+}) => {
   const [edit, setEdit] = useState(false);
   const [blogData, setBlogData] = useState({});
   const { register } = useForm();
@@ -25,7 +30,7 @@ const CategoryInfo = ({ categoryInfo, setBlogContent, blogContent }) => {
   };
   return (
     <section>
-      <FormCard title="Category Information">
+      <FormCard title={categoryInformation}>
         <div className="grid grid-cols-1 gap-5 my-5">
           <div className="grid space-y-2">
             <h1 className="text-lg font-semibold text-secondary">

@@ -10,14 +10,17 @@ import { NavLink } from "react-router-dom";
 import FormCard from "../../../ui/FormCard";
 import { Edit } from "../../../assets/icons/icons";
 import useTopNavData from "../../../hooks/useTopNavData";
-
-const TABLE_HEAD = ["Key", "Value", "Status", "Action"];
+import { getTranslationObject } from "../../../../../i18next";
 
 const TopNavbarInfo = () => {
   const [topnavInfo] = useTopNavData();
-
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const dashboardTranslationsHeader = getTranslationObject("componentTitle");
+  const { topNavInfo: topNavInfoT } = dashboardTranslations.menu;
+  const { key, value, status, action } = dashboardTranslationsHeader;
+  const TABLE_HEAD = [key, value, status, action];
   return (
-    <FormCard title="Top Navber Info">
+    <FormCard title={topNavInfoT}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>

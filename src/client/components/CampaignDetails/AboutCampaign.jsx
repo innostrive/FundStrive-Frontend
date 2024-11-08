@@ -23,7 +23,7 @@ const AboutCampaign = ({ id }) => {
           </Typography>
         </div>
         <Progress
-          value={initialProgress}
+          value={Number(initialProgress)}
           className="bg-secondary text-xs"
           color="cyan"
           size="sm"

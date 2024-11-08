@@ -3,10 +3,14 @@ import FormCard from "../../ui/FormCard";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const ContactDetails = () => {
   const { id } = useParams();
   const [contactInfo, setContactInfo] = useState({});
+  const dashboardTranslationsHeaders = getTranslationObject("dashboard");
+  const { contactInfo: contactInfoT, contactDetails } =
+    dashboardTranslationsHeaders.contactInfo;
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
     axiosSecure.get(`/api/contact-us/${id}`).then((res) => {
@@ -27,11 +31,11 @@ const ContactDetails = () => {
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/contact-info" className="opacity-60">
-          Contact Info
+          {contactInfoT}
         </NavLink>
-        <span className="cursor-context-menu">Contact Details</span>
+        <span className="cursor-context-menu">{contactDetails}</span>
       </Breadcrumbs>
-      <FormCard title="Contact Details" className="space-y-5">
+      <FormCard title={contactDetails} className="space-y-5">
         <div className="flex justify-between items-center">
           <div className="flex flex-col gap-1">
             <span className="text-base font-bold text-black">

@@ -17,16 +17,19 @@ import {
 } from "../../../assets/icons/icons";
 import CaruselTitle from "../CaruselTitle/CaruselTitle";
 import DashboardLayout from "../../../layout/DashboardLayout";
+import { getTranslationObject } from "../../../../../i18next";
 const BannerSettings = () => {
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { headerCarusel, title } = dashboardTranslations.carusel;
   const data = [
     {
-      label: "Header Carusel",
+      label: headerCarusel,
       value: "dashboard",
       icon: SliderIcon,
       desc: <BannerSettingsList />,
     },
     {
-      label: "Carusel Title",
+      label: title,
       value: "title",
       icon: DocumentIcon,
       desc: <CaruselTitle />,

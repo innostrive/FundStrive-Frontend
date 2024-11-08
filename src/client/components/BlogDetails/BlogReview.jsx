@@ -18,7 +18,7 @@ const BlogReview = ({ blog }) => {
       );
       setBlogReviews(filteredReviews);
     }
-  }, [reviews, blog?._id]);
+  }, [blog?._id]);
 
   const handleDelete = async (id) => {
     console.log("id:", id);

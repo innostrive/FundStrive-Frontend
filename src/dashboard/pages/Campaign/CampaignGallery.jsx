@@ -16,9 +16,14 @@ import useCampaignData from "../../hooks/useCampaignData";
 import useCampaignGallery from "../../hooks/useCampaignGallery";
 import ViewSingleImage from "./ViewSingleImage";
 
-const TABLE_HEAD = ["Image", "Action"];
-
-const CampaignGallery = ({ id, campaignName }) => {
+const CampaignGallery = ({
+  id,
+  campaignName,
+  galleryList,
+  upload,
+  imageTableHeading,
+  actionTable,
+}) => {
   const [gallery, handleGalleryDelete] = useCampaignGallery(id);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [active, setActive] = useState(1);
@@ -57,12 +62,14 @@ const CampaignGallery = ({ id, campaignName }) => {
     if (active > 1) setActive(active - 1);
   };
 
+  const TABLE_HEAD = [imageTableHeading, actionTable];
+
   return (
     <FormCard
-      title="Gallery List"
+      title={galleryList}
       icon={<Add />}
       path={`/admin-dashboard/campaigns/upload-gallery/${id}`}
-      iconTitle="Upload"
+      iconTitle={upload}
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">

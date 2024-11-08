@@ -12,7 +12,7 @@ import EditorToolbar, {
 } from "../../components/EditToolbar/EditToolbar";
 import useCategoriesData from "../../hooks/useCategoriesData";
 import EditCampaignReview from "./EditCampaignReview";
-import EditCampaignFile from "./EditCampaignFile";
+import { getTranslationObject } from "../../../../i18next";
 const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
   const { id } = useParams();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
@@ -27,6 +27,21 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [campaignDescription, setCampaignDescription] = useState("");
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { createCampaign, campaigns, submit } =
+    dashboardTranslations.dashboardTitle;
+  const {
+    campaignName,
+    campaignTitle,
+    category,
+    targetAmount,
+    deadline: deadlineAmount,
+    uploadImage,
+    description,
+    status,
+    updateBtn,
+    reviews,
+  } = dashboardTranslations.form;
 
   useEffect(() => {
     axiosSecure.get(`/campaigns/${id}`).then((res) => {
@@ -76,21 +91,17 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
         },
       })
       .then((response) => {
-        console.log("Server response:", response);
         toast.success(response.data.message);
         navigate("/admin-dashboard/campaigs");
       })
-      .catch((error) => {
-        console.error("Error submitting data:", error);
-      });
-    // console.log("edit-campaign:", campaignData);
+      .catch((error) => {});
   };
   return (
     <FormCard title="Update Campaign">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-1 grid sm:grid-cols-2 grid-cols-1 gap-10">
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Name</span>
+            <span className="text-sm">{campaignName}</span>
             <input
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               type="text"
@@ -99,7 +110,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Title</span>
+            <span className="text-sm">{campaignTitle}</span>
             <input
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               type="text"
@@ -108,7 +119,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Target Amount</span>
+            <span className="text-sm">{targetAmount}</span>
             <input
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               type="text"
@@ -117,7 +128,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Deadline</span>
+            <span className="text-sm">{deadlineAmount}</span>
             <input
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               type="date"
@@ -130,7 +141,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
             />
           </div>
           <div className="grid grid-cols-1 space-y-5">
-            <span className="text-sm">Status</span>
+            <span className="text-sm">{status}</span>
             <select
               label="Select Status"
               value={selectedStatus}
@@ -142,19 +153,15 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
             </select>
           </div>
           <div className="grid grid-cols-1 space-y-5">
-            <span className="text-sm">Category</span>
+            <span className="text-sm">{category}</span>
             <select
               label="Category"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-auto text-base rounded"
             >
-              {categories.map((category) => (
-                <option
-                  key={category?._id}
-                  value={category?._id}
-                  className="text-black"
-                >
+              {categories.map((category, i) => (
+                <option key={i} value={category?._id} className="text-black">
                   {category.name}
                 </option>
               ))}
@@ -162,7 +169,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
           </div>
           <div className="col-span-2">
             <div className="space-y-5">
-              <span className="text-sm mt-5">Description</span>
+              <span className="text-sm mt-5">{description}</span>
               <EditorToolbar toolbarId={"t2"} />
               <ReactQuill
                 theme="snow"
@@ -189,7 +196,7 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
               htmlFor="fileImage"
               className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
             >
-              Upload Image
+              {uploadImage}
             </label>
             <input
               multiple
@@ -221,12 +228,15 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
             </div>
           </div>
         </div>
-        <IButton className="my-5 flex ml-auto">update</IButton>
+        <IButton className="my-5 flex ml-auto">{updateBtn}</IButton>
       </form>
       <div className="space-y-5">
-        <span>Reviews: {campaignReviews?.length}</span>
-        {campaignReviews.map((campaignReview) => (
+        <span>
+          {reviews}: {campaignReviews?.length}
+        </span>
+        {campaignReviews.map((campaignReview, i) => (
           <EditCampaignReview
+            key={i}
             campaignReview={campaignReview}
             handleDelete={handleDelete}
           />

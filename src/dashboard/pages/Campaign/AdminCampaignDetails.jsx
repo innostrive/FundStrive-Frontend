@@ -12,11 +12,7 @@ import {
   TabPanel,
   Breadcrumbs,
 } from "@material-tailwind/react";
-import {
-  Square3Stack3DIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-} from "@heroicons/react/24/solid";
+
 import CampaignGallery from "./CampaignGallery";
 import CampaignDocuments from "./CampaignDocuments";
 import FormCard from "../../ui/FormCard";
@@ -26,8 +22,19 @@ import {
   DocumentIcon,
 } from "../../assets/icons/icons";
 import DashboardLayout from "../../layout/DashboardLayout";
+import { getTranslationObject } from "../../../../i18next";
 const AdminCampaignDetails = () => {
   const { id } = useParams();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    campaignList,
+    galleryList,
+    documentList,
+    campaigns,
+    campaignInformation,
+    upload,
+  } = dashboardTranslations.dashboardTitle;
+  const { imageTableHeading, actionTable } = dashboardTranslations.form;
   const [reviews] = useReviewData();
   const [campaignInfo, setCampaignInfo] = useState({});
   const [category, setCategory] = useState();
@@ -43,7 +50,7 @@ const AdminCampaignDetails = () => {
 
   const data = [
     {
-      label: "Campaign List",
+      label: campaignList,
       value: "dashboard",
       icon: CampaignIcon,
       desc: (
@@ -52,29 +59,46 @@ const AdminCampaignDetails = () => {
           category={category}
           setCategory={setCategory}
           campaignReviews={campaignReviews}
+          campaignInformation={campaignInformation}
         />
       ),
     },
     {
-      label: "Gallery List",
+      label: galleryList,
       value: "profile",
       icon: GalleryIcon,
-      desc: <CampaignGallery id={id} campaignName={campaignInfo?.title} />,
+      desc: (
+        <CampaignGallery
+          id={id}
+          campaignName={campaignInfo?.title}
+          galleryList={galleryList}
+          upload={upload}
+          imageTableHeading={imageTableHeading}
+          actionTable={actionTable}
+        />
+      ),
     },
     {
-      label: "Document List",
+      label: documentList,
       value: "settings",
       icon: DocumentIcon,
-      desc: <CampaignDocuments id={id} campaignName={campaignInfo?.title} />,
+      desc: (
+        <CampaignDocuments
+          id={id}
+          campaignName={campaignInfo?.title}
+          documentList={documentList}
+          upload={upload}
+        />
+      ),
     },
   ];
   return (
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/campaigns" className="opacity-60">
-          Campaigns
+          {campaigns}
         </NavLink>
-        <span className="cursor-context-menu">Campaign Details</span>
+        <span className="cursor-context-menu">{campaignInformation}</span>
       </Breadcrumbs>
       <FormCard>
         <Tabs value="dashboard" className="bg-white">

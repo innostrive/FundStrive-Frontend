@@ -13,8 +13,7 @@ import { Add, Delete, Edit, View } from "../../../assets/icons/icons";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import FormCard from "../../../ui/FormCard";
-
-const TABLE_HEAD = ["Name", "Carusel", "Status", "Action"];
+import { getTranslationObject } from "../../../../../i18next";
 
 const BannerSettingsList = () => {
   const [banners, handleBannerDelete] = useBanner();
@@ -48,11 +47,16 @@ const BannerSettingsList = () => {
     if (active > 1) setActive(active - 1);
   };
 
+  const dashboardTranslationsHeader = getTranslationObject("componentTitle");
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { caruselList } = dashboardTranslations.carusel;
+  const { name, carusel, status, action, add } = dashboardTranslationsHeader;
+  const TABLE_HEAD = [name, carusel, status, action];
   return (
     <FormCard
-      title="Header Caruesl List"
+      title={caruselList}
       icon={<Add />}
-      iconTitle="Add"
+      iconTitle={add}
       path="/admin-dashboard/banners/upload-carusel"
     >
       <CardBody className="border p-0">
@@ -66,7 +70,7 @@ const BannerSettingsList = () => {
                     color="blue-gray"
                     className="font-bold leading-none opacity-70"
                   >
-                    {head}
+                    {head || ""}
                   </Typography>
                 </th>
               ))}

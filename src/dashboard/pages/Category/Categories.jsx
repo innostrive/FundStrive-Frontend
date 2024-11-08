@@ -13,12 +13,15 @@ import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
+import { getTranslationObject } from "../../../../i18next";
 
 const TABLE_HEAD = ["Category", "Status", "Action"];
 
 const Categories = () => {
   const [categories, handleCategoryDelete] = useCategoriesData();
-
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { categoryList, add, previous, nextT } =
+    dashboardTranslations.dashboardTitle;
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -50,10 +53,10 @@ const Categories = () => {
 
   return (
     <FormCard
-      title="Category List"
+      title={categoryList}
       path="/admin-dashboard/categories/create-category"
       icon={<Add />}
-      iconTitle="Add"
+      iconTitle={add}
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -145,7 +148,7 @@ const Categories = () => {
             onClick={prev}
             disabled={active === 1}
           >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> {previous}
           </Button>
 
           <div className="flex items-center gap-2">
@@ -162,7 +165,7 @@ const Categories = () => {
             onClick={next}
             disabled={active === totalPages}
           >
-            Next
+            {nextT}
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>

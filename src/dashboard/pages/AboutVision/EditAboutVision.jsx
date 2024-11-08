@@ -8,6 +8,7 @@ import IButton from "../../ui/IButton";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const EditAboutVision = () => {
   const { id } = useParams();
@@ -45,20 +46,28 @@ const EditAboutVision = () => {
     });
     console.log("edit:", editData);
   };
-
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    aboutVision,
+    updateAboutVision,
+    introName,
+    successValue,
+    status,
+    update,
+  } = dashboardTranslations.aboutInfo;
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/about-info" className="opacity-60">
-          About Info
+          {aboutVision}
         </NavLink>
-        <span className="cursor-context-menu">Update About Vision</span>
+        <span className="cursor-context-menu">{updateAboutVision}</span>
       </Breadcrumbs>
-      <FormCard title="Update About Vision">
+      <FormCard title={updateAboutVision}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-5">
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Name</span>
+              <span className="text-sm">{introName}</span>
               <input
                 type="text"
                 size="lg"
@@ -70,7 +79,7 @@ const EditAboutVision = () => {
               />
             </div>
             <div className="grid space-y-2">
-              <span className="text-sm">Success Value</span>
+              <span className="text-sm">{successValue}</span>
               <textarea
                 type="text"
                 className="text-base h-auto min-h-40 border border-gray-300 px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded"
@@ -80,7 +89,8 @@ const EditAboutVision = () => {
                 {...register("value")}
               />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-2 space-y-2">
+              <span className="text-sm">{status}</span>
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -92,7 +102,7 @@ const EditAboutVision = () => {
             </div>
           </div>
           <IButton type="submit" className="my-5 flex ml-auto">
-            update
+            {update}
           </IButton>
         </form>
       </FormCard>

@@ -19,7 +19,6 @@ const Projects = () => {
     about[0].value = volunteer?.length;
     donation[0].value = count?.raised_amount;
   } else {
-    console.error("No items found with the key 'Volunteer'");
   }
 
   const combinedArray = aboutActivity.map((n, index) => ({
@@ -31,8 +30,9 @@ const Projects = () => {
     <section className="py-20 bg-[#caccd1]">
       <Container>
         <div className="grid sm:grid-cols-4 grid-cols-1 gap-4 sm:px-0 px-5">
-          {combinedArray.map((activity) => (
+          {combinedArray.map((activity, i) => (
             <div
+              key={i}
               className="h-auto w-auto p-10 rounded-md grid place-content-center place-items-center gap-2"
               style={{ backgroundColor: activity?.color }}
             >
@@ -45,27 +45,6 @@ const Projects = () => {
               </p>
             </div>
           ))}
-          {/* <div className="h-auto w-auto p-10 bg-[#2B2A27] rounded-md grid place-content-center place-items-center gap-2">
-            <img src={award} alt="" className="h-12 w-12" />
-            <span className="text-2xl font-bold text-[#f3f4f7]">6528+</span>
-            <p className="text-sm font-light text-[#f3f4f7] tracking-normal">
-              Award
-            </p>
-          </div>
-          <div className="h-auto w-auto p-10 bg-[#f47721] rounded-md grid place-content-center place-items-center gap-2">
-            <img src={volunteer} alt="" className="h-12 w-12" />
-            <span className="text-2xl font-bold text-[#f3f4f7]">6528+</span>
-            <p className="text-sm font-light text-[#f3f4f7] tracking-normal">
-              Total Volunteer
-            </p>
-          </div>
-          <div className="h-auto w-auto p-10 bg-[#7469B6] rounded-md grid place-content-center place-items-center gap-2">
-            <img src={donation} alt="" className="h-12 w-12" />
-            <span className="text-2xl font-bold text-[#f3f4f7]">6528+</span>
-            <p className="text-sm font-light text-[#f3f4f7] tracking-normal">
-              Dontaion Completed
-            </p>
-          </div> */}
         </div>
       </Container>
     </section>

@@ -23,7 +23,6 @@ const AboutUs = () => {
     about[0].value = volunteer?.length;
     donation[0].value = count?.raised_amount;
   } else {
-    console.error("No items found with the key 'Volunteer'");
   }
 
   const image = [happy, volunteers, donations, award];
@@ -38,16 +37,12 @@ const AboutUs = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-40 px-5 sm:px-0">
           <div className="space-y-8 sm:place-self-center">
             {aboutIntro.map((intro) => (
-              <>
-                <Title
-                  title={intro?.key}
-                  className="text-left"
-                  key={intro?._id}
-                />
+              <div key={intro?._id}>
+                <Title title={intro?.key} className="text-left" />
                 <p className="text-sm font-light leading-loose tracking-normal">
                   {intro?.value}
                 </p>
-              </>
+              </div>
             ))}
             <div>
               <Link to={"/about-us"}>

@@ -5,6 +5,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const CreateFaq = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,7 +27,7 @@ const CreateFaq = () => {
       if (res.status === 200) {
         toast.success(res.data.message);
         reset();
-        navigate("/dashboard/faq-settings");
+        navigate("/admin-dashboard/faq");
         // console.log("faq:", res.data);
       } else {
         toast.warning("Something Wrong!!!");
@@ -34,18 +35,28 @@ const CreateFaq = () => {
     });
     // console.log("data:", payload);
   };
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    createFaq,
+    question,
+    answer,
+    submit,
+    faq,
+    questionError,
+    answerError,
+  } = dashboardTranslations.faq;
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/faq" className="opacity-60">
-          FAQ
+          {faq}
         </NavLink>
-        <span className="cursor-context-menu">Create Faq</span>
+        <span className="cursor-context-menu">{createFaq}</span>
       </Breadcrumbs>
       <FormCard title="Create FAQ">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Question</span>
+            <span className="text-sm">{question}</span>
             <input
               type="text"
               size="lg"
@@ -53,7 +64,7 @@ const CreateFaq = () => {
               id="key"
               name="key"
               {...register("key", {
-                required: "Question is required",
+                required: questionError,
               })}
             />
             {errors.key && (
@@ -62,14 +73,14 @@ const CreateFaq = () => {
           </div>
 
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Answer</span>
+            <span className="text-sm">{answer}</span>
             <textarea
               type="text"
               className="text-base border border-gray-300 h-auto min-h-40 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               id="value"
               name="value"
               {...register("value", {
-                required: "Answer is required",
+                required: answerError,
               })}
             />
             {errors.value && (
@@ -79,7 +90,7 @@ const CreateFaq = () => {
             )}
           </div>
 
-          <IButton className="flex ml-auto mt-5">Submit</IButton>
+          <IButton className="flex ml-auto mt-5">{submit}</IButton>
         </form>
       </FormCard>
     </section>

@@ -48,8 +48,8 @@ const Volunteer = () => {
           }}
           modules={[Pagination, Navigation, Autoplay]}
         >
-          {volunteer.map((data) => (
-            <SwiperSlide key={data._id}>
+          {volunteer.map((data, i) => (
+            <SwiperSlide key={data?._id}>
               <div className="relative">
                 <div className="h-auto min-h-96 w-full grid grid-rows-12 justify-items-center shadow-lg rounded-xl sm:max-w-96 bg-white px-5 sm:px-0">
                   <div

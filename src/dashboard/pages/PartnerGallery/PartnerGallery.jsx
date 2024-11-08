@@ -13,8 +13,7 @@ import { useState, useMemo } from "react";
 import usePartnerGallery from "../../hooks/usePartnerGallery";
 import FormCard from "../../ui/FormCard";
 import { Add, Delete, Edit, View } from "../../assets/icons/icons";
-
-const TABLE_HEAD = ["Name", "Image", "Status", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const PrtnerGallery = () => {
   const [partner, handlePartnerDelete] = usePartnerGallery();
@@ -47,12 +46,16 @@ const PrtnerGallery = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
-
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { image, status, action, add } = dashboardTranslationsHeading;
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { partnerGallery } = dashboardTranslations.carusel;
+  const TABLE_HEAD = [image, status, action];
   return (
     <FormCard
-      title="Partner List"
+      title={partnerGallery}
       icon={<Add />}
-      iconTitle="Add"
+      iconTitle={add}
       path="/admin-dashboard/banners/create-partner"
     >
       <CardBody className="border p-0">
@@ -82,15 +85,6 @@ const PrtnerGallery = () => {
               return (
                 <tr key={_id}>
                   <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {name}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
                     <img
                       src={imageUrl + image}
                       crossOrigin="anonymous"
@@ -119,7 +113,7 @@ const PrtnerGallery = () => {
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <NavLink
+                      {/* <NavLink
                         to={`/admin-dashboard/banners/edit-partner-gallery/${_id}`}
                       >
                         <Tooltip content="Edit">
@@ -127,7 +121,7 @@ const PrtnerGallery = () => {
                             <Edit className="size-5 text-green-500" />
                           </IconButton>
                         </Tooltip>
-                      </NavLink>
+                      </NavLink> */}
                       <Tooltip content="Delete">
                         <IconButton
                           variant="text"

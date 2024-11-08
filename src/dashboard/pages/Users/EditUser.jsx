@@ -9,9 +9,23 @@ import IButton from "../../ui/IButton";
 import TextInput from "../../ui/TextInput";
 import Form from "../../components/form/Form";
 import DashboardLayout from "../../layout/DashboardLayout";
+import { getTranslationObject } from "../../../../i18next";
 
 const EditUser = () => {
   const { id } = useParams();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    name,
+    email,
+    phoneNumber,
+    address,
+    uploadImage,
+    imageU,
+    postCode,
+    country,
+  } = dashboardTranslations?.form;
+  const { updateUser, users, updateBtn } =
+    dashboardTranslations?.dashboardTitle;
   const { register, handleSubmit, reset, control } = useForm();
   const [userInfo, setUserInfo] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -69,7 +83,6 @@ const EditUser = () => {
       })
       .catch((error) => {
         toast.error(error);
-        console.error("Error submitting data:", error);
       });
   };
 
@@ -77,15 +90,15 @@ const EditUser = () => {
     <DashboardLayout>
       <Breadcrumbs className="mb-5 bg-gray-400 bg-opacity-30">
         <NavLink to="/admin-dashboard/users" className="opacity-60">
-          Users
+          {users}
         </NavLink>
-        <span className="cursor-context-menu">Update User</span>
+        <span className="cursor-context-menu">{updateUser}</span>
       </Breadcrumbs>
-      <FormCard title="Update User">
+      <FormCard title={updateUser}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid sm:grid-cols-2 grid-cols-1 gap-10">
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Name</span>
+              <span className="text-sm">{name}</span>
               <input
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 type="text"
@@ -94,7 +107,7 @@ const EditUser = () => {
               />
             </div>
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Email</span>
+              <span className="text-sm">{email}</span>
               <input
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 type="email"
@@ -103,7 +116,7 @@ const EditUser = () => {
               />
             </div>
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Phone Number</span>
+              <span className="text-sm">{phoneNumber}</span>
               <input
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 type="text"
@@ -112,7 +125,7 @@ const EditUser = () => {
               />
             </div>
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Country</span>
+              <span className="text-sm">{country}</span>
               <input
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 type="text"
@@ -121,7 +134,7 @@ const EditUser = () => {
               />
             </div>
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Status</span>
+              <span className="text-sm">{status}</span>
               <select
                 label="Select Status"
                 value={selectedStatus}
@@ -133,7 +146,7 @@ const EditUser = () => {
               </select>
             </div>
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Post Code</span>
+              <span className="text-sm">{postCode}</span>
               <input
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 type="text"
@@ -142,7 +155,7 @@ const EditUser = () => {
               />
             </div>
             <div className="grid grid-cols-1 col-span-2 space-y-2">
-              <span className="text-sm">Address</span>
+              <span className="text-sm">{address}</span>
               <input
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 type="text"
@@ -152,7 +165,7 @@ const EditUser = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 col-span-2 space-y-2 mt-5">
-            <span className="text-sm">Image</span>
+            <span className="text-sm">{imageU}</span>
             <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
               <img
                 src={imageUrl + userInfo?.image}
@@ -167,7 +180,7 @@ const EditUser = () => {
               htmlFor="image"
               className="text-base text-black font-medium text-center cursor-pointer block h-full w-full border border-gray-300 p-2 rounded-md"
             >
-              Upload Image
+              {uploadImage}
             </label>
             <input
               type="file"
@@ -197,9 +210,7 @@ const EditUser = () => {
               )}
             </div>
           </div>
-          <IButton title="update" className="flex ml-auto my-5">
-            update
-          </IButton>
+          <IButton className="flex ml-auto my-5">{updateBtn}</IButton>
         </form>
       </FormCard>
     </DashboardLayout>

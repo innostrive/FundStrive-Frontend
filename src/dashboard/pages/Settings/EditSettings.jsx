@@ -9,6 +9,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import DashboardLayout from "../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const EditSettings = () => {
   const { id } = useParams();
@@ -17,6 +18,10 @@ const EditSettings = () => {
   const [settings, setSettings] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
   const navigate = useNavigate();
+
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { navMenu, updateNavmenu, menu, status, update } =
+    dashboardTranslations.menu;
   const { register, reset, handleSubmit } = useForm();
 
   useEffect(() => {
@@ -42,24 +47,22 @@ const EditSettings = () => {
         toast.success(res.data.message);
         navigate("/dashboard/menu-settings");
       }
-      console.log(res.data.data);
     });
-    console.log("edit:", editData);
   };
 
   return (
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/navmenus" className="opacity-60">
-          Navmenus
+          {navMenu}
         </NavLink>
-        <span className="cursor-context-menu">Update Navbar Menu</span>
+        <span className="cursor-context-menu">{updateNavmenu}</span>
       </Breadcrumbs>
       <FormCard title="Update Navbar Menu">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-10">
             <div className="grid grid-cols-1 col-span-2 space-y-2">
-              <span className="text-sm">Menu</span>
+              <span className="text-sm">{menu}</span>
               <input
                 type="text"
                 size="lg"
@@ -70,7 +73,8 @@ const EditSettings = () => {
                 {...register("key")}
               />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-2 space-y-2">
+              <span className="text-sm">{status}</span>
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -82,7 +86,7 @@ const EditSettings = () => {
             </div>
           </div>
           <IButton type="submit" className="my-5 flex ml-auto">
-            update
+            {update}
           </IButton>
         </form>
       </FormCard>

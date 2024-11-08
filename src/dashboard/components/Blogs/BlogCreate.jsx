@@ -19,12 +19,26 @@ import IButton from "../../ui/IButton";
 import { Add } from "../../assets/icons/icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layout/DashboardLayout";
+import { getTranslationObject } from "../../../../i18next";
 
 const BlogCreate = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    blogs,
+    uploadBlog,
+    title,
+    tag,
+    content,
+    uploadImage,
+    submit,
+    titleError,
+    tagError,
+    contentError,
+  } = dashboardTranslations.blog;
   const {
     register,
     handleSubmit,
@@ -70,15 +84,15 @@ const BlogCreate = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/blogs" className="opacity-60">
-          Blogs
+          {blogs}
         </NavLink>
-        <span className="cursor-context-menu">Create Blog</span>
+        <span className="cursor-context-menu">{uploadBlog}</span>
       </Breadcrumbs>
       <FormCard title="Upload Blog">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2">
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Title
+              {title}
             </Typography>
             <input
               type="text"
@@ -87,11 +101,7 @@ const BlogCreate = () => {
               id="title"
               name="title"
               {...register("title", {
-                required: "Title is required",
-                minLength: {
-                  value: 3,
-                  message: "Title must be at least 3 characters long",
-                },
+                required: titleError,
               })}
             />
             {errors.title && (
@@ -102,7 +112,7 @@ const BlogCreate = () => {
 
             {/* Tags */}
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Tags
+              {tag}
             </Typography>
             <input
               type="text"
@@ -111,11 +121,7 @@ const BlogCreate = () => {
               id="tags"
               name="tags"
               {...register("tags", {
-                required: "Tags are required",
-                minLength: {
-                  value: 2,
-                  message: "Tags must be at least 2 characters long",
-                },
+                required: tagError,
               })}
             />
             {errors.tags && (
@@ -124,13 +130,13 @@ const BlogCreate = () => {
               </span>
             )}
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Content
+              {content}
             </Typography>
             <EditorToolbar toolbarId={"t2"} />
             <Controller
               name="content"
               control={control}
-              rules={{ required: "Content is required" }}
+              rules={{ required: contentError }}
               render={({
                 field: { onChange, value },
                 fieldState: { error },
@@ -154,7 +160,7 @@ const BlogCreate = () => {
               htmlFor="image"
               className="text-base text-black font-medium text-center cursor-pointer block h-full w-full border border-gray-400 p-2 rounded-md"
             >
-              Upload Image
+              {uploadImage}
             </label>
             <input
               type="file"
@@ -177,7 +183,7 @@ const BlogCreate = () => {
               )}
             </div>
           </div>
-          <IButton className="flex ml-auto my-5">Submit</IButton>
+          <IButton className="flex ml-auto my-5">{submit}</IButton>
         </form>
       </FormCard>
     </DashboardLayout>

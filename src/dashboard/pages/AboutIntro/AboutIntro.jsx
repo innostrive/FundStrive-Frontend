@@ -14,8 +14,7 @@ import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import useAboutIntroData from "../../hooks/useAboutIntroData";
-
-const TABLE_HEAD = ["Key", "Intro", "Status", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const AboutIntro = () => {
   const [aboutIntro] = useAboutIntroData();
@@ -26,8 +25,15 @@ const AboutIntro = () => {
       return text;
     }
   };
+
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { aboutIntro: aboutIntroT } = dashboardTranslations.aboutInfo;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { name, intro, status, action } = dashboardTranslationsHeading;
+
+  const TABLE_HEAD = [name, intro, status, action];
   return (
-    <FormCard title="About Intro">
+    <FormCard title={aboutIntroT}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>

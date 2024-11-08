@@ -6,7 +6,6 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import { Square3Stack3DIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { GalleryIcon, SliderIcon } from "../../assets/icons/icons";
 import AboutCampaignSettings from "../AboutCampaignSettings/AboutCampaignSettings";
 import AboutVision from "../AboutVision/AboutVison";
@@ -14,22 +13,26 @@ import AboutHeaderInfo from "../AboutDetails/AboutHeaderInfo";
 import AboutMissionInfo from "../AboutDetails/AboutMissionInfo";
 import FormCard from "../../ui/FormCard";
 import AboutIntro from "../AboutIntro/AboutIntro";
+import { getTranslationObject } from "../../../../i18next";
 const AboutInfo = () => {
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { campaignData, aboutIntro, aboutVision } =
+    dashboardTranslations.aboutInfo;
   const data = [
     {
-      label: "Campaign Settings",
+      label: campaignData,
       value: "campaign",
       icon: SliderIcon,
       desc: <AboutCampaignSettings />,
     },
     {
-      label: "About Intro",
+      label: aboutIntro,
       value: "intro",
       icon: GalleryIcon,
       desc: <AboutIntro />,
     },
     {
-      label: "About Vision",
+      label: aboutVision,
       value: "vision",
       icon: GalleryIcon,
       desc: <AboutVision />,

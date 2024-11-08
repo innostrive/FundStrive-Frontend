@@ -13,8 +13,7 @@ import FormCard from "../../ui/FormCard";
 import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import useContactInfo from "../../hooks/useContactInfo";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-
-const TABLE_HEAD = ["Name", "Email", "Phone", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const ContactInfo = () => {
   const [contactInfo, handleContactInfoDelete] = useContactInfo();
@@ -46,9 +45,14 @@ const ContactInfo = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
+  const dashboardTranslationsHeaders = getTranslationObject("componentTitle");
+  const { name, email, phone, action } = dashboardTranslationsHeaders;
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { contactInfo: contactInfoT } = dashboardTranslations.contactInfo;
 
+  const TABLE_HEAD = [name, email, phone, action];
   return (
-    <FormCard title="Contact Info">
+    <FormCard title={contactInfoT}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
@@ -60,7 +64,7 @@ const ContactInfo = () => {
                     color="blue-gray"
                     className="font-bold leading-none opacity-70"
                   >
-                    {head}
+                    {head || ""}
                   </Typography>
                 </th>
               ))}

@@ -12,16 +12,19 @@ import { GalleryIcon, SliderIcon } from "../../assets/icons/icons";
 import NavbarLogo from "./NavbarLogo";
 import FooterLogo from "./FooterLogo";
 import FormCard from "../../ui/FormCard";
+import { getTranslationObject } from "../../../../i18next";
 const WebsiteLogo = () => {
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { navbarLogo, footerLogo } = dashboardTranslations.websiteLogo;
   const data = [
     {
-      label: "Navbar Logo",
+      label: navbarLogo,
       value: "navbar",
       icon: SliderIcon,
       desc: <NavbarLogo />,
     },
     {
-      label: "Footer Logo",
+      label: footerLogo,
       value: "footer",
       icon: GalleryIcon,
       desc: <FooterLogo />,

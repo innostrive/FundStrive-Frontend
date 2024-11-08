@@ -12,14 +12,18 @@ import { NavLink } from "react-router-dom";
 import FormCard from "../../ui/FormCard";
 import useLogo from "../../hooks/useLogo";
 import useFooterLogo from "../../hooks/useFooterLogo";
-
-const TABLE_HEAD = ["Name", "Logo", "Status", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const FooterLogo = () => {
   const [footerLogo] = useFooterLogo();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { name, logo: navlogo, status, action } = dashboardTranslationsHeading;
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { footerLogo: footerLogoT } = dashboardTranslations.websiteLogo;
+  const TABLE_HEAD = [name, navlogo, status, action];
   return (
-    <FormCard title="Website Logo">
+    <FormCard title={footerLogoT}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
@@ -57,7 +61,11 @@ const FooterLogo = () => {
                   </td>
                   <td className={classes}>
                     <img
-                      src={imageUrl + image}
+                      src={
+                        image
+                          ? imageUrl + image
+                          : "default-placeholder-image.jpg"
+                      }
                       crossOrigin="anonymous"
                       alt=""
                       className="h-16 w-16 object-cover rounded-full"

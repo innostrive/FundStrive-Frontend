@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import FormCard from "../../ui/FormCard";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const FaqDetails = () => {
   const { id } = useParams();
@@ -14,16 +15,17 @@ const FaqDetails = () => {
       setFaqDetails(res.data.data);
     });
   }, []);
-
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { faqDetails: faqDetailsT, faq } = dashboardTranslations.faq;
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/faq" className="opacity-60">
-          FAQ
+          {faq}
         </NavLink>
-        <span className="cursor-context-menu">Faq Details</span>
+        <span className="cursor-context-menu">{faqDetailsT}</span>
       </Breadcrumbs>
-      <FormCard title="FAQ Details">
+      <FormCard title={faqDetailsT}>
         <div className="flex flex-col gap-5">
           <div className="flex justify-between items-center">
             <span className="text-lg font-semibold text-secondary">

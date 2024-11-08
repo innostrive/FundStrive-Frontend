@@ -8,12 +8,16 @@ import IButton from "../../ui/IButton";
 import axios from "axios";
 import DashboardLayout from "../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const SettingsInfo = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const URL = import.meta.env.VITE_BASE_URL;
   const [settings, setSettings] = useState({});
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { navMenu, navMenuDetails, name, menu, status } =
+    dashboardTranslations.menu;
   const [selectedStatus, setSelectedStatus] = useState("");
   useEffect(() => {
     axios.get(`${URL}/settings/${id}`).then((res) => {
@@ -26,14 +30,14 @@ const SettingsInfo = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/navmenus" className="opacity-60">
-          Navbar Menus
+          {navMenu}
         </NavLink>
-        <span className="cursor-context-menu">Navbar Menu Details</span>
+        <span className="cursor-context-menu">{navMenuDetails}</span>
       </Breadcrumbs>
       <FormCard title="Navbar Menu Details">
         <div className="grid grid-cols-2 gap-10">
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Name</span>
+            <span className="text-sm">{name}</span>
             <input
               type="text"
               size="lg"
@@ -45,7 +49,7 @@ const SettingsInfo = () => {
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Menu</span>
+            <span className="text-sm">{menu}</span>
             <input
               type="text"
               size="lg"
@@ -57,7 +61,7 @@ const SettingsInfo = () => {
             />
           </div>
           <div className="grid col-span-2 space-y-2">
-            <span className="text-sm">Status</span>
+            <span className="text-sm">{status}</span>
             <input
               type="text"
               size="lg"

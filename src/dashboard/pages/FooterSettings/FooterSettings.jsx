@@ -1,27 +1,24 @@
 import {
   CardBody,
-  CardFooter,
   Typography,
-  Chip,
-  Button,
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
-import { useState, useMemo } from "react";
-import usePartnerGallery from "../../hooks/usePartnerGallery";
 import FormCard from "../../ui/FormCard";
-import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import { Edit } from "../../assets/icons/icons";
 import useFooterData from "../../hooks/useFooterData";
-
-const TABLE_HEAD = ["Name", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const FooterSettings = () => {
   const footerData = useFooterData();
-
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { footer } = dashboardTranslations.footer;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { name, action } = dashboardTranslationsHeading;
+  const TABLE_HEAD = [name, action];
   return (
-    <FormCard title="Footer">
+    <FormCard title={footer}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>

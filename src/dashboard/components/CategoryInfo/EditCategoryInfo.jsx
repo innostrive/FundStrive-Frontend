@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
-import TextInput from "../../ui/TextInput";
 import ReactQuill from "react-quill";
+import { getTranslationObject } from "../../../../i18next";
 import EditorToolbar, {
   modules,
   formats,
 } from "../../components/EditToolbar/EditToolbar";
-const EditCategoryInfo = () => {
+const EditCategoryInfo = ({ updateCategory, updateBtn }) => {
   const { id } = useParams();
+  const categoryTranslate = getTranslationObject("dashboard");
+  const { name, description, status } = categoryTranslate.category;
   const { register, handleSubmit, reset } = useForm(); // react-hook-form
   const [categoryInfo, setCategoryInfo] = useState({});
   const [categoryDescription, setCategoryDescription] = useState("");
@@ -31,8 +32,6 @@ const EditCategoryInfo = () => {
       setCategoryDescription(userData?.description);
     });
   }, [id, axiosSecure]);
-
-  console.log("categoryById:", categoryInfo);
 
   useEffect(() => {
     reset();
@@ -70,11 +69,11 @@ const EditCategoryInfo = () => {
   };
   return (
     <section>
-      <FormCard title="Update Category">
+      <FormCard title={updateCategory}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 w-full">
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Name</span>
+              <span className="text-sm">{name}</span>
               <input
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 type="text"
@@ -83,7 +82,7 @@ const EditCategoryInfo = () => {
               />
             </div>
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Status</span>
+              <span className="text-sm">{status}</span>
               <select
                 label="Select Status"
                 value={selectedStatus}
@@ -96,7 +95,7 @@ const EditCategoryInfo = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 space-y-2 mt-7">
-            <span className="text-sm">Description</span>
+            <span className="text-sm">{description}</span>
             <EditorToolbar toolbarId={"t2"} />
             <ReactQuill
               theme="snow"
@@ -135,7 +134,7 @@ const EditCategoryInfo = () => {
               )}
             </div>
           </div>
-          <IButton className="flex ml-auto my-5">Update</IButton>
+          <IButton className="flex ml-auto my-5">{updateBtn}</IButton>
         </form>
       </FormCard>
     </section>

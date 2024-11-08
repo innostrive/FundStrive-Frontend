@@ -9,6 +9,7 @@ import useTopNavData from "../../../hooks/useTopNavData";
 import axios from "axios";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../../i18next";
 
 const EditEmail = () => {
   const { id } = useParams();
@@ -17,6 +18,8 @@ const EditEmail = () => {
   const navigate = useNavigate();
   const [settings, setSettings] = useState({});
   const { register, reset, handleSubmit } = useForm();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { topNavInfo, updateEmail, email, update } = dashboardTranslations.menu;
 
   useEffect(() => {
     axios.get(`${URL}/settings/${id}`).then((res) => {
@@ -43,14 +46,14 @@ const EditEmail = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/navmenus" className="opacity-60">
-          Top Navinfo
+          {topNavInfo}
         </NavLink>
-        <span className="cursor-context-menu">Update Email</span>
+        <span className="cursor-context-menu">{updateEmail}</span>
       </Breadcrumbs>
       <FormCard title="Update Email">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Name</span>
+            <span className="text-sm">{email}</span>
             <input
               type="text"
               size="lg"
@@ -60,7 +63,7 @@ const EditEmail = () => {
               defaultValue={settings?.key}
             />
           </div>
-          <IButton className="flex ml-auto mt-5">Update</IButton>
+          <IButton className="flex ml-auto mt-5">{update}</IButton>
         </form>
       </FormCard>
     </DashboardLayout>

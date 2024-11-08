@@ -14,8 +14,7 @@ import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
-
-const TABLE_HEAD = ["Title", "Published Date", "Status", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const Blogs = () => {
   const [blogs, handleBlogDelete] = useBlogsData();
@@ -47,12 +46,18 @@ const Blogs = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
+  const dashboardTranslations = getTranslationObject("componentTitle");
+  const dashboardTranslationsBlog = getTranslationObject("dashboard");
+  const { title, publishedDate, status, action, add } = dashboardTranslations;
+  const { blogList } = dashboardTranslationsBlog.blog;
+
+  const TABLE_HEAD = [title, publishedDate, status, action];
   return (
     <FormCard
-      title="Blog List"
+      title={blogList}
       icon={<Add />}
       path="/admin-dashboard/blogs/create-blog"
-      iconTitle="Add"
+      iconTitle={add}
       className="w-full"
     >
       <CardBody className="border p-0">

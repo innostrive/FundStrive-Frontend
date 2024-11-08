@@ -7,6 +7,7 @@ import IButton from "../../ui/IButton";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const EditSocialMedia = () => {
   const { id } = useParams();
@@ -34,19 +35,22 @@ const EditSocialMedia = () => {
     axiosSecure.put(`/api/settings/${id}`, payload).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.message);
-        navigate("/dashboard/faq-settings");
+        navigate("/admin-dashboard/social-media");
       } else {
         toast.warning("Somthing wrong!!!");
       }
     });
   };
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { socialMedia, updateSocialMediaLink, update, link } =
+    dashboardTranslations.socialMedia;
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/social-media" className="opacity-60">
-          Social Links
+          {socialMedia}
         </NavLink>
-        <span className="cursor-context-menu">Update Social Link</span>
+        <span className="cursor-context-menu">{updateSocialMediaLink}</span>
       </Breadcrumbs>
       <FormCard title="Update Social Link">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -62,20 +66,8 @@ const EditSocialMedia = () => {
               defaultValue={socialLinkDetails?.value}
             />
           </div>
-          {/* <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Status</span>
-            <select
-              label="Select Status"
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-              className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-auto text-base rounded"
-            >
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div> */}
           <IButton type="submit" className="flex ml-auto">
-            Update
+            {update}
           </IButton>
         </form>
       </FormCard>

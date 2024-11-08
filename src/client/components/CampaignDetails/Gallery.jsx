@@ -54,13 +54,15 @@ const Gallery = ({ campaignId }) => {
           />
         </DialogHeader>
         <DialogBody className="border-none">
-          {selectedImage && (
+          {selectedImage ? (
             <img
               src={imageUrl + selectedImage?.asset}
               alt={`Image ${selectedImage?.asset}`}
               className="h-full w-full object-cover rounded"
               crossOrigin="anonymous"
             />
+          ) : (
+            <p>No image selected</p> // Fallback content when `selectedImage` is null
           )}
         </DialogBody>
       </Dialog>

@@ -1,14 +1,42 @@
-import { Typography } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { Breadcrumbs, Typography } from "@material-tailwind/react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import IButton from "../../ui/IButton";
 import FormCard from "../../ui/FormCard";
+import { getTranslationObject } from "../../../../i18next";
 const CreateUser = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [isLoading, setIsLoading] = useState(false);
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    name,
+    email,
+    phoneNumber,
+    address,
+    state,
+    city,
+    postCode,
+    country,
+    submit,
+  } = dashboardTranslations?.form;
+  const {
+    nameErr,
+    nameErrMsg,
+    emailErr,
+    emailErrMsg,
+    phoneNumberErr,
+    phoneNumberErrMsg,
+    addressErr,
+    stateErr,
+    cityErr,
+    postCodeErr,
+    postCodeErrMsg,
+    countryErr,
+  } = dashboardTranslations?.errors;
+  const { createUser, users } = dashboardTranslations?.dashboardTitle;
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -18,6 +46,7 @@ const CreateUser = () => {
   } = useForm();
   const onSubmit = async (data) => {
     const payload = {
+      role: "maintainer",
       password: "123456",
       image: data.image,
       ...data,
@@ -28,21 +57,25 @@ const CreateUser = () => {
       setIsLoading(false);
       if (response.status === 200) {
         toast.success(response.data.data.message);
-        console.log("message:", response.data.data.message);
-        navigate("/dashboard/users");
+        navigate("/admin-dashboard/users");
       }
     } catch (error) {
       toast.error("Failed to sign up. Please try again.");
-      console.log("error", error);
     }
   };
   return (
-    <FormCard title="Create User">
+    <FormCard title={createUser}>
+      <Breadcrumbs className="bg-gray-400 bg-opacity-30">
+        <NavLink to="/admin-dashboard/users" className="opacity-60">
+          {users}
+        </NavLink>
+        <span className="cursor-context-menu">{createUser}</span>
+      </Breadcrumbs>
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
         <div className="mb-1 grid sm:grid-cols-2 grid-cols-1 gap-5">
           <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Your Name
+            <Typography className="mb-3 text-sm text-secondary">
+              {name}
             </Typography>
             <input
               type="text"
@@ -51,10 +84,10 @@ const CreateUser = () => {
                 errors.name ? "border-red-500" : "border-gray-300"
               }`}
               {...register("name", {
-                required: "Name is required",
+                required: nameErr,
                 minLength: {
                   value: 3,
-                  message: "Name should be at least 3 characters long",
+                  message: nameErrMsg,
                 },
               })}
             />
@@ -64,8 +97,8 @@ const CreateUser = () => {
           </div>
 
           <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Your Email
+            <Typography className="mb-3 text-sm text-secondary">
+              {email}
             </Typography>
             <input
               type="email"
@@ -74,10 +107,10 @@ const CreateUser = () => {
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
               {...register("email", {
-                required: "Email is required",
+                required: emailErr,
                 pattern: {
                   value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Enter a valid email",
+                  message: emailErrMsg,
                 },
               })}
             />
@@ -85,33 +118,9 @@ const CreateUser = () => {
               <p className="text-red-500 text-sm">{errors.email.message}</p>
             )}
           </div>
-
-          {/* <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Password
-            </Typography>
-            <input
-              type="password"
-              name="password"
-              className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              }`}
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters long",
-                },
-              })}
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password.message}</p>
-            )}
-          </div> */}
-
           <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Phone Number
+            <Typography className="mb-3 text-sm text-secondary">
+              {phoneNumber}
             </Typography>
             <input
               type="text"
@@ -120,10 +129,10 @@ const CreateUser = () => {
                 errors.phone_number ? "border-red-500" : "border-gray-300"
               }`}
               {...register("phone_number", {
-                required: "Phone number is required",
+                required: phoneNumberErr,
                 pattern: {
                   value: /^[0-9]{10}$/,
-                  message: "Enter a valid 10-digit phone number",
+                  message: phoneNumberErrMsg,
                 },
               })}
             />
@@ -135,8 +144,8 @@ const CreateUser = () => {
           </div>
 
           <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Address
+            <Typography className="mb-3 text-sm text-secondary">
+              {address}
             </Typography>
             <input
               type="text"
@@ -144,7 +153,7 @@ const CreateUser = () => {
               className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                 errors.address ? "border-red-500" : "border-gray-300"
               }`}
-              {...register("address", { required: "Address is required" })}
+              {...register("address", { required: addressErr })}
             />
             {errors.address && (
               <p className="text-red-500 text-sm">{errors.address.message}</p>
@@ -152,8 +161,8 @@ const CreateUser = () => {
           </div>
 
           <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Country
+            <Typography className="mb-3 text-sm text-secondary">
+              {country}
             </Typography>
             <input
               type="text"
@@ -161,7 +170,7 @@ const CreateUser = () => {
               className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                 errors.country ? "border-red-500" : "border-gray-300"
               }`}
-              {...register("country", { required: "Country is required" })}
+              {...register("country", { required: countryErr })}
             />
             {errors.country && (
               <p className="text-red-500 text-sm">{errors.country.message}</p>
@@ -169,8 +178,8 @@ const CreateUser = () => {
           </div>
 
           <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              State
+            <Typography className="mb-3 text-sm text-secondary">
+              {state}
             </Typography>
             <input
               type="text"
@@ -178,7 +187,7 @@ const CreateUser = () => {
               className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                 errors.state ? "border-red-500" : "border-gray-300"
               }`}
-              {...register("state", { required: "State is required" })}
+              {...register("state", { required: stateErr })}
             />
             {errors.state && (
               <p className="text-red-500 text-sm">{errors.state.message}</p>
@@ -186,8 +195,8 @@ const CreateUser = () => {
           </div>
 
           <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              City
+            <Typography className="mb-3 text-sm text-secondary">
+              {city}
             </Typography>
             <input
               type="text"
@@ -195,7 +204,7 @@ const CreateUser = () => {
               className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                 errors.city ? "border-red-500" : "border-gray-300"
               }`}
-              {...register("city", { required: "City is required" })}
+              {...register("city", { required: cityErr })}
             />
             {errors.city && (
               <p className="text-red-500 text-sm">{errors.city.message}</p>
@@ -203,8 +212,8 @@ const CreateUser = () => {
           </div>
 
           <div>
-            <Typography variant="h6" color="blue-gray" className="mb-3">
-              Post Code
+            <Typography className="mb-3 text-sm text-secondary">
+              {postCode}
             </Typography>
             <input
               type="text"
@@ -213,10 +222,10 @@ const CreateUser = () => {
                 errors.post_code ? "border-red-500" : "border-gray-300"
               }`}
               {...register("post_code", {
-                required: "Post code is required",
+                required: postCodeErr,
                 pattern: {
                   value: /^[0-9]{5}$/,
-                  message: "Enter a valid 5-digit post code",
+                  message: postCodeErrMsg,
                 },
               })}
             />
@@ -231,7 +240,7 @@ const CreateUser = () => {
           fullWidth
           disabled={isLoading ? true : false}
         >
-          {isLoading ? "Loading..." : "Create"}
+          {isLoading ? `${loading}` : `${submit}`}
         </IButton>
       </form>
     </FormCard>

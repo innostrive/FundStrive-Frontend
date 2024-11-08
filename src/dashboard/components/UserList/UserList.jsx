@@ -13,11 +13,15 @@ import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import useUsersData from "../../hooks/useUsersData";
+import { getTranslationObject } from "../../../../i18next";
 
 const TABLE_HEAD = ["Name", "Country", "Role", "Status", "Action"];
 
 const UserList = () => {
   const [users, handleUserDelete] = useUsersData();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { userList, add, previous, nextT } =
+    dashboardTranslations?.dashboardTitle;
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
@@ -49,9 +53,9 @@ const UserList = () => {
   };
   return (
     <FormCard
-      title="User List"
+      title={userList}
       icon={<Add />}
-      iconTitle="Add"
+      iconTitle={add}
       path="/admin-dashboard/users/create-user"
     >
       <CardBody className="border p-0">
@@ -73,7 +77,7 @@ const UserList = () => {
           </thead>
           <tbody>
             {paginatedusers.map(
-              ({ name, country, role, status, _id, image }, index) => {
+              ({ name, country, role, status, _id }, index) => {
                 const isLast = index === paginatedusers.length - 1;
                 const classes = isLast
                   ? "p-4 border-b-none"
@@ -105,7 +109,7 @@ const UserList = () => {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {role}
+                        {role || "No role assigned"}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -162,7 +166,8 @@ const UserList = () => {
             onClick={prev}
             disabled={active === 1}
           >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
+            {previous}
           </Button>
 
           <div className="flex items-center gap-2">
@@ -179,7 +184,7 @@ const UserList = () => {
             onClick={next}
             disabled={active === totalPages}
           >
-            Next
+            {nextT}
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>

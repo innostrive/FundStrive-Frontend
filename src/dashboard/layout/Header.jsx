@@ -1,5 +1,6 @@
 import { Navbar } from "@material-tailwind/react";
 import Dropdown from "../components/Dropdown/Dropdown";
+import LanguageSelector from "../../client/components/LanguageSelector/LanguageSelector";
 const Header = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <div>
@@ -24,7 +25,8 @@ const Header = ({ sidebarOpen, setSidebarOpen }) => {
               />
             </svg>
           </div>
-          <div>
+          <div className="flex space-x-5 items-center">
+            <LanguageSelector></LanguageSelector>
             <Dropdown />
           </div>
         </div>

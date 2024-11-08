@@ -1,13 +1,4 @@
-import {
-  Breadcrumbs,
-  Button,
-  Card,
-  Input,
-  Option,
-  Select,
-  Textarea,
-  Typography,
-} from "@material-tailwind/react";
+import { Breadcrumbs, Option, Select } from "@material-tailwind/react";
 import React, { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
@@ -20,14 +11,35 @@ import EditorToolbar, {
   formats,
 } from "../../components/EditToolbar/EditToolbar";
 import { Controller, useForm } from "react-hook-form";
-import { json, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layout/DashboardLayout";
+import { getTranslationObject } from "../../../../i18next";
 
 const CreateCampaign = () => {
   const axiosSecure = useAxiosSecure();
   const [categories] = useCategoriesData();
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { createCampaign, campaigns, submit } =
+    dashboardTranslations.dashboardTitle;
+  const {
+    campaignName,
+    campaignTitle,
+    category,
+    targetAmount,
+    deadline,
+    uploadImage,
+    description,
+  } = dashboardTranslations.form;
+  const {
+    campaignNameError,
+    campaignTitleError,
+    categoryError,
+    targetAmountError,
+    deadlineError,
+    descriptionErr,
+    imageError,
+    targetAmountErrMsg,
+  } = dashboardTranslations.errors;
   const [imagePreview, setImagePreview] = useState("");
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
@@ -71,41 +83,33 @@ const CreateCampaign = () => {
           if (response.status === 200) {
             toast.success(response.data.message);
             reset();
-            navigate("/dashboard/campaign");
+            navigate("/admin-dashboard/campaigns");
           }
-          console.log("campaign:", response);
         });
     } catch (err) {
       toast.error(err);
-      console.log(err);
     }
-    // console.log("campaign:", formData.get("data"));
-    console.log("campaignCreate:", campaignData);
   };
 
   return (
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/campaigns" className="opacity-60">
-          Campaigns
+          {campaigns}
         </NavLink>
-        <span className="cursor-context-menu">Create Campaign</span>
+        <span className="cursor-context-menu">{createCampaign}</span>
       </Breadcrumbs>
       <FormCard title="Create Campaign">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2">
           <div className="mb-1 grid sm:grid-cols-2 grid-cols-1 gap-10">
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Campaign Name</span>
+              <span className="text-sm">{campaignName}</span>
               <input
                 type="text"
                 size="lg"
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 {...register("name", {
-                  required: "Campaign name is required",
-                  minLength: {
-                    value: 3,
-                    message: "Campaign name must be at least 3 characters",
-                  },
+                  required: campaignNameError,
                 })}
               />
               {errors.name && (
@@ -117,17 +121,13 @@ const CreateCampaign = () => {
 
             {/* Campaign Title */}
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Campaign Title</span>
+              <span className="text-sm">{campaignTitle}</span>
               <input
                 type="text"
                 size="lg"
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 {...register("title", {
-                  required: "Campaign title is required",
-                  minLength: {
-                    value: 5,
-                    message: "Campaign title must be at least 5 characters",
-                  },
+                  required: campaignTitleError,
                 })}
               />
               {errors.title && (
@@ -138,12 +138,12 @@ const CreateCampaign = () => {
             </div>
 
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Category</span>
+              <span className="text-sm">{category}</span>
 
               <Controller
                 name="category"
                 control={control}
-                rules={{ required: "Category is required" }}
+                rules={{ required: categoryError }}
                 render={({ field: { onChange } }) => (
                   <Select
                     label="Select Category"
@@ -167,16 +167,16 @@ const CreateCampaign = () => {
               )}
             </div>
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Target Amount</span>
+              <span className="text-sm">{targetAmount}</span>
               <input
                 type="text"
                 size="lg"
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 {...register("target_amount", {
-                  required: "Target amount is required",
+                  required: targetAmountError,
                   pattern: {
                     value: /^[0-9]*$/,
-                    message: "Target amount must be a valid number",
+                    message: targetAmountErrMsg,
                   },
                 })}
               />
@@ -189,13 +189,13 @@ const CreateCampaign = () => {
 
             {/* Deadline */}
             <div className="grid col-span-2 space-y-2">
-              <span className="text-sm">Deadline</span>
+              <span className="text-sm">{deadline}</span>
               <input
                 type="date"
                 size="lg"
                 className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
                 {...register("deadline", {
-                  required: "Deadline is required",
+                  required: deadlineError,
                 })}
               />
               {errors.deadline && (
@@ -205,12 +205,12 @@ const CreateCampaign = () => {
               )}
             </div>
             <div className="col-span-2 space-y-2">
-              <span className="grid grid-cols-1 space-y-2">Description</span>
+              <span className="grid grid-cols-1 space-y-2">{description}</span>
               <EditorToolbar toolbarId={"t2"} />
               <Controller
                 name="description"
                 control={control}
-                rules={{ required: "Description is required" }}
+                rules={{ required: descriptionErr }}
                 render={({
                   field: { onChange, value },
                   fieldState: { error },
@@ -236,7 +236,7 @@ const CreateCampaign = () => {
                 htmlFor="image"
                 className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
               >
-                Upload Image
+                {uploadImage}
               </label>
               <input
                 type="file"
@@ -260,7 +260,7 @@ const CreateCampaign = () => {
               </div>
             </div>
           </div>
-          <IButton className="my-5 flex ml-auto">Submit</IButton>
+          <IButton className="my-5 flex ml-auto">{submit}</IButton>
         </form>
       </FormCard>
     </DashboardLayout>

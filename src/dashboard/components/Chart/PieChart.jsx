@@ -14,7 +14,6 @@ const PieChart = () => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     axiosSecure.get("/api/dashboard/get-month-wise-raised-data").then((res) => {
-      console.log("res:", res.data.data);
       setSeries(res.data.data.series);
       setCategories(res.data.data.categories);
     });

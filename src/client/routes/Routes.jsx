@@ -179,6 +179,8 @@ import FooterSettings from "../../dashboard/pages/FooterSettings/FooterSettings"
 import EditFooter from "../../dashboard/pages/FooterSettings/EditFooter";
 import EditSocialMedia from "../../dashboard/pages/SocialMedia/EditSocialMedia";
 import SocialMedia from "../../dashboard/pages/SocialMedia/SocialMedia";
+import EditUserPrivilege from "../../dashboard/pages/UserPrivilege/EditUserPrivilege";
+import CreateCaruselTitle from "../../dashboard/pages/Settings/CaruselTitle/CreateCaruselTitle";
 
 export const router = createBrowserRouter([
   {
@@ -539,6 +541,16 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: "admin-dashboard/banners/create-carusel-title",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout>
+          <CreateCaruselTitle></CreateCaruselTitle>
+        </DashboardLayout>
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "admin-dashboard/banners/edit-carusel-title/:id",
     element: (
       <ProtectedRoute>
@@ -585,6 +597,16 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <UserPrivilege />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "admin-dashboard/user-privilege/edit-user-privilege/:role",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout>
+          <EditUserPrivilege />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },

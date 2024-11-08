@@ -1,33 +1,26 @@
-import {
-  Breadcrumbs,
-  Button,
-  Card,
-  Input,
-  Textarea,
-  Typography,
-} from "@material-tailwind/react";
-import React, { useEffect, useState } from "react";
+import { Breadcrumbs } from "@material-tailwind/react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
-import Form from "../../components/form/Form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import categorySchema from "../../schemas/category.schema";
-import TextInput from "../../ui/TextInput";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
-import { json, NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import EditorToolbar, {
   modules,
   formats,
 } from "../../components/EditToolbar/EditToolbar";
 import DashboardLayout from "../../layout/DashboardLayout";
+import { getTranslationObject } from "../../../../i18next";
 const CreateCategory = () => {
   const axiosSecure = useAxiosSecure();
+  const categoryTranslate = getTranslationObject("dashboard");
+  const { categories, createCategory, name, description, submit } =
+    categoryTranslate.category;
+  const { nameErr, descriptionErr } = categoryTranslate.errors;
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
-  const [value, setValue] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const {
     handleSubmit,
@@ -36,7 +29,6 @@ const CreateCategory = () => {
     clearErrors,
     formState: { errors },
   } = useForm();
-  const [isError, setError] = useState(null);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -79,18 +71,18 @@ const CreateCategory = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/categories" className="opacity-60">
-          Categories
+          {categories}
         </NavLink>
-        <span className="cursor-context-menu">Create Category</span>
+        <span className="cursor-context-menu">{createCategory}</span>
       </Breadcrumbs>
       <FormCard title="Create category">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="mb-1 grid gap-6">
-            <span className="-mb-3 text-sm text-secondary">Name</span>
+            <span className="-mb-3 text-sm text-secondary">{name}</span>
             <input
               type="text"
               name="name"
-              {...register("name", { required: "Name is required" })}
+              {...register("name", { required: nameErr })}
               className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
                 errors.name ? "border-red-500" : "border-gray-300"
               }`}
@@ -98,12 +90,12 @@ const CreateCategory = () => {
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
             )}
-            <span className="-mb-3 text-sm text-secondary">Description</span>
+            <span className="-mb-3 text-sm text-secondary">{description}</span>
             <EditorToolbar toolbarId={"t2"} />
             <Controller
               name="description"
               control={control}
-              rules={{ required: "Description is required" }}
+              rules={{ required: descriptionErr }}
               render={({
                 field: { onChange, value },
                 fieldState: { error },
@@ -160,7 +152,7 @@ const CreateCategory = () => {
               )}
             </div>
           </div>
-          <IButton className="flex ml-auto">Submit</IButton>
+          <IButton className="flex ml-auto">{submit}</IButton>
         </form>
       </FormCard>
     </DashboardLayout>

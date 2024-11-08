@@ -14,13 +14,10 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import FormCard from "../../../ui/FormCard";
 import useCaruselTitle from "../../../hooks/useCaruselTitle";
-
-const TABLE_HEAD = ["Title", "Status", "Action"];
+import { getTranslationObject } from "../../../../../i18next";
 
 const CaruselTitle = () => {
   const [caruselTitle, handleBannerDelete] = useCaruselTitle();
-  console.log("first:", caruselTitle);
-  const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -50,11 +47,17 @@ const CaruselTitle = () => {
     if (active > 1) setActive(active - 1);
   };
 
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { title, status, action, add } = dashboardTranslationsHeading;
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { caruselTitleList } = dashboardTranslations.carusel;
+
+  const TABLE_HEAD = [title, status, action];
   return (
     <FormCard
-      title="Header Caruesl List"
+      title={caruselTitleList}
       icon={<Add />}
-      iconTitle="Add"
+      iconTitle={add}
       path="/admin-dashboard/banners/create-carusel-title"
     >
       <CardBody className="border p-0">
@@ -104,13 +107,6 @@ const CaruselTitle = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      {/* <NavLink to={`/dashboard/banner/${_id}`}>
-                        <Tooltip content="View">
-                          <IconButton variant="text">
-                            <View className="size-5 text-secondary" />
-                          </IconButton>
-                        </Tooltip>
-                      </NavLink> */}
                       <NavLink
                         to={`/admin-dashboard/banners/edit-carusel-title/${_id}`}
                       >

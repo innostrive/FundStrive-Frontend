@@ -14,8 +14,7 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import useUsersData from "../../hooks/useUsersData";
 import useFaqData from "../../hooks/useFaqData";
-
-const TABLE_HEAD = ["Question", "Status", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const UserList = () => {
   const [faq, handleFaqDelete] = useFaqData();
@@ -47,11 +46,18 @@ const UserList = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
+
+  const dashboardTranslationsHeaders = getTranslationObject("componentTitle");
+  const { question, status, action, add } = dashboardTranslationsHeaders;
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { faqList } = dashboardTranslations.dashboardTitle;
+  const TABLE_HEAD = [question, status, action];
   return (
     <FormCard
-      title="FAQ List"
+      title={faqList}
       icon={<Add />}
       path="/admin-dashboard/faq/create-faq"
+      iconTitle={add}
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">

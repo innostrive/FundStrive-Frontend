@@ -17,7 +17,6 @@ const BarChart = () => {
     axiosSecure
       .get("/api/dashboard/get-month-wise-campaign-data")
       .then((res) => {
-        console.log("res:", res.data.data);
         setSeries(res.data.data.series);
         setCategories(res.data.data.categories);
       });

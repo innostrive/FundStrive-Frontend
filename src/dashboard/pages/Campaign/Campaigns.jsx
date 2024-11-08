@@ -13,11 +13,15 @@ import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import useCampaignData from "../../hooks/useCampaignData";
+import { getTranslationObject } from "../../../../i18next";
 
 const TABLE_HEAD = ["Campaign", "Title", "Status", "Action"];
 
 const Campaigns = () => {
   const [campaigns, handleCampaignDelete] = useCampaignData();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { campaignList, add, edit, view } =
+    dashboardTranslations.dashboardTitle;
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -49,10 +53,10 @@ const Campaigns = () => {
 
   return (
     <FormCard
-      title="Campaign List"
+      title={campaignList}
       icon={<Add />}
       path="/admin-dashboard/campaigns/create-campaign"
-      iconTitle="Add"
+      iconTitle={add}
     >
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
@@ -114,7 +118,7 @@ const Campaigns = () => {
                         <NavLink
                           to={`/admin-dashboard/campaigns/campaign-details/${_id}`}
                         >
-                          <Tooltip content="View">
+                          <Tooltip content={view}>
                             <IconButton variant="text">
                               <View className="size-5 text-secondary" />
                             </IconButton>
@@ -123,7 +127,7 @@ const Campaigns = () => {
                         <NavLink
                           to={`/admin-dashboard/campaigns/edit-campaign/${_id}`}
                         >
-                          <Tooltip content="Edit">
+                          <Tooltip content={edit}>
                             <IconButton variant="text">
                               <Edit className="size-5 text-green-500" />
                             </IconButton>

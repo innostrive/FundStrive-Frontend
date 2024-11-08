@@ -13,8 +13,9 @@ const OurPlan = () => {
     <section className="py-20 mb-20">
       <Container>
         <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 sm:px-0 px-5">
-          {combinedArray.map((plan) => (
+          {combinedArray.map((plan, i) => (
             <div
+              key={i}
               className="h-auto w-auto p-10 rounded-md grid place-content-center place-items-center gap-2"
               style={{ backgroundColor: plan?.color }}
             >
@@ -26,26 +27,6 @@ const OurPlan = () => {
               </p>
             </div>
           ))}
-          {/* <div className="h-auto w-auto p-10 bg-[#2B2A27] rounded-md grid place-content-center place-items-center gap-2">
-            <span className="text-2xl font-bold text-[#f3f4f7] uppercase">
-              Our Vision
-            </span>
-            <p className="text-sm font-light text-[#f3f4f7] tracking-normal text-center">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Repellat, ut reprehenderit explicabo dolorum praesentium
-              consequuntur.
-            </p>
-          </div>
-          <div className="h-auto w-auto p-10 bg-[#f47721] rounded-md grid place-content-center place-items-center gap-2">
-            <span className="text-2xl font-bold text-[#f3f4f7] uppercase">
-              Our History
-            </span>
-            <p className="text-sm font-light text-[#f3f4f7] tracking-normal text-center">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Repellat, ut reprehenderit explicabo dolorum praesentium
-              consequuntur.
-            </p>
-          </div> */}
         </div>
       </Container>
     </section>

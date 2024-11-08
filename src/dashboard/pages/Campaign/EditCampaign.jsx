@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import DashboardLayout from "../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const EditCampaign = () => {
   const { id } = useParams();
@@ -17,6 +18,8 @@ const EditCampaign = () => {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [campaignDescription, setCampaignDescription] = useState("");
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { updateCampaign, campaigns } = dashboardTranslations.dashboardTitle;
   useEffect(() => {
     axiosSecure.get(`/campaigns/${id}`).then((res) => {
       const userData = res.data.data;
@@ -27,9 +30,7 @@ const EditCampaign = () => {
   }, [id, axiosSecure]);
 
   const campaignReviews = reviews.filter((item) => item.campaign_id === id);
-  // console.log("capaignReviews:", campaignReviews);
   const handleDelete = async (id) => {
-    // console.log("id:", id);
     const data = {
       ids: [id],
     };
@@ -44,9 +45,9 @@ const EditCampaign = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/campaigns" className="opacity-60">
-          Campaigns
+          {campaigns}
         </NavLink>
-        <span className="cursor-context-menu">Update Campaign</span>
+        <span className="cursor-context-menu">{updateCampaign}</span>
       </Breadcrumbs>
       <EditCampaignInfo
         campaignInfo={campaignInfo}

@@ -13,12 +13,14 @@ import { Breadcrumbs, Button, Option, Select } from "@material-tailwind/react";
 import useCategoriesData from "../../hooks/useCategoriesData";
 import CampaignReview from "./CampaignReview";
 import { NavLink } from "react-router-dom";
+import { getTranslationObject } from "../../../../i18next";
 
 const CampaignInfo = ({
   campaignInfo,
   category,
   setCategory,
   campaignReviews,
+  campaignInformation,
 }) => {
   const [categories] = useCategoriesData();
   const [edit, setEdit] = useState(false);
@@ -29,6 +31,22 @@ const CampaignInfo = ({
     "MMMM Do YYYY, h:mm:ss a"
   );
 
+  const dashboardTranslations = getTranslationObject("dashboard");
+
+  const {
+    campaignName,
+    campaignTitle,
+    category: categoryT,
+    targetAmount,
+    deadline: deadlineAmount,
+    uploadImage,
+    description,
+    status,
+    updateBtn,
+    reviews,
+    raisedAmount,
+  } = dashboardTranslations.form;
+
   const handleCategoryChange = (value) => {
     console.log(value);
     setCategory((prevData) => ({
@@ -38,7 +56,7 @@ const CampaignInfo = ({
   };
   return (
     <section>
-      <FormCard title="Campaign Details">
+      <FormCard title={campaignInformation}>
         <div className="flex gap-4 items-center justify-center mb-5">
           <div>
             <img
@@ -56,7 +74,7 @@ const CampaignInfo = ({
         </div>
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-10">
           <div className="grid space-y-2">
-            <span className="text-sm">Name</span>
+            <span className="text-sm">{campaignName}</span>
             <input
               type="text"
               defaultValue={campaignInfo?.name}
@@ -70,7 +88,7 @@ const CampaignInfo = ({
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Ttile</span>
+            <span className="text-sm">{campaignTitle}</span>
             <input
               type="text"
               defaultValue={campaignInfo?.name}
@@ -84,7 +102,7 @@ const CampaignInfo = ({
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Category</span>
+            <span className="text-sm">{categoryT}</span>
             <select
               label="Category"
               className="border border-gray-300 focus:outline-gray-300 px-2 py-1.5 w-auto text-base rounded"
@@ -103,7 +121,7 @@ const CampaignInfo = ({
             </select>
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Raised Amount</span>
+            <span className="text-sm">{raisedAmount}</span>
             <input
               type="text"
               defaultValue={campaignInfo?.raised_amount}
@@ -117,7 +135,7 @@ const CampaignInfo = ({
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Target Amount</span>
+            <span className="text-sm">{targetAmount}</span>
             <input
               type="text"
               defaultValue={campaignInfo?.target_amount}
@@ -131,7 +149,7 @@ const CampaignInfo = ({
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Deadline</span>
+            <span className="text-sm">{deadlineAmount}</span>
             <input
               type="text"
               defaultValue={campaignDeadline}
@@ -145,7 +163,7 @@ const CampaignInfo = ({
             />
           </div>
           <div className="grid space-y-2 col-span-2">
-            <label className="text-sm">Description</label>
+            <label className="text-sm">{description}</label>
             <EditorToolbar toolbarId={"t2"} />
             <ReactQuill
               theme="snow"
@@ -166,8 +184,8 @@ const CampaignInfo = ({
           </div>
         ) : null}
         <div className="my-10 space-y-5">
-          {campaignReviews.map((campaignReview) => (
-            <CampaignReview campaignReview={campaignReview} />
+          {campaignReviews.map((campaignReview, i) => (
+            <CampaignReview campaignReview={campaignReview} key={i} />
           ))}
         </div>
       </FormCard>

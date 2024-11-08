@@ -78,12 +78,15 @@ const UserPrivilege = () => {
                             <ViewPriviliegeModal role={role} />
                           </IconButton>
                         </Tooltip>
-                        <NavLink>
+                        <NavLink
+                        // to={`/admin-dashboard/user-privilege/edit-user-privilege/${role}`}
+                        >
                           <Tooltip content="Edit">
                             <IconButton
                               variant="text"
                               onClick={() => handleRole(item)}
                             >
+                              {/* <Edit className="size-5 cursor-pointer" /> */}
                               <EditPriviliegeModal role={role} />
                             </IconButton>
                           </Tooltip>

@@ -11,14 +11,18 @@ import { Add, Delete, Edit, View } from "../../assets/icons/icons";
 import { NavLink } from "react-router-dom";
 import FormCard from "../../ui/FormCard";
 import useLogo from "../../hooks/useLogo";
-
-const TABLE_HEAD = ["Name", "Logo", "Status", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const NavbarLogo = () => {
   const [logo, handleLogoDelete] = useLogo();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { name, logo: navlogo, status, action } = dashboardTranslationsHeading;
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { navbarLogo } = dashboardTranslations.websiteLogo;
+  const TABLE_HEAD = [name, navlogo, status, action];
   return (
-    <FormCard title="Website Logo">
+    <FormCard title={navbarLogo}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
@@ -56,7 +60,11 @@ const NavbarLogo = () => {
                   </td>
                   <td className={classes}>
                     <img
-                      src={imageUrl + image}
+                      src={
+                        image
+                          ? imageUrl + image
+                          : "default-placeholder-image.jpg"
+                      }
                       crossOrigin="anonymous"
                       alt=""
                       className="h-16 w-16 object-cover rounded-full"

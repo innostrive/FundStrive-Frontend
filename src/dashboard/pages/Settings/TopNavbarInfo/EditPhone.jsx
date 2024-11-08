@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../../i18next";
 
 const EditPhone = () => {
   const { id } = useParams();
@@ -16,6 +17,8 @@ const EditPhone = () => {
   const navigate = useNavigate();
   const [settings, setSettings] = useState({});
   const { register, reset, handleSubmit } = useForm();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { topNavInfo, updatePhone, phone, update } = dashboardTranslations.menu;
 
   useEffect(() => {
     axios.get(`${URL}/settings/${id}`).then((res) => {
@@ -44,14 +47,14 @@ const EditPhone = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/navmenus" className="opacity-60">
-          Top Navinfo
+          {topNavInfo}
         </NavLink>
-        <span className="cursor-context-menu">Update Phone</span>
+        <span className="cursor-context-menu">{updatePhone}</span>
       </Breadcrumbs>
       <FormCard title="Update Phone">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Name</span>
+            <span className="text-sm">{phone}</span>
             <input
               type="text"
               size="lg"
@@ -61,7 +64,7 @@ const EditPhone = () => {
               defaultValue={settings?.value}
             />
           </div>
-          <IButton className="flex ml-auto mt-5">Update</IButton>
+          <IButton className="flex ml-auto mt-5">{update}</IButton>
         </form>
       </FormCard>
     </DashboardLayout>

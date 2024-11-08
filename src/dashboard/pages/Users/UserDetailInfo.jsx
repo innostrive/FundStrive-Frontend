@@ -4,15 +4,19 @@ import { useState } from "react";
 import IButton from "../../ui/IButton";
 import { useForm } from "react-hook-form";
 import { Edit } from "../../assets/icons/icons";
-const UserDetailInfo = ({ userInfo }) => {
+import { getTranslationObject } from "../../../../i18next";
+const UserDetailInfo = ({ userInfo, userInformation }) => {
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { name, email, phoneNumber, country, state, city, postCode, address } =
+    dashboardTranslations?.form;
   const [edit, setEdit] = useState(false);
   const { register } = useForm();
   return (
     <section>
-      <FormCard title="User Information">
+      <FormCard title={userInformation}>
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 my-5">
           <div className="grid space-y-2">
-            <label className="text-sm">Name</label>
+            <label className="text-sm">{name}</label>
             <input
               type="text"
               defaultValue={userInfo?.name}
@@ -26,7 +30,7 @@ const UserDetailInfo = ({ userInfo }) => {
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Email</span>
+            <span className="text-sm">{email}</span>
             <input
               type="email"
               defaultValue={userInfo?.email}
@@ -40,7 +44,7 @@ const UserDetailInfo = ({ userInfo }) => {
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Phone Number</span>
+            <span className="text-sm">{phoneNumber}</span>
             <input
               type="text"
               defaultValue={userInfo?.phone_number}
@@ -54,7 +58,7 @@ const UserDetailInfo = ({ userInfo }) => {
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Country</span>
+            <span className="text-sm">{country}</span>
             <input
               type="text"
               defaultValue={userInfo?.country}
@@ -68,7 +72,7 @@ const UserDetailInfo = ({ userInfo }) => {
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">State</span>
+            <span className="text-sm">{state}</span>
             <input
               type="text"
               defaultValue={userInfo?.state}
@@ -82,7 +86,7 @@ const UserDetailInfo = ({ userInfo }) => {
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">City</span>
+            <span className="text-sm">{city}</span>
             <input
               type="text"
               defaultValue={userInfo?.city}
@@ -96,7 +100,7 @@ const UserDetailInfo = ({ userInfo }) => {
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Post Code</span>
+            <span className="text-sm">{postCode}</span>
             <input
               type="text"
               defaultValue={userInfo?.post_code}
@@ -110,7 +114,7 @@ const UserDetailInfo = ({ userInfo }) => {
             />
           </div>
           <div className="grid space-y-2">
-            <span className="text-sm">Address</span>
+            <span className="text-sm">{address}</span>
             <input
               type="text"
               defaultValue={userInfo?.address}

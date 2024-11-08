@@ -35,7 +35,11 @@ export default function Dropdown() {
           variant="circular"
           alt="tania andrew"
           className="cursor-pointer"
-          src={imageUrl + userInfo?.image}
+          src={
+            userInfo?.image
+              ? imageUrl + userInfo.image
+              : "default-placeholder-image.jpg"
+          }
           crossOrigin="anonymous"
         />
       </MenuHandler>

@@ -16,16 +16,19 @@ import TopNavbarInfo from "./TopNavbarInfo/TopNavbarInfo";
 import FormCard from "../../ui/FormCard";
 import { MenuIcon, MenuSettingsIcon } from "../../assets/icons/icons";
 import DashboardLayout from "../../layout/DashboardLayout";
+import { getTranslationObject } from "../../../../i18next";
 const Settings = () => {
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { navMenu, topNavMenu } = dashboardTranslations.menu;
   const data = [
     {
-      label: "Navbar Menus",
+      label: navMenu,
       value: "dashboard",
       icon: MenuIcon,
       desc: <MenuSettings />,
     },
     {
-      label: "Top Navbar Menu",
+      label: topNavMenu,
       value: "profile",
       icon: MenuSettingsIcon,
       desc: <TopNavbarInfo />,

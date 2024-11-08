@@ -12,9 +12,7 @@ import { Delete } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
 import { useState, useMemo } from "react";
 import useSubscribers from "../../hooks/useSubscribers";
-
-const TABLE_HEAD = ["Email", "Status", "Action"];
-
+import { getTranslationObject } from "../../../../i18next";
 const Subscribers = () => {
   const [subscribers, handleSubscriberDelete] = useSubscribers();
   const [active, setActive] = useState(1);
@@ -45,8 +43,14 @@ const Subscribers = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
+
+  const dashboardTranslationsHeaders = getTranslationObject("componentTitle");
+  const { email, status, action } = dashboardTranslationsHeaders;
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { subscriberList } = dashboardTranslations.dashboardTitle;
+  const TABLE_HEAD = [email, status, action];
   return (
-    <FormCard title="Subscribers List">
+    <FormCard title={subscriberList}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>

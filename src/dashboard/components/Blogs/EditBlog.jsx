@@ -1,10 +1,4 @@
-import {
-  Breadcrumbs,
-  Button,
-  Card,
-  Input,
-  Typography,
-} from "@material-tailwind/react";
+import { Breadcrumbs, Input, Typography } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
@@ -17,11 +11,11 @@ import EditorToolbar, {
 } from "../../components/EditToolbar/EditToolbar";
 import FormCard from "../../ui/FormCard";
 import IButton from "../../ui/IButton";
-import BlogReview from "./BlogReview";
 import axios from "axios";
 import useReviewData from "../../hooks/useReviewData";
 import EditBlogReview from "./EditBlogReview";
 import DashboardLayout from "../../layout/DashboardLayout";
+import { getTranslationObject } from "../../../../i18next";
 
 const EditBlog = () => {
   const { id } = useParams();
@@ -36,11 +30,11 @@ const EditBlog = () => {
 
   const [reviews, refetch] = useReviewData();
   const URL = import.meta.env.VITE_BASE_URL;
-  console.log("reviews:", reviews);
 
   const blogReviews = reviews.filter((item) => item.post_id === id);
-  console.log("blogReviews:", blogReviews);
-
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { blogs, uploadBlog, title, tag, content, uploadImage, update } =
+    dashboardTranslations.blog;
   const handleDelete = async (id) => {
     console.log("id:", id);
     const data = {
@@ -118,15 +112,15 @@ const EditBlog = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/blogs" className="opacity-60">
-          Blogs
+          {blogs}
         </NavLink>
-        <span className="cursor-context-menu">Blog Update</span>
+        <span className="cursor-context-menu">{uploadBlog}</span>
       </Breadcrumbs>
       <FormCard title="Update Blog">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2">
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Ttile
+              {title}
             </Typography>
             <Input
               type="text"
@@ -142,7 +136,7 @@ const EditBlog = () => {
               defaultValue={blogData?.title}
             />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Tags
+              {tag}
             </Typography>
             <Input
               type="text"
@@ -159,7 +153,7 @@ const EditBlog = () => {
             />
 
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Content
+              {content}
             </Typography>
             <EditorToolbar toolbarId={"t2"} />
             <ReactQuill
@@ -185,7 +179,7 @@ const EditBlog = () => {
               htmlFor="image"
               className="text-base text-black text-center font-medium cursor-pointer block h-full w-full border border-gray-400 p-2 rounded-md"
             >
-              Upload Image
+              {uploadImage}
             </label>
             <input
               type="file"
@@ -215,7 +209,7 @@ const EditBlog = () => {
               )}
             </div>
           </div>
-          <IButton className="flex ml-auto my-5">Update</IButton>
+          <IButton className="flex ml-auto my-5">{update}</IButton>
         </form>
         <div className="space-y-5 my-10">
           <span>Total Comments {blogReviews.length}</span>

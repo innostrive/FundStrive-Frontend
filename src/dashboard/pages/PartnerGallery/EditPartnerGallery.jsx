@@ -60,7 +60,6 @@ const EditPartnerGallery = () => {
         },
       })
       .then((response) => {
-        console.log("Server response:", response);
         toast.success(response.data.message);
         navigate("/admin-dashboard/banners");
       })
@@ -68,7 +67,6 @@ const EditPartnerGallery = () => {
         console.error("Error submitting data:", error);
         toast.error(error);
       });
-    console.log("bannerData:", bannerData);
   };
 
   return (

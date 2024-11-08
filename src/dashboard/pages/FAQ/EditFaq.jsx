@@ -7,6 +7,7 @@ import IButton from "../../ui/IButton";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const EditFaq = () => {
   const { id } = useParams();
@@ -37,25 +38,27 @@ const EditFaq = () => {
     axiosSecure.put(`/api/settings/${id}`, payload).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.message);
-        navigate("/dashboard/faq-settings");
+        navigate("/admin-dashboard/faq");
       } else {
         toast.warning("Somthing wrong!!!");
       }
     });
-    console.log("data:", payload);
   };
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { updateFaq, faq, question, answer, update, status } =
+    dashboardTranslations.faq;
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/faq" className="opacity-60">
-          FAQ
+          {faq}
         </NavLink>
-        <span className="cursor-context-menu">Update Faq</span>
+        <span className="cursor-context-menu">{updateFaq}</span>
       </Breadcrumbs>
-      <FormCard title="Edit FAQ">
+      <FormCard title={updateFaq}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Question</span>
+            <span className="text-sm">{question}</span>
             <input
               type="text"
               size="lg"
@@ -68,7 +71,7 @@ const EditFaq = () => {
           </div>
 
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Answer</span>
+            <span className="text-sm">{answer}</span>
             <textarea
               type="text"
               className="text-base border border-gray-300 h-auto min-h-40 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
@@ -79,7 +82,7 @@ const EditFaq = () => {
             />
           </div>
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Status</span>
+            <span className="text-sm">{status}</span>
             <select
               label="Select Status"
               value={selectedStatus}
@@ -91,7 +94,7 @@ const EditFaq = () => {
             </select>
           </div>
           <IButton type="submit" className="flex ml-auto">
-            Update
+            {update}
           </IButton>
         </form>
       </FormCard>

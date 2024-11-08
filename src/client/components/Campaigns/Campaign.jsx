@@ -35,7 +35,7 @@ const Campaign = ({ campaign }) => {
             <img
               src={imageUrl + campaign?.image}
               crossOrigin="anonymous"
-              alt=""
+              alt="campaign"
               className="h-10 w-10 rounded-full"
             />
             <p className="text-sm font-normal">{campaign?.name}</p>
@@ -62,7 +62,7 @@ const Campaign = ({ campaign }) => {
             </Typography>
           </div>
           <Progress
-            value={initialProgress}
+            value={Number(initialProgress)}
             className="bg-secondary text-xs"
             color="cyan"
             size="sm"

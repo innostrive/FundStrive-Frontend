@@ -141,6 +141,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import IButton from "../../ui/IButton";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const EditFooterLogo = () => {
   const { id } = useParams();
@@ -201,19 +202,28 @@ const EditFooterLogo = () => {
         toast.error(error);
       });
   };
-
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    websiteLogo,
+    updateFooterLogo,
+    status,
+    uploadImage,
+    submit,
+    image: footerImage,
+  } = dashboardTranslations.websiteLogo;
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/website-logo" className="opacity-60">
-          Website Logo
+          {websiteLogo}
         </NavLink>
-        <span className="cursor-context-menu">Update Footer Logo</span>
+        <span className="cursor-context-menu">{updateFooterLogo}</span>
       </Breadcrumbs>
       <FormCard title="Update Footer Logo">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="space-y-5">
-            <div className="col-span-2">
+            <div className="col-span-2 space-y-2">
+              <span className="text-sm">{status}</span>
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -225,10 +235,14 @@ const EditFooterLogo = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 col-span-2 space-y-2 mt-5">
-            <span className="text-sm">Image</span>
+            <span className="text-sm">{footerImage}</span>
             <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
               <img
-                src={imageUrl + footerLogo?.image}
+                src={
+                  footerLogo?.image
+                    ? imageUrl + footerLogo.image
+                    : "default-placeholder-image.jpg"
+                }
                 alt="user"
                 className="h-full w-full object-cover object-center rounded-md"
                 crossOrigin="anonymous"
@@ -240,7 +254,7 @@ const EditFooterLogo = () => {
               htmlFor="image"
               className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
             >
-              Upload Image
+              {uploadImage}
             </label>
             <input
               type="file"
@@ -269,7 +283,7 @@ const EditFooterLogo = () => {
               )}
             </div>
           </div>
-          <IButton className="flex ml-auto">Submit</IButton>
+          <IButton className="flex ml-auto">{submit}</IButton>
         </form>
       </FormCard>
     </section>

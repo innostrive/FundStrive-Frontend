@@ -3,7 +3,6 @@ import {
   MenuHandler,
   MenuItem,
   MenuList,
-  Rating,
 } from "@material-tailwind/react";
 import reviewing from "../../assets/Logo/user.jpg";
 import { ThreeDotMenu } from "../../../client/assets/icons/icons";

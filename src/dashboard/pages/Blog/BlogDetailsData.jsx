@@ -13,7 +13,6 @@ const BlogDetailsData = () => {
     axiosSecure.get(`/posts/${id}`).then((res) => {
       const blogData = res.data.data;
       setBlogInfo(blogData);
-      console.log("blogData:", blogData);
     });
   }, [id, axiosSecure]);
 
@@ -28,10 +27,8 @@ const BlogDetailsData = () => {
 
   const [reviews, refetch] = useReviewData();
   const URL = import.meta.env.VITE_BASE_URL;
-  console.log("reviews:", reviews);
 
   const blogReviews = reviews.filter((item) => item.post_id === id);
-  console.log("blogReviews:", blogReviews);
 
   const handleDelete = async (id) => {
     console.log("id:", id);

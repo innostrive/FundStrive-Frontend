@@ -20,7 +20,6 @@ const textVariants = {
 const Header = () => {
   const [carusel] = useHeaderCarusel();
   const [caruselTitle] = useCaruselTitle();
-  console.log("first:", caruselTitle);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [animateText, setAnimateText] = useState("visible");
 

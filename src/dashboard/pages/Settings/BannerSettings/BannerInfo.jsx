@@ -5,12 +5,15 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../../i18next";
 
 const BannerInfo = () => {
   const { id } = useParams();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [banner, setBanner] = useState({});
   const axiosSecure = useAxiosSecure();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { headerCarusel, carusel, name } = dashboardTranslations.carusel;
 
   useEffect(() => {
     axiosSecure.get(`/banners/${id}`).then((res) => {
@@ -21,9 +24,9 @@ const BannerInfo = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/banners" className="opacity-60">
-          Banners
+          {carusel}
         </NavLink>
-        <span className="cursor-context-menu">Header carusel</span>
+        <span className="cursor-context-menu">{headerCarusel}</span>
       </Breadcrumbs>
       <FormCard title="Carusel">
         <div className="flex mx-auto">
@@ -36,7 +39,7 @@ const BannerInfo = () => {
         </div>
         <div className="space-y-5">
           <div className="grid grid-cols-1 space-y-2">
-            <span className="text-sm">Name</span>
+            <span className="text-sm">{name}</span>
             <input
               className="text-base border border-gray-300 px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded"
               type="text"

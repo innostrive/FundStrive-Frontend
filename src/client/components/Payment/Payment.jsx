@@ -2,13 +2,10 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Input, Typography } from "@material-tailwind/react";
 import IButton from "../../../dashboard/ui/IButton";
 import axios from "axios";
-import { useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
 const Payment = ({ id }) => {
   const URL = import.meta.env.VITE_BASE_URL;
-  const [payment, setPayment] = useState("");
   const {
     register,
     reset,
@@ -24,15 +21,12 @@ const Payment = ({ id }) => {
     try {
       const response = await axios.post(`${URL}/payment_check`, payload);
       const sessionId = response.data.data.sessionId;
-      console.log("response:", response);
       if (sessionId) {
         const stripe = await stripePromise;
         localStorage.setItem("planData", JSON.stringify(payload));
         await stripe.redirectToCheckout({ sessionId });
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-5">

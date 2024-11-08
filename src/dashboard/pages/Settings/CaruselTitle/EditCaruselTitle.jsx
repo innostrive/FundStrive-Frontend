@@ -8,6 +8,7 @@ import { Breadcrumbs } from "@material-tailwind/react";
 import FormCard from "../../../ui/FormCard";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import IButton from "../../../ui/IButton";
+import { getTranslationObject } from "../../../../../i18next";
 
 const EditCaruselTitle = () => {
   const { id } = useParams();
@@ -17,6 +18,16 @@ const EditCaruselTitle = () => {
   const [selectedStatus, setSelectedStatus] = useState("");
   const navigate = useNavigate();
   const { register, reset, handleSubmit } = useForm();
+
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    updateCaruselTitle,
+    carusel,
+    shortTitle,
+    description,
+    status,
+    update,
+  } = dashboardTranslations.carusel;
 
   useEffect(() => {
     axios.get(`${URL}/settings/${id}`).then((res) => {
@@ -41,24 +52,22 @@ const EditCaruselTitle = () => {
         toast.success(res.data.message);
         navigate("/admin-dashboard/banners");
       }
-      console.log(res.data.data);
     });
-    console.log("edit:", editData);
   };
 
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/banners" className="opacity-60">
-          Banners
+          {carusel}
         </NavLink>
-        <span className="cursor-context-menu">Update Carusel Title</span>
+        <span className="cursor-context-menu">{updateCaruselTitle}</span>
       </Breadcrumbs>
-      <FormCard title="Edit Navbar Menu">
+      <FormCard title={updateCaruselTitle}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-10">
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Menu</span>
+              <span className="text-sm">{shortTitle}</span>
               <input
                 type="text"
                 size="lg"
@@ -70,7 +79,7 @@ const EditCaruselTitle = () => {
               />
             </div>
             <div className="grid grid-cols-1 space-y-2">
-              <span className="text-sm">Menu</span>
+              <span className="text-sm">{description}</span>
               <input
                 type="text"
                 size="lg"
@@ -81,7 +90,8 @@ const EditCaruselTitle = () => {
                 {...register("value")}
               />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-2 space-y-2">
+              <span className="text-sm">{status}</span>
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -93,7 +103,7 @@ const EditCaruselTitle = () => {
             </div>
           </div>
           <IButton type="submit" className="my-5 flex ml-auto">
-            update
+            {update}
           </IButton>
         </form>
       </FormCard>

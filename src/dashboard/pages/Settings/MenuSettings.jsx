@@ -15,8 +15,8 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { FilterSettings } from "./FilterSettings";
 import FormCard from "../../ui/FormCard";
+import { getTranslationObject } from "../../../../i18next";
 
-const TABLE_HEAD = ["Menu", "Status", "Action"];
 const MenuSettings = () => {
   const [settings, handleSettingsDelete] = useSettings();
 
@@ -48,8 +48,14 @@ const MenuSettings = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const dashboardTranslationsHeader = getTranslationObject("componentTitle");
+  const { menuList } = dashboardTranslations.menu;
+  const { menu, status, action } = dashboardTranslationsHeader;
+
+  const TABLE_HEAD = [menu, status, action];
   return (
-    <FormCard title="Menu List">
+    <FormCard title={menuList}>
       <CardBody className="border p-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>

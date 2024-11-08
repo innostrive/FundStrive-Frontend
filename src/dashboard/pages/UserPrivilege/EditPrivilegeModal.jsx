@@ -18,13 +18,15 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const TABLE_HEAD = ["Name", "Action"];
+const TABLE_HEAD = ["Name", "Action", "Action", "Action", "Action", "Action"];
 
 const EditPriviliegeModal = ({ role }) => {
   const roleValue = useRolePrivilegeValue(role);
+  // console.log("🚀 ~ EditPriviliegeModal ~ roleValue:", roleValue);
   const [rolePrivilegeValue, setRolePrivilegeValue] = useState({
     ...roleValue,
   });
+  // console.log("roleValue:", roleValue);
   const URL = import.meta.env.VITE_BASE_URL;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
@@ -32,15 +34,7 @@ const EditPriviliegeModal = ({ role }) => {
   const { handleSubmit } = useForm();
   useEffect(() => {
     setRolePrivilegeValue(roleValue);
-  }, [roleValue]);
-
-  const onSubmit = (data) => {
-    axios.put(`${URL}/settings/role-privilige`).then((res) => {
-      if (res.status === 200) {
-        toast.success(res.data.message);
-      }
-    });
-  };
+  }, [roleValue, rolePrivilegeValue]);
 
   const handleCheckboxChange = (event) => {
     let privilegeValue = [];
@@ -56,7 +50,7 @@ const EditPriviliegeModal = ({ role }) => {
       if (action === "All") {
         privilegeValue = [];
       } else {
-        privilegeValue = privilegeValue[privilege].filter(
+        privilegeValue = rolePrivilegeValue[privilege].filter(
           (item) => item !== action
         );
       }
@@ -66,18 +60,26 @@ const EditPriviliegeModal = ({ role }) => {
       ...prevState,
       [privilege]: privilegeValue,
     }));
-    console.log(
-      "🚀 ~ onChange ~ value:",
-      privilege,
-      " => ",
-      rolePrivilegeValue[privilege]
-    );
+
+    // console.log(
+    //   "🚀 ~ onChange ~ value:",
+    //   privilege,
+    //   " => ",
+    //   rolePrivilegeValue[privilege]
+    // );
   };
   useEffect(() => {
-    console.log("🚀 ~ useEffect ~ rolePrivilegeValue:", rolePrivilegeValue);
-    // setRolePrivilegeValue(rolePrivilegeValue);
+    // console.log("🚀 ~ useEffect ~ rolePrivilegeValue:", rolePrivilegeValue);
+    setRolePrivilegeValue(rolePrivilegeValue);
   }, [rolePrivilegeValue]);
 
+  const onSubmit = (data) => {
+    axios.put(`${URL}/settings/role-privilige`).then((res) => {
+      if (res.status === 200) {
+        toast.success(res.data.message);
+      }
+    });
+  };
   return (
     <>
       <Edit className="size-5 cursor-pointer" onClick={handleOpen} />
@@ -125,35 +127,36 @@ const EditPriviliegeModal = ({ role }) => {
                               {privilege}
                             </Typography>
                           </td>
-                          <td className={classes}>
-                            <div className="flex items-center gap-5">
-                              {["All", "INSERT", "VIEW", "EDIT", "DELETE"].map(
-                                (action) => (
+                          {["All", "INSERT", "VIEW", "EDIT", "DELETE"].map(
+                            (action) => (
+                              <td className={classes}>
+                                <div className="flex items-center gap-5">
                                   <div
-                                    key={action}
+                                    key={`${action}-${privilege}`}
                                     className="flex items-center gap-2 border border-gray-200 rounded py-2 px-3"
                                   >
                                     <Typography variant="small">
                                       {action}
                                     </Typography>
-                                    <Checkbox
+                                    <input
+                                      type="checkbox"
                                       color="blue"
                                       name={action + "@" + privilege}
-                                      defaultChecked={
+                                      checked={
                                         rolePrivilegeValue[privilege]
                                           ? rolePrivilegeValue[
                                               privilege
                                             ].includes(action)
-                                          : false
+                                          : roleValue
                                       }
                                       onChange={handleCheckboxChange}
                                       containerProps={{ className: "p-0" }}
                                     />
                                   </div>
-                                )
-                              )}
-                            </div>
-                          </td>
+                                </div>
+                              </td>
+                            )
+                          )}
                         </tr>
                       );
                     })}

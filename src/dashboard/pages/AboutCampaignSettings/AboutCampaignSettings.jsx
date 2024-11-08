@@ -6,19 +6,16 @@ import {
   Button,
   IconButton,
   Tooltip,
-  Breadcrumbs,
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { Add, Delete, Edit, View } from "../../assets/icons/icons";
+import { Edit } from "../../assets/icons/icons";
 import FormCard from "../../ui/FormCard";
 import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
-import useUsersData from "../../hooks/useUsersData";
 import useAboutSettings from "../../hooks/useAboutSettings";
 import useVolunteerData from "../../../client/hooks/useVolunteerData";
 import useContactCount from "../../../client/hooks/useContactCount";
-
-const TABLE_HEAD = ["Key", "Value", "Status", "Action"];
+import { getTranslationObject } from "../../../../i18next";
 
 const AboutCampaignSettings = () => {
   const [aboutSuccess] = useAboutSettings();
@@ -32,7 +29,6 @@ const AboutCampaignSettings = () => {
     about[0].value = volunteer?.length;
     donation[0].value = count?.raised_amount;
   } else {
-    console.error("No items found with the key 'Volunteer'");
   }
 
   const [active, setActive] = useState(1);
@@ -63,9 +59,15 @@ const AboutCampaignSettings = () => {
   const prev = () => {
     if (active > 1) setActive(active - 1);
   };
+
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { campaignDataList } = dashboardTranslations.aboutInfo;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { key, value, status, action } = dashboardTranslationsHeading;
+  const TABLE_HEAD = [key, value, status, action];
   return (
     <section>
-      <FormCard title="Campaign Data List">
+      <FormCard title={campaignDataList}>
         <CardBody className="border p-0">
           <table className="w-full min-w-max table-auto text-left">
             <thead>
@@ -108,7 +110,7 @@ const AboutCampaignSettings = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {value}
+                          {value || ""}
                         </Typography>
                       </td>
                       <td className={classes}>
