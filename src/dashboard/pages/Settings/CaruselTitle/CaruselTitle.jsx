@@ -48,7 +48,16 @@ const CaruselTitle = () => {
   };
 
   const dashboardTranslationsHeading = getTranslationObject("componentTitle");
-  const { title, status, action, add } = dashboardTranslationsHeading;
+  const {
+    title,
+    status,
+    action,
+    add,
+    edit,
+    delete: deleteT,
+    previous,
+    nextT,
+  } = dashboardTranslationsHeading;
   const dashboardTranslations = getTranslationObject("dashboard");
   const { caruselTitleList } = dashboardTranslations.carusel;
 
@@ -110,13 +119,13 @@ const CaruselTitle = () => {
                       <NavLink
                         to={`/admin-dashboard/banners/edit-carusel-title/${_id}`}
                       >
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <Tooltip content="Delete">
+                      <Tooltip content={deleteT}>
                         <IconButton
                           variant="text"
                           onClick={() => handleBannerDelete(_id)}
@@ -141,7 +150,7 @@ const CaruselTitle = () => {
             onClick={prev}
             disabled={active === 1}
           >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> {previous}
           </Button>
 
           <div className="flex items-center gap-2">
@@ -158,7 +167,7 @@ const CaruselTitle = () => {
             onClick={next}
             disabled={active === totalPages}
           >
-            Next
+            {nextT}
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>

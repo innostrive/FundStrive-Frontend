@@ -11,11 +11,26 @@ import IButton from "../../ui/IButton";
 import ForgotPassword from "./ForgotPassword";
 import { PasswordModal } from "./PasswordModal";
 import { useForm } from "react-hook-form";
+import { getTranslationObject } from "../../../../i18next";
 
 const LoginForm = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const translation = getTranslationObject("public");
+  const {
+    login,
+    password,
+    email,
+    passwordError,
+    emailError,
+    emailFormat,
+    passwordFormat,
+    newAccount,
+    signUp,
+    loginSuccess,
+    loginFailed,
+  } = translation?.login;
   const {
     register,
     handleSubmit,
@@ -27,7 +42,7 @@ const LoginForm = () => {
     try {
       await axios.post(`${URL}/login`, data).then((data) => {
         setIsLoading(false);
-        toast.success(data.data.message);
+        toast.success(loginSuccess);
         localStorage.setItem("token", data.data.data.token);
         localStorage.setItem("role", data.data.data.role);
         localStorage.setItem("userId", data.data.data.id);
@@ -35,7 +50,7 @@ const LoginForm = () => {
         navigate("/dashboard");
       });
     } catch (err) {
-      toast.error(err);
+      toast.error(loginFailed);
     }
   };
 
@@ -43,7 +58,7 @@ const LoginForm = () => {
     <section>
       <div className="my-5">
         <Typography variant="h4" color="blue-gray">
-          Login
+          {login}
         </Typography>
         <Typography color="gray" className="mt-1 font-normal">
           Nice to meet you! Enter your details to register.
@@ -54,7 +69,7 @@ const LoginForm = () => {
         className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
       >
         <div className="mb-1 flex flex-col gap-6">
-          <span className="text-sm">Email</span>
+          <span className="text-sm">{email}</span>
           <input
             type="email"
             name="email"
@@ -62,10 +77,10 @@ const LoginForm = () => {
               errors.email ? "border-red-500" : "border-gray-300"
             }`}
             {...register("email", {
-              required: "Email is required",
+              required: emailError,
               pattern: {
                 value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                message: "Enter a valid email",
+                message: emailFormat,
               },
             })}
           />
@@ -73,7 +88,7 @@ const LoginForm = () => {
             <p className="text-red-500 text-sm">{errors.email.message}</p>
           )}
 
-          <span className="text-sm">Password</span>
+          <span className="text-sm">{password}</span>
           <input
             type="password"
             name="password"
@@ -81,10 +96,10 @@ const LoginForm = () => {
               errors.password ? "border-red-500" : "border-gray-300"
             }`}
             {...register("password", {
-              required: "Password is required",
+              required: passwordError,
               minLength: {
                 value: 6,
-                message: "Password must be at least 6 characters long",
+                message: passwordFormat,
               },
             })}
           />
@@ -99,12 +114,12 @@ const LoginForm = () => {
           fullWidth
           disabled={isLoading ? true : false}
         >
-          {isLoading ? "Login..." : "Login"}
+          {isLoading ? login : login}
         </IButton>
         <Typography color="gray" className="mt-4 font-normal">
-          Don't have an account?{" "}
+          {newAccount}
           <Link to={"/sign-up"} className="font-medium text-gray-900">
-            Sign Up
+            {signUp}
           </Link>
         </Typography>
       </form>

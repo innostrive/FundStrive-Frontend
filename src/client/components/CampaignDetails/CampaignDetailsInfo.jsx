@@ -18,14 +18,17 @@ import {
 } from "../../assets/icons/icons";
 import Reviews from "../Reviews/Reviews";
 import CampaignDocument from "./CampaignDocument";
+import { getTranslationObject } from "../../../../i18next";
 
 const CampaignDetailsInfo = ({ id }) => {
   const campaign = useCampaignsInfo(id);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const campaignId = campaign?._id;
+  const translation = getTranslationObject("public");
+  const { description, gallery, document, reviews } = translation?.campaign;
   const data = [
     {
-      label: "Description",
+      label: description,
       value: "description",
       icon: DescriptionIcon,
       desc: (
@@ -33,19 +36,19 @@ const CampaignDetailsInfo = ({ id }) => {
       ),
     },
     {
-      label: "Gallery",
+      label: gallery,
       value: "gallery",
       icon: GalleryIcon,
       desc: <Gallery campaignId={campaignId} />,
     },
     {
-      label: "Document",
+      label: document,
       value: "document",
       icon: DocumentIcon,
       desc: <CampaignDocument campaignId={campaignId} />,
     },
     {
-      label: "Reviews",
+      label: reviews,
       value: "reviews",
       icon: ReviewIcon,
       desc: <Reviews campaignId={campaignId} />,

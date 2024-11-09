@@ -63,7 +63,7 @@ const AboutCampaignSettings = () => {
   const dashboardTranslations = getTranslationObject("dashboard");
   const { campaignDataList } = dashboardTranslations.aboutInfo;
   const dashboardTranslationsHeading = getTranslationObject("componentTitle");
-  const { key, value, status, action } = dashboardTranslationsHeading;
+  const { key, value, status, action, edit } = dashboardTranslationsHeading;
   const TABLE_HEAD = [key, value, status, action];
   return (
     <section>
@@ -128,20 +128,12 @@ const AboutCampaignSettings = () => {
                           <NavLink
                             to={`/admin-dashboard/about-info/edit-about-settings/${_id}`}
                           >
-                            <Tooltip content="Edit">
+                            <Tooltip content={edit}>
                               <IconButton variant="text">
                                 <Edit className="size-5 text-green-500" />
                               </IconButton>
                             </Tooltip>
                           </NavLink>
-                          {/* <Tooltip content="Delete">
-                        <IconButton
-                          variant="text"
-                          onClick={() => handleAboutSuccessDelete(_id)}
-                        >
-                          <Delete className="size-5 text-red-500" />
-                        </IconButton>
-                      </Tooltip> */}
                         </div>
                       </td>
                     </tr>
@@ -151,37 +143,6 @@ const AboutCampaignSettings = () => {
             </tbody>
           </table>
         </CardBody>
-
-        <CardFooter className="flex items-center justify-end p-4">
-          <div className="flex items-center gap-4">
-            <Button
-              variant="text"
-              className="flex items-center gap-2 rounded-full"
-              onClick={prev}
-              disabled={active === 1}
-            >
-              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-            </Button>
-
-            <div className="flex items-center gap-2">
-              {Array.from({ length: totalPages }, (_, i) => (
-                <IconButton key={i + 1} {...getItemProps(i + 1)}>
-                  {i + 1}
-                </IconButton>
-              ))}
-            </div>
-
-            <Button
-              variant="text"
-              className="flex items-center gap-2 rounded-full"
-              onClick={next}
-              disabled={active === totalPages}
-            >
-              Next
-              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-            </Button>
-          </div>
-        </CardFooter>
       </FormCard>
     </section>
   );

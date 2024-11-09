@@ -1,14 +1,17 @@
+import { getTranslationObject } from "../../../../i18next";
 import BlogReview from "./BlogReview";
 const Blog = ({ blog, author, publishedDate }) => {
+  const translation = getTranslationObject("public");
+  const { publishedAt, writer } = translation?.blog;
   return (
     <div className="space-y-10">
       <div className="space-y-8">
         <div className="flex justify-between items-center">
           <p className="text-xs font-semibold tracking-wide">
-            Published At: {publishedDate}
+            {publishedAt}: {publishedDate}
           </p>
           <p className="text-xs font-semibold tracking-wide">
-            Author: {author?.name}
+            {writer}: {author?.name}
           </p>
         </div>
         <div

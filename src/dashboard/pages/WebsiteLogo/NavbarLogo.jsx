@@ -17,7 +17,13 @@ const NavbarLogo = () => {
   const [logo, handleLogoDelete] = useLogo();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const dashboardTranslationsHeading = getTranslationObject("componentTitle");
-  const { name, logo: navlogo, status, action } = dashboardTranslationsHeading;
+  const {
+    name,
+    logo: navlogo,
+    status,
+    action,
+    edit,
+  } = dashboardTranslationsHeading;
   const dashboardTranslations = getTranslationObject("dashboard");
   const { navbarLogo } = dashboardTranslations.websiteLogo;
   const TABLE_HEAD = [name, navlogo, status, action];
@@ -92,7 +98,7 @@ const NavbarLogo = () => {
                       <NavLink
                         to={`/admin-dashboard/website-logo/update-navbar-logo/${_id}`}
                       >
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>

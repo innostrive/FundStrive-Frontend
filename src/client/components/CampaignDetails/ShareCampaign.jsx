@@ -4,15 +4,18 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { BiLogoFacebook, BiLogoLinkedin } from "react-icons/bi";
 import { FaGoogle, FaInstagram } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import { getTranslationObject } from "../../../../i18next";
 
 const ShareCampaign = () => {
   const [value, setValue] = useState(window.location.href);
   const [copied, setCopied] = useState(false);
+  const translation = getTranslationObject("public");
+  const { copy, shareCampaign, linkCopySuccess } = translation?.campaign;
   return (
     <div>
       <div className="my-4">
         <h1 className="text-base font-medium text-secondary">
-          Share Campaign With Social Media
+          {shareCampaign}
         </h1>
       </div>
       <div className="relative flex w-full max-w-[24rem]">
@@ -33,14 +36,14 @@ const ShareCampaign = () => {
           text={value}
           onCopy={() => {
             setCopied(true);
-            copied && toast.success("Link Successfully Coppied...");
+            copied && toast.success(linkCopySuccess);
           }}
         >
           <Button
             size="sm"
             className="!absolute right-1 top-1 rounded bg-secondary"
           >
-            Copy
+            {copy}
           </Button>
         </CopyToClipboard>
       </div>

@@ -9,10 +9,40 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import userRegistrationSchema from "../../schemas/registration.schema";
 import IButton from "../../ui/IButton";
 import { useForm } from "react-hook-form";
+import { getTranslationObject } from "../../../../i18next";
 const SignUpForm = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const translation = getTranslationObject("public");
+  const {
+    name,
+    nameError,
+    email,
+    emailError,
+    emailFormat,
+    password,
+    passwordError,
+    passwordFormat,
+    address,
+    addressError,
+    phoneNumber,
+    phoneNumberError,
+    country,
+    countryError,
+    city,
+    cityError,
+    state,
+    stateError,
+    postCode,
+    postCodeError,
+    signUp,
+    newAccount,
+    login,
+    postCodeFormat,
+    signUpSuccess,
+    signing,
+  } = translation?.login;
   const {
     handleSubmit,
     register,
@@ -30,24 +60,22 @@ const SignUpForm = () => {
       setIsLoading(false);
       if (response.status === 200) {
         toast.success(response.data.data.message);
-        console.log("message:", response.data.data.message);
         navigate("/login");
       }
     } catch (error) {
-      toast.error("Failed to sign up. Please try again.");
-      console.log("error", error);
+      toast.error(signUpSuccess);
     }
   };
   return (
     <div className="w-full max-w-3xl sm:p-0 p-5">
       <Typography variant="h4" color="blue-gray" className="my-5">
-        Sign Up
+        {signUp}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
         <div className="mb-1 grid sm:grid-cols-2 grid-cols-1 gap-5">
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
-              Your Name
+              {name}
             </Typography>
             <input
               type="text"
@@ -56,11 +84,7 @@ const SignUpForm = () => {
                 errors.name ? "border-red-500" : "border-gray-300"
               }`}
               {...register("name", {
-                required: "Name is required",
-                minLength: {
-                  value: 3,
-                  message: "Name should be at least 3 characters long",
-                },
+                required: nameError,
               })}
             />
             {errors.name && (
@@ -70,7 +94,7 @@ const SignUpForm = () => {
 
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
-              Your Email
+              {email}
             </Typography>
             <input
               type="email"
@@ -79,10 +103,10 @@ const SignUpForm = () => {
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
               {...register("email", {
-                required: "Email is required",
+                required: emailError,
                 pattern: {
                   value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Enter a valid email",
+                  message: emailFormat,
                 },
               })}
             />
@@ -93,7 +117,7 @@ const SignUpForm = () => {
 
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
-              Password
+              {password}
             </Typography>
             <input
               type="password"
@@ -102,10 +126,10 @@ const SignUpForm = () => {
                 errors.password ? "border-red-500" : "border-gray-300"
               }`}
               {...register("password", {
-                required: "Password is required",
+                required: passwordError,
                 minLength: {
                   value: 6,
-                  message: "Password must be at least 6 characters long",
+                  message: passwordFormat,
                 },
               })}
             />
@@ -116,7 +140,7 @@ const SignUpForm = () => {
 
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
-              Phone Number
+              {phoneNumber}
             </Typography>
             <input
               type="text"
@@ -125,11 +149,7 @@ const SignUpForm = () => {
                 errors.phone_number ? "border-red-500" : "border-gray-300"
               }`}
               {...register("phone_number", {
-                required: "Phone number is required",
-                pattern: {
-                  value: /^[0-9]{10}$/,
-                  message: "Enter a valid 10-digit phone number",
-                },
+                required: phoneNumberError,
               })}
             />
             {errors.phone_number && (
@@ -141,7 +161,7 @@ const SignUpForm = () => {
 
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
-              Address
+              {address}
             </Typography>
             <input
               type="text"
@@ -149,7 +169,7 @@ const SignUpForm = () => {
               className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                 errors.address ? "border-red-500" : "border-gray-300"
               }`}
-              {...register("address", { required: "Address is required" })}
+              {...register("address", { required: addressError })}
             />
             {errors.address && (
               <p className="text-red-500 text-sm">{errors.address.message}</p>
@@ -158,7 +178,7 @@ const SignUpForm = () => {
 
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
-              Country
+              {country}
             </Typography>
             <input
               type="text"
@@ -166,7 +186,7 @@ const SignUpForm = () => {
               className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                 errors.country ? "border-red-500" : "border-gray-300"
               }`}
-              {...register("country", { required: "Country is required" })}
+              {...register("country", { required: countryError })}
             />
             {errors.country && (
               <p className="text-red-500 text-sm">{errors.country.message}</p>
@@ -175,7 +195,7 @@ const SignUpForm = () => {
 
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
-              State
+              {state}
             </Typography>
             <input
               type="text"
@@ -183,7 +203,7 @@ const SignUpForm = () => {
               className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                 errors.state ? "border-red-500" : "border-gray-300"
               }`}
-              {...register("state", { required: "State is required" })}
+              {...register("state", { required: stateError })}
             />
             {errors.state && (
               <p className="text-red-500 text-sm">{errors.state.message}</p>
@@ -192,7 +212,7 @@ const SignUpForm = () => {
 
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
-              City
+              {city}
             </Typography>
             <input
               type="text"
@@ -200,7 +220,7 @@ const SignUpForm = () => {
               className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                 errors.city ? "border-red-500" : "border-gray-300"
               }`}
-              {...register("city", { required: "City is required" })}
+              {...register("city", { required: cityError })}
             />
             {errors.city && (
               <p className="text-red-500 text-sm">{errors.city.message}</p>
@@ -209,7 +229,7 @@ const SignUpForm = () => {
 
           <div>
             <Typography variant="h6" color="blue-gray" className="mb-3">
-              Post Code
+              {postCode}
             </Typography>
             <input
               type="text"
@@ -218,10 +238,10 @@ const SignUpForm = () => {
                 errors.post_code ? "border-red-500" : "border-gray-300"
               }`}
               {...register("post_code", {
-                required: "Post code is required",
+                required: postCodeError,
                 pattern: {
                   value: /^[0-9]{5}$/,
-                  message: "Enter a valid 5-digit post code",
+                  message: postCodeFormat,
                 },
               })}
             />
@@ -236,12 +256,12 @@ const SignUpForm = () => {
           fullWidth
           disabled={isLoading ? true : false}
         >
-          {isLoading ? "Signing Up..." : "Sign up"}
+          {isLoading ? signing : signUp}
         </IButton>
         <Typography color="gray" className="mt-4 text-center font-normal">
-          Already have an account?{" "}
+          {newAccount}
           <Link to={"/login"} className="font-medium text-gray-900">
-            Sign In
+            {login}
           </Link>
         </Typography>
       </form>

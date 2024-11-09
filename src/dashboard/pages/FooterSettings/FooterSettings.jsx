@@ -15,7 +15,7 @@ const FooterSettings = () => {
   const dashboardTranslations = getTranslationObject("dashboard");
   const { footer } = dashboardTranslations.footer;
   const dashboardTranslationsHeading = getTranslationObject("componentTitle");
-  const { name, action } = dashboardTranslationsHeading;
+  const { name, action, edit } = dashboardTranslationsHeading;
   const TABLE_HEAD = [name, action];
   return (
     <FormCard title={footer}>
@@ -59,7 +59,7 @@ const FooterSettings = () => {
                       <NavLink
                         to={`/admin-dashboard/footer/edit-footer/${_id}`}
                       >
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>

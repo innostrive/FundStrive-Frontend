@@ -12,6 +12,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const Blog = ({ blog }) => {
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
@@ -35,6 +36,8 @@ const Blog = ({ blog }) => {
       return text;
     }
   };
+  const translation = getTranslationObject("public");
+  const { publishedAt, writer, readMore } = translation?.blog;
   return (
     <Card className="w-96 border shadow-sm flex flex-col min-h-[24rem] h-auto">
       <CardHeader shadow={false} floated={false} className="h-40 flex-shrink-0">
@@ -49,12 +52,12 @@ const Blog = ({ blog }) => {
         <div className="mb-2 flex items-center justify-between space-y-2">
           <div className="h-10 w-auto px-2 rounded-md bg-orange-600 bg-opacity-[10%] flex justify-center items-center">
             <Typography className="font-semibold text-xs leading-5 text-orange-600">
-              Published At: {publishedDate}
+              {publishedAt}: {publishedDate}
             </Typography>
           </div>
           <div className="h-10 w-auto px-2 rounded-md bg-green-600 bg-opacity-[10%] flex justify-center items-center">
             <Typography className="font-semibold text-xs leading-5 text-green-600">
-              Author: {author?.name}
+              {writer}: {author?.name}
             </Typography>
           </div>
         </div>
@@ -69,7 +72,7 @@ const Blog = ({ blog }) => {
             fullWidth={true}
             className="bg-primary hover:bg-cyan-700 text-white shadow-none hover:shadow-none focus:scale-105 focus:shadow-none"
           >
-            Read More
+            {readMore}
           </Button>
         </Link>
       </CardFooter>

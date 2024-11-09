@@ -16,7 +16,7 @@ const TopNavbarInfo = () => {
   const [topnavInfo] = useTopNavData();
   const dashboardTranslations = getTranslationObject("dashboard");
   const dashboardTranslationsHeader = getTranslationObject("componentTitle");
-  const { topNavInfo: topNavInfoT } = dashboardTranslations.menu;
+  const { topNavInfo: topNavInfoT, edit } = dashboardTranslations.menu;
   const { key, value, status, action } = dashboardTranslationsHeader;
   const TABLE_HEAD = [key, value, status, action];
   return (
@@ -83,7 +83,7 @@ const TopNavbarInfo = () => {
                         <NavLink
                           to={`/admin-dashboard/navmenus/top-navbar-edit-emailInfo/${_id}`}
                         >
-                          <Tooltip content="Edit">
+                          <Tooltip content={edit}>
                             <IconButton variant="text">
                               <Edit className="size-5 text-green-500" />
                             </IconButton>

@@ -15,13 +15,21 @@ import { NavLink } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { getTranslationObject } from "../../../../i18next";
 
-const TABLE_HEAD = ["Category", "Status", "Action"];
-
 const Categories = () => {
   const [categories, handleCategoryDelete] = useCategoriesData();
   const dashboardTranslations = getTranslationObject("dashboard");
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
   const { categoryList, add, previous, nextT } =
     dashboardTranslations.dashboardTitle;
+  const {
+    category,
+    status,
+    action,
+    view,
+    delete: deletT,
+    edit,
+  } = dashboardTranslationsHeading;
+  const TABLE_HEAD = [category, status, action];
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -108,7 +116,7 @@ const Categories = () => {
                       <NavLink
                         to={`/admin-dashboard/categories/category-details/${_id}`}
                       >
-                        <Tooltip content="View">
+                        <Tooltip content={view}>
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
@@ -117,13 +125,13 @@ const Categories = () => {
                       <NavLink
                         to={`/admin-dashboard/categories/edit-category/${_id}`}
                       >
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <Tooltip content="Delete">
+                      <Tooltip content={deletT}>
                         <IconButton
                           variant="text"
                           onClick={() => handleCategoryDelete(_id)}

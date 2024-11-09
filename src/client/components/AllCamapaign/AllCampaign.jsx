@@ -10,12 +10,20 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import IButton from "../../../dashboard/ui/IButton";
+import { getTranslationObject } from "../../../../i18next";
 const AllCampaign = ({ campaign }) => {
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const goal = campaign?.target_amount || 0;
   const raised = campaign?.raised_amount || 0;
   const initialProgress =
     goal > 0 ? ((raised / goal) * 100).toFixed(2) : "0.00";
+  const translation = getTranslationObject("public");
+  const {
+    donate,
+    completed,
+    raised: Raised,
+    goal: Goal,
+  } = translation?.campaign;
   return (
     <Card
       className="h-[30rem] w-full sm:max-w-96 rounded-md bg-white flex flex-col"
@@ -43,7 +51,7 @@ const AllCampaign = ({ campaign }) => {
           </div>
           <Link to={`/campaign/${campaign?._id}`}>
             <IButton className="bg-primary hover:bg-secondary duration-200 ease-in text-text-primary rounded-none uppercase">
-              Donate
+              {donate}
             </IButton>
           </Link>
         </div>
@@ -56,7 +64,7 @@ const AllCampaign = ({ campaign }) => {
         <div className="p-5 bg-[#f3f4f7] w-full">
           <div className="flex items-center justify-between mb-2">
             <Typography color="blue-gray" variant="small">
-              Completed
+              {completed}
             </Typography>
             <Typography color="blue-gray" variant="small">
               {initialProgress}%
@@ -73,13 +81,13 @@ const AllCampaign = ({ campaign }) => {
           <p className="font-bold text-sm text-secondary">
             ${campaign?.raised_amount > 0 ? campaign?.raised_amount : 0}
             <span className="font-semibold text-sm ml-1 tracking-normal text-primary">
-              Raised
+              {Raised}
             </span>
           </p>
           <p className="font-bold text-sm text-secondary">
             ${campaign?.target_amount}
             <span className="font-semibold text-sm ml-1 tracking-normal text-[#219558]">
-              Goal
+              {Goal}
             </span>
           </p>
         </div>

@@ -15,13 +15,23 @@ import { useState, useMemo } from "react";
 import useUsersData from "../../hooks/useUsersData";
 import { getTranslationObject } from "../../../../i18next";
 
-const TABLE_HEAD = ["Name", "Country", "Role", "Status", "Action"];
-
 const UserList = () => {
   const [users, handleUserDelete] = useUsersData();
   const dashboardTranslations = getTranslationObject("dashboard");
   const { userList, add, previous, nextT } =
     dashboardTranslations?.dashboardTitle;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const {
+    name,
+    country,
+    role,
+    status,
+    action,
+    view,
+    edit,
+    delete: deleteT,
+  } = dashboardTranslationsHeading;
+  const TABLE_HEAD = [name, country, role, status, action];
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
@@ -127,20 +137,20 @@ const UserList = () => {
                         <NavLink
                           to={`/admin-dashboard/users/user-details/${_id}`}
                         >
-                          <Tooltip content="View">
+                          <Tooltip content={view}>
                             <IconButton variant="text">
                               <View className="size-5 text-secondary" />
                             </IconButton>
                           </Tooltip>
                         </NavLink>
                         <NavLink to={`/admin-dashboard/users/edit-user/${_id}`}>
-                          <Tooltip content="Edit">
+                          <Tooltip content={edit}>
                             <IconButton variant="text">
                               <Edit className="size-5 text-green-500" />
                             </IconButton>
                           </Tooltip>
                         </NavLink>
-                        <Tooltip content="Delete">
+                        <Tooltip content={deleteT}>
                           <IconButton
                             variant="text"
                             onClick={() => handleUserDelete(_id)}

@@ -50,6 +50,14 @@ const Blogs = () => {
   const dashboardTranslationsBlog = getTranslationObject("dashboard");
   const { title, publishedDate, status, action, add } = dashboardTranslations;
   const { blogList } = dashboardTranslationsBlog.blog;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const {
+    view,
+    edit,
+    previous,
+    nextT,
+    delete: deleteT,
+  } = dashboardTranslationsHeading;
 
   const TABLE_HEAD = [title, publishedDate, status, action];
   return (
@@ -119,20 +127,20 @@ const Blogs = () => {
                       <NavLink
                         to={`/admin-dashboard/blogs/blog-details/${_id}`}
                       >
-                        <Tooltip content="View">
+                        <Tooltip content={view}>
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
                       <NavLink to={`/admin-dashboard/blogs/edit-blog/${_id}`}>
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <Tooltip content="Delete">
+                      <Tooltip content={deleteT}>
                         <IconButton
                           variant="text"
                           onClick={() => handleBlogDelete(_id)}
@@ -157,7 +165,7 @@ const Blogs = () => {
             onClick={prev}
             disabled={active === 1}
           >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> {previous}
           </Button>
 
           <div className="flex items-center gap-2">
@@ -174,7 +182,7 @@ const Blogs = () => {
             onClick={next}
             disabled={active === totalPages}
           >
-            Next
+            {nextT}
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>

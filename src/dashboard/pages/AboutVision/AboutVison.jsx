@@ -58,7 +58,7 @@ const AboutVision = () => {
   const dashboardTranslations = getTranslationObject("dashboard");
   const { aboutVision: aboutVisionT } = dashboardTranslations.aboutInfo;
   const dashboardTranslationsHeading = getTranslationObject("componentTitle");
-  const { key, value, status, action } = dashboardTranslationsHeading;
+  const { key, value, status, action, edit } = dashboardTranslationsHeading;
   const TABLE_HEAD = [key, value, status, action];
   return (
     <FormCard title={aboutVisionT}>
@@ -121,7 +121,7 @@ const AboutVision = () => {
                       <NavLink
                         to={`/admin-dashboard/about-info/edit-about-vision/${_id}`}
                       >
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>

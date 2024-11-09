@@ -52,7 +52,8 @@ const MenuSettings = () => {
   const dashboardTranslationsHeader = getTranslationObject("componentTitle");
   const { menuList } = dashboardTranslations.menu;
   const { menu, status, action } = dashboardTranslationsHeader;
-
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const { view, edit } = dashboardTranslationsHeading;
   const TABLE_HEAD = [menu, status, action];
   return (
     <FormCard title={menuList}>
@@ -108,7 +109,7 @@ const MenuSettings = () => {
                       <NavLink
                         to={`/admin-dashboard/navmenus/navmenu-details/${_id}`}
                       >
-                        <Tooltip content="Menu Info">
+                        <Tooltip content={view}>
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
@@ -117,20 +118,12 @@ const MenuSettings = () => {
                       <NavLink
                         to={`/admin-dashboard/navmenus/edit-navmenu/${_id}`}
                       >
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      {/* <Tooltip content="Delete">
-                        <IconButton
-                          variant="text"
-                          onClick={() => handleSettingsDelete(_id)}
-                        >
-                          <Delete className="size-5 text-red-500" />
-                        </IconButton>
-                      </Tooltip> */}
                     </div>
                   </td>
                 </tr>
@@ -139,37 +132,6 @@ const MenuSettings = () => {
           </tbody>
         </table>
       </CardBody>
-
-      <CardFooter className="flex items-center justify-end p-4">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="text"
-            className="flex items-center gap-2 rounded-full"
-            onClick={prev}
-            disabled={active === 1}
-          >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-          </Button>
-
-          <div className="flex items-center gap-2">
-            {Array.from({ length: totalPages }, (_, i) => (
-              <IconButton key={i + 1} {...getItemProps(i + 1)}>
-                {i + 1}
-              </IconButton>
-            ))}
-          </div>
-
-          <Button
-            variant="text"
-            className="flex items-center gap-2 rounded-full"
-            onClick={next}
-            disabled={active === totalPages}
-          >
-            Next
-            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-          </Button>
-        </div>
-      </CardFooter>
     </FormCard>
   );
 };

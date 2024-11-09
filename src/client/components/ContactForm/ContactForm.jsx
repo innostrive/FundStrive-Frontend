@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useCountries } from "use-react-countries";
+import { getTranslationObject } from "../../../../i18next";
 
 const ContactForm = () => {
   const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -22,6 +23,18 @@ const ContactForm = () => {
   const { countries } = useCountries();
   const [country, setCountry] = useState(0);
   const { name, flags, countryCallingCode } = countries[country];
+  const translation = getTranslationObject("public");
+  const {
+    name: nameT,
+    nameError,
+    email,
+    emailError,
+    phone,
+    message,
+    messageError,
+    sendMessage,
+    sending,
+  } = translation?.contact;
   const {
     register,
     reset,
@@ -43,7 +56,6 @@ const ContactForm = () => {
       } else {
         toast.warning("Something wrong!");
       }
-      console.log("contactMessage:", res);
     });
   };
   return (
@@ -55,17 +67,17 @@ const ContactForm = () => {
         >
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Name
+              {nameT}
             </Typography>
             <Input
               size="lg"
               type="text"
-              placeholder="Name"
+              placeholder={name}
               className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
-              {...register("name", { required: "Name is required" })}
+              {...register("name", { required: nameError })}
             />
             {errors.name && (
               <Typography color="red" variant="small" className="-my-3">
@@ -73,18 +85,18 @@ const ContactForm = () => {
               </Typography>
             )}
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Email
+              {email}
             </Typography>
             <Input
               size="lg"
               type="email"
-              placeholder="Email"
+              placeholder={email}
               className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
               {...register("email", {
-                required: "Email is required",
+                required: emailError,
                 pattern: {
                   value: /\S+@\S+\.\S+/,
                   message: "Invalid email format",
@@ -96,6 +108,9 @@ const ContactForm = () => {
                 {errors.email.message}
               </Typography>
             )}
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              {phone}
+            </Typography>
             <div className="relative flex w-full max-w-[24rem]">
               <Menu placement="bottom-start">
                 <MenuHandler>
@@ -138,7 +153,7 @@ const ContactForm = () => {
               </Menu>
               <Input
                 type="tel"
-                placeholder="Mobile Number"
+                placeholder={phone}
                 className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
                 labelProps={{
                   className: "before:content-none after:content-none",
@@ -146,16 +161,12 @@ const ContactForm = () => {
                 containerProps={{
                   className: "min-w-0",
                 }}
-                {...register("phone", { required: "Phone number is required" })}
+                {...register("phone")}
               />
             </div>
-            {errors.message && (
-              <Typography color="red" variant="small" className="-my-3">
-                {errors.phone.message}
-              </Typography>
-            )}
+
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Message
+              {message}
             </Typography>
             <div className="w-96">
               <Textarea
@@ -164,7 +175,7 @@ const ContactForm = () => {
                 labelProps={{
                   className: "before:content-none after:content-none px-4 py-2",
                 }}
-                {...register("message", { required: "Message is required" })}
+                {...register("message", { required: messageError })}
               />
             </div>
             {errors.message && (
@@ -182,10 +193,10 @@ const ContactForm = () => {
           >
             {isLoading ? (
               <div className="flex justify-center items-center gap-2">
-                <Spinner /> Sending...
+                <Spinner /> {sending}
               </div>
             ) : (
-              "Send Message"
+              sendMessage
             )}
           </Button>
         </form>

@@ -15,13 +15,22 @@ import { useState, useMemo } from "react";
 import useCampaignData from "../../hooks/useCampaignData";
 import { getTranslationObject } from "../../../../i18next";
 
-const TABLE_HEAD = ["Campaign", "Title", "Status", "Action"];
-
 const Campaigns = () => {
   const [campaigns, handleCampaignDelete] = useCampaignData();
   const dashboardTranslations = getTranslationObject("dashboard");
   const { campaignList, add, edit, view } =
     dashboardTranslations.dashboardTitle;
+  const dashboardTranslationsHeading = getTranslationObject("componentTitle");
+  const {
+    campaign,
+    title,
+    status,
+    action,
+    previous,
+    nextT,
+    delete: deleteT,
+  } = dashboardTranslationsHeading;
+  const TABLE_HEAD = [campaign, title, status, action];
   const [active, setActive] = useState(1);
   const itemsPerPage = 5;
 
@@ -133,7 +142,7 @@ const Campaigns = () => {
                             </IconButton>
                           </Tooltip>
                         </NavLink>
-                        <Tooltip content="Delete">
+                        <Tooltip content={deleteT}>
                           <IconButton
                             variant="text"
                             onClick={() => handleCampaignDelete(_id)}
@@ -159,7 +168,7 @@ const Campaigns = () => {
             onClick={prev}
             disabled={active === 1}
           >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> {previous}
           </Button>
 
           <div className="flex items-center gap-2">
@@ -176,7 +185,7 @@ const Campaigns = () => {
             onClick={next}
             disabled={active === totalPages}
           >
-            Next
+            {nextT}
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>

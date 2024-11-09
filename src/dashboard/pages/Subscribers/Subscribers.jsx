@@ -45,7 +45,14 @@ const Subscribers = () => {
   };
 
   const dashboardTranslationsHeaders = getTranslationObject("componentTitle");
-  const { email, status, action } = dashboardTranslationsHeaders;
+  const {
+    email,
+    status,
+    action,
+    delete: deletT,
+    previous,
+    nextT,
+  } = dashboardTranslationsHeaders;
   const dashboardTranslations = getTranslationObject("dashboard");
   const { subscriberList } = dashboardTranslations.dashboardTitle;
   const TABLE_HEAD = [email, status, action];
@@ -98,7 +105,7 @@ const Subscribers = () => {
                   </td>
                   <td className={classes}>
                     <div className="flex items-center">
-                      <Tooltip content="Delete">
+                      <Tooltip content={deletT}>
                         <IconButton
                           variant="text"
                           onClick={() => handleSubscriberDelete(_id)}
@@ -123,7 +130,7 @@ const Subscribers = () => {
             onClick={prev}
             disabled={active === 1}
           >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> {previous}
           </Button>
 
           <div className="flex items-center gap-2">
@@ -140,7 +147,7 @@ const Subscribers = () => {
             onClick={next}
             disabled={active === totalPages}
           >
-            Next
+            {nextT}
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>

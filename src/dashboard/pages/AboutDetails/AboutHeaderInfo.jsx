@@ -51,7 +51,7 @@ const AboutHeaderInfo = () => {
   return (
     <FormCard
       title="Header List"
-      path="/dashboard/create-about-headerInfo"
+      path="/admin-dashboard/about-info/create-about-headerInfo"
       icon={<Add />}
       iconTitle="Add"
     >

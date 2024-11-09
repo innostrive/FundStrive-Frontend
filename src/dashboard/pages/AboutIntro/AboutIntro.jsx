@@ -29,7 +29,8 @@ const AboutIntro = () => {
   const dashboardTranslations = getTranslationObject("dashboard");
   const { aboutIntro: aboutIntroT } = dashboardTranslations.aboutInfo;
   const dashboardTranslationsHeading = getTranslationObject("componentTitle");
-  const { name, intro, status, action } = dashboardTranslationsHeading;
+  const { name, intro, status, action, view, edit } =
+    dashboardTranslationsHeading;
 
   const TABLE_HEAD = [name, intro, status, action];
   return (
@@ -93,7 +94,7 @@ const AboutIntro = () => {
                       <NavLink
                         to={`/admin-dashboard/about-info/about-intro-details/${_id}`}
                       >
-                        <Tooltip content="View">
+                        <Tooltip content={view}>
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
@@ -102,7 +103,7 @@ const AboutIntro = () => {
                       <NavLink
                         to={`/admin-dashboard/about-info/edit-about-intro/${_id}`}
                       >
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>

@@ -18,7 +18,13 @@ const FooterLogo = () => {
   const [footerLogo] = useFooterLogo();
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const dashboardTranslationsHeading = getTranslationObject("componentTitle");
-  const { name, logo: navlogo, status, action } = dashboardTranslationsHeading;
+  const {
+    name,
+    logo: navlogo,
+    status,
+    action,
+    edit,
+  } = dashboardTranslationsHeading;
   const dashboardTranslations = getTranslationObject("dashboard");
   const { footerLogo: footerLogoT } = dashboardTranslations.websiteLogo;
   const TABLE_HEAD = [name, navlogo, status, action];
@@ -93,7 +99,7 @@ const FooterLogo = () => {
                       <NavLink
                         to={`/admin-dashboard/website-logo/update-footer-logo/${_id}`}
                       >
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>

@@ -3,6 +3,7 @@ import IButton from "../../../dashboard/ui/IButton";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { getTranslationObject } from "../../../../i18next";
 const BlogReviewForm = ({ blog, refetch }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [isLoading, setIsLoading] = useState(false);
@@ -24,25 +25,31 @@ const BlogReviewForm = ({ blog, refetch }) => {
         toast.success(res.data.message);
         setIsLoading(false);
         reset();
-        console.log("review:", res.data);
       }
       refetch();
     });
-    console.log("data:", payload);
   };
+  const translation = getTranslationObject("public");
+  const {
+    name,
+    email,
+    comment,
+    wait,
+    submit,
+    nameError,
+    emailError,
+    commentError,
+    emailFormat,
+  } = translation?.blog;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-1 grid gap-6">
-        <span className="-mb-3 text-sm text-secondary">Name</span>
+        <span className="-mb-3 text-sm text-secondary">{name}</span>
         <input
           type="text"
           name="name"
           {...register("name", {
-            required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Name must be at least 3 characters long",
-            },
+            required: nameError,
           })}
           className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
             errors.name ? "border-red-500" : "border-gray-300"
@@ -51,13 +58,13 @@ const BlogReviewForm = ({ blog, refetch }) => {
         {errors.name && <p className="text-red-500">{errors.name.message}</p>}
 
         {/* Email Field */}
-        <span className="-mb-3 text-sm text-secondary">Email</span>
+        <span className="-mb-3 text-sm text-secondary">{email}</span>
         <input
           type="email"
           name="email"
           {...register("email", {
-            required: "Email is required",
-            pattern: { value: /^\S+@\S+$/i, message: "Invalid email format" },
+            required: emailError,
+            pattern: { value: /^\S+@\S+$/i, message: emailFormat },
           })}
           className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
             errors.email ? "border-red-500" : "border-gray-300"
@@ -66,15 +73,11 @@ const BlogReviewForm = ({ blog, refetch }) => {
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
         {/* Review Field */}
-        <span className="-mb-3 text-sm text-secondary">Comment</span>
+        <span className="-mb-3 text-sm text-secondary">{comment}</span>
         <textarea
           name="review"
           {...register("review", {
-            required: "Review is required",
-            minLength: {
-              value: 10,
-              message: "Review must be at least 10 characters long",
-            },
+            required: commentError,
           })}
           className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded h-auto min-h-40 ${
             errors.review ? "border-red-500" : "border-gray-300"
@@ -86,7 +89,7 @@ const BlogReviewForm = ({ blog, refetch }) => {
       </div>
 
       <IButton className="mt-5 rounded-none py-5">
-        {isLoading ? "Wait..." : "Submit"}
+        {isLoading ? wait : submit}
       </IButton>
     </form>
   );

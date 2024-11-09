@@ -46,7 +46,16 @@ const ContactInfo = () => {
     if (active > 1) setActive(active - 1);
   };
   const dashboardTranslationsHeaders = getTranslationObject("componentTitle");
-  const { name, email, phone, action } = dashboardTranslationsHeaders;
+  const {
+    name,
+    email,
+    phone,
+    action,
+    view,
+    delete: deleteT,
+    previous,
+    nextT,
+  } = dashboardTranslationsHeaders;
   const dashboardTranslations = getTranslationObject("dashboard");
   const { contactInfo: contactInfoT } = dashboardTranslations.contactInfo;
 
@@ -118,14 +127,14 @@ const ContactInfo = () => {
                         <NavLink
                           to={`/admin-dashboard/contact-info/contact-details/${_id}`}
                         >
-                          <Tooltip content="View">
+                          <Tooltip content={view}>
                             <IconButton variant="text">
                               <View />
                             </IconButton>
                           </Tooltip>
                         </NavLink>
 
-                        <Tooltip content="Delete">
+                        <Tooltip content={deleteT}>
                           <IconButton
                             variant="text"
                             onClick={() => handleContactInfoDelete(_id)}
@@ -151,7 +160,7 @@ const ContactInfo = () => {
             onClick={prev}
             disabled={active === 1}
           >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> {previous}
           </Button>
 
           <div className="flex items-center gap-2">
@@ -168,7 +177,7 @@ const ContactInfo = () => {
             onClick={next}
             disabled={active === totalPages}
           >
-            Next
+            {nextT}
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>

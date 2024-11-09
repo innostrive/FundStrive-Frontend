@@ -22,7 +22,7 @@ const SocialMedia = () => {
   const dashboardTranslations = getTranslationObject("dashboard");
   const { socialMedia } = dashboardTranslations.socialMedia;
   const dashboardTranslationsHeading = getTranslationObject("componentTitle");
-  const { name, action, link } = dashboardTranslationsHeading;
+  const { name, action, link, edit } = dashboardTranslationsHeading;
   const TABLE_HEAD = [name, link, action];
   return (
     <FormCard title={socialMedia}>
@@ -75,7 +75,7 @@ const SocialMedia = () => {
                       <NavLink
                         to={`/admin-dashboard/social-media/edit-social-media/${_id}`}
                       >
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>

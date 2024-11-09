@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { X } from "../../assets/icons/icons";
+import { getTranslationObject } from "../../../../i18next";
 
 export function VolunteerForm({ open, handleOpen }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +38,29 @@ export function VolunteerForm({ open, handleOpen }) {
       toast.error("Failed to Join. Please try again.");
     }
   };
+  const translation = getTranslationObject("public");
+  const {
+    name,
+    nameError,
+    email,
+    emailError,
+    emailFormat,
+    address,
+    addressError,
+    phoneNumber,
+    phoneNumberError,
+    country,
+    countryError,
+    city,
+    cityError,
+    state,
+    stateError,
+    postCode,
+    postCodeError,
+    postCodeFormat,
+    join,
+    joining,
+  } = translation?.login;
   return (
     <>
       <IButton
@@ -59,14 +83,14 @@ export function VolunteerForm({ open, handleOpen }) {
                   color="blue-gray"
                   className="mb-3"
                 >
-                  Your Name
+                  {name}
                 </Typography>
                 <input
                   placeholder="Name"
                   className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                     errors.name ? "border-red-500" : "border-gray-300"
                   }`}
-                  {...register("name", { required: "Name is required" })}
+                  {...register("name", { required: nameError })}
                   error={errors.name?.message}
                 />
                 {errors.name && (
@@ -80,7 +104,7 @@ export function VolunteerForm({ open, handleOpen }) {
                   color="blue-gray"
                   className="mb-3"
                 >
-                  Your Email
+                  {email}
                 </Typography>
                 <input
                   placeholder="example@mail.com"
@@ -88,10 +112,10 @@ export function VolunteerForm({ open, handleOpen }) {
                     errors.email ? "border-red-500" : "border-gray-300"
                   }`}
                   {...register("email", {
-                    required: "Email is required",
+                    required: emailError,
                     pattern: {
                       value: /^\S+@\S+$/i,
-                      message: "Invalid email format",
+                      message: emailFormat,
                     },
                   })}
                   error={errors.email?.message}
@@ -107,7 +131,7 @@ export function VolunteerForm({ open, handleOpen }) {
                   color="blue-gray"
                   className="mb-3"
                 >
-                  Phone Number
+                  {phoneNumber}
                 </Typography>
                 <input
                   placeholder="Phone number"
@@ -115,11 +139,7 @@ export function VolunteerForm({ open, handleOpen }) {
                     errors.phone_number ? "border-red-500" : "border-gray-300"
                   }`}
                   {...register("phone_number", {
-                    required: "Phone number is required",
-                    minLength: {
-                      value: 10,
-                      message: "Phone number must be at least 10 digits",
-                    },
+                    required: phoneNumberError,
                   })}
                   error={errors.phone_number?.message}
                 />
@@ -136,14 +156,14 @@ export function VolunteerForm({ open, handleOpen }) {
                   color="blue-gray"
                   className="mb-3"
                 >
-                  Address
+                  {address}
                 </Typography>
                 <input
                   placeholder="Address"
                   className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                     errors.address ? "border-red-500" : "border-gray-300"
                   }`}
-                  {...register("address", { required: "Address is required" })}
+                  {...register("address", { required: addressError })}
                   error={errors.address?.message}
                 />
                 {errors.address && (
@@ -158,14 +178,14 @@ export function VolunteerForm({ open, handleOpen }) {
                   color="blue-gray"
                   className="mb-3"
                 >
-                  Country
+                  {country}
                 </Typography>
                 <input
                   placeholder="Country"
                   className={`border px-2 py-1.5 w-full focus:outline-gray-300 focus:outline-1 rounded ${
                     errors.country ? "border-red-500" : "border-gray-300"
                   }`}
-                  {...register("country", { required: "Country is required" })}
+                  {...register("country", { required: countryError })}
                   error={errors.country?.message}
                 />
                 {errors.country && (
@@ -178,7 +198,7 @@ export function VolunteerForm({ open, handleOpen }) {
                   color="blue-gray"
                   className="mb-3"
                 >
-                  State
+                  {state}
                 </Typography>
                 <input
                   placeholder="State"
@@ -186,11 +206,7 @@ export function VolunteerForm({ open, handleOpen }) {
                     errors.state ? "border-red-500" : "border-gray-300"
                   }`}
                   {...register("state", {
-                    required: "State is required",
-                    minLength: {
-                      value: 2,
-                      message: "State must be at least 2 characters",
-                    },
+                    required: stateError,
                   })}
                   error={errors.state?.message}
                 />
@@ -206,7 +222,7 @@ export function VolunteerForm({ open, handleOpen }) {
                   color="blue-gray"
                   className="mb-3"
                 >
-                  City
+                  {city}
                 </Typography>
                 <input
                   placeholder="City"
@@ -214,11 +230,7 @@ export function VolunteerForm({ open, handleOpen }) {
                     errors.city ? "border-red-500" : "border-gray-300"
                   }`}
                   {...register("city", {
-                    required: "City is required",
-                    minLength: {
-                      value: 2,
-                      message: "City must be at least 2 characters",
-                    },
+                    required: cityError,
                   })}
                   error={errors.city?.message}
                 />
@@ -234,7 +246,7 @@ export function VolunteerForm({ open, handleOpen }) {
                   color="blue-gray"
                   className="mb-3"
                 >
-                  Post Code
+                  {postCode}
                 </Typography>
                 <input
                   placeholder="Post Code"
@@ -242,10 +254,10 @@ export function VolunteerForm({ open, handleOpen }) {
                     errors.post_code ? "border-red-500" : "border-gray-300"
                   }`}
                   {...register("post_code", {
-                    required: "Post code is required",
+                    required: postCodeError,
                     pattern: {
                       value: /^[0-9]{5}(-[0-9]{4})?$/,
-                      message: "Invalid post code format",
+                      message: postCodeFormat,
                     },
                   })}
                   error={errors.post_code?.message}
@@ -260,7 +272,7 @@ export function VolunteerForm({ open, handleOpen }) {
               className="mt-6 flex ml-auto"
               onClick={handleOpen}
             >
-              {isLoading ? "Joinig..." : "Join"}
+              {isLoading ? joining : join}
             </IButton>
           </form>
         </FormCard>

@@ -47,7 +47,16 @@ const PrtnerGallery = () => {
     if (active > 1) setActive(active - 1);
   };
   const dashboardTranslationsHeading = getTranslationObject("componentTitle");
-  const { image, status, action, add } = dashboardTranslationsHeading;
+  const {
+    image,
+    status,
+    action,
+    add,
+    previous,
+    nextT,
+    view,
+    delete: deleteT,
+  } = dashboardTranslationsHeading;
   const dashboardTranslations = getTranslationObject("dashboard");
   const { partnerGallery } = dashboardTranslations.carusel;
   const TABLE_HEAD = [image, status, action];
@@ -107,22 +116,13 @@ const PrtnerGallery = () => {
                       <NavLink
                         to={`/admin-dashboard/banners/partner-gallery-view/${_id}`}
                       >
-                        <Tooltip content="View">
+                        <Tooltip content={view}>
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      {/* <NavLink
-                        to={`/admin-dashboard/banners/edit-partner-gallery/${_id}`}
-                      >
-                        <Tooltip content="Edit">
-                          <IconButton variant="text">
-                            <Edit className="size-5 text-green-500" />
-                          </IconButton>
-                        </Tooltip>
-                      </NavLink> */}
-                      <Tooltip content="Delete">
+                      <Tooltip content={deleteT}>
                         <IconButton
                           variant="text"
                           onClick={() => handlePartnerDelete(_id)}
@@ -147,7 +147,7 @@ const PrtnerGallery = () => {
             onClick={prev}
             disabled={active === 1}
           >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> {previous}
           </Button>
 
           <div className="flex items-center gap-2">
@@ -164,7 +164,7 @@ const PrtnerGallery = () => {
             onClick={next}
             disabled={active === totalPages}
           >
-            Next
+            {nextT}
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>

@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import CustomDonateForm from "./CustomDonateForm";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getTranslationObject } from "../../../../i18next";
 const DonateForm = ({ id }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [value, setValue] = useState();
@@ -27,7 +28,28 @@ const DonateForm = ({ id }) => {
   const [isCustomAmount, setIsCustomAmount] = useState(true);
   const [paymentType, setPaymentType] = useState(false);
   const [error, setError] = useState("");
-
+  const translation = getTranslationObject("public");
+  const {
+    offline,
+    online,
+    paymentWith,
+    donationAmount: donationAmountT,
+    custom,
+    personalInfromation,
+    name,
+    email,
+    bankOrTransectionId,
+    country,
+    makeYourDonation,
+    hundredDollar,
+    twoHundredDollar,
+    threeHundredDollar,
+    selectCountry,
+    bankError,
+    nameError,
+    emailError,
+    paymetSuccess,
+  } = translation?.campaign;
   const {
     register,
     reset,
@@ -65,29 +87,25 @@ const DonateForm = ({ id }) => {
     try {
       await axios.post(`${URL}/payment_success`, payload).then((res) => {
         if (res.status) {
-          toast.success(res.data.message);
+          toast.success(paymetSuccess);
           reset();
-          console.log("payment:", res.data.message);
         }
       });
-    } catch (error) {
-      console.log(error);
-    }
-
-    console.log("data:", payload);
+    } catch (error) {}
   };
+
   return (
     <Card color="transparent" shadow={false} className="my-10">
-      <h1 className="text-base font-medium text-black">Payment With</h1>
+      <h1 className="text-base font-medium text-black">{paymentWith}</h1>
       <div className="flex">
         <Radio
           name="offline"
-          label="Offline"
+          label={offline}
           onClick={() => setPaymentType(true)}
         />
         <Radio
           name="offline"
-          label="Online"
+          label={online}
           defaultChecked
           onClick={() => setPaymentType(false)}
         />
@@ -96,7 +114,7 @@ const DonateForm = ({ id }) => {
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="space-y-4">
             <h1 className="text-base font-medium text-black">
-              Donation Amount
+              {donationAmountT}
             </h1>
             <Input
               size="md"
@@ -112,7 +130,7 @@ const DonateForm = ({ id }) => {
             <div className="flex flex-wrap">
               <Radio
                 name="type"
-                label="$100"
+                label={hundredDollar}
                 onClick={() => {
                   setDonationAmount("100");
                   setIsCustomAmount(false);
@@ -120,7 +138,7 @@ const DonateForm = ({ id }) => {
               />
               <Radio
                 name="type"
-                label="$200"
+                label={twoHundredDollar}
                 onClick={() => {
                   setDonationAmount("200");
                   setIsCustomAmount(false);
@@ -128,7 +146,7 @@ const DonateForm = ({ id }) => {
               />
               <Radio
                 name="type"
-                label="$300"
+                label={threeHundredDollar}
                 onClick={() => {
                   setDonationAmount("300");
                   setIsCustomAmount(false);
@@ -136,7 +154,7 @@ const DonateForm = ({ id }) => {
               />
               <Radio
                 name="type"
-                label="Custom"
+                label={custom}
                 onClick={() => {
                   setDonationAmount("");
                   setIsCustomAmount(true); // Enable input when Custom is selected
@@ -146,7 +164,7 @@ const DonateForm = ({ id }) => {
             </div>
             <div className="my-4">
               <h1 className="text-base font-medium text-black">
-                Personal Information
+                {personalInfromation}
               </h1>
             </div>
             <div className="mb-1 flex flex-col gap-6">
@@ -155,16 +173,16 @@ const DonateForm = ({ id }) => {
                 color="blue-gray"
                 className="-mb-3 font-normal text-base"
               >
-                Your Name
+                {name}
               </Typography>
               <Input
                 size="md"
-                placeholder="name"
+                placeholder={name}
                 className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
-                {...register("name", { required: "Name is required" })}
+                {...register("name", { required: nameError })}
               />
               {errors.name && (
                 <Typography color="red" variant="small">
@@ -176,17 +194,17 @@ const DonateForm = ({ id }) => {
                 color="blue-gray"
                 className="-mb-3 font-normal text-base"
               >
-                Your Email
+                {email}
               </Typography>
               <Input
                 size="md"
-                placeholder="email"
+                placeholder={email}
                 className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
                 {...register("email", {
-                  required: "Email is required",
+                  required: emailError,
                   pattern: {
                     value: /\S+@\S+\.\S+/,
                     message: "Invalid email format",
@@ -203,17 +221,17 @@ const DonateForm = ({ id }) => {
                 color="blue-gray"
                 className="-mb-3 font-normal text-base"
               >
-                Bank AC/Transection Id
+                {bankOrTransectionId}
               </Typography>
               <Input
                 size="md"
-                placeholder="Bank Account Number"
+                placeholder={bankOrTransectionId}
                 className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
                 {...register("transaction_id", {
-                  required: "Bank Account/Transection Id is required",
+                  required: bankError,
                 })}
               />
               {errors.transaction_id && (
@@ -226,10 +244,10 @@ const DonateForm = ({ id }) => {
                 color="blue-gray"
                 className="-mb-3 font-normal text-base"
               >
-                Country
+                {country}
               </Typography>
               <Select
-                label="Select Country"
+                label={selectCountry}
                 value={selectedCountry}
                 onChange={(value) => setSelectedCountry(value)}
               >
@@ -245,7 +263,7 @@ const DonateForm = ({ id }) => {
               </Select>
             </div>
             <Button type="submit" className="mt-6 bg-secondary" fullWidth>
-              Make Your Donation
+              {makeYourDonation}
             </Button>
           </div>
         </form>

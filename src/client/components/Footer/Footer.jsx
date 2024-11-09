@@ -12,6 +12,7 @@ import useNavMenus from "../../hooks/useNavMenus";
 import useFooterData from "../../../dashboard/hooks/useFooterData";
 import useSocialMediaData from "../../../dashboard/hooks/useSocialMediaData";
 import { FaXTwitter } from "react-icons/fa6";
+import { getTranslationObject } from "../../../../i18next";
 const Footer = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const footerData = useFooterData();
@@ -47,7 +48,8 @@ const Footer = () => {
     { name: "Instagram", icon: <FaInstagram className="size-5" /> },
     { name: "Facebook", icon: <BiLogoFacebook className="size-5" /> },
   ];
-
+  const translation = getTranslationObject("public");
+  const { useFulLinks, send, sending, causes, subscribe } = translation?.footer;
   return (
     <div className="py-20 bg-secondary">
       <Container>
@@ -70,7 +72,7 @@ const Footer = () => {
             </p>
           </div>
           <div className="space-y-4 grid">
-            <h3 className="text-2xl font-medium text-white">Useful Links</h3>
+            <h3 className="text-2xl font-medium text-white">{useFulLinks}</h3>
             {activeMenus.map((menu) => (
               <a
                 href={menu?.value}
@@ -82,7 +84,7 @@ const Footer = () => {
             ))}
           </div>
           <div className="space-y-4 grid">
-            <h3 className="text-2xl font-medium text-white">Causes</h3>
+            <h3 className="text-2xl font-medium text-white">{causes}</h3>
             <a href="" className="text-sm font-medium text-text-primary">
               Save Nature
             </a>
@@ -101,7 +103,7 @@ const Footer = () => {
           </div>
           <div className="space-y-4">
             <h1 className="text-2xl font-medium tracking-wide text-text-primary">
-              Subscribe
+              {subscribe}
             </h1>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-12">
@@ -118,10 +120,10 @@ const Footer = () => {
                 >
                   {isLoading ? (
                     <div className="flex justify-center items-center gap-2">
-                      <Spinner /> Sending...
+                      <Spinner /> {sending}
                     </div>
                   ) : (
-                    "Send"
+                    send
                   )}
                 </button>
               </div>

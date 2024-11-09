@@ -3,6 +3,7 @@ import { Input, Typography } from "@material-tailwind/react";
 import IButton from "../../../dashboard/ui/IButton";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { getTranslationObject } from "../../../../i18next";
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
 const Payment = ({ id }) => {
   const URL = import.meta.env.VITE_BASE_URL;
@@ -28,19 +29,22 @@ const Payment = ({ id }) => {
       }
     } catch (error) {}
   };
+  const translation = getTranslationObject("public");
+  const { amount, email, makeYourDonation, amountError, emailError } =
+    translation?.campaign;
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-5">
       <div className="space-y-4">
-        <label className="text-base font-medium text-[#2B2A27]">Email</label>
+        <label className="text-base font-medium text-[#2B2A27]">{email}</label>
         <Input
           size="md"
-          placeholder="Email"
+          placeholder={email}
           className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
           labelProps={{
             className: "before:content-none after:content-none",
           }}
           {...register("email", {
-            required: "Email is required",
+            required: emailError,
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
               message: "Enter a valid email address",
@@ -51,16 +55,16 @@ const Payment = ({ id }) => {
           <span className="text-red-500 text-sm">{errors.email.message}</span>
         )}
         <label className="text-base font-medium text-[#2B2A27] block mt-3">
-          Amount
+          {amount}
         </label>
         <Input
           size="md"
-          placeholder="Amount"
+          placeholder={amount}
           className="!border !border-gray-300 px-2 py-1.5 w-auto !focus:outline-gray-300 !focus:outline-1 !rounded"
           labelProps={{
             className: "before:content-none after:content-none",
           }}
-          {...register("amount", { required: "Amount is required" })}
+          {...register("amount", { required: amountError })}
         />
         {errors.amount && (
           <Typography color="red" variant="small">
@@ -69,7 +73,7 @@ const Payment = ({ id }) => {
         )}
       </div>
       <IButton className="uppercase w-full" type="submit">
-        Make your donation
+        {makeYourDonation}
       </IButton>
     </form>
   );

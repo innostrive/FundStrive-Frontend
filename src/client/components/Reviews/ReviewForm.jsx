@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import useReview from "../../hooks/useReview";
 import { useForm } from "react-hook-form";
 import StarRating from "../ui/StarRating";
+import { getTranslationObject } from "../../../../i18next";
 const ReviewForm = ({ campaignId }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const [isLoading, setIsLoading] = useState(false);
@@ -36,12 +37,23 @@ const ReviewForm = ({ campaignId }) => {
         refetch();
       }
     });
-    console.log("campaign-review:", payload);
   };
+  const translation = getTranslationObject("public");
+  const {
+    rating: ratingT,
+    name,
+    wait,
+    email,
+    emailError,
+    review,
+    reviewError,
+    submit,
+    emailFormat,
+  } = translation?.campaign;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex items-center gap-5 mb-2">
-        <Typography className="">Rate This Campaign?</Typography>
+        <Typography className="">{ratingT}</Typography>
         <StarRating
           rating={rating}
           hoverRating={hoverRating}
@@ -53,14 +65,8 @@ const ReviewForm = ({ campaignId }) => {
         <span className="-mb-3 text-sm text-secondary">Name</span>
         <input
           type="text"
-          name="name"
-          {...register("name", {
-            required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Name must be at least 3 characters long",
-            },
-          })}
+          name={name}
+          {...register("name")}
           className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
             errors.name ? "border-red-500" : "border-gray-300"
           }`}
@@ -71,10 +77,10 @@ const ReviewForm = ({ campaignId }) => {
         <span className="-mb-3 text-sm text-secondary">Email</span>
         <input
           type="email"
-          name="email"
+          name={email}
           {...register("email", {
-            required: "Email is required",
-            pattern: { value: /^\S+@\S+$/i, message: "Invalid email format" },
+            required: emailError,
+            pattern: { value: /^\S+@\S+$/i, message: emailFormat },
           })}
           className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded ${
             errors.email ? "border-red-500" : "border-gray-300"
@@ -83,15 +89,11 @@ const ReviewForm = ({ campaignId }) => {
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
         {/* Review Field */}
-        <span className="-mb-3 text-sm text-secondary">Review</span>
+        <span className="-mb-3 text-sm text-secondary">{review}</span>
         <textarea
           name="review"
           {...register("review", {
-            required: "Review is required",
-            minLength: {
-              value: 10,
-              message: "Review must be at least 10 characters long",
-            },
+            required: reviewError,
           })}
           className={`border px-2 py-1.5 w-auto focus:outline-gray-300 focus:outline-1 rounded h-auto min-h-40 ${
             errors.review ? "border-red-500" : "border-gray-300"
@@ -103,7 +105,7 @@ const ReviewForm = ({ campaignId }) => {
       </div>
 
       <IButton className="mt-5 rounded-none py-5">
-        {isLoading ? "Wait..." : "Submit"}
+        {isLoading ? wait : submit}
       </IButton>
     </form>
   );

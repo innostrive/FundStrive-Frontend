@@ -48,7 +48,17 @@ const UserList = () => {
   };
 
   const dashboardTranslationsHeaders = getTranslationObject("componentTitle");
-  const { question, status, action, add } = dashboardTranslationsHeaders;
+  const {
+    question,
+    status,
+    action,
+    add,
+    edit,
+    delete: deleteT,
+    view,
+    preivous,
+    nextT,
+  } = dashboardTranslationsHeaders;
   const dashboardTranslations = getTranslationObject("dashboard");
   const { faqList } = dashboardTranslations.dashboardTitle;
   const TABLE_HEAD = [question, status, action];
@@ -107,20 +117,20 @@ const UserList = () => {
                   <td className={classes}>
                     <div className="flex items-center">
                       <NavLink to={`/admin-dashboard/faq/faq-details/${_id}`}>
-                        <Tooltip content="View">
+                        <Tooltip content={view}>
                           <IconButton variant="text">
                             <View className="size-5 text-secondary" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
                       <NavLink to={`/admin-dashboard/faq/edit-faq/${_id}`}>
-                        <Tooltip content="Edit">
+                        <Tooltip content={edit}>
                           <IconButton variant="text">
                             <Edit className="size-5 text-green-500" />
                           </IconButton>
                         </Tooltip>
                       </NavLink>
-                      <Tooltip content="Delete">
+                      <Tooltip content={deleteT}>
                         <IconButton
                           variant="text"
                           onClick={() => handleFaqDelete(_id)}
@@ -145,7 +155,7 @@ const UserList = () => {
             onClick={prev}
             disabled={active === 1}
           >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> {preivous}
           </Button>
 
           <div className="flex items-center gap-2">
@@ -162,7 +172,7 @@ const UserList = () => {
             onClick={next}
             disabled={active === totalPages}
           >
-            Next
+            {nextT}
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>
