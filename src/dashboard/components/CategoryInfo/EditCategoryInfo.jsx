@@ -14,7 +14,8 @@ import EditorToolbar, {
 const EditCategoryInfo = ({ updateCategory, updateBtn }) => {
   const { id } = useParams();
   const categoryTranslate = getTranslationObject("dashboard");
-  const { name, description, status } = categoryTranslate.category;
+  const { name, description, status, categoryUpdatedSuccess, error } =
+    categoryTranslate.category;
   const { register, handleSubmit, reset } = useForm(); // react-hook-form
   const [categoryInfo, setCategoryInfo] = useState({});
   const [categoryDescription, setCategoryDescription] = useState("");
@@ -57,15 +58,14 @@ const EditCategoryInfo = ({ updateCategory, updateBtn }) => {
     await axiosSecure
       .put(`/api/categories/${id}`, categoryData)
       .then((response) => {
-        console.log("Server response:", response);
-        toast.success(response.data.message);
-        navigate("/dashboard/category");
+        if (response.status === 200) {
+          toast.success(categoryUpdatedSuccess);
+          navigate("/admin-dashboard/categories");
+        }
       })
-      .catch((error) => {
-        console.error("Error submitting data:", error);
+      .catch((err) => {
         toast.error(error);
       });
-    console.log("category:", categoryData);
   };
   return (
     <section>

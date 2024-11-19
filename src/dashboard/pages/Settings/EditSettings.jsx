@@ -20,8 +20,15 @@ const EditSettings = () => {
   const navigate = useNavigate();
 
   const dashboardTranslations = getTranslationObject("dashboard");
-  const { navMenu, updateNavmenu, menu, status, update } =
-    dashboardTranslations.menu;
+  const {
+    navMenu,
+    updateNavmenu,
+    menu,
+    status,
+    update,
+    menuUpdateSuccess,
+    error,
+  } = dashboardTranslations.menu;
   const { register, reset, handleSubmit } = useForm();
 
   useEffect(() => {
@@ -44,8 +51,10 @@ const EditSettings = () => {
     };
     axiosSecure.put(`/api/settings/${id}`, editData).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.message);
-        navigate("/dashboard/menu-settings");
+        toast.success(menuUpdateSuccess);
+        navigate("/admin-dashboard/navmenus");
+      } else {
+        toast.error(error);
       }
     });
   };

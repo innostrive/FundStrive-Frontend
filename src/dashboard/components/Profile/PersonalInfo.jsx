@@ -7,6 +7,7 @@ import { Button } from "@material-tailwind/react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { getTranslationObject } from "../../../../i18next";
 
 const PersonalInfo = ({ userInfo, selectedStatus, setSelectedStatus }) => {
   const [edit, setEdit] = useState(false);
@@ -14,19 +15,36 @@ const PersonalInfo = ({ userInfo, selectedStatus, setSelectedStatus }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const userId = localStorage.getItem("userId");
   const { handleSubmit, register, reset } = useForm();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    name,
+    email,
+    phoneNumber,
+    country,
+    state,
+    city,
+    postCode,
+    address,
+    update,
+    cancel,
+    status,
+    personalInformation,
+    userUpdateSuccess,
+    error,
+  } = dashboardTranslations?.form;
 
   const onSubmit = (data) => {
     axiosSecure.put(`${URL}/api/users/${userId}`, data).then((res) => {
       if (res.status === 200) {
-        toast.success("User updated successfully");
+        toast.success(userUpdateSuccess);
       } else {
-        toast.error(res.data.data.message);
+        toast.error(error);
       }
     });
   };
   return (
     <FormCard
-      title="Personal Information"
+      title={personalInformation}
       icon={
         <Edit onClick={() => setEdit(true)} className="text-secondary size-6" />
       }
@@ -37,7 +55,7 @@ const PersonalInfo = ({ userInfo, selectedStatus, setSelectedStatus }) => {
             <div className="grid grid-cols-2 justify-between gap-5">
               <div className="flex flex-col space-y-2">
                 <label htmlFor="" className="text-sm">
-                  Name
+                  {name}
                 </label>
                 <input
                   disabled={edit ? false : true}
@@ -52,7 +70,7 @@ const PersonalInfo = ({ userInfo, selectedStatus, setSelectedStatus }) => {
               </div>
               <div className="flex flex-col space-y-2">
                 <label htmlFor="" className="text-sm">
-                  Email Address
+                  {email}
                 </label>
                 <input
                   disabled={edit ? false : true}
@@ -67,7 +85,7 @@ const PersonalInfo = ({ userInfo, selectedStatus, setSelectedStatus }) => {
               </div>
               <div className="flex flex-col space-y-2">
                 <label htmlFor="" className="text-sm">
-                  Phone
+                  {phoneNumber}
                 </label>
                 <input
                   disabled={edit ? false : true}
@@ -82,7 +100,7 @@ const PersonalInfo = ({ userInfo, selectedStatus, setSelectedStatus }) => {
               </div>
               <div className="flex flex-col space-y-2">
                 <label htmlFor="" className="text-sm">
-                  Status
+                  {status}
                 </label>
                 <select
                   label="Select Status"
@@ -104,9 +122,9 @@ const PersonalInfo = ({ userInfo, selectedStatus, setSelectedStatus }) => {
         </div>
         {edit ? (
           <div className="my-5 flex gap-5 justify-end">
-            <IButton type="submit">Update</IButton>
+            <IButton type="submit">{update}</IButton>
             <Button className="bg-red-400" onClick={() => setEdit(false)}>
-              Cancel
+              {cancel}
             </Button>
           </div>
         ) : null}

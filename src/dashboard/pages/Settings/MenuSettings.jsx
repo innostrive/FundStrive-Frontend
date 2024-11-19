@@ -18,36 +18,8 @@ import FormCard from "../../ui/FormCard";
 import { getTranslationObject } from "../../../../i18next";
 
 const MenuSettings = () => {
-  const [settings, handleSettingsDelete] = useSettings();
+  const [settings] = useSettings();
 
-  const [active, setActive] = useState(1);
-  const itemsPerPage = 5;
-
-  const totalPages = Math.ceil(settings.length / itemsPerPage);
-
-  const paginatedSettings = useMemo(() => {
-    const start = (active - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    return settings.slice(start, end);
-  }, [settings, active]);
-
-  const getItemProps = (index) => ({
-    variant: active === index ? "filled" : "text",
-    color: "gray",
-    onClick: () => setActive(index),
-    className:
-      active === index
-        ? "rounded-full bg-secondary text-white"
-        : "rounded-full bg-gray-50 hover:bg-gray-200 text-black",
-  });
-
-  const next = () => {
-    if (active < totalPages) setActive(active + 1);
-  };
-
-  const prev = () => {
-    if (active > 1) setActive(active - 1);
-  };
   const dashboardTranslations = getTranslationObject("dashboard");
   const dashboardTranslationsHeader = getTranslationObject("componentTitle");
   const { menuList } = dashboardTranslations.menu;
@@ -75,8 +47,8 @@ const MenuSettings = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedSettings.map(({ key, status, _id }, index) => {
-              const isLast = index === paginatedSettings.length - 1;
+            {settings.map(({ key, status, _id }, index) => {
+              const isLast = index === settings.length - 1;
               const classes = isLast
                 ? "p-4 border-b-none"
                 : "p-4 border-b border-blue-gray-50";

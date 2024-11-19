@@ -30,6 +30,8 @@ const EditBanner = () => {
     image: imageT,
     uploadImage,
     submit,
+    caruselUpdateSuccess,
+    error,
   } = dashboardTranslations.carusel;
 
   useEffect(() => {
@@ -73,10 +75,12 @@ const EditBanner = () => {
         },
       })
       .then((response) => {
-        toast.success(response.data.message);
-        navigate("/admin-dashboard/banners");
+        if (response.status === 200) {
+          toast.success(updateCarusel);
+          navigate("/admin-dashboard/banners");
+        }
       })
-      .catch((error) => {
+      .catch((err) => {
         toast.error(error);
       });
   };

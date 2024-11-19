@@ -16,8 +16,15 @@ import { getTranslationObject } from "../../../../i18next";
 const CreateCategory = () => {
   const axiosSecure = useAxiosSecure();
   const categoryTranslate = getTranslationObject("dashboard");
-  const { categories, createCategory, name, description, submit } =
-    categoryTranslate.category;
+  const {
+    categories,
+    createCategory,
+    name,
+    description,
+    submit,
+    categoryCreateSuccess,
+    error,
+  } = categoryTranslate.category;
   const { nameErr, descriptionErr } = categoryTranslate.errors;
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
@@ -56,15 +63,13 @@ const CreateCategory = () => {
         })
         .then((response) => {
           if (response.status === 200) {
-            toast.success(response.data.message);
-            navigate("/dashboard/category");
+            toast.success(categoryCreateSuccess);
+            navigate("/admin-dashboard/categories");
           }
         });
     } catch (err) {
-      toast.error(err);
-      console.log(err);
+      toast.error(error);
     }
-    console.log("data", postData);
   };
 
   return (

@@ -19,7 +19,8 @@ const EditCampaign = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [campaignDescription, setCampaignDescription] = useState("");
   const dashboardTranslations = getTranslationObject("dashboard");
-  const { updateCampaign, campaigns } = dashboardTranslations.dashboardTitle;
+  const { updateCampaign, campaigns, commentDeleted } =
+    dashboardTranslations.dashboardTitle;
   useEffect(() => {
     axiosSecure.get(`/campaigns/${id}`).then((res) => {
       const userData = res.data.data;
@@ -36,7 +37,7 @@ const EditCampaign = () => {
     };
     await axios.delete(`${URL}/reviews`, { data }).then((res) => {
       if (res.status === 200) {
-        toast.success("Comment deleted...");
+        toast.success(commentDeleted);
         refetch();
       }
     });

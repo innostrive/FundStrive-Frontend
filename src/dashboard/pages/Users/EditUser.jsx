@@ -23,6 +23,8 @@ const EditUser = () => {
     imageU,
     postCode,
     country,
+    userUpdateSuccess,
+    error,
   } = dashboardTranslations?.form;
   const { updateUser, users, updateBtn } =
     dashboardTranslations?.dashboardTitle;
@@ -77,11 +79,11 @@ const EditUser = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          toast.success(res.data.message);
+          toast.success(userUpdateSuccess);
           navigate("/admin-dashboard/users");
         }
       })
-      .catch((error) => {
+      .catch((err) => {
         toast.error(error);
       });
   };

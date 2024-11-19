@@ -10,6 +10,7 @@ import user from "../../../dashboard/assets/volunteer-03.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
+import { getTranslationObject } from "../../../../i18next";
 export default function Dropdown() {
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const [userInfo, setUserInfo] = useState({});
@@ -28,6 +29,8 @@ export default function Dropdown() {
     localStorage.removeItem("userId");
     navigate("/login");
   };
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { profile, signOut } = dashboardTranslations?.profile;
   return (
     <Menu>
       <MenuHandler>
@@ -62,7 +65,7 @@ export default function Dropdown() {
                 />
               </svg>
               <Typography variant="small" className="font-medium">
-                Profile
+                {profile}
               </Typography>
             </div>
           </Link>
@@ -83,7 +86,7 @@ export default function Dropdown() {
             />
           </svg>
           <Typography variant="small" className="font-medium">
-            Sign Out
+            {signOut}
           </Typography>
         </MenuItem>
       </MenuList>

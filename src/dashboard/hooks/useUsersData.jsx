@@ -3,10 +3,14 @@ import useAxiosSecure from "./useAxiosSecure";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
+import { getTranslationObject } from "../../../i18next";
 
 const useUsersData = () => {
   const axiosSecure = useAxiosSecure();
+  const translate = getTranslationObject("dashboard");
 
+  const { deleteSuccess, deletePermission, permissionSuccess, warning, error } =
+    translate.form;
   const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
@@ -19,28 +23,27 @@ const useUsersData = () => {
     const data = { ids: [id] };
 
     Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
+      title: deletePermission,
+      text: warning,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: permissionSuccess,
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
           .delete("/api/users", { data })
           .then((response) => {
             if (response.status === 200) {
-              toast.success("Delete Successful");
+              toast.success(deleteSuccess);
               refetch();
             } else {
-              toast.warning("Category not deleted");
+              toast.warning(error);
             }
           })
           .catch((error) => {
-            toast.error("An error occurred");
-            console.error(error);
+            toast.error(error);
           });
       }
     });

@@ -13,6 +13,9 @@ const EditFooter = () => {
   const { id } = useParams();
   const URL = import.meta.env.VITE_BASE_URL;
   const axiosSecure = useAxiosSecure();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const { footer, updateFooter, update, updateFooterSuccess, error } =
+    dashboardTranslations.footer;
   const [socialLinkDetails, setSocialLinkDetails] = useState({});
   const { register, reset, handleSubmit } = useForm();
   const navigate = useNavigate();
@@ -34,16 +37,14 @@ const EditFooter = () => {
 
     axiosSecure.put(`/api/settings/${id}`, payload).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.message);
+        toast.success(updateFooterSuccess);
         navigate("/admin-dashboard/faq-settings");
       } else {
-        toast.warning("Somthing wrong!!!");
+        toast.warning(error);
       }
     });
   };
 
-  const dashboardTranslations = getTranslationObject("dashboard");
-  const { footer, updateFooter, update } = dashboardTranslations.footer;
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">

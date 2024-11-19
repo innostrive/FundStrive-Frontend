@@ -8,10 +8,21 @@ import IButton from "../../../ui/IButton";
 import { toast } from "react-toastify";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../../i18next";
 
 const CreateBanner = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    carusel,
+    createCarusel,
+    image: imageT,
+    uploadImage,
+    caruselCreateSuccess,
+    error,
+    submit,
+  } = dashboardTranslations.carusel;
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const { handleSubmit } = useForm();
@@ -43,33 +54,31 @@ const CreateBanner = () => {
         })
         .then((response) => {
           if (response.status === 200) {
-            toast.success(response.data.message);
-            navigate("/dashboard/banner-list");
+            toast.success(caruselCreateSuccess);
+            navigate("/admin-dashboard/banners");
           }
         });
     } catch (err) {
-      toast.error(err);
-      console.log(err);
+      toast.error(error);
     }
-    console.log("data", data);
   };
 
   return (
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/banners" className="opacity-60">
-          Banners
+          {carusel}
         </NavLink>
-        <span className="cursor-context-menu">Upload Carusel</span>
+        <span className="cursor-context-menu">{createCarusel}</span>
       </Breadcrumbs>
-      <FormCard title="Upload Carusel Image">
+      <FormCard title={createCarusel}>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="col-span-2 mt-5">
             <label
               htmlFor="image"
               className="text-base text-black font-medium text-center cursor-pointer block h-10 w-full border-gray-300 border p-2 rounded-md"
             >
-              Upload Image
+              {uploadImage}
             </label>
             <input
               type="file"
@@ -91,7 +100,7 @@ const CreateBanner = () => {
               )}
             </div>
           </div>
-          <IButton className="flex ml-auto">Submit</IButton>
+          <IButton className="flex ml-auto">{submit}</IButton>
         </form>
       </FormCard>
     </DashboardLayout>

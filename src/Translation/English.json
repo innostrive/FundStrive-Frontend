@@ -100,7 +100,8 @@
       "edit": "Edit",
       "view": "View",
       "delete": "Delete",
-      "uploadDocument": "Upload Document"
+      "uploadDocument": "Upload Document",
+      "commentDeleted": "Comment Deleted..."
     },
     "sidebarRoutesName": {
       "dashboard": "Dashboard",
@@ -145,7 +146,21 @@
       "imageTableHeading": "Image",
       "actionTable": "Action",
       "update": "Update",
-      "upload": "Upload"
+      "upload": "Upload",
+      "updateSuccess": "Update Successfully...",
+      "deleteSuccess": "Delete Successfully...",
+      "createSuccess": "Create Successfully...",
+      "deletePermission": "Are you sure to delete?",
+      "permissionSuccess": "Yes, delete it!",
+      "warning": "You won't be able to revert this!",
+      "error": "Somthing went wrong try again!",
+      "userCreateSuccess": "User Create Successful...",
+      "userUpdateSuccess": "User Updated Successfully...",
+      "campaignUpdateSuccess": "Campaign Updated Successfully...",
+      "campaignCreateSuccess": "Campaign Created Successfully...",
+      "personalInformation": "Personal Information",
+      "profile": "Profile",
+      "cancel": "Cancel"
     },
     "errors": {
       "nameError": "Name is required",
@@ -176,7 +191,10 @@
       "name": "Name",
       "description": "Description",
       "submit": "Submit",
-      "status": "Status"
+      "status": "Status",
+      "categoryCreateSuccess": "Category Created Successfully...",
+      "categoryUpdatedSuccess": "Category Updated Successfully...",
+      "error": "Somthing went wrong try again!"
     },
     "blog": {
       "blogs": "Blogs",
@@ -194,7 +212,11 @@
       "submit": "Submit",
       "titleError": "Title is required",
       "tagError": "Tags is required",
-      "contentError": "Content is required"
+      "contentError": "Content is required",
+      "blogCreateSuccess": "Blog created successfully!!!",
+      "blogUpdatedSuccess": "Blog updated successfully!!!",
+      "error": "Somthing went wrong try again!",
+      "commentDeleted": "Comment Deleted..."
     },
     "menu": {
       "navMenu": "Navbar Menus",
@@ -210,7 +232,12 @@
       "updateEmail": "Update Email",
       "updatePhone": "Update Phone",
       "email": "Email",
-      "phone": "Phone"
+      "phone": "Phone",
+      "menuUpdateSuccess": "Menu Update Successfully...",
+      "error": "Somthing went wrong try again!",
+      "edit": "Edit",
+      "emailUpdate": "Email update Successfully...",
+      "phoneUpdate": "Phone update Successfully..."
     },
     "carusel": {
       "caruselList": "Carusel List",
@@ -218,6 +245,10 @@
       "headerCarusel": "Header Carusel",
       "name": "Name",
       "updateCarusel": "Update Carusel",
+      "createCarusel": "Upload Carusel Image",
+      "caruselCreateSuccess": "Carusel Create Successfully...",
+      "caruselUpdateSuccess": "Carusel Updated Successfully...",
+      "error": "Somthing went wrong try again!",
       "status": "Status",
       "image": "Image",
       "uploadImage": "Upload Image",
@@ -226,10 +257,15 @@
       "title": "Title",
       "partnerGallery": "Partner Gallery List",
       "partnerImage": "Partner Gallery",
+      "updatePartnerImage": "Update Partner Gallery",
+      "createPartnerImageSuccess": "Upload Partner Successfully...",
+      "updatePartnerImageSuccess": "Update Partner Successfully...",
       "caruselTitleList": "Carusel Title List",
       "shortTitle": "Short Title",
       "description": "Description",
       "createCaruselTitle": "Create Carusel Title",
+      "createCaruselTitleSuccess": "Carusel Title Created Successfully...",
+      "updateCaruselTitleSuccess": "Carusel Title Updated Successfully...",
       "shortTitleError": "Short Title is required",
       "updateCaruselTitle": "Update Carusel Title",
       "uploadPartnerImage": "Upload Partner Image"
@@ -249,11 +285,17 @@
       "faq": "FAQ",
       "faqDetails": "FAQ Details",
       "updateFaq": "Update FAQ",
-      "status": "Status"
+      "status": "Status",
+      "createFaqSuccess": "Create FAQ Successfully...",
+      "updateFaqSuccess": "Update FAQ Successfully...",
+      "error": "Somthing went wrong try again!"
     },
     "websiteLogo": {
       "navbarLogo": "Navbar Logo",
       "footerLogo": "Footer Logo",
+      "footerLogoUpdateSuccess": "Footer Logo Updated Successfully...",
+      "navbarLogoUpdateSuccess": "Navbar Logo Updated Successfully...",
+      "error": "Somthing went wrong try again!",
       "updateNavbarLogo": "Update Navbar Logo",
       "updateFooterLogo": "Update Footer Logo",
       "status": "Status",
@@ -266,11 +308,15 @@
     "footer": {
       "footer": "Footer",
       "updateFooter": "Update Footer",
+      "updateFooterSuccess": "Update Footer Successfully...",
+      "error": "Somthing went wrong try again!",
       "update": "Update"
     },
     "socialMedia": {
       "socialMedia": "Social Media",
       "updateSocialMediaLink": "Update Social Media Link",
+      "updateSuccess": "Update Successfully....",
+      "error": "Somthing went wrong try again!",
       "link": "Link",
       "update": "Update"
     },
@@ -285,7 +331,13 @@
       "introName": "Name",
       "successValue": "Success Value",
       "status": "Status",
-      "update": "Update"
+      "update": "Update",
+      "updateSuccess": "Update Successfull...",
+      "error": "Somthing went wrong try again!"
+    },
+    "profile": {
+      "profile": "Profile",
+      "signOut": "Sign Out"
     }
   },
   "public": {

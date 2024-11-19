@@ -45,7 +45,7 @@
     "react-router-dom": "^6.26.1",
     "react-simple-star-rating": "^5.1.7",
     "react-toastify": "^10.0.5",
-    "sweetalert2": "^11.14.0",
+    "sweetalert2": "^11.14.5",
     "swiper": "^11.1.12",
     "tailwind-merge": "^2.5.2",
     "use-react-countries": "^2.0.1",

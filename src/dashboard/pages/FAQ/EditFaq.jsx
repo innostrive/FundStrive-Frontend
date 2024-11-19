@@ -13,6 +13,17 @@ const EditFaq = () => {
   const { id } = useParams();
   const URL = import.meta.env.VITE_BASE_URL;
   const axiosSecure = useAxiosSecure();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    updateFaq,
+    faq,
+    question,
+    answer,
+    update,
+    status,
+    updateFaqSuccess,
+    error,
+  } = dashboardTranslations.faq;
   const [faqDetails, setFaqDetails] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
   const { register, reset, handleSubmit } = useForm();
@@ -37,16 +48,14 @@ const EditFaq = () => {
 
     axiosSecure.put(`/api/settings/${id}`, payload).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.message);
+        toast.success(updateFaqSuccess);
         navigate("/admin-dashboard/faq");
       } else {
-        toast.warning("Somthing wrong!!!");
+        toast.warning(error);
       }
     });
   };
-  const dashboardTranslations = getTranslationObject("dashboard");
-  const { updateFaq, faq, question, answer, update, status } =
-    dashboardTranslations.faq;
+
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">

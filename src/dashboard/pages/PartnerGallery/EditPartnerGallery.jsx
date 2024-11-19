@@ -7,10 +7,22 @@ import { toast } from "react-toastify";
 import IButton from "../../ui/IButton";
 import DashboardLayout from "../../layout/DashboardLayout";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { getTranslationObject } from "../../../../i18next";
 
 const EditPartnerGallery = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    uploadPartnerImage,
+    submit,
+    carusel,
+    error,
+    updatePartnerImageSuccess,
+    updatePartnerImage,
+  } = dashboardTranslations.carusel;
+
   const navigate = useNavigate();
   const [partnerImage, setPartnerImage] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -60,11 +72,12 @@ const EditPartnerGallery = () => {
         },
       })
       .then((response) => {
-        toast.success(response.data.message);
-        navigate("/admin-dashboard/banners");
+        if (response.status === 200) {
+          toast.success(updatePartnerImageSuccess);
+          navigate("/admin-dashboard/banners");
+        }
       })
-      .catch((error) => {
-        console.error("Error submitting data:", error);
+      .catch((err) => {
         toast.error(error);
       });
   };
@@ -73,11 +86,11 @@ const EditPartnerGallery = () => {
     <DashboardLayout>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">
         <NavLink to="/admin-dashboard/banners" className="opacity-60">
-          Banners
+          {carusel}
         </NavLink>
-        <span className="cursor-context-menu">Update Partner Image</span>
+        <span className="cursor-context-menu">{updatePartnerImage}</span>
       </Breadcrumbs>
-      <FormCard title="Update Partner Gallery">
+      <FormCard title={updatePartnerImage}>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 w-full">
           <div className="space-y-5">
             <div className="col-span-2">
@@ -92,7 +105,7 @@ const EditPartnerGallery = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 col-span-2 space-y-2 mt-5">
-            <span className="text-sm">Image</span>
+            <span className="text-sm">{im}</span>
             <div className="size-32 border-2 border-dashed border-gray-400 rounded-md p-2">
               <img
                 src={imageUrl + partnerImage?.image}

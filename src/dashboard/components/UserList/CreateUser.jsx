@@ -21,6 +21,8 @@ const CreateUser = () => {
     postCode,
     country,
     submit,
+    userCreateSuccess,
+    error,
   } = dashboardTranslations?.form;
   const {
     nameErr,
@@ -56,11 +58,11 @@ const CreateUser = () => {
       const response = await axios.post(`${URL}/signup`, payload);
       setIsLoading(false);
       if (response.status === 200) {
-        toast.success(response.data.data.message);
+        toast.success(userCreateSuccess);
         navigate("/admin-dashboard/users");
       }
-    } catch (error) {
-      toast.error("Failed to sign up. Please try again.");
+    } catch {
+      toast.error(error);
     }
   };
   return (

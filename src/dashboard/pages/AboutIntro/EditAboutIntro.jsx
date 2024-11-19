@@ -19,6 +19,18 @@ const EditAboutIntro = () => {
   const navigate = useNavigate();
   const { register, reset, handleSubmit } = useForm();
 
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    aboutIntro: aboutIntroT,
+    updateAboutIntro,
+    introName,
+    successValue,
+    status,
+    update,
+    updateSuccess,
+    error,
+  } = dashboardTranslations.aboutInfo;
+
   useEffect(() => {
     axios.get(`${URL}/settings/${id}`).then((res) => {
       setSettings(res.data.data);
@@ -39,20 +51,14 @@ const EditAboutIntro = () => {
     };
     axiosSecure.put(`/api/settings/${id}`, editData).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.message);
+        toast.success(updateSuccess);
         navigate("/admin-dashboard/about-vision");
+      } else {
+        toast.error(error);
       }
     });
   };
-  const dashboardTranslations = getTranslationObject("dashboard");
-  const {
-    aboutIntro: aboutIntroT,
-    updateAboutIntro,
-    introName,
-    successValue,
-    status,
-    update,
-  } = dashboardTranslations.aboutInfo;
+
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">

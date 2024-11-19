@@ -29,6 +29,8 @@ const CreateCampaign = () => {
     deadline,
     uploadImage,
     description,
+    campaignCreateSuccess,
+    error,
   } = dashboardTranslations.form;
   const {
     campaignNameError,
@@ -81,13 +83,13 @@ const CreateCampaign = () => {
         })
         .then((response) => {
           if (response.status === 200) {
-            toast.success(response.data.message);
+            toast.success(campaignCreateSuccess);
             reset();
             navigate("/admin-dashboard/campaigns");
           }
         });
     } catch (err) {
-      toast.error(err);
+      toast.error(error);
     }
   };
 

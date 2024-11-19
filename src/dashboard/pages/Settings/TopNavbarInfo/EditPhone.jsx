@@ -18,7 +18,8 @@ const EditPhone = () => {
   const [settings, setSettings] = useState({});
   const { register, reset, handleSubmit } = useForm();
   const dashboardTranslations = getTranslationObject("dashboard");
-  const { topNavInfo, updatePhone, phone, update } = dashboardTranslations.menu;
+  const { topNavInfo, updatePhone, phone, update, phoneUpdate, error } =
+    dashboardTranslations.menu;
 
   useEffect(() => {
     axios.get(`${URL}/settings/${id}`).then((res) => {
@@ -33,10 +34,10 @@ const EditPhone = () => {
   const onSubmit = (data) => {
     axiosSecure.put(`/api/settings/${id}`, data).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.message);
-        navigate("/dashboard/top-navbar");
+        toast.success(phoneUpdate);
+        navigate("/admin-dashboard/navmenus");
       } else {
-        toast.warning("Something wrong");
+        toast.warning(error);
       }
       // console.log(res.data.data);
     });

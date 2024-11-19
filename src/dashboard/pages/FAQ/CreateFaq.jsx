@@ -10,6 +10,19 @@ import { getTranslationObject } from "../../../../i18next";
 const CreateFaq = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    createFaq,
+    question,
+    answer,
+    submit,
+    faq,
+    questionError,
+    answerError,
+    createFaqSuccess,
+    error,
+  } = dashboardTranslations.faq;
   const {
     register,
     reset,
@@ -25,26 +38,15 @@ const CreateFaq = () => {
     };
     axiosSecure.post("/api/settings", payload).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.message);
+        toast.success(createFaqSuccess);
         reset();
         navigate("/admin-dashboard/faq");
-        // console.log("faq:", res.data);
       } else {
-        toast.warning("Something Wrong!!!");
+        toast.warning(error);
       }
     });
-    // console.log("data:", payload);
   };
-  const dashboardTranslations = getTranslationObject("dashboard");
-  const {
-    createFaq,
-    question,
-    answer,
-    submit,
-    faq,
-    questionError,
-    answerError,
-  } = dashboardTranslations.faq;
+
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">

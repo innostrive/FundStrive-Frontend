@@ -3,10 +3,15 @@ import useAxiosSecure from "./useAxiosSecure";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { getTranslationObject } from "../../../i18next";
 
 const useFaqData = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const axiosSecure = useAxiosSecure();
+
+  const translate = getTranslationObject("dashboard");
+  const { deleteSuccess, deletePermission, permissionSuccess, warning, error } =
+    translate.form;
 
   const { refetch, data: faq = [] } = useQuery({
     queryKey: ["faq"],
@@ -20,28 +25,27 @@ const useFaqData = () => {
     const data = { ids: [id] };
 
     Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
+      title: deletePermission,
+      text: warning,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: permissionSuccess,
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
           .delete("/api/settings", { data })
           .then((response) => {
             if (response.status === 200) {
-              toast.success("Delete Successful");
+              toast.success(deleteSuccess);
               refetch();
             } else {
-              toast.warning("FAQ not deleted");
+              toast.warning(error);
             }
           })
-          .catch((error) => {
-            toast.error("An error occurred");
-            console.error(error);
+          .catch((err) => {
+            toast.error(error);
           });
       }
     });

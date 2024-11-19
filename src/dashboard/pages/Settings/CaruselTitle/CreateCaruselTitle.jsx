@@ -19,6 +19,8 @@ const CreateCaruselTitle = () => {
     submit,
     shortTitleError,
     carusel,
+    createCaruselTitleSuccess,
+    error,
   } = dashboardTranslations.carusel;
   const axiosSecure = useAxiosSecure();
   const [value, setValue] = useState([]);
@@ -39,13 +41,13 @@ const CreateCaruselTitle = () => {
     try {
       await axiosSecure.post("/api/settings", payload).then((response) => {
         if (response.status === 200) {
-          toast.success(response.data.message);
+          toast.success(createCaruselTitleSuccess);
           reset();
           navigate("/admin-dashboard/banners");
         }
       });
     } catch (err) {
-      toast.error(err);
+      toast.error(error);
     }
   };
   return (

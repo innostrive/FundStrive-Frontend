@@ -15,7 +15,13 @@ const CreatePartner = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const dashboardTranslations = getTranslationObject("dashboard");
-  const { uploadPartnerImage, submit, carusel } = dashboardTranslations.carusel;
+  const {
+    uploadPartnerImage,
+    submit,
+    carusel,
+    createPartnerImageSuccess,
+    error,
+  } = dashboardTranslations.carusel;
   const {
     register,
     reset,
@@ -51,12 +57,12 @@ const CreatePartner = () => {
         })
         .then((response) => {
           if (response.status === 200) {
-            toast.success(response.data.message);
+            toast.success(createPartnerImageSuccess);
             navigate("/admin-dashboard/banners");
           }
         });
     } catch (err) {
-      toast.error(err);
+      toast.error(error);
     }
   };
 

@@ -131,7 +131,7 @@ const TopNavbarInfo = () => {
                         <NavLink
                           to={`/admin-dashboard/navmenus/top-navbar-edit-phoneInfo/${_id}`}
                         >
-                          <Tooltip content="Edit">
+                          <Tooltip content={edit}>
                             <IconButton variant="text">
                               <Edit className="size-5 text-green-500" />
                             </IconButton>

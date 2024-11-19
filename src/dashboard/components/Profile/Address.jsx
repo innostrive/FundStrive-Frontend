@@ -151,10 +151,25 @@ import IButton from "../../ui/IButton";
 import { Button } from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { getTranslationObject } from "../../../../i18next";
 
 const Address = () => {
   const [edit, setEdit] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    country,
+    postCode,
+    address,
+    update,
+    cancel,
+    status,
+    personalInformation,
+    userUpdateSuccess,
+    error,
+  } = dashboardTranslations?.form;
+  const { addressError, countryError, postCodeError } =
+    dashboardTranslations?.errors;
   const {
     register,
     reset,
@@ -180,19 +195,20 @@ const Address = () => {
       .put(`/api/users/${userId}`, data)
       .then((res) => {
         if (res.status === 200) {
-          toast.success(res.data.message);
+          toast.success(userUpdateSuccess);
           setEdit(false); // Close edit mode upon successful update
+        } else {
+          toast.error(error);
         }
       })
-      .catch((error) => {
-        toast.error("Error updating address.");
-        console.error("Error submitting data:", error);
+      .catch((err) => {
+        toast.error(error);
       });
   };
 
   return (
     <FormCard
-      title="Address"
+      title={address}
       icon={
         <Edit onClick={() => setEdit(true)} className="text-secondary size-6" />
       }
@@ -201,14 +217,14 @@ const Address = () => {
         <div className="flex justify-between items-center">
           <div className="flex-1">
             <div className="grid grid-cols-2 gap-5">
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-2">
                 <label htmlFor="address" className="text-sm">
-                  Address
+                  {address}
                 </label>
                 <input
                   disabled={!edit}
                   defaultValue={userInfo?.address}
-                  {...register("address", { required: "Address is required" })}
+                  {...register("address", { required: addressError })}
                   className={`${
                     edit
                       ? "p-2 bg-white border border-gray-200 rounded-md"
@@ -222,14 +238,14 @@ const Address = () => {
                 )}
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-2">
                 <label htmlFor="country" className="text-sm">
-                  Country
+                  {country}
                 </label>
                 <input
                   disabled={!edit}
                   defaultValue={userInfo?.country}
-                  {...register("country", { required: "Country is required" })}
+                  {...register("country", { required: countryError })}
                   className={`${
                     edit
                       ? "p-2 bg-white border border-gray-200 rounded-md"
@@ -242,62 +258,15 @@ const Address = () => {
                   </p>
                 )}
               </div>
-
-              {/* <div className="flex flex-col">
-                <label htmlFor="state" className="text-sm">
-                  State
-                </label>
-                <input
-                  disabled={!edit}
-                  defaultValue={userInfo?.state}
-                  {...register("state", { required: "State is required" })}
-                  className={`${
-                    edit
-                      ? "p-2 bg-white border border-gray-200 rounded-md"
-                      : "p-2 bg-white border border-gray-200"
-                  }`}
-                />
-                {errors.state && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.state.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex flex-col">
-                <label htmlFor="city" className="text-sm">
-                  City
-                </label>
-                <input
-                  disabled={!edit}
-                  defaultValue={userInfo?.city}
-                  {...register("city", { required: "City is required" })}
-                  className={`${
-                    edit
-                      ? "p-2 bg-white border border-gray-200 rounded-md"
-                      : "p-2 bg-white border border-gray-200"
-                  }`}
-                />
-                {errors.city && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.city.message}
-                  </p>
-                )}
-              </div> */}
-
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-2">
                 <label htmlFor="post_code" className="text-sm">
-                  Post Code
+                  {postCode}
                 </label>
                 <input
                   disabled={!edit}
                   defaultValue={userInfo?.post_code}
                   {...register("post_code", {
-                    required: "Post code is required",
-                    pattern: {
-                      value: /^[0-9]{5}$/,
-                      message: "Invalid post code format",
-                    },
+                    required: postCodeError,
                   })}
                   className={`${
                     edit
@@ -316,9 +285,9 @@ const Address = () => {
         </div>
         {edit && (
           <div className="my-5 flex gap-5 justify-end">
-            <IButton type="submit">Update</IButton>
+            <IButton type="submit">{update}</IButton>
             <Button className="bg-red-400" onClick={() => setEdit(false)}>
-              Cancel
+              {cancel}
             </Button>
           </div>
         )}

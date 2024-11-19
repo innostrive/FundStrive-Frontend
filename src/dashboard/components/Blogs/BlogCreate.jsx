@@ -38,6 +38,8 @@ const BlogCreate = () => {
     titleError,
     tagError,
     contentError,
+    blogCreateSuccess,
+    error,
   } = dashboardTranslations.blog;
   const {
     register,
@@ -71,12 +73,10 @@ const BlogCreate = () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          toast.success("Blog created successfully!!!");
-          navigate("/dashboard/blogs");
-          console.log("blog:", response.data);
+          toast.success(blogCreateSuccess);
+          navigate("/admin-dashboard/blogs");
         } else {
-          toast.error("Something went wrong!!!");
-          console.log("blog:", response.data.message);
+          toast.error(error);
         }
       });
   };

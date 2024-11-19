@@ -33,8 +33,18 @@ const EditBlog = () => {
 
   const blogReviews = reviews.filter((item) => item.post_id === id);
   const dashboardTranslations = getTranslationObject("dashboard");
-  const { blogs, uploadBlog, title, tag, content, uploadImage, update } =
-    dashboardTranslations.blog;
+  const {
+    blogs,
+    uploadBlog,
+    title,
+    tag,
+    content,
+    uploadImage,
+    update,
+    commentDeleted,
+    blogUpdatedSuccess,
+    error,
+  } = dashboardTranslations.blog;
   const handleDelete = async (id) => {
     console.log("id:", id);
     const data = {
@@ -42,7 +52,7 @@ const EditBlog = () => {
     };
     await axios.delete(`${URL}/reviews`, { data }).then((res) => {
       if (res.status === 200) {
-        toast.success("Comment deleted...");
+        toast.success(commentDeleted);
         refetch();
       }
     });
@@ -99,12 +109,10 @@ const EditBlog = () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          toast.success(response.data.message);
-          navigate("/dashboard/blogs");
-          console.log("blog:", response.data.message);
+          toast.success(blogUpdatedSuccess);
+          navigate("/admin-dashboard/blogs");
         } else {
-          toast.error("Something went wrong!!!");
-          console.log("blog:", response.data.message);
+          toast.error(error);
         }
       });
   };

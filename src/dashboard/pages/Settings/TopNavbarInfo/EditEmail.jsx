@@ -19,7 +19,8 @@ const EditEmail = () => {
   const [settings, setSettings] = useState({});
   const { register, reset, handleSubmit } = useForm();
   const dashboardTranslations = getTranslationObject("dashboard");
-  const { topNavInfo, updateEmail, email, update } = dashboardTranslations.menu;
+  const { topNavInfo, updateEmail, email, update, emailUpdate, error } =
+    dashboardTranslations.menu;
 
   useEffect(() => {
     axios.get(`${URL}/settings/${id}`).then((res) => {
@@ -34,13 +35,12 @@ const EditEmail = () => {
   const onSubmit = (data) => {
     axiosSecure.put(`/api/settings/${id}`, data).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.message);
-        navigate("/dashboard/top-navbar");
+        toast.success(emailUpdate);
+        navigate("/admin-dashboard/navmenus");
+      } else {
+        toast.error(error);
       }
-      // console.log(res.data.data);
     });
-
-    // console.log("topnav:", data);
   };
   return (
     <DashboardLayout>

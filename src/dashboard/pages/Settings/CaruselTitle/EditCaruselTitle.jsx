@@ -27,6 +27,8 @@ const EditCaruselTitle = () => {
     description,
     status,
     update,
+    updateCaruselTitleSuccess,
+    error,
   } = dashboardTranslations.carusel;
 
   useEffect(() => {
@@ -49,8 +51,10 @@ const EditCaruselTitle = () => {
     };
     axiosSecure.put(`/api/settings/${id}`, editData).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.message);
+        toast.success(updateCaruselTitleSuccess);
         navigate("/admin-dashboard/banners");
+      } else {
+        toast.error(error);
       }
     });
   };

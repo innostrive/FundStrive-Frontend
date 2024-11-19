@@ -12,6 +12,17 @@ const EditNavbarLogo = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    websiteLogo,
+    updateNavbarLogo,
+    status,
+    uploadImage,
+    submit,
+    image: navImage,
+    navbarLogoUpdateSuccess,
+    error,
+  } = dashboardTranslations.websiteLogo;
   const [navbarLogo, setNavbarLogo] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("");
   const [image, setImage] = useState(null);
@@ -60,22 +71,16 @@ const EditNavbarLogo = () => {
         },
       })
       .then((response) => {
-        toast.success(response.data.message);
-        navigate("/admin-dashboard/website-logo");
+        if (response.status === 200) {
+          toast.success(navbarLogoUpdateSuccess);
+          navigate("/admin-dashboard/website-logo");
+        }
       })
-      .catch((error) => {
+      .catch((err) => {
         toast.error(error);
       });
   };
-  const dashboardTranslations = getTranslationObject("dashboard");
-  const {
-    websiteLogo,
-    updateNavbarLogo,
-    status,
-    uploadImage,
-    submit,
-    image: navImage,
-  } = dashboardTranslations.websiteLogo;
+
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">

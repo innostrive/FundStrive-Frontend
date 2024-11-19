@@ -1,4 +1,4 @@
-import donation from "../../../assets/donation.jpg";
+import donation from "../../../assets/unity.png";
 import SignUpForm from "../../../components/form/SignUpForm";
 const SignUp = () => {
   return (

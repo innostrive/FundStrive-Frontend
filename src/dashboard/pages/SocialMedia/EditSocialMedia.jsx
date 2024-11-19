@@ -13,6 +13,15 @@ const EditSocialMedia = () => {
   const { id } = useParams();
   const URL = import.meta.env.VITE_BASE_URL;
   const axiosSecure = useAxiosSecure();
+  const dashboardTranslations = getTranslationObject("dashboard");
+  const {
+    socialMedia,
+    updateSocialMediaLink,
+    update,
+    link,
+    updateSuccess,
+    error,
+  } = dashboardTranslations.socialMedia;
   const [socialLinkDetails, setSocialLinkDetails] = useState({});
   const { register, reset, handleSubmit } = useForm();
   const navigate = useNavigate();
@@ -34,16 +43,14 @@ const EditSocialMedia = () => {
 
     axiosSecure.put(`/api/settings/${id}`, payload).then((res) => {
       if (res.status === 200) {
-        toast.success(res.data.message);
+        toast.success(updateSuccess);
         navigate("/admin-dashboard/social-media");
       } else {
-        toast.warning("Somthing wrong!!!");
+        toast.warning(error);
       }
     });
   };
-  const dashboardTranslations = getTranslationObject("dashboard");
-  const { socialMedia, updateSocialMediaLink, update, link } =
-    dashboardTranslations.socialMedia;
+
   return (
     <section>
       <Breadcrumbs className="bg-gray-400 bg-opacity-30 mb-5">

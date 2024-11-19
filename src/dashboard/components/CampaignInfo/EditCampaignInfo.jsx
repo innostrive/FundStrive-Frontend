@@ -41,6 +41,8 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
     status,
     updateBtn,
     reviews,
+    error,
+    campaignUpdateSuccess,
   } = dashboardTranslations.form;
 
   useEffect(() => {
@@ -91,10 +93,14 @@ const EditCampaignInfo = ({ handleDelete, campaignReviews }) => {
         },
       })
       .then((response) => {
-        toast.success(response.data.message);
-        navigate("/admin-dashboard/campaigs");
+        if (response.status === 200) {
+          toast.success(campaignUpdateSuccess);
+          navigate("/admin-dashboard/campaigns");
+        }
       })
-      .catch((error) => {});
+      .catch((err) => {
+        toast.error(error);
+      });
   };
   return (
     <FormCard title="Update Campaign">
