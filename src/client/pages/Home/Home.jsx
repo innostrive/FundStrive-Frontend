@@ -16,9 +16,9 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Suspense fallback={<CardLoading />}>
-        <Campaigns />
-      </Suspense>
+      {/* <Suspense fallback={<CardLoading />}>
+      </Suspense> */}
+      <Campaigns />
       <SuportedPartner />
       <Volunteer />
       <JoinVolunteer />

@@ -91,16 +91,12 @@ const EditBlog = () => {
 
   const onSubmit = (data) => {
     const formData = new FormData();
+    formData.append("image", image);
     const postData = {
       ...data,
       content: blogContent,
+      image,
     };
-
-    formData.append("data", JSON.stringify(postData));
-
-    // console.log("blogData:", formData.get("data"));
-    // console.log("blogData:", formData.get("image"));
-
     axiosSecure
       .put(`/api/posts/${id}`, postData, {
         headers: {

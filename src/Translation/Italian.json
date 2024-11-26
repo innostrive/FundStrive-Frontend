@@ -430,7 +430,9 @@
       "newAccount": "Non hai un account?",
       "postCodeFormat": "Inserisci un codice postale valido a 5 cifre",
       "signing": "Registrazione in corso...",
-      "signUpSuccess": "Registrazione riuscita..."
+      "signUpSuccess": "Registrazione riuscita...",
+      "join": "Unisciti",
+      "joining": "Unendosi..."
     },
     "footer": {
       "useFulLinks": "Link Utili",

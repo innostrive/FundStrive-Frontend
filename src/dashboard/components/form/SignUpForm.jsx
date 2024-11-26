@@ -42,7 +42,7 @@ const SignUpForm = () => {
     postCodeFormat,
     signUpSuccess,
     signing,
-  } = translation?.login;
+  } = translation?.signUp;
   const {
     handleSubmit,
     register,

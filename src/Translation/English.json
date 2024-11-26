@@ -453,7 +453,9 @@
       "newAccount": "Don't have an account?",
       "postCodeFormat": "Enter a valid 5-digit post code",
       "signing": "Signing...",
-      "signUpSuccess": "Sign Up Successful..."
+      "signUpSuccess": "Sign Up Successful...",
+      "join": "Join",
+      "joining": "Joining..."
     },
     "footer": {
       "useFulLinks": "UseFull Links",

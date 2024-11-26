@@ -60,7 +60,7 @@ export function VolunteerForm({ open, handleOpen }) {
     postCodeFormat,
     join,
     joining,
-  } = translation?.login;
+  } = translation?.signUp;
   return (
     <>
       <IButton
