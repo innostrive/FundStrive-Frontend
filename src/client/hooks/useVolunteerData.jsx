@@ -5,14 +5,14 @@ import useAxiosSecure from "./useAxiosSecure";
 const useVolunteerData = () => {
   const URL = import.meta.env.VITE_BASE_URL;
   const axiosSecure = useAxiosSecure();
-  const { data: volunteer = [] } = useQuery({
+  const { data: volunteerData = [] } = useQuery({
     queryKey: ["volunteer-data"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/volunteer`);
-      return res.data.data.users;
+      return res.data.data;
     },
   });
-  return [volunteer];
+  return [volunteerData];
 };
 
 export default useVolunteerData;
