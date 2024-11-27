@@ -8,9 +8,7 @@ const useVolunteerData = () => {
   const { data: volunteer = [] } = useQuery({
     queryKey: ["volunteer-data"],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/api/users?role=volunteer&status=Active`
-      );
+      const res = await axiosSecure.get(`/users/volunteer`);
       return res.data.data.users;
     },
   });
